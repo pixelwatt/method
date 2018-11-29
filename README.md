@@ -1,3 +1,3 @@
-# spitfire
+# Theme
 
-The foundation for new PixelWatt projects.
+About this theme.

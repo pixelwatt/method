@@ -1,0 +1,96 @@
+/*
+THEME STYLES
+*/
+
+// Import Bootstrap
+
+@import "assets/css/bootstrap/bootstrap";
+
+// Jarallax CSS
+
+.jarallax {
+    position: relative;
+    z-index: 0;
+}
+.jarallax > .jarallax-img {
+    position: absolute;
+    object-fit: cover;
+    /* support for plugin https://github.com/bfred-it/object-fit-images */
+    font-family: 'object-fit: cover;';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+// Error 404 Styles
+
+body.error404 {
+	height: 100%;
+	min-height: 100%;
+	//background-image: url('assets/images/error404-bg.png');
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-color: $gray-100;
+
+	@include media-breakpoint-down(xs) {
+		background: transparent;
+	}
+	.row {
+		height: 100vh;
+	}
+	.error404-content {
+		padding: 2rem 0 2.75rem 0;
+		background-color: #fff;
+		border-radius: 4px;
+		border: 3px solid #CDCDCD;
+		box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+
+		@include media-breakpoint-down(xs) {
+			background: transparent;
+			border: none;
+			box-shadow: none;
+		}
+
+		h1 {
+			font-size:  8rem;
+			font-family: $font-family-sans-serif;
+			color: $primary;
+			font-weight: 900;
+			line-height: 0.9;
+			margin: 0 0 0.25rem 0;
+
+			@include media-breakpoint-down(sm) {
+				font-size: 6rem;
+			}
+		}
+		h2 {
+			font-size: 1.75rem;
+			font-family: $font-family-sans-serif;
+			color: $gray-600;
+			line-height: 1;
+			margin: 0 0 2rem 0;
+			font-weight: 900;
+
+			@include media-breakpoint-down(sm) {
+				font-size: 1.5rem;
+			}
+		}
+
+		p {
+			font-family: $font-family-sans-serif;
+			font-style: italic;
+			font-size: 0.95rem;
+			color: #595959;
+			font-weight: 500;
+			padding: 0 1.75rem;
+			margin: 0 0 2rem 0;
+		}
+
+		.btn-primary {
+			font-weight: 700;
+		}
+	}	
+}

@@ -134,9 +134,9 @@ function spitfire_register_required_plugins() {
 //-----------------------------------------------------
 
 function spitfire_scripts() {
-	wp_enqueue_style( 'spitfire', get_template_directory_uri().'/theme.min.css', '', '1.0.1' );
-	wp_enqueue_style( 'fontawesome', 'https://use.fontawesome.com/releases/v5.5.0/css/all.css' );
-	wp_enqueue_script( 'scripts', get_template_directory_uri().'/assets/js/scripts.min.js', array('jquery'), '1.0.1', false );
+	wp_enqueue_style( 'spitfire', get_template_directory_uri().'/theme.min.css', '', '1.0.2' );
+	wp_enqueue_style( 'fontawesome', get_template_directory_uri().'/inc/fontawesome/css/all.min.css' );
+	wp_enqueue_script( 'scripts', get_template_directory_uri().'/assets/js/scripts.min.js', array('jquery'), '1.0.2', false );
     
 	if ( ! is_admin() ) {
         wp_deregister_script( 'jquery' );
@@ -418,7 +418,221 @@ function spitfire_get_social_icons() {
 //======================================================================
 
 
-// Place content generation functions here.
+class spitfire_layout {
+	private $elements = array();
+	private $meta = array();
+	private $mods = array();
+	private $id;
+	private $html;
+	private $modals;
+	private $scripts;
+	private $attr = array();
+
+	public function build_page( $pid='', $archive=false ) {
+		$this->mods = get_theme_mods();
+		if ( true == $archive ) {
+			global $wp_query;
+			$this->attr['is_archive'] = true;
+			$this->attr['post_type'] = ( spitfire_check_key( $wp_query->query_vars['post_type'] ) ? $wp_query->query_vars['post_type'] : 'post' );
+			if ( 'post' == $this->attr['post_type'] ) {
+				$this->attr['category'] = ( spitfire_check_key( $wp_query->queried_object->name ) ? $wp_query->queried_object->name : '' );
+			}
+			$this->attr['taxonomy'] = ( spitfire_check_key( $wp_query->query_vars['taxonomy'] ) ? $wp_query->query_vars['taxonomy'] : '' );
+			$this->determine_attributes();
+			$this->build_layout();
+			return $this->html . $this->modals . $this->scripts;
+		}
+		elseif ( ( ! empty( $pid ) ) && ( false == $archive ) ) {
+			$this->attr['is_archive'] = false;
+			$this->attr['post_type'] = get_post_type( $this->id );
+			$this->id = $pid;
+			$this->meta = get_post_meta( $this->id );
+			$this->determine_attributes();
+			$this->build_layout();
+			return $this->html . $this->modals . $this->scripts;
+		} else {
+			return false;
+		}
+	}
+
+
+	private function determine_attributes() {
+		global $wp_query;
+		if ( true == $this->attr['is_archive'] ) {
+			switch ( $this->attr['post_type'] ) {
+				case 'post':
+					$this->attr['components'] = array( 'components' );
+					break;
+			}
+		} else {
+			switch ( $this->attr['post_type'] ) {
+				case 'page':
+					$fp = get_option( 'page_on_front' );
+					if ( $fp == $this->id ) {
+						$this->attr['components'] = array( 'components' );
+					} else {
+						$template = get_page_template_slug( $this->id );
+						switch ( $template ) {
+							case 'templates/page-template-custom.php':
+								$this->attr['components'] = array( 'components' );
+								break;
+							default:
+								$this->attr['components'] = array( 'components' );
+								break;
+						}
+					}
+					break;
+				case 'post':
+					$this->attr['components'] = array( 'components' );
+					break;
+				default:
+					break;
+			}
+		}
+		return;
+	}
+
+
+	private function build_layout() {
+		$this->build_header();
+		$this->build_components();
+		$this->build_footer();
+		return;
+	}
+
+
+	private function build_header() {
+		$this->scripts .= '
+
+		';
+		$this->html .= '
+		
+		';
+		return;
+	}
+
+
+	private function build_footer() {
+		$this->html .= '
+		
+		';
+		return;
+	}
+
+
+	private function inject_modal( $mid, $mclass='', $title, $content, $prefiltered=false, $lg=false, $scrollable=false ) {
+		$this->modals .= '
+			<div class="modal fade" id="' . $mid . '" tabindex="-1" role="dialog" aria-labelledby="' . $mid . 'Label" aria-hidden="true">
+				<div class="modal-dialog' . ( $scrollable ? ' modal-dialog-scrollable' : '' ) . ( $lg ? ' modal-lg' : '' ) . '" role="document">
+					<div class="modal-content">
+      					<div class="modal-header">
+        					<h5 class="modal-title" id="exampleModalLabel">' . $title . '</h5>
+        					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          						<span aria-hidden="true">&times;</span>
+        					</button>
+      					</div>
+      					<div class="modal-body">
+      						' . ( $prefiltered ? $content : spitfire_filter_content( $content ) ) . '
+      					</div>  
+    				</div>
+  				</div>
+			</div>
+
+		';
+	}
+
+
+	private function build_components() {
+		if ( true == $this->attr['is_archive'] ) {
+			global $wp_query;
+		}
+		foreach ( $this->attr['components'] as $component ) {
+			switch ( $component ) {
+				case 'component':
+					$this->html .= '
+
+					';
+					break;
+				default:
+					break;
+			}
+		}
+		return;
+	}
+
+
+	private function array_to_ul( $array ) {
+		$array = maybe_unserialize( $array );
+		$output = '';
+
+		if ( ! empty( $array ) ) {
+			if ( is_array( $array ) ) {
+				$output .= '<ul>';
+				foreach ( $array as $item ) {
+					$output .= '<li>' . esc_html( $item ) . '</li>';
+				}
+				$output .= '</ul>';
+			}
+		}
+		return $output;
+	}
+
+
+	private function get_meta( $key ) {
+		$output = false;
+		if ( isset( $this->meta["{$key}"][0] ) ) {
+			if ( ! empty( $this->meta["{$key}"][0] ) ) {
+				$output = $this->meta["{$key}"][0];
+			}
+		}
+		return $output;
+	}
+
+
+	private function get_option( $key ) {
+		$output = false;
+		if ( isset( $this->mods["{$key}"] ) ) {
+			if ( ! empty( $this->mods["{$key}"] ) ) {
+				$output = $this->mods["{$key}"];
+			}
+		}
+		return $output;
+	}
+
+	/*
+	Usage for archive pages:
+	get_header();
+	$layout = new spitfire_layout;
+	echo $layout->build_page( '', true );
+	get_footer();
+
+	Usage for single pages:
+	get_header();
+	$layout = new spitfire_layout;
+	echo $layout->build_page( $post->ID );
+	get_footer();
+}
+
+
+function spitfire_check_key( $key ) {
+	$output = $fb;
+	if ( isset( $key ) ) {
+		if ( ! empty( $key ) ) {
+			$output = true;
+		}
+	}
+	return $output;
+}
+
+
+if (!function_exists('array_key_first')) {
+    function array_key_first(array $arr) {
+        foreach($arr as $key => $unused) {
+            return $key;
+        }
+        return NULL;
+    }
+}
 
 
 //======================================================================

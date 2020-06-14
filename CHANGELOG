@@ -1,3 +1,7 @@
+## 1.0.3
+
+This release add's Boostrap 4.5.0, increases the gulp version requirements to 4.0.0+, fixes various code issues, and moves the theme away from the customizer.
+
 ## 1.0.1 - 03-24-2019
 
 This release upgrades Bootstrap to v4.3.1

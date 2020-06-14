@@ -64,14 +64,14 @@ function spitfire_register_required_plugins() {
         ),
 
         array(
-            'name'      => 'Kirki',
-            'slug'      => 'kirki',
+            'name'      => 'Ninja Forms',
+            'slug'      => 'ninja-forms',
             'required'  => true,
         ),
 
         array(
-            'name'      => 'Ninja Forms',
-            'slug'      => 'ninja-forms',
+            'name'      => 'Classic Editor',
+            'slug'      => 'classic-editor',
             'required'  => true,
         ),
 
@@ -104,8 +104,8 @@ function spitfire_register_required_plugins() {
 
         /*
         array(
-            'name'      => 'Classic Editor',
-            'slug'      => 'classic-editor',
+            'name'      => 'Kirki',
+            'slug'      => 'kirki',
             'required'  => true,
         ),
         */
@@ -134,9 +134,9 @@ function spitfire_register_required_plugins() {
 //-----------------------------------------------------
 
 function spitfire_scripts() {
-	wp_enqueue_style( 'spitfire', get_template_directory_uri().'/theme.min.css', '', '1.0.2' );
+	wp_enqueue_style( 'spitfire', get_template_directory_uri().'/theme.min.css', '', '1.0.3' );
 	wp_enqueue_style( 'fontawesome', get_template_directory_uri().'/inc/fontawesome/css/all.min.css' );
-	wp_enqueue_script( 'scripts', get_template_directory_uri().'/assets/js/scripts.min.js', array('jquery'), '1.0.2', false );
+	wp_enqueue_script( 'scripts', get_template_directory_uri().'/assets/js/scripts.min.js', array('jquery'), '1.0.3', false );
     
 	if ( ! is_admin() ) {
         wp_deregister_script( 'jquery' );
@@ -150,75 +150,90 @@ add_action( 'wp_enqueue_scripts', 'spitfire_scripts' );
 
 
 //======================================================================
-// 2. KIRKI CONFIG
+// 2. THEME OPTIONS
 //======================================================================
 
+add_action( 'cmb2_admin_init', 'spitfire_register_theme_options_metabox' );
 
-if ( class_exists( 'Kirki' ) ) {
+function spitfire_register_theme_options_metabox() {
 
-    // Set up the Kirki config
+	/**
+	 * Registers options page menu item and form.
+	 */
+	$cmb_options = new_cmb2_box( array(
+		'id'           => 'spitfire_theme_options_metabox',
+		'title'        => esc_html__( 'spitfire Theme Options', 'spitfire' ),
+		'object_types' => array( 'options-page' ),
 
-    Kirki::add_config( 'spitfire', array(
-        'capability'  => 'edit_theme_options',
-        'option_type' => 'theme_mod',
-    ) );
+		/*
+		 * The following parameters are specific to the options-page box
+		 * Several of these parameters are passed along to add_menu_page()/add_submenu_page().
+		 */
 
-    // Set up a panel to store all of this config's fields under
-
-    Kirki::add_panel( 'theme_options', array(
-        'priority'    => 10,
-        'title'       => __( 'spitfire Theme Options', 'crossfitrtr' ),
-        'description' => __( 'Here, you can modify custom options for the spitfire theme.', 'crossfitrtr' ),
-    ) );
-
-    // Add social media link options
-
-    Kirki::add_section( 'social_options', array(
-		'title'          => __( 'Social Accounts' ),
-		'description'    => __( 'Here, add primary social media accounts.' ),
-		'panel'          => 'theme_options', // Not typically needed.
-		'priority'       => 160,
-		'capability'     => 'edit_theme_options',
-		'theme_supports' => '', // Rarely needed.
+		'option_key'      => 'spitfire_options', // The option key and admin menu page slug.
+		// 'icon_url'        => 'dashicons-palmtree', // Menu icon. Only applicable if 'parent_slug' is left empty.
+		'menu_title'      => esc_html__( 'Theme Options', 'spitfire' ), // Falls back to 'title' (above).
+		'parent_slug'     => 'themes.php', // Make options page a submenu item of the themes menu.
+		// 'capability'      => 'manage_options', // Cap required to view options-page.
+		// 'position'        => 1, // Menu position. Only applicable if 'parent_slug' is left empty.
+		// 'admin_menu_hook' => 'network_admin_menu', // 'network_admin_menu' to add network-level options page.
+		// 'display_cb'      => false, // Override the options-page form output (CMB2_Hookup::options_page_output()).
+		// 'save_button'     => esc_html__( 'Save Theme Options', 'myprefix' ), // The text for the options-page save button. Defaults to 'Save'.
 	) );
 
-	Kirki::add_field( 'spitfire', array(
-		'type'        => 'repeater',
-		'label'       => esc_attr__( 'Social Links', 'spitfire' ),
-		'description' => esc_attr__( 'Add social links here.', 'spitfire' ),
-		'section'     => 'social_options',
-		'priority'    => 10,
-		'row_label' => array(
-			'type' => 'text',
-			'value' => esc_attr__( 'Social Link', 'spitfire' ),
-		),
-		'settings'    => 'spitfire_social',
-		'fields' => array(
-			'service' => array(
-				'type'        => 'radio',
-				'label'       => esc_attr__( 'Service', 'spitfire' ),
-				'description' => esc_attr__( 'Which service are you adding a link for?', 'spitfire' ),
-				'default'     => 'facebook',
-				'multiple'    => 0,
-				'choices'     => array(
-					'facebook' => esc_attr__( 'Facebook', 'spitfire' ),
-					'twitter' => esc_attr__( 'Twitter', 'spitfire' ),
-					'linkedin' => esc_attr__( 'LinkedIn', 'spitfire' ),
-					'instagram' => esc_attr__( 'Instagram', 'spitfire' ),
-					'pinterest' => esc_attr__( 'Pinterest', 'spitfire' ),
-					'youtube' => esc_attr__( 'YouTube', 'spitfire' ),
-				),
-			),
-			'url' => array(
-				'type'        => 'text',
-				'label'       => esc_attr__( 'Profile URL', 'spitfire' ),
-				'description' => esc_attr__( 'Enter the full URL for your profile.', 'spitfire' ),
-				'default'     => '',
-			),
+	$cmb_options->add_field( array(
+        'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Social Media Accounts</span>', 'cmb2' ),
+        //'desc'     => __( 'Below, add images for this investment.', 'cmb2' ),
+        'id'       => 'social_info',
+        'type'     => 'title',
+    ) );
+
+	$group_field_social_accounts = $cmb_options->add_field( array(
+		'id'          => 'social_accounts',
+		'type'        => 'group',
+		'description' => __( 'Configure social account links below.', 'spitfire' ),
+		// 'repeatable'  => false, // use false if you want non-repeatable group
+		'options'     => array(
+			'group_title'       => __( 'Account {#}', 'spitfire' ), // since version 1.1.4, {#} gets replaced by row number
+			'add_button'        => __( 'Add Another Account', 'spitfire' ),
+			'remove_button'     => __( 'Remove Account', 'spitfire' ),
+			'sortable'          => true,
+			'closed'         => true, // true to have the groups closed by default
+			// 'remove_confirm' => esc_html__( 'Are you sure you want to remove?', 'cmb2' ), // Performs confirmation before removing group.
 		),
 	) );
+
+	$cmb_options->add_group_field( $group_field_social_accounts, array(
+		'name' => 'Service',
+		'id'   => 'service',
+		'type' => 'radio',
+		'default' => 'facebook',
+		'desc' => __( 'Which service are you adding a link for?', 'spitfire' ),
+		'options' => array(
+			'facebook' => esc_attr__( 'Facebook', 'spitfire' ),
+			'twitter' => esc_attr__( 'Twitter', 'spitfire' ),
+			'linkedin' => esc_attr__( 'LinkedIn', 'spitfire' ),
+			'instagram' => esc_attr__( 'Instagram', 'spitfire' ),
+			'pinterest' => esc_attr__( 'Pinterest', 'spitfire' ),
+			'youtube' => esc_attr__( 'YouTube', 'spitfire' ),
+		),
+	) );
+
+	$cmb_options->add_group_field( $group_field_social_accounts, array(
+		'name' => __( 'Profile URL', 'spitfire' ),
+		'desc' => __( 'Enter the full URL for your profile.', 'spitfire' ),
+		'id'   => 'url',
+		'type' => 'text_url',
+	) );
+
+	/*
+	 * Options fields ids only need
+	 * to be unique within this box.
+	 * Prefix is not needed.
+	 */
 
 }
+
 
 
 //======================================================================
@@ -362,57 +377,6 @@ function spitfire_get_content( $id ) {
 	return $content;
 }
 
-
-//-----------------------------------------------------
-// Return social icons in unordered list.
-//-----------------------------------------------------
-
-function spitfire_get_social_icons() {
-	$output = '';
-
-	$social_links = get_theme_mod( 'spitfire_social' );
-	if ( ! empty( $social_links ) ) {
-		if ( is_array( $social_links ) ) {
-			$output .= '<ul class="s-ics">';
-
-			foreach ( $social_links as $link ) {
-				$service = ( isset( $link['service'] ) ? ( ! empty( $link['service'] ) ? $link['service'] : 'facebook' ) : 'facebook' );
-
-				switch ( $service ) {
-					case 'facebook':
-						$fa = 'fab fa-facebook-f';
-						break;
-					case 'twitter':
-						$fa = 'fab fa-twitter';
-						break;
-					case 'linkedin':
-						$fa = 'fab fa-linkedin-in';
-						break;
-					case 'instagram':
-						$fa = 'fab fa-instagram';
-						break;
-					case 'pinterest':
-						$fa = 'fab fa-pinterest';
-						break;
-					case 'youtube':
-						$fa = 'fab fa-youtube';
-						break;
-					default:
-						$fa = 'fab fa-facebook-f';
-						break;
-				}
-
-				$output .= ' <li>' . ( isset( $link['url'] ) ? ( ! empty( $link['url'] ) ? '<a href="' . $link['url'] . '">' : '' ) : '' ) . '<i class="' . $fa . '"></i><span class="sr-only sr-only-focusable"> ' . ucwords( $service ) . '</span>' . ( isset( $link['url'] ) ? ( ! empty( $link['url'] ) ? '</a>' : '' ) : '' ) . '</li>';
-			}
-
-			$output .= '</ul>';
-		}
-	}
-
-	return $output;
-}
-
-
 //======================================================================
 // 6. CONTENT GENERATION FUNCTIONS
 //======================================================================
@@ -421,7 +385,7 @@ function spitfire_get_social_icons() {
 class spitfire_layout {
 	private $elements = array();
 	private $meta = array();
-	private $mods = array();
+	private $opts = array();
 	private $id;
 	private $html;
 	private $modals;
@@ -429,7 +393,7 @@ class spitfire_layout {
 	private $attr = array();
 
 	public function build_page( $pid='', $archive=false ) {
-		$this->mods = get_theme_mods();
+		$this->opts = get_option( 'spitfire_options' );
 		if ( true == $archive ) {
 			global $wp_query;
 			$this->attr['is_archive'] = true;
@@ -591,11 +555,56 @@ class spitfire_layout {
 
 	private function get_option( $key ) {
 		$output = false;
-		if ( isset( $this->mods["{$key}"] ) ) {
-			if ( ! empty( $this->mods["{$key}"] ) ) {
-				$output = $this->mods["{$key}"];
+		if ( isset( $this->opts["{$key}"] ) ) {
+			if ( ! empty( $this->opts["{$key}"] ) ) {
+				$output = $this->opts["{$key}"];
 			}
 		}
+		return $output;
+	}
+
+	private function build_social_icons() {
+		$output = '';
+
+		$social_links = $this->get_option( 'social_accounts' );
+		if ( ! empty( $social_links ) ) {
+			if ( is_array( $social_links ) ) {
+				$output .= '<ul class="s-ics">';
+
+				foreach ( $social_links as $link ) {
+					$service = ( isset( $link['service'] ) ? ( ! empty( $link['service'] ) ? $link['service'] : 'facebook' ) : 'facebook' );
+
+					switch ( $service ) {
+						case 'facebook':
+							$fa = 'fab fa-facebook-f';
+							break;
+						case 'twitter':
+							$fa = 'fab fa-twitter';
+							break;
+						case 'linkedin':
+							$fa = 'fab fa-linkedin-in';
+							break;
+						case 'instagram':
+							$fa = 'fab fa-instagram';
+							break;
+						case 'pinterest':
+							$fa = 'fab fa-pinterest';
+							break;
+						case 'youtube':
+							$fa = 'fab fa-youtube';
+							break;
+						default:
+							$fa = 'fab fa-facebook-f';
+							break;
+					}
+
+					$output .= ' <li>' . ( isset( $link['url'] ) ? ( ! empty( $link['url'] ) ? '<a href="' . $link['url'] . '">' : '' ) : '' ) . '<i class="' . $fa . '"></i><span class="sr-only sr-only-focusable"> ' . ucwords( $service ) . '</span>' . ( isset( $link['url'] ) ? ( ! empty( $link['url'] ) ? '</a>' : '' ) : '' ) . '</li>';
+				}
+
+				$output .= '</ul>';
+			}
+		}
+
 		return $output;
 	}
 
@@ -611,6 +620,8 @@ class spitfire_layout {
 	$layout = new spitfire_layout;
 	echo $layout->build_page( $post->ID );
 	get_footer();
+
+	*/
 }
 
 

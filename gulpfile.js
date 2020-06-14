@@ -32,7 +32,7 @@ gulp.task('serve', function() {
     });
 
     // Watch .scss files
-    gulp.watch('./**/*.scss', ['styles']);
+    gulp.watch('./**/*.scss', gulp.task('styles'));
 
     gulp.watch('./**/*.*').on('change', browserSync.reload);
     

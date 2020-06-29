@@ -411,6 +411,12 @@ class spitfire_layout {
 			$this->attr['post_type'] = get_post_type( $this->id );
 			$this->id = $pid;
 			$this->meta = get_post_meta( $this->id );
+			if ( 'page' == $this->attr['post_type'] ) {
+				$fp = get_option( 'page_on_front' );
+				if ( $fp == $this->id ) {
+					$this->attr['is_front'] = true;
+				}
+			}
 			$this->determine_attributes();
 			$this->build_layout();
 			return $this->html . $this->modals . $this->scripts;
@@ -431,8 +437,7 @@ class spitfire_layout {
 		} else {
 			switch ( $this->attr['post_type'] ) {
 				case 'page':
-					$fp = get_option( 'page_on_front' );
-					if ( $fp == $this->id ) {
+					if ( $this->attr['is_front'] ) {
 						$this->attr['components'] = array( 'components' );
 					} else {
 						$template = get_page_template_slug( $this->id );
@@ -541,6 +546,24 @@ class spitfire_layout {
 		return $output;
 	}
 
+	private function array_to_p( $array, $class='' ) {
+		$array = maybe_unserialize( $array );
+		$output = '';
+
+		if ( ! empty( $array ) ) {
+			if ( is_array( $array ) ) {
+				$output .= '<p' . ( ! empty( $class ) ? ' class="' . $class . '"' : '' ) . '>';
+				$ac = count( $array );
+				$i = 1;
+				foreach ( $array as $item ) {
+					$output .= esc_html( $item ) . ( $i != $ac ? '<br>' : '' );
+					$i++;
+				}
+				$output .= '</p>';
+			}
+		}
+		return $output;
+	}
 
 	private function get_meta( $key ) {
 		$output = false;
@@ -643,6 +666,28 @@ if (!function_exists('array_key_first')) {
         }
         return NULL;
     }
+}
+
+function spitfire_get_post_array( $type, $none=false ) {
+	//lets create an array of boroughs to loop through
+	if ( true == $none ) {
+		$output[0] = 'None';
+	} else {
+		$output = array();
+	}
+	  
+	//The Query
+	$items = get_posts('post_type=' . $type . '&post_status=publish&posts_per_page=-1'); 
+	
+	if ( $items ) {
+    	foreach ( $items as $post ) :
+    		setup_postdata( $post );
+    		$output["{$post->ID}"] = get_the_title($post->ID);
+    	endforeach; 
+    	wp_reset_postdata();
+    }
+
+    return $output;
 }
 
 

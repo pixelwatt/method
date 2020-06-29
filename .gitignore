@@ -3,3 +3,4 @@
 node_modules/
 .sublime-gulp.cache
 package-lock.json
+/sublime-gulp.log

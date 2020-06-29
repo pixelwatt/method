@@ -1,7 +1,6 @@
 var gulp = require('gulp'),
 sass = require('gulp-dart-sass'),
 autoprefixer = require('gulp-autoprefixer'),
-cssnano = require('gulp-cssnano'),
 jshint = require('gulp-jshint'),
 uglify = require('gulp-uglify'),
 imagemin = require('gulp-imagemin'),
@@ -11,15 +10,16 @@ notify = require('gulp-notify'),
 cache = require('gulp-cache'),
 browserSync = require('browser-sync').create(),
 del = require('del'),
-watchSass = require("gulp-watch-sass");
+watchSass = require("gulp-watch-sass"),
+cleanCSS = require('gulp-clean-css');
 
 gulp.task('styles', function() {
     return gulp.src('./theme.scss')
       .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-      .pipe(autoprefixer('since 2013'))
+      .pipe(autoprefixer('last 2 versions'))
       .pipe(gulp.dest('.'))
       .pipe(rename({suffix: '.min'}))
-      .pipe(cssnano())
+      .pipe(cleanCSS('level: 2'))
       .pipe(gulp.dest('.'))
       .pipe(browserSync.stream())
       .pipe(notify({ message: 'Styles task complete' }));
@@ -32,9 +32,9 @@ gulp.task('serve', function() {
     });
 
     // Watch .scss files
-    gulp.watch('./**/*.scss', gulp.task('styles'));
+    gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.task('styles'));
 
-    gulp.watch('./**/*.*').on('change', browserSync.reload);
+    gulp.watch(['./**/*.*', '!./node_modules/', '!./.git/']).on('change', browserSync.reload);
     
 });
 
@@ -54,6 +54,6 @@ gulp.task('scripts', function() {
 gulp.task('watch', function() {
     
       // Watch .scss files
-      gulp.watch('./**/*.scss', ['styles']);
+      gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], ['styles']);
     
 });

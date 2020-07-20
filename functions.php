@@ -226,6 +226,20 @@ function spitfire_register_theme_options_metabox() {
 		'type' => 'text_url',
 	) );
 
+	$cmb_options->add_field( array(
+        'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Footer Options</span>', 'spitfire' ),
+        //'desc'     => __( 'Below, add images for this investment.', 'spitfire' ),
+        'id'       => 'footer_info',
+        'type'     => 'title',
+    ) );
+
+    $cmb_options->add_field( array(
+        'name'     => __( 'Copyright', 'spitfire' ),
+        //'desc'     => __( 'Below, add images for this investment.', 'spitfire' ),
+        'id'       => 'footer_copyright',
+        'type'     => 'wysiwyg',
+    ) );
+
 	/*
 	 * Options fields ids only need
 	 * to be unique within this box.
@@ -376,6 +390,88 @@ function spitfire_get_content( $id ) {
 	$content = str_replace(']]>', ']]&gt;', $content);
 	return $content;
 }
+
+//-----------------------------------------------------
+// Check an array key to see if it exists
+//-----------------------------------------------------
+
+function spitfire_check_key( $key ) {
+	$output = $fb;
+	if ( isset( $key ) ) {
+		if ( ! empty( $key ) ) {
+			$output = true;
+		}
+	}
+	return $output;
+}
+
+
+//-----------------------------------------------------
+// Add the array_key_first() function for older PHP
+//-----------------------------------------------------
+
+if (!function_exists('array_key_first')) {
+    function array_key_first(array $arr) {
+        foreach($arr as $key => $unused) {
+            return $key;
+        }
+        return NULL;
+    }
+}
+
+
+//-----------------------------------------------------
+// Get an array of post IDs and titles
+//-----------------------------------------------------
+
+function spitfire_get_post_array( $type, $none=false ) {
+	//lets create an array of boroughs to loop through
+	if ( true == $none ) {
+		$output[0] = 'None';
+	} else {
+		$output = array();
+	}
+	  
+	//The Query
+	$items = get_posts('post_type=' . $type . '&post_status=publish&posts_per_page=-1'); 
+	
+	if ( $items ) {
+    	foreach ( $items as $post ) :
+    		setup_postdata( $post );
+    		$output["{$post->ID}"] = get_the_title($post->ID);
+    	endforeach; 
+    	wp_reset_postdata();
+    }
+
+    return $output;
+}
+
+
+//-----------------------------------------------------
+// Get an array of term ids and names
+//-----------------------------------------------------
+
+function spitfire_get_term_array( $tax, $none=false ) {
+	//lets create an array of boroughs to loop through
+	if ( true == $none ) {
+		$output[0] = 'None';
+	} else {
+		$output = array();
+	}
+	  
+	//The Query
+	$items = get_terms( $tax ); 
+	
+	if ( $items ) {
+    	foreach ( $items as $term ) :
+    		$output["{$term->term_id}"] = $term->name;
+    	endforeach; 
+    }
+
+    return $output;
+
+}
+
 
 //======================================================================
 // 6. CONTENT GENERATION FUNCTIONS
@@ -647,50 +743,6 @@ class spitfire_layout {
 	*/
 }
 
-
-function spitfire_check_key( $key ) {
-	$output = $fb;
-	if ( isset( $key ) ) {
-		if ( ! empty( $key ) ) {
-			$output = true;
-		}
-	}
-	return $output;
-}
-
-
-if (!function_exists('array_key_first')) {
-    function array_key_first(array $arr) {
-        foreach($arr as $key => $unused) {
-            return $key;
-        }
-        return NULL;
-    }
-}
-
-function spitfire_get_post_array( $type, $none=false ) {
-	//lets create an array of boroughs to loop through
-	if ( true == $none ) {
-		$output[0] = 'None';
-	} else {
-		$output = array();
-	}
-	  
-	//The Query
-	$items = get_posts('post_type=' . $type . '&post_status=publish&posts_per_page=-1'); 
-	
-	if ( $items ) {
-    	foreach ( $items as $post ) :
-    		setup_postdata( $post );
-    		$output["{$post->ID}"] = get_the_title($post->ID);
-    	endforeach; 
-    	wp_reset_postdata();
-    }
-
-    return $output;
-}
-
-
 //======================================================================
 // 7. CMB2 HELPER FUNCTIONS
 //======================================================================
@@ -796,3 +848,66 @@ $cmb_options = new_cmb2_box( array(
 	'show_on' => array( 'key' => 'front-page', 'value' => '' ),
 ) );
 */
+
+
+//======================================================================
+// 8. CMB2 ALERTS LOADER
+//======================================================================
+
+function spitfire_load_cmb2_options( &$obj, $temps ) {
+	foreach ( $temps as $temp ) {
+		switch ( $temp ) {
+			case '':
+				break;
+			default:
+				break;
+		}
+	}
+	return;
+}
+
+
+
+//======================================================================
+// 9. CMB2 META BOXES
+//======================================================================
+
+/**
+ * Front Page Metabox
+ */
+
+add_action( 'cmb2_admin_init', 'spitfire_register_page_front_metabox' );
+
+function spitfire_register_page_front_metabox() {
+	$prefix = '_spitfire_';
+
+	$cmb_options = new_cmb2_box( array(
+		'id'            => $prefix . 'metabox_page_front',
+		'title'         => esc_html__( 'Front Page Options', 'cmb2' ),
+		'object_types'  => array( 'page' ),
+		'show_on' => array( 'key' => 'front-page', 'value' => '' ),
+	) );
+
+	spitfire_load_cmb2_options( $cmb_options, array( 'elements' ) );
+
+}
+
+/**
+ * Default Page Metabox
+ */
+
+add_action( 'cmb2_admin_init', 'spitfire_register_page_default_metabox' );
+
+function spitfire_register_page_default_metabox() {
+	$prefix = '_spitfire_';
+
+	$cmb_options = new_cmb2_box( array(
+		'id'            => $prefix . 'metabox_page_default',
+		'title'         => esc_html__( 'Additional Options', 'cmb2' ),
+		'object_types'  => array( 'page' ),
+		'show_on' => array( 'key' => 'default-page-template', 'value' => '' ),
+	) );
+
+	spitfire_load_cmb2_options( $cmb_options, array( 'elements' ) );
+
+}

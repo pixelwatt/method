@@ -527,28 +527,28 @@ class spitfire_layout {
 		if ( true == $this->attr['is_archive'] ) {
 			switch ( $this->attr['post_type'] ) {
 				case 'post':
-					$this->attr['components'] = array( 'components' );
+					$this->attr['components'] = array( 'activated' );
 					break;
 			}
 		} else {
 			switch ( $this->attr['post_type'] ) {
 				case 'page':
 					if ( $this->attr['is_front'] ) {
-						$this->attr['components'] = array( 'components' );
+						$this->attr['components'] = array( 'activated' );
 					} else {
 						$template = get_page_template_slug( $this->id );
 						switch ( $template ) {
 							case 'templates/page-template-custom.php':
-								$this->attr['components'] = array( 'components' );
+								$this->attr['components'] = array( 'activated' );
 								break;
 							default:
-								$this->attr['components'] = array( 'components' );
+								$this->attr['components'] = array( 'activated' );
 								break;
 						}
 					}
 					break;
 				case 'post':
-					$this->attr['components'] = array( 'components' );
+					$this->attr['components'] = array( 'activated' );
 					break;
 				default:
 					break;
@@ -613,9 +613,21 @@ class spitfire_layout {
 		}
 		foreach ( $this->attr['components'] as $component ) {
 			switch ( $component ) {
-				case 'component':
+				case 'activated':
+					// Placeholder element. Should be removed from production theme.
 					$this->html .= '
-
+						<div id="spitfire-activation">
+							<div class="container-fluid ' . spitfire_get_class( 'full_width_container' ) . '">
+								<div class="row justify-content-center">
+									<div class="' . spitfire_get_class( 'full_width_outer_col' ) . '">
+										<div class="text-center">
+										<h1 class="display-4">Up and running! <i class="far fa-thumbs-up"></i></h1>
+										<p class="lead">If I was in World War Two they\'d call me <strong><em>spitfire</em></strong></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					';
 					break;
 				default:
@@ -671,6 +683,15 @@ class spitfire_layout {
 		return $output;
 	}
 
+	private function get_serialized_meta( $key ) {
+		$output = false;
+		if ( isset( $this->meta["{$key}"][0] ) ) {
+			if ( ! empty( $this->meta["{$key}"][0] ) ) {
+				$output = maybe_unserialize( $this->meta["{$key}"][0] );
+			}
+		}
+		return $output;
+	}
 
 	private function get_option( $key ) {
 		$output = false;
@@ -911,3 +932,45 @@ function spitfire_register_page_default_metabox() {
 	spitfire_load_cmb2_options( $cmb_options, array( 'elements' ) );
 
 }
+
+
+//======================================================================
+// 10. LOGIN CUSTOMIZATION
+//======================================================================
+
+//-----------------------------------------------------
+// Change the login page logo URL to link to the site.
+//-----------------------------------------------------
+
+function spitfire_custom_login_url( $url ) {
+    return get_site_url();
+}
+add_filter( 'login_headerurl', 'spitfire_custom_login_url' );
+
+
+//-----------------------------------------------------
+// Add a canvas element for Granim.
+//-----------------------------------------------------
+
+function spitfire_add_html_content() {
+	echo '<canvas id="bg-canvas"></canvas>';
+}
+add_action( 'login_header', 'spitfire_add_html_content' );
+
+
+//-----------------------------------------------------
+// Enqueue scripts and styles for login.
+//-----------------------------------------------------
+
+function spitfire_login_scripts() {
+	wp_enqueue_script( 'granim', get_template_directory_uri().'/inc/granim/granim.js', array(), '1.0.0', false );
+	wp_register_script( 'spitfire-login', get_template_directory_uri().'/login.js', array( 'granim' ), '1.0.0', true );
+	$js_array = array(
+    	'template_dir' => get_template_directory_uri()
+	);
+	wp_localize_script( 'spitfire-login', 'theme', $js_array );
+	wp_enqueue_script( 'spitfire-login' );
+	wp_enqueue_style( 'spitfire-login', get_template_directory_uri().'/login.css' );
+}
+
+add_action( 'login_enqueue_scripts', 'spitfire_login_scripts' );

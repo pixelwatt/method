@@ -1,3 +1,3 @@
-# Theme
+# Sunrise Base Theme
 
-About this theme.
+This is the Sunrise base theme.

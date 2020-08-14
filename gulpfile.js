@@ -54,6 +54,6 @@ gulp.task('scripts', function() {
 gulp.task('watch', function() {
     
       // Watch .scss files
-      gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], ['styles']);
+      gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.task('styles'));
     
 });

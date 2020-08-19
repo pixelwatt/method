@@ -1,5 +1,5 @@
 <?php
 	get_header();
-	$layout = new sunriseLayout;
+	$layout = new SunriseLayout;
 	echo $layout->build_page( $post->ID );
 	get_footer();

@@ -1,0 +1,10 @@
+stages:
+  - test
+
+code_lint:
+  stage: test
+  image: joinville/phpcs-wordpress
+  script:
+    - echo "memory_limit=-1" > /usr/local/etc/php/conf.d/memory-limit.ini
+    - phpcs --standard=WordPress-Core --ignore=/inc/ --extensions=php .
+  allow_failure: true

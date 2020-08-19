@@ -411,10 +411,10 @@ function sunrise_check_key( $key ) {
 
 if ( ! function_exists( 'array_key_first' ) ) {
 	function array_key_first( array $arr ) {
-		foreach( $arr as $key => $unused ) {
+		foreach ( $arr as $key => $unused ) {
 			return $key;
 		}
-		return NULL;
+		return null;
 	}
 }
 
@@ -476,7 +476,7 @@ function sunrise_get_term_array( $tax, $none = false ) {
 //======================================================================
 
 
-class sunriseLayout {
+class SunriseLayout {
 	private $elements = array();
 	private $meta = array();
 	private $opts = array();
@@ -499,8 +499,7 @@ class sunriseLayout {
 			$this->determine_attributes();
 			$this->build_layout();
 			return $this->html . $this->modals . $this->scripts;
-		} 
-		elseif ( ( ! empty( $pid ) ) && ( false == $archive ) ) {
+		} elseif ( ( ! empty( $pid ) ) && ( false == $archive ) ) {
 			$this->attr['is_archive'] = false;
 			$this->attr['post_type'] = get_post_type( $this->id );
 			$this->id = $pid;

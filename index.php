@@ -1,8 +1,5 @@
-<?php get_header();
-
+<?php
 	get_header();
-	$layout = new spitfire_layout;
-	echo $layout->build_page( '', true );
+	$layout = new sunriseLayout;
+	echo $layout->build_page( $post->ID );
 	get_footer();
-
-get_footer();

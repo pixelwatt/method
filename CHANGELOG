@@ -1,3 +1,7 @@
+## 1.0.6
+
+This release implements fixes for code format issues found in code lint (PHPCS configured to check against WordPress coding standards), changes theme prefixes from "spitfire" to "sunrise", and updated class references in template files to use the new layout class name (sunriseLayout)
+
 ## 1.0.5
 
 Added a code_lint CI script.

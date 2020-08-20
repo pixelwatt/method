@@ -22,7 +22,7 @@ body.login input[type=text]:focus {
 
 .message { 
 	background-color: #7c547d !important; 
-	color:#fff !important; 
+	color: #fff !important; 
 	font-weight: 500 !important; 
 	border-left: none !important; 
 	border-radius: 4px !important; 

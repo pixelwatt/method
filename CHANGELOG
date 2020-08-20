@@ -1,3 +1,7 @@
+## 1.0.7
+
+This release adds expanded theme support options, removes FontAwesome files, and includes other misc changes. This release was built with the initial version of Sunrise Builder.
+
 ## 1.0.6
 
 This release implements fixes for code format issues found in code lint (PHPCS configured to check against WordPress coding standards), changes theme prefixes from "spitfire" to "sunrise", and updated class references in template files to use the new layout class name (sunriseLayout)

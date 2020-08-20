@@ -33,16 +33,44 @@ require_once get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
 // Theme and Post Support
 //-----------------------------------------------------
 
-// Add theme support for the title tag
-add_theme_support( 'title-tag' );
+function sunrise_enable_theme_support() {
 
-// Add theme support for post thumbnails
-add_theme_support( 'post-thumbnails' );
+	// Add theme support for html5 markup
+	$args = array(
+		'search-form',
+		'comment-form',
+		'comment-list',
+		'gallery',
+		'caption',
+		'script',
+		'style',
+	);
+	add_theme_support( 'html5', $args );
 
-function sunrise_after_setup_theme() {
-	add_theme_support( 'html5', array( 'search-form' ) );
+	// Add theme support for the title tag
+	add_theme_support( 'title-tag' );
+
+	// Add theme support for post thumbnails
+	add_theme_support( 'post-thumbnails' );
 }
-add_action( 'after_setup_theme', 'sunrise_after_setup_theme' );
+add_action( 'after_setup_theme', 'sunrise_enable_theme_support' );
+
+
+function sunrise_register_custom_nav_menus() {
+	register_nav_menus(
+		array(
+			'primary' => 'Primary',
+		)
+	);
+}
+add_action( 'after_setup_theme', 'sunrise_register_custom_nav_menus' );
+
+
+//-----------------------------------------------------
+// Custom Image Sizes
+//-----------------------------------------------------
+
+add_image_size( 'Banner', 1400, 600, true );
 
 
 //-----------------------------------------------------
@@ -63,12 +91,6 @@ function sunrise_register_required_plugins() {
 		array(
 			'name'      => 'CMB2',
 			'slug'      => 'cmb2',
-			'required'  => true,
-		),
-
-		array(
-			'name'      => 'Ninja Forms',
-			'slug'      => 'ninja-forms',
 			'required'  => true,
 		),
 
@@ -102,13 +124,12 @@ function sunrise_register_required_plugins() {
 //-----------------------------------------------------
 
 function sunrise_scripts() {
-	wp_enqueue_style( 'sunrise', get_template_directory_uri() . '/theme.min.css', '', '1.0.6' );
-	wp_enqueue_style( 'fontawesome', get_template_directory_uri() . '/inc/fontawesome/css/all.min.css' );
-	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.6', false );
+	wp_enqueue_style( 'sunrise', get_template_directory_uri() . '/theme.min.css', '', '1.0.7' );
+	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.7', false );
 
 	if ( ! is_admin() ) {
 		wp_deregister_script( 'jquery' );
-		wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', false, '3.3.1' );
+		wp_register_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js', false, '3.5.1' );
 		wp_enqueue_script( 'jquery' );
 	}
 
@@ -153,8 +174,7 @@ function sunrise_register_theme_options_metabox() {
 
 	$cmb_options->add_field(
 		array(
-			'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Social Media Accounts</span>', 'cmb2' ),
-			//'desc'     => __( 'Below, add images for this investment.', 'cmb2' ),
+			'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Social Media Accounts</span>', 'sunrise' ),
 			'id'       => 'social_info',
 			'type'     => 'title',
 		)
@@ -172,7 +192,7 @@ function sunrise_register_theme_options_metabox() {
 				'remove_button'     => __( 'Remove Account', 'sunrise' ),
 				'sortable'          => true,
 				'closed'         => true, // true to have the groups closed by default
-				// 'remove_confirm' => esc_html__( 'Are you sure you want to remove?', 'cmb2' ), // Performs confirmation before removing group.
+				// 'remove_confirm' => esc_html__( 'Are you sure you want to remove?', 'sunrise' ), // Performs confirmation before removing group.
 			),
 		)
 	);
@@ -209,7 +229,6 @@ function sunrise_register_theme_options_metabox() {
 	$cmb_options->add_field(
 		array(
 			'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Footer Options</span>', 'sunrise' ),
-			//'desc'     => __( 'Below, add images for this investment.', 'sunrise' ),
 			'id'       => 'footer_info',
 			'type'     => 'title',
 		)
@@ -218,7 +237,6 @@ function sunrise_register_theme_options_metabox() {
 	$cmb_options->add_field(
 		array(
 			'name'     => __( 'Copyright', 'sunrise' ),
-			//'desc'     => __( 'Below, add images for this investment.', 'sunrise' ),
 			'id'       => 'footer_copyright',
 			'type'     => 'wysiwyg',
 		)
@@ -263,7 +281,7 @@ function sunrise_news_init() {
 
 	$args = array(
 		'labels'             => $labels,
-		'description'        => __( 'Church news updates.', 'sunrise' ),
+		'description'        => __( 'A description for the post type.', 'sunrise' ),
 		'public'             => true,
 		'publicly_queryable' => true,
 		'show_ui'            => true,

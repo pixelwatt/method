@@ -1,13 +1,13 @@
 {
   "name": "sunrise",
-  "version": "1.0.6",
-  "description": "",
+  "version": "1.0.7",
+  "description": "A barebones foundation for custom theme development.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Rob Clark",
+  "license": "LGPL",
   "devDependencies": {
     "browser-sync": "^2.26.3",
     "del": "^3.0.0",

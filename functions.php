@@ -33,8 +33,11 @@ require_once get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
 // Theme and Post Support
 //-----------------------------------------------------
 
-add_theme_support( 'title-tag' );			// Add theme support for the title tag
-add_theme_support( 'post-thumbnails' );		// Add theme support for post thumbnails
+// Add theme support for the title tag
+add_theme_support( 'title-tag' );
+
+// Add theme support for post thumbnails
+add_theme_support( 'post-thumbnails' );
 
 function sunrise_after_setup_theme() {
 	add_theme_support( 'html5', array( 'search-form' ) );
@@ -74,41 +77,6 @@ function sunrise_register_required_plugins() {
 			'slug'      => 'classic-editor',
 			'required'  => true,
 		),
-
-		/*
-        array(
-            'name'      => 'SVG Support',
-            'slug'      => 'svg-support',
-            'required'  => true,
-        ),
-        */
-
-		/*
-        array(
-			'name'      => 'cmb2-field-post-search-ajax',
-			'slug'      => 'cmb2-field-post-search-ajax',
-			'source'    => 'https://github.com/alexis-magina/cmb2-field-post-search-ajax/archive/master.zip',
-			'required'  => true,
-			'force_activation'   => false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch.
-		),
-		*/
-
-		/*
-        array(
-			'name'      => 'CMB2 Roadway Segments',
-			'slug'      => 'cmb2-roadway-segments',
-			'source'    => 'https://github.com/pixelwatt/cmb2-roadway-segments/archive/master.zip',
-			'required'  => true,
-		),
-		*/
-
-		/*
-        array(
-            'name'      => 'Kirki',
-            'slug'      => 'kirki',
-            'required'  => true,
-        ),
-        */
 
 	);
 
@@ -160,85 +128,101 @@ function sunrise_register_theme_options_metabox() {
 	/**
 	 * Registers options page menu item and form.
 	 */
-	$cmb_options = new_cmb2_box( array(
-		'id'           => 'sunrise_theme_options_metabox',
-		'title'        => esc_html__( 'sunrise Theme Options', 'sunrise' ),
-		'object_types' => array( 'options-page' ),
+	$cmb_options = new_cmb2_box(
+		array(
+			'id'           => 'sunrise_theme_options_metabox',
+			'title'        => esc_html__( 'sunrise Theme Options', 'sunrise' ),
+			'object_types' => array( 'options-page' ),
 
-		/*
-		 * The following parameters are specific to the options-page box
-		 * Several of these parameters are passed along to add_menu_page()/add_submenu_page().
-		 */
+			/*
+			 * The following parameters are specific to the options-page box
+			 * Several of these parameters are passed along to add_menu_page()/add_submenu_page().
+			 */
 
-		'option_key'      => 'sunrise_options', // The option key and admin menu page slug.
-		// 'icon_url'        => 'dashicons-palmtree', // Menu icon. Only applicable if 'parent_slug' is left empty.
-		'menu_title'      => esc_html__( 'Theme Options', 'sunrise' ), // Falls back to 'title' (above).
-		'parent_slug'     => 'themes.php', // Make options page a submenu item of the themes menu.
-		// 'capability'      => 'manage_options', // Cap required to view options-page.
-		// 'position'        => 1, // Menu position. Only applicable if 'parent_slug' is left empty.
-		// 'admin_menu_hook' => 'network_admin_menu', // 'network_admin_menu' to add network-level options page.
-		// 'display_cb'      => false, // Override the options-page form output (CMB2_Hookup::options_page_output()).
-		// 'save_button'     => esc_html__( 'Save Theme Options', 'myprefix' ), // The text for the options-page save button. Defaults to 'Save'.
-	) );
+			'option_key'      => 'sunrise_options', // The option key and admin menu page slug.
+			// 'icon_url'        => 'dashicons-palmtree', // Menu icon. Only applicable if 'parent_slug' is left empty.
+			'menu_title'      => esc_html__( 'Theme Options', 'sunrise' ), // Falls back to 'title' (above).
+			'parent_slug'     => 'themes.php', // Make options page a submenu item of the themes menu.
+			// 'capability'      => 'manage_options', // Cap required to view options-page.
+			// 'position'        => 1, // Menu position. Only applicable if 'parent_slug' is left empty.
+			// 'admin_menu_hook' => 'network_admin_menu', // 'network_admin_menu' to add network-level options page.
+			// 'display_cb'      => false, // Override the options-page form output (CMB2_Hookup::options_page_output()).
+			// 'save_button'     => esc_html__( 'Save Theme Options', 'myprefix' ), // The text for the options-page save button. Defaults to 'Save'.
+		)
+	);
 
-	$cmb_options->add_field( array(
-		'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Social Media Accounts</span>', 'cmb2' ),
-		//'desc'     => __( 'Below, add images for this investment.', 'cmb2' ),
-		'id'       => 'social_info',
-		'type'     => 'title',
-	) );
+	$cmb_options->add_field(
+		array(
+			'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Social Media Accounts</span>', 'cmb2' ),
+			//'desc'     => __( 'Below, add images for this investment.', 'cmb2' ),
+			'id'       => 'social_info',
+			'type'     => 'title',
+		)
+	);
 
-	$group_field_social_accounts = $cmb_options->add_field( array(
-		'id'          => 'social_accounts',
-		'type'        => 'group',
-		'description' => __( 'Configure social account links below.', 'sunrise' ),
-		// 'repeatable'  => false, // use false if you want non-repeatable group
-		'options'     => array(
-			'group_title'       => __( 'Account {#}', 'sunrise' ), // since version 1.1.4, {#} gets replaced by row number
-			'add_button'        => __( 'Add Another Account', 'sunrise' ),
-			'remove_button'     => __( 'Remove Account', 'sunrise' ),
-			'sortable'          => true,
-			'closed'         => true, // true to have the groups closed by default
-			// 'remove_confirm' => esc_html__( 'Are you sure you want to remove?', 'cmb2' ), // Performs confirmation before removing group.
-		),
-	) );
+	$group_field_social_accounts = $cmb_options->add_field(
+		array(
+			'id'          => 'social_accounts',
+			'type'        => 'group',
+			'description' => __( 'Configure social account links below.', 'sunrise' ),
+			// 'repeatable'  => false, // use false if you want non-repeatable group
+			'options'     => array(
+				'group_title'       => __( 'Account {#}', 'sunrise' ), // since version 1.1.4, {#} gets replaced by row number
+				'add_button'        => __( 'Add Another Account', 'sunrise' ),
+				'remove_button'     => __( 'Remove Account', 'sunrise' ),
+				'sortable'          => true,
+				'closed'         => true, // true to have the groups closed by default
+				// 'remove_confirm' => esc_html__( 'Are you sure you want to remove?', 'cmb2' ), // Performs confirmation before removing group.
+			),
+		)
+	);
 
-	$cmb_options->add_group_field( $group_field_social_accounts, array(
-		'name' => 'Service',
-		'id'   => 'service',
-		'type' => 'radio',
-		'default' => 'facebook',
-		'desc' => __( 'Which service are you adding a link for?', 'sunrise' ),
-		'options' => array(
-			'facebook' => esc_attr__( 'Facebook', 'sunrise' ),
-			'twitter' => esc_attr__( 'Twitter', 'sunrise' ),
-			'linkedin' => esc_attr__( 'LinkedIn', 'sunrise' ),
-			'instagram' => esc_attr__( 'Instagram', 'sunrise' ),
-			'pinterest' => esc_attr__( 'Pinterest', 'sunrise' ),
-			'youtube' => esc_attr__( 'YouTube', 'sunrise' ),
-		),
-	) );
+	$cmb_options->add_group_field(
+		$group_field_social_accounts,
+		array(
+			'name' => 'Service',
+			'id'   => 'service',
+			'type' => 'radio',
+			'default' => 'facebook',
+			'desc' => __( 'Which service are you adding a link for?', 'sunrise' ),
+			'options' => array(
+				'facebook' => esc_attr__( 'Facebook', 'sunrise' ),
+				'twitter' => esc_attr__( 'Twitter', 'sunrise' ),
+				'linkedin' => esc_attr__( 'LinkedIn', 'sunrise' ),
+				'instagram' => esc_attr__( 'Instagram', 'sunrise' ),
+				'pinterest' => esc_attr__( 'Pinterest', 'sunrise' ),
+				'youtube' => esc_attr__( 'YouTube', 'sunrise' ),
+			),
+		)
+	);
 
-	$cmb_options->add_group_field( $group_field_social_accounts, array(
-		'name' => __( 'Profile URL', 'sunrise' ),
-		'desc' => __( 'Enter the full URL for your profile.', 'sunrise' ),
-		'id'   => 'url',
-		'type' => 'text_url',
-	) );
+	$cmb_options->add_group_field(
+		$group_field_social_accounts,
+		array(
+			'name' => __( 'Profile URL', 'sunrise' ),
+			'desc' => __( 'Enter the full URL for your profile.', 'sunrise' ),
+			'id'   => 'url',
+			'type' => 'text_url',
+		)
+	);
 
-	$cmb_options->add_field( array(
-		'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Footer Options</span>', 'sunrise' ),
-		//'desc'     => __( 'Below, add images for this investment.', 'sunrise' ),
-		'id'       => 'footer_info',
-		'type'     => 'title',
-	) );
+	$cmb_options->add_field(
+		array(
+			'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Footer Options</span>', 'sunrise' ),
+			//'desc'     => __( 'Below, add images for this investment.', 'sunrise' ),
+			'id'       => 'footer_info',
+			'type'     => 'title',
+		)
+	);
 
-	$cmb_options->add_field( array(
-		'name'     => __( 'Copyright', 'sunrise' ),
-		//'desc'     => __( 'Below, add images for this investment.', 'sunrise' ),
-		'id'       => 'footer_copyright',
-		'type'     => 'wysiwyg',
-	) );
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Copyright', 'sunrise' ),
+			//'desc'     => __( 'Below, add images for this investment.', 'sunrise' ),
+			'id'       => 'footer_copyright',
+			'type'     => 'wysiwyg',
+		)
+	);
 
 	/*
 	 * Options fields ids only need
@@ -899,12 +883,17 @@ add_action( 'cmb2_admin_init', 'sunrise_register_page_front_metabox' );
 function sunrise_register_page_front_metabox() {
 	$prefix = '_sunrise_';
 
-	$cmb_options = new_cmb2_box( array(
-		'id'            => $prefix . 'metabox_page_front',
-		'title'         => esc_html__( 'Front Page Options', 'cmb2' ),
-		'object_types'  => array( 'page' ),
-		'show_on' => array( 'key' => 'front-page', 'value' => '' ),
-	) );
+	$cmb_options = new_cmb2_box(
+		array(
+			'id'            => $prefix . 'metabox_page_front',
+			'title'         => esc_html__( 'Front Page Options', 'cmb2' ),
+			'object_types'  => array( 'page' ),
+			'show_on' => array(
+				'key' => 'front-page',
+				'value' => '',
+			),
+		)
+	);
 
 	sunrise_load_cmb2_options( $cmb_options, array( 'elements' ) );
 
@@ -919,12 +908,17 @@ add_action( 'cmb2_admin_init', 'sunrise_register_page_default_metabox' );
 function sunrise_register_page_default_metabox() {
 	$prefix = '_sunrise_';
 
-	$cmb_options = new_cmb2_box( array(
-		'id'            => $prefix . 'metabox_page_default',
-		'title'         => esc_html__( 'Additional Options', 'cmb2' ),
-		'object_types'  => array( 'page' ),
-		'show_on' => array( 'key' => 'default-page-template', 'value' => '' ),
-	) );
+	$cmb_options = new_cmb2_box(
+		array(
+			'id'            => $prefix . 'metabox_page_default',
+			'title'         => esc_html__( 'Additional Options', 'cmb2' ),
+			'object_types'  => array( 'page' ),
+			'show_on' => array(
+				'key' => 'default-page-template',
+				'value' => '',
+			),
+		)
+	);
 
 	sunrise_load_cmb2_options( $cmb_options, array( 'elements' ) );
 

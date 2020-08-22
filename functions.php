@@ -33,7 +33,7 @@ require_once get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
 // Theme and Post Support
 //-----------------------------------------------------
 
-function sunrise_enable_theme_support() {
+function method_enable_theme_support() {
 
 	// Add theme support for html5 markup
 	$args = array(
@@ -53,17 +53,17 @@ function sunrise_enable_theme_support() {
 	// Add theme support for post thumbnails
 	add_theme_support( 'post-thumbnails' );
 }
-add_action( 'after_setup_theme', 'sunrise_enable_theme_support' );
+add_action( 'after_setup_theme', 'method_enable_theme_support' );
 
 
-function sunrise_register_custom_nav_menus() {
+function method_register_custom_nav_menus() {
 	register_nav_menus(
 		array(
 			'primary' => 'Primary',
 		)
 	);
 }
-add_action( 'after_setup_theme', 'sunrise_register_custom_nav_menus' );
+add_action( 'after_setup_theme', 'method_register_custom_nav_menus' );
 
 
 //-----------------------------------------------------
@@ -79,9 +79,9 @@ add_image_size( 'header_bg', 1400, 600, true );
 
 require_once get_template_directory() . '/inc/class-tgm-plugin-activation.php';
 
-add_action( 'tgmpa_register', 'sunrise_register_required_plugins' );
+add_action( 'tgmpa_register', 'method_register_required_plugins' );
 
-function sunrise_register_required_plugins() {
+function method_register_required_plugins() {
 	/*
 	 * Array of plugin arrays. Required keys are name and slug.
 	 * If the source is NOT from the .org repo, then source is also required.
@@ -103,7 +103,7 @@ function sunrise_register_required_plugins() {
 	);
 
 	$config = array(
-		'id'           => 'sunrise',                 // Unique ID for hashing notices for multiple instances of TGMPA.
+		'id'           => 'method',                 // Unique ID for hashing notices for multiple instances of TGMPA.
 		'default_path' => '',                      // Default absolute path to bundled plugins.
 		'menu'         => 'tgmpa-install-plugins', // Menu slug.
 		'parent_slug'  => 'themes.php',            // Parent menu slug.
@@ -123,9 +123,9 @@ function sunrise_register_required_plugins() {
 // Enqueue scripts and styles
 //-----------------------------------------------------
 
-function sunrise_scripts() {
-	wp_enqueue_style( 'sunrise', get_template_directory_uri() . '/theme.min.css', '', '1.0.8' );
-	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.8', false );
+function method_scripts() {
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.0.9' );
+	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.9', false );
 
 	if ( ! is_admin() ) {
 		wp_deregister_script( 'jquery' );
@@ -135,24 +135,24 @@ function sunrise_scripts() {
 
 }
 
-add_action( 'wp_enqueue_scripts', 'sunrise_scripts' );
+add_action( 'wp_enqueue_scripts', 'method_scripts' );
 
 
 //======================================================================
 // 2. THEME OPTIONS
 //======================================================================
 
-add_action( 'cmb2_admin_init', 'sunrise_register_theme_options_metabox' );
+add_action( 'cmb2_admin_init', 'method_register_theme_options_metabox' );
 
-function sunrise_register_theme_options_metabox() {
+function method_register_theme_options_metabox() {
 
 	/**
 	 * Registers options page menu item and form.
 	 */
 	$cmb_options = new_cmb2_box(
 		array(
-			'id'           => 'sunrise_theme_options_metabox',
-			'title'        => esc_html__( 'sunrise Theme Options', 'sunrise' ),
+			'id'           => 'method_theme_options_metabox',
+			'title'        => esc_html__( 'method Theme Options', 'method' ),
 			'object_types' => array( 'options-page' ),
 
 			/*
@@ -160,9 +160,9 @@ function sunrise_register_theme_options_metabox() {
 			 * Several of these parameters are passed along to add_menu_page()/add_submenu_page().
 			 */
 
-			'option_key'      => 'sunrise_options', // The option key and admin menu page slug.
+			'option_key'      => 'method_options', // The option key and admin menu page slug.
 			// 'icon_url'        => 'dashicons-palmtree', // Menu icon. Only applicable if 'parent_slug' is left empty.
-			'menu_title'      => esc_html__( 'Theme Options', 'sunrise' ), // Falls back to 'title' (above).
+			'menu_title'      => esc_html__( 'Theme Options', 'method' ), // Falls back to 'title' (above).
 			'parent_slug'     => 'themes.php', // Make options page a submenu item of the themes menu.
 			// 'capability'      => 'manage_options', // Cap required to view options-page.
 			// 'position'        => 1, // Menu position. Only applicable if 'parent_slug' is left empty.
@@ -174,7 +174,7 @@ function sunrise_register_theme_options_metabox() {
 
 	$cmb_options->add_field(
 		array(
-			'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Social Media Accounts</span>', 'sunrise' ),
+			'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Social Media Accounts</span>', 'method' ),
 			'id'       => 'social_info',
 			'type'     => 'title',
 		)
@@ -184,15 +184,15 @@ function sunrise_register_theme_options_metabox() {
 		array(
 			'id'          => 'social_accounts',
 			'type'        => 'group',
-			'description' => __( 'Configure social account links below.', 'sunrise' ),
+			'description' => __( 'Configure social account links below.', 'method' ),
 			// 'repeatable'  => false, // use false if you want non-repeatable group
 			'options'     => array(
-				'group_title'       => __( 'Account {#}', 'sunrise' ), // since version 1.1.4, {#} gets replaced by row number
-				'add_button'        => __( 'Add Another Account', 'sunrise' ),
-				'remove_button'     => __( 'Remove Account', 'sunrise' ),
+				'group_title'       => __( 'Account {#}', 'method' ), // since version 1.1.4, {#} gets replaced by row number
+				'add_button'        => __( 'Add Another Account', 'method' ),
+				'remove_button'     => __( 'Remove Account', 'method' ),
 				'sortable'          => true,
 				'closed'         => true, // true to have the groups closed by default
-				// 'remove_confirm' => esc_html__( 'Are you sure you want to remove?', 'sunrise' ), // Performs confirmation before removing group.
+				// 'remove_confirm' => esc_html__( 'Are you sure you want to remove?', 'method' ), // Performs confirmation before removing group.
 			),
 		)
 	);
@@ -204,14 +204,14 @@ function sunrise_register_theme_options_metabox() {
 			'id'   => 'service',
 			'type' => 'radio',
 			'default' => 'facebook',
-			'desc' => __( 'Which service are you adding a link for?', 'sunrise' ),
+			'desc' => __( 'Which service are you adding a link for?', 'method' ),
 			'options' => array(
-				'facebook' => esc_attr__( 'Facebook', 'sunrise' ),
-				'twitter' => esc_attr__( 'Twitter', 'sunrise' ),
-				'linkedin' => esc_attr__( 'LinkedIn', 'sunrise' ),
-				'instagram' => esc_attr__( 'Instagram', 'sunrise' ),
-				'pinterest' => esc_attr__( 'Pinterest', 'sunrise' ),
-				'youtube' => esc_attr__( 'YouTube', 'sunrise' ),
+				'facebook' => esc_attr__( 'Facebook', 'method' ),
+				'twitter' => esc_attr__( 'Twitter', 'method' ),
+				'linkedin' => esc_attr__( 'LinkedIn', 'method' ),
+				'instagram' => esc_attr__( 'Instagram', 'method' ),
+				'pinterest' => esc_attr__( 'Pinterest', 'method' ),
+				'youtube' => esc_attr__( 'YouTube', 'method' ),
 			),
 		)
 	);
@@ -219,8 +219,8 @@ function sunrise_register_theme_options_metabox() {
 	$cmb_options->add_group_field(
 		$group_field_social_accounts,
 		array(
-			'name' => __( 'Profile URL', 'sunrise' ),
-			'desc' => __( 'Enter the full URL for your profile.', 'sunrise' ),
+			'name' => __( 'Profile URL', 'method' ),
+			'desc' => __( 'Enter the full URL for your profile.', 'method' ),
 			'id'   => 'url',
 			'type' => 'text_url',
 		)
@@ -228,7 +228,7 @@ function sunrise_register_theme_options_metabox() {
 
 	$cmb_options->add_field(
 		array(
-			'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Footer Options</span>', 'sunrise' ),
+			'name'     => __( '<span style="font-size: 1.25rem; font-weight: 800; line-height: 1; text-transform: none;">Footer Options</span>', 'method' ),
 			'id'       => 'footer_info',
 			'type'     => 'title',
 		)
@@ -236,7 +236,7 @@ function sunrise_register_theme_options_metabox() {
 
 	$cmb_options->add_field(
 		array(
-			'name'     => __( 'Copyright', 'sunrise' ),
+			'name'     => __( 'Copyright', 'method' ),
 			'id'       => 'footer_copyright',
 			'type'     => 'wysiwyg',
 		)
@@ -259,29 +259,29 @@ function sunrise_register_theme_options_metabox() {
 
 /*
 
-add_action( 'init', 'sunrise_news_init' );
+add_action( 'init', 'method_news_init' );
 
-function sunrise_news_init() {
+function method_news_init() {
 	$labels = array(
-		'name'               => _x( 'News', 'post type general name', 'sunrise' ),
-		'singular_name'      => _x( 'News Item', 'post type singular name', 'sunrise' ),
-		'menu_name'          => _x( 'News', 'admin menu', 'sunrise' ),
-		'name_admin_bar'     => _x( 'News Item', 'add new on admin bar', 'sunrise' ),
-		'add_new'            => _x( 'Add News Item', 'job', 'sunrise' ),
-		'add_new_item'       => __( 'Add New News Item', 'sunrise' ),
-		'new_item'           => __( 'New News Item', 'sunrise' ),
-		'edit_item'          => __( 'Edit News Item', 'sunrise' ),
-		'view_item'          => __( 'View News Item', 'sunrise' ),
-		'all_items'          => __( 'News', 'sunrise' ),
-		'search_items'       => __( 'Search News', 'sunrise' ),
-		'parent_item_colon'  => __( 'Parent News:', 'sunrise' ),
-		'not_found'          => __( 'No news found.', 'sunrise' ),
-		'not_found_in_trash' => __( 'No news found in Trash.', 'sunrise' )
+		'name'               => _x( 'News', 'post type general name', 'method' ),
+		'singular_name'      => _x( 'News Item', 'post type singular name', 'method' ),
+		'menu_name'          => _x( 'News', 'admin menu', 'method' ),
+		'name_admin_bar'     => _x( 'News Item', 'add new on admin bar', 'method' ),
+		'add_new'            => _x( 'Add News Item', 'job', 'method' ),
+		'add_new_item'       => __( 'Add New News Item', 'method' ),
+		'new_item'           => __( 'New News Item', 'method' ),
+		'edit_item'          => __( 'Edit News Item', 'method' ),
+		'view_item'          => __( 'View News Item', 'method' ),
+		'all_items'          => __( 'News', 'method' ),
+		'search_items'       => __( 'Search News', 'method' ),
+		'parent_item_colon'  => __( 'Parent News:', 'method' ),
+		'not_found'          => __( 'No news found.', 'method' ),
+		'not_found_in_trash' => __( 'No news found in Trash.', 'method' )
 	);
 
 	$args = array(
 		'labels'             => $labels,
-		'description'        => __( 'A description for the post type.', 'sunrise' ),
+		'description'        => __( 'A description for the post type.', 'method' ),
 		'public'             => true,
 		'publicly_queryable' => true,
 		'show_ui'            => true,
@@ -308,9 +308,9 @@ function sunrise_news_init() {
 // Declare custom taxonomies here.
 
 /*
-add_action( 'init', 'sunrise_register_mytax', 0 );
+add_action( 'init', 'method_register_mytax', 0 );
 
-function sunrise_register_mytax() {
+function method_register_mytax() {
 	// Add new taxonomy, make it hierarchical (like categories)
 	$labels = array(
 		'name' => _x( 'My Tax Terms', 'taxonomy general name' ),
@@ -347,7 +347,7 @@ function sunrise_register_mytax() {
 // Get common CSS classes
 //-----------------------------------------------------
 
-function sunrise_get_class( $class ) {
+function method_get_class( $class ) {
 	$output = '';
 
 	if ( ! empty( $class ) ) {
@@ -371,7 +371,7 @@ function sunrise_get_class( $class ) {
 // Run a string through Wordpress' content filter
 //-----------------------------------------------------
 
-function sunrise_filter_content( $content ) {
+function method_filter_content( $content ) {
 	if ( ! empty( $content ) ) {
 		$content = apply_filters( 'the_content', $content );
 	}
@@ -384,7 +384,7 @@ function sunrise_filter_content( $content ) {
 //-----------------------------------------------------
 
 
-function sunrise_get_content( $id ) {
+function method_get_content( $id ) {
 	$content_post = get_post( $id );
 	$content = $content_post->post_content;
 	$content = apply_filters( 'the_content', $content );
@@ -396,7 +396,7 @@ function sunrise_get_content( $id ) {
 // Check an array key to see if it exists
 //-----------------------------------------------------
 
-function sunrise_check_key( $key ) {
+function method_check_key( $key ) {
 	$output = $fb;
 	if ( isset( $key ) ) {
 		if ( ! empty( $key ) ) {
@@ -425,7 +425,7 @@ if ( ! function_exists( 'array_key_first' ) ) {
 // Get an array of post IDs and titles
 //-----------------------------------------------------
 
-function sunrise_get_post_array( $type, $none = false ) {
+function method_get_post_array( $type, $none = false ) {
 	//lets create an array of boroughs to loop through
 	if ( true == $none ) {
 		$output[0] = 'None';
@@ -452,7 +452,7 @@ function sunrise_get_post_array( $type, $none = false ) {
 // Get an array of term ids and names
 //-----------------------------------------------------
 
-function sunrise_get_term_array( $tax, $none = false ) {
+function method_get_term_array( $tax, $none = false ) {
 	//lets create an array of boroughs to loop through
 	if ( true == $none ) {
 		$output[0] = 'None';
@@ -478,7 +478,7 @@ function sunrise_get_term_array( $tax, $none = false ) {
 //======================================================================
 
 
-class SunriseLayout {
+class MethodLayout {
 	private $elements = array();
 	private $meta = array();
 	private $opts = array();
@@ -489,15 +489,15 @@ class SunriseLayout {
 	private $attr = array();
 
 	public function build_page( $pid = '', $archive = false ) {
-		$this->opts = get_option( 'sunrise_options' );
+		$this->opts = get_option( 'method_options' );
 		if ( true == $archive ) {
 			global $wp_query;
 			$this->attr['is_archive'] = true;
-			$this->attr['post_type'] = ( sunrise_check_key( $wp_query->query_vars['post_type'] ) ? $wp_query->query_vars['post_type'] : 'post' );
+			$this->attr['post_type'] = ( method_check_key( $wp_query->query_vars['post_type'] ) ? $wp_query->query_vars['post_type'] : 'post' );
 			if ( 'post' == $this->attr['post_type'] ) {
-				$this->attr['category'] = ( sunrise_check_key( $wp_query->queried_object->name ) ? $wp_query->queried_object->name : '' );
+				$this->attr['category'] = ( method_check_key( $wp_query->queried_object->name ) ? $wp_query->queried_object->name : '' );
 			}
-			$this->attr['taxonomy'] = ( sunrise_check_key( $wp_query->query_vars['taxonomy'] ) ? $wp_query->query_vars['taxonomy'] : '' );
+			$this->attr['taxonomy'] = ( method_check_key( $wp_query->query_vars['taxonomy'] ) ? $wp_query->query_vars['taxonomy'] : '' );
 			$this->determine_attributes();
 			$this->build_layout();
 			return $this->html . $this->modals . $this->scripts;
@@ -596,7 +596,7 @@ class SunriseLayout {
         					</button>
       					</div>
       					<div class="modal-body">
-      						' . ( $prefiltered ? $content : sunrise_filter_content( $content ) ) . '
+      						' . ( $prefiltered ? $content : method_filter_content( $content ) ) . '
       					</div>  
     				</div>
   				</div>
@@ -615,13 +615,13 @@ class SunriseLayout {
 				case 'activated':
 					// Placeholder element. Should be removed from production theme.
 					$this->html .= '
-						<div id="sunrise-activation">
-							<div class="container-fluid ' . sunrise_get_class( 'full_width_container' ) . '">
+						<div id="method-activation">
+							<div class="container-fluid ' . method_get_class( 'full_width_container' ) . '">
 								<div class="row justify-content-center">
-									<div class="' . sunrise_get_class( 'full_width_outer_col' ) . '">
+									<div class="' . method_get_class( 'full_width_outer_col' ) . '">
 										<div class="text-center">
 										<h1 class="display-4">Up and running! <i class="far fa-thumbs-up"></i></h1>
-										<p class="lead">If I was in World War Two they\'d call me <strong><em>sunrise</em></strong></p>
+										<p class="lead">If I was in World War Two they\'d call me <strong><em>method</em></strong></p>
 										</div>
 									</div>
 								</div>
@@ -750,13 +750,13 @@ class SunriseLayout {
 	/*
 	Usage for archive pages:
 	get_header();
-	$layout = new SunriseLayout;
+	$layout = new MethodLayout;
 	echo $layout->build_page( '', true );
 	get_footer();
 
 	Usage for single pages:
 	get_header();
-	$layout = new SunriseLayout;
+	$layout = new MethodLayout;
 	echo $layout->build_page( $post->ID );
 	get_footer();
 
@@ -776,7 +776,7 @@ class SunriseLayout {
 * @param array $meta_box
 * @return bool display metabox
 */
-function sunrise_cmb2_metabox_include_default_page( $display, $meta_box ) {
+function method_cmb2_metabox_include_default_page( $display, $meta_box ) {
 	if ( ! isset( $meta_box['show_on']['key'] ) ) {
 		return $display;
 	}
@@ -827,7 +827,7 @@ $cmb_options = new_cmb2_box( array(
  * @param array $meta_box
  * @return bool display metabox
  */
-function sunrise_cmb2_metabox_include_front_page( $display, $meta_box ) {
+function method_cmb2_metabox_include_front_page( $display, $meta_box ) {
 	if ( ! isset( $meta_box['show_on']['key'] ) ) {
 		return $display;
 	}
@@ -874,7 +874,7 @@ $cmb_options = new_cmb2_box( array(
 // 8. CMB2 ALERTS LOADER
 //======================================================================
 
-function sunrise_load_cmb2_options( &$obj, $temps ) {
+function method_load_cmb2_options( &$obj, $temps ) {
 	foreach ( $temps as $temp ) {
 		switch ( $temp ) {
 			case '':
@@ -896,10 +896,10 @@ function sunrise_load_cmb2_options( &$obj, $temps ) {
  * Front Page Metabox
  */
 
-add_action( 'cmb2_admin_init', 'sunrise_register_page_front_metabox' );
+add_action( 'cmb2_admin_init', 'method_register_page_front_metabox' );
 
-function sunrise_register_page_front_metabox() {
-	$prefix = '_sunrise_';
+function method_register_page_front_metabox() {
+	$prefix = '_method_';
 
 	$cmb_options = new_cmb2_box(
 		array(
@@ -913,7 +913,7 @@ function sunrise_register_page_front_metabox() {
 		)
 	);
 
-	sunrise_load_cmb2_options( $cmb_options, array( 'elements' ) );
+	method_load_cmb2_options( $cmb_options, array( 'elements' ) );
 
 }
 
@@ -921,10 +921,10 @@ function sunrise_register_page_front_metabox() {
  * Default Page Metabox
  */
 
-add_action( 'cmb2_admin_init', 'sunrise_register_page_default_metabox' );
+add_action( 'cmb2_admin_init', 'method_register_page_default_metabox' );
 
-function sunrise_register_page_default_metabox() {
-	$prefix = '_sunrise_';
+function method_register_page_default_metabox() {
+	$prefix = '_method_';
 
 	$cmb_options = new_cmb2_box(
 		array(
@@ -938,7 +938,7 @@ function sunrise_register_page_default_metabox() {
 		)
 	);
 
-	sunrise_load_cmb2_options( $cmb_options, array( 'elements' ) );
+	method_load_cmb2_options( $cmb_options, array( 'elements' ) );
 
 }
 
@@ -951,35 +951,35 @@ function sunrise_register_page_default_metabox() {
 // Change the login page logo URL to link to the site.
 //-----------------------------------------------------
 
-function sunrise_custom_login_url( $url ) {
+function method_custom_login_url( $url ) {
 	return get_site_url();
 }
-add_filter( 'login_headerurl', 'sunrise_custom_login_url' );
+add_filter( 'login_headerurl', 'method_custom_login_url' );
 
 
 //-----------------------------------------------------
 // Add a canvas element for Granim.
 //-----------------------------------------------------
 
-function sunrise_add_html_content() {
+function method_add_html_content() {
 	echo '<canvas id="bg-canvas"></canvas>';
 }
-add_action( 'login_header', 'sunrise_add_html_content' );
+add_action( 'login_header', 'method_add_html_content' );
 
 
 //-----------------------------------------------------
 // Enqueue scripts and styles for login.
 //-----------------------------------------------------
 
-function sunrise_login_scripts() {
+function method_login_scripts() {
 	wp_enqueue_script( 'granim', get_template_directory_uri() . '/inc/granim/granim.js', array(), '1.0.0', false );
-	wp_register_script( 'sunrise-login', get_template_directory_uri() . '/login.js', array( 'granim' ), '1.0.0', true );
+	wp_register_script( 'method-login', get_template_directory_uri() . '/login.js', array( 'granim' ), '1.0.0', true );
 	$js_array = array(
 		'template_dir' => get_template_directory_uri(),
 	);
-	wp_localize_script( 'sunrise-login', 'theme', $js_array );
-	wp_enqueue_script( 'sunrise-login' );
-	wp_enqueue_style( 'sunrise-login', get_template_directory_uri() . '/login.css' );
+	wp_localize_script( 'method-login', 'theme', $js_array );
+	wp_enqueue_script( 'method-login' );
+	wp_enqueue_style( 'method-login', get_template_directory_uri() . '/login.css' );
 }
 
-add_action( 'login_enqueue_scripts', 'sunrise_login_scripts' );
+add_action( 'login_enqueue_scripts', 'method_login_scripts' );

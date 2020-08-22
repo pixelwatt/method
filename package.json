@@ -1,6 +1,6 @@
 {
-  "name": "sunrise",
-  "version": "1.0.8",
+  "name": "method",
+  "version": "1.0.9",
   "description": "A barebones foundation for custom theme development.",
   "main": "index.js",
   "scripts": {

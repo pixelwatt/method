@@ -70,7 +70,7 @@ add_action( 'after_setup_theme', 'sunrise_register_custom_nav_menus' );
 // Custom Image Sizes
 //-----------------------------------------------------
 
-add_image_size( 'Banner', 1400, 600, true );
+add_image_size( 'header_bg', 1400, 600, true );
 
 
 //-----------------------------------------------------
@@ -124,8 +124,8 @@ function sunrise_register_required_plugins() {
 //-----------------------------------------------------
 
 function sunrise_scripts() {
-	wp_enqueue_style( 'sunrise', get_template_directory_uri() . '/theme.min.css', '', '1.0.7' );
-	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.7', false );
+	wp_enqueue_style( 'sunrise', get_template_directory_uri() . '/theme.min.css', '', '1.0.8' );
+	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.8', false );
 
 	if ( ! is_admin() ) {
 		wp_deregister_script( 'jquery' );
@@ -750,13 +750,13 @@ class SunriseLayout {
 	/*
 	Usage for archive pages:
 	get_header();
-	$layout = new sunrise_layout;
+	$layout = new SunriseLayout;
 	echo $layout->build_page( '', true );
 	get_footer();
 
 	Usage for single pages:
 	get_header();
-	$layout = new sunrise_layout;
+	$layout = new SunriseLayout;
 	echo $layout->build_page( $post->ID );
 	get_footer();
 
@@ -776,7 +776,7 @@ class SunriseLayout {
 * @param array $meta_box
 * @return bool display metabox
 */
-function cmb2_metabox_include_default_page( $display, $meta_box ) {
+function sunrise_cmb2_metabox_include_default_page( $display, $meta_box ) {
 	if ( ! isset( $meta_box['show_on']['key'] ) ) {
 		return $display;
 	}
@@ -827,7 +827,7 @@ $cmb_options = new_cmb2_box( array(
  * @param array $meta_box
  * @return bool display metabox
  */
-function ed_metabox_include_front_page( $display, $meta_box ) {
+function sunrise_cmb2_metabox_include_front_page( $display, $meta_box ) {
 	if ( ! isset( $meta_box['show_on']['key'] ) ) {
 		return $display;
 	}

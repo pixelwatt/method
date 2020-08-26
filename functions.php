@@ -94,11 +94,8 @@ function method_register_required_plugins() {
 			'required'  => true,
 		),
 
-		array(
-			'name'      => 'Classic Editor',
-			'slug'      => 'classic-editor',
-			'required'  => true,
-		),
+
+
 
 	);
 
@@ -124,8 +121,8 @@ function method_register_required_plugins() {
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.0.9' );
-	wp_enqueue_script( 'scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.9', false );
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.0.10' );
+	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.10', false );
 
 	if ( ! is_admin() ) {
 		wp_deregister_script( 'jquery' );
@@ -803,7 +800,7 @@ function method_cmb2_metabox_include_default_page( $display, $meta_box ) {
 	// there is a front page set and we're on it!
 	return $is_it_basic;
 }
-add_filter( 'cmb2_show_on', 'cmb2_metabox_include_default_page', 10, 2 );
+add_filter( 'cmb2_show_on', 'method_cmb2_metabox_include_default_page', 10, 2 );
 
 
 /*
@@ -855,7 +852,7 @@ function method_cmb2_metabox_include_front_page( $display, $meta_box ) {
 	// there is a front page set and we're on it!
 	return $post_id == $front_page;
 }
-add_filter( 'cmb2_show_on', 'ed_metabox_include_front_page', 10, 2 );
+add_filter( 'cmb2_show_on', 'method_cmb2_metabox_include_front_page', 10, 2 );
 
 
 /*

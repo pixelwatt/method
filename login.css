@@ -1,45 +1,35 @@
+body.login {
+	background-image: url('assets/images/login-bg.jpg') !important;
+	background-size: cover !important;
+	background-position: center center !important;
+	background-repeat: no-repeat !important;
+	background-color:  !important;
+}
 body.login .button-primary {
 	background: #4BFD9F !important;
 	border-color: #4BFD9F !important;
 	color: #000 !important;
 }
-
 body.login .button-secondary {
 	color: #4BFD9F !important;
 }
-
 body.login input[type=password]:focus,
 body.login input[type=text]:focus {
 	border-color: #4BFD9F !important;
 	box-shadow: 0 0 0 1px #4BFD9F !important;
 }
-
 .login h1 a {
-    background-image: url('assets/images/login-logo.png') !important;
+    background-image: url('assets/images/login-logo.svg') !important;
     background-size: 250px 80px !important;
     width: 250px !important;
     height: 80px !important;
 }
-
 .message { 
 	background-color: #4BFD9F !important; 
 	color: #000 !important; 
 	font-weight: 500 !important; 
 	border-left: none !important; 
 	border-radius: 4px !important; 
-}
-
-#bg-canvas {
-	display: block;
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 100% !important;
-	height: 100% !important;
-	background-position: center center;
-	background-size: cover;
 }
 #login {
 	position: relative;

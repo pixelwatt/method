@@ -94,9 +94,6 @@ function method_register_required_plugins() {
 			'required'  => true,
 		),
 
-
-
-
 	);
 
 	$config = array(
@@ -121,8 +118,8 @@ function method_register_required_plugins() {
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.0.10' );
-	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.10', false );
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.0.11' );
+	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.11', false );
 
 	if ( ! is_admin() ) {
 		wp_deregister_script( 'jquery' );
@@ -939,9 +936,70 @@ function method_register_page_default_metabox() {
 
 }
 
+/*
+Example CMB2 registration for a custom page template:
+
+add_action( 'cmb2_admin_init', 'method_register_page_template_tmpname_metabox' );
+
+function method_register_page_template_tmpname_metabox() {
+	$prefix = '_method_';
+
+	$cmb_options = new_cmb2_box(
+		array(
+			'id'            => $prefix . 'metabox_page_template_tmpname',
+			'title'         => esc_html__( 'Template Options', 'cmb2' ),
+			'object_types'  => array( 'page' ),
+			'priority'     => 'high',
+			'show_on'      => array(
+				'key'   => 'page-template',
+				'value' => 'templates/page-template-tmpname.php',
+			),
+		)
+	);
+
+	method_load_cmb2_options( $cmb_options, array( 'elements' ) );
+
+}
+
+*/
 
 //======================================================================
-// 10. LOGIN CUSTOMIZATION
+// 10. DASHBOARD / EDITOR OPTIMIZATIONS
+//======================================================================
+
+//-----------------------------------------------------
+// Remove editor button to add Ninja Forms
+//-----------------------------------------------------
+
+add_action( 'admin_head', 'method_remove_add_new_nf_button' );
+
+function method_remove_add_new_nf_button() {
+	echo '<style>
+		#wp-content-media-buttons .button.nf-insert-form {display:none !important; visibility: hidden !important;}
+	</style>';
+}
+
+//-----------------------------------------------------
+// Remove sidebar metabox for appending a Ninja Form
+//-----------------------------------------------------
+
+add_action( 'add_meta_boxes', function() {
+	remove_meta_box( 'nf_admin_metaboxes_appendaform', ['page', 'post'], 'side' );
+}, 99 );
+
+
+//-----------------------------------------------------
+// Lower Yoast metabox priority
+//-----------------------------------------------------
+
+function method_lower_wpseo_priority( $html ) {
+	return 'low';
+}
+add_filter( 'wpseo_metabox_prio', 'method_lower_wpseo_priority' );
+
+
+//======================================================================
+// 11. LOGIN CUSTOMIZATION
 //======================================================================
 
 //-----------------------------------------------------
@@ -955,27 +1013,10 @@ add_filter( 'login_headerurl', 'method_custom_login_url' );
 
 
 //-----------------------------------------------------
-// Add a canvas element for Granim.
-//-----------------------------------------------------
-
-function method_add_html_content() {
-	echo '<canvas id="bg-canvas"></canvas>';
-}
-add_action( 'login_header', 'method_add_html_content' );
-
-
-//-----------------------------------------------------
 // Enqueue scripts and styles for login.
 //-----------------------------------------------------
 
 function method_login_scripts() {
-	wp_enqueue_script( 'granim', get_template_directory_uri() . '/inc/granim/granim.js', array(), '1.0.0', false );
-	wp_register_script( 'method-login', get_template_directory_uri() . '/login.js', array( 'granim' ), '1.0.0', true );
-	$js_array = array(
-		'template_dir' => get_template_directory_uri(),
-	);
-	wp_localize_script( 'method-login', 'theme', $js_array );
-	wp_enqueue_script( 'method-login' );
 	wp_enqueue_style( 'method-login', get_template_directory_uri() . '/login.css' );
 }
 

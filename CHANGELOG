@@ -1,3 +1,18 @@
+## 1.0.11
+
+Changes:
+* ( assets/images/login-bg.jpg ) Updated the background image for the custom login page.
+* ( assets/images/login-logo.* ) Updated the theme logo for the custom login page and changed it's format to SVG.
+* ( functions.php ) Added an example function (commented out) for registering a new meta box for a custom page template.
+* ( functions.php ) Added functions to remove post editor options added by Ninja Forms and to lower the priority of Yoast SEO's metabox (if these plugins are used)
+* ( functions.php ) Removed granim from the custom login page, and removed it's required extra markup.
+* ( inc/granim/ ) Removed granim
+* ( login.css ) Added styles for the login page background image, updated the path to the custom logo
+* ( login.js ) Removed, as it was only required for granim
+* ( screenshot.png ) Updated the screenshot for the theme.
+
+---
+
 ## 1.0.10
 
 Changes:
@@ -5,35 +20,51 @@ Changes:
 * ( functions.php ) Changed the handle used for the theme's scripts to "method"
 * ( functions.php ) Fixed a bug with CMB2 helper function names that caused CMB2 to not function.
 * ( inc/fontawesome/ ) Removed FontAwesome assets
-* ( README.md ) Added a banner image to the README 
+* ( README.md ) Added a banner image to the README
+
+---
 
 ## 1.0.9
 
 Changed the theme's name to Method. It sounds cooler.
 
+---
+
 ## 1.0.8
 
 This release includes minor tweaks to function names (updated prefixes) and other minor fixes.
+
+---
 
 ## 1.0.7
 
 This release adds expanded theme support options, removes FontAwesome files, and includes other misc changes. This release was built with the initial version of Sunrise Builder.
 
+---
+
 ## 1.0.6
 
 This release implements fixes for code format issues found in code lint (PHPCS configured to check against WordPress coding standards), changes theme prefixes from "spitfire" to "sunrise", and updated class references in template files to use the new layout class name (sunriseLayout)
+
+---
 
 ## 1.0.5
 
 Added a code_lint CI script.
 
+---
+
 ## 1.0.4
 
 Added login screen customizations, upgraded Bootstrap to 4.5.2, added basic page/front page/single templates, and added a new method, get_serialized_mets(), to the layout class.
 
+---
+
 ## 1.0.3
 
 This release add's Boostrap 4.5.0, increases the gulp version requirements to 4.0.0+, fixes various code issues, and moves the theme away from the customizer.
+
+---
 
 ## 1.0.1 - 03-24-2019
 

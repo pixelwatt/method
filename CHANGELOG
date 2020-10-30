@@ -1,3 +1,13 @@
+## 1.0.12
+
+Changes:
+* ( functions.php ) Added a new function, method_str_replace_assoc(), to find/replace strings using values from an associative array.
+* ( functions.php ) Modified markup for the layout class default 'active' component to look like the 404 template.
+* ( functions.php ) Added a new function to the layout class, format_tags(), for replacing format tags with html markup.
+* ( theme.scss ) Changed body.error404 to .error404 so the contained styles could be reused on non-error404 pages.
+
+---
+
 ## 1.0.11
 
 Changes:

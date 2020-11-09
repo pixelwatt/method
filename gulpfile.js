@@ -39,7 +39,7 @@ gulp.task('serve', function() {
 });
 
 gulp.task('scripts', function() {
-    return gulp.src(['assets/js/bootstrap.bundle.js','assets/js/jquery.matchHeight.js','assets/js/jarallax.js','assets/js/jarallax-element.js'])
+    return gulp.src(['inc/bootstrap.bundle.js','inc/jquery.matchHeight.js','inc/jarallax.js','inc/jarallax-element.js'])
       .pipe(jshint('.jshintrc'))
       .pipe(jshint.reporter('default'))
       .pipe(concat('assets/js/scripts.js'))

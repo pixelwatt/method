@@ -1,3 +1,15 @@
+## 1.0.13
+
+Changes:
+* ( functions.php ) Added a new method to the layout class, get_headline(), to provide a uniform method for handeling fields that support format tags. This also allows for cleaner code, as the method handles logic for checking if a meta key is empty, falling back to an optionally provided fallback, and then not rendering anything. While fallback strings are not processed in any way, metakeys are passed through esc_html() and then the format_tags method if not empty. Example usage: $this->get_headline( 'my_meta_key', '<h2>', '</h2>', 'Fallback' )
+* ( functions.php ) Added a new function, method_get_tags_badge(), that returns HTML for a "Tags Supported" badge. This badge can be inserted into CMB2 field descriptions for fields that will be passed through the format_tags() method of the layout class. Clicking the badge will open a dialog listing available tags. If you add additional tags to the format_tags() method, you should update the dialog's text to detail them so that content editors know that they are available and what they do.
+* ( assets/css/admin-styles.css ) Added an admin CSS file, which currently contains styles for the "Tags Supported" badge (.method-tags-opener)
+* ( functions.php ) Added a new function, method_admin_scripts(), that registers admin-styles.css, the jquery ui dialog plugin, and styles for the current version of WordPress-bundled jquery ui for the admin area of the site via admin_enqueue_scripts
+* ( functions.php ) Added a new function, method_admin_footer_function(), that injects js and html for the format tags dialog into the admin footer via admin_footer
+* ( functions.php ) Added support for inserting em tags to strings processed with the format_tags method.
+* ( functions.php ) Added new methods to the layout class for loading a second set of post meta, retrieving loaded meta in a similiar fashion to the get_meta() method, and unloading the meta. This was added for easier handling of meta in archive layout components. ( load_meta(), get_loaded_meta(), get_serialized_loaded_meta(), unload_meta() )
+* ( functions.php ) Added a new method to the layout classes, get_loaded_headline(), for indentical headline processing, but with loaded meta.
+
 ## 1.0.12
 
 Changes:

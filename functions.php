@@ -118,8 +118,8 @@ function method_register_required_plugins() {
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.0.12' );
-	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.12', false );
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.0.13' );
+	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.0.13', false );
 
 	if ( ! is_admin() ) {
 		wp_deregister_script( 'jquery' );
@@ -130,6 +130,49 @@ function method_scripts() {
 }
 
 add_action( 'wp_enqueue_scripts', 'method_scripts' );
+
+
+function method_admin_scripts() {
+	$wp_scripts = wp_scripts();
+	wp_enqueue_script( 'jquery-ui-dialog' );
+    wp_enqueue_style( 'jquery-ui', 'https://ajax.googleapis.com/ajax/libs/jqueryui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css', '', '', false );
+    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin-styles.css', '', '1.0.13' );
+}
+
+add_action( 'admin_enqueue_scripts', 'method_admin_scripts' );
+
+
+function method_admin_footer_function() {
+	echo '
+		<script>
+		  jQuery( function() {
+		    jQuery( "#method-tags-dialog" ).dialog({
+		      autoOpen: false,
+		      width: 600,
+		    });
+		 
+		    jQuery( ".method-tags-opener" ).on( "click", function() {
+		      jQuery( "#method-tags-dialog" ).dialog( "open" );
+		    });
+		  });
+		</script>
+
+		<div id="method-tags-dialog" title="About Tags">
+		  <p>Format tags allow you to safely format text for certain options that don\'t support HTML formatting, such as headlines. Below is a listing of currently-available tags:</p>
+		  <hr>
+		  <h5>[strong]...[/strong]</h5>
+		  <p>This tag allows you to bold portions of text by wrapping the desired text in <code>[strong]...[/strong]</code>.<br><em>(Ex: "I want [strong]this[/strong] to be bold.")</em></p>
+		  <hr>
+		  <h5>[em]...[/em]</h5>
+		  <p>Similiar to the [strong] tag, this tag allows you to italicize portions of text by wrapping the desired text in <code>[em]...[/em]</code>.<br><em>(Ex: "I want [em]this[/em] to be italic.")</em></p>
+		  <hr>
+		  <h5>[br]</h5>
+		  <p>This tags allows you to insert a line break. Use <code>[br]</code> for the line break to appear on all devices, <code>[mbr]</code> for the line break to only appear on mobile, and <code>[dbr]</code> for the break to only appear on desktop.<br><em>(Ex: "I want this text on line 1,[br]and this text on line 2.")</em></p>
+		</div>
+	';
+}
+
+add_action( 'admin_footer', 'method_admin_footer_function', 100 );
 
 
 //======================================================================
@@ -485,6 +528,7 @@ function method_str_replace_assoc( array $replace, $subject ) {
 class MethodLayout {
 	private $elements = array();
 	private $meta = array();
+	private $loaded_meta = array();
 	private $opts = array();
 	private $id;
 	private $html;
@@ -686,8 +730,56 @@ class MethodLayout {
 			'[dbr]' => '<br class="d-xs-none d-sm-none d-md-inline">',
 			'[strong]' => '<strong>',
 			'[/strong]' => '</strong>',
+			'[em]' => '<em>',
+			'[/em]' => '</em>',
 		);
 		return method_str_replace_assoc( $tags, $text );
+	}
+
+	private function get_headline( $key, $before, $after, $fallback = '' ) {
+		$output = '';
+		if ( ( $this->get_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
+			$output = $before . ( $this->get_meta( $key ) ? $this->format_tags( esc_html( $this->get_meta( $key ) ) ) : $fallback ) . $after;
+		}
+		return $output;
+	}
+
+	private function get_loaded_headline( $key, $before, $after, $fallback = '' ) {
+		$output = '';
+		if ( ( $this->get_loaded_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
+			$output = $before . ( $this->get_loaded_meta( $key ) ? $this->format_tags( esc_html( $this->get_loaded_meta( $key ) ) ) : $fallback ) . $after;
+		}
+		return $output;
+	}
+
+	private function load_meta( $id ) {
+		$this->loaded_meta = get_post_meta( $id );
+		return;
+	}
+
+	private function unload_meta( $id ) {
+		$this->loaded_meta = array();
+		return;
+	}
+
+	private function get_loaded_meta( $key ) {
+		$output = false;
+		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
+			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
+				$output = $this->loaded_meta[ "{$key}" ][0];
+			}
+		}
+		return $output;
+	}
+
+	private function get_serialized_loaded_meta( $key ) {
+		$output = false;
+		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
+			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
+				$output = maybe_unserialize( $this->loaded_meta[ "{$key}" ][0] );
+			}
+		}
+		return $output;
 	}
 
 	private function get_meta( $key ) {
@@ -784,6 +876,11 @@ class MethodLayout {
 //======================================================================
 // 7. CMB2 HELPER FUNCTIONS
 //======================================================================
+
+
+function method_get_tags_badge() {
+	return '<span class="method-tags-opener">Tags Supported</span> ';
+}
 
 
 /**
@@ -889,13 +986,28 @@ $cmb_options = new_cmb2_box( array(
 
 
 //======================================================================
-// 8. CMB2 ALERTS LOADER
+// 8. CMB2 OPTIONS LOADER
 //======================================================================
 
 function method_load_cmb2_options( &$obj, $temps ) {
 	foreach ( $temps as $temp ) {
 		switch ( $temp ) {
-			case '':
+			case 'example':
+				$obj->add_field(
+					array(
+						'name'     => __( '<span style="font-size: 1.5rem; font-weight: 900;">Example Section</span>', 'method' ),
+						'id'   => '_method_example_info',
+						'type'     => 'title',
+					)
+				);
+				$obj->add_field(
+					array(
+						'name'     => __( 'Headline', 'method' ),
+						'desc'     => __( method_get_tags_badge() . 'Provide a headline for this item.', 'method' ),
+						'id'   => '_method_example_headline',
+						'type'     => 'text',
+					)
+				);
 				break;
 			default:
 				break;
@@ -956,7 +1068,7 @@ function method_register_page_default_metabox() {
 		)
 	);
 
-	method_load_cmb2_options( $cmb_options, array( 'elements' ) );
+	method_load_cmb2_options( $cmb_options, array( 'example' ) );
 
 }
 

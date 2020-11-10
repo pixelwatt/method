@@ -1,3 +1,13 @@
+## 1.0.14
+
+Changes:
+* Moved bundled JS scripts into the inc/ directory for consistency.
+* Upgraded jarallax to 1.12.4 and removed the depracated jarallax-element.js file.
+* Upgraded Bootstrap to v4.5.3.
+* Recompiled scripts.min.js and theme.min.css.
+
+---
+
 ## 1.0.13
 
 Changes:
@@ -9,6 +19,8 @@ Changes:
 * ( functions.php ) Added support for inserting em tags to strings processed with the format_tags method.
 * ( functions.php ) Added new methods to the layout class for loading a second set of post meta, retrieving loaded meta in a similiar fashion to the get_meta() method, and unloading the meta. This was added for easier handling of meta in archive layout components. ( load_meta(), get_loaded_meta(), get_serialized_loaded_meta(), unload_meta() )
 * ( functions.php ) Added a new method to the layout classes, get_loaded_headline(), for indentical headline processing, but with loaded meta.
+
+---
 
 ## 1.0.12
 

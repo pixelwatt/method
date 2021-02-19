@@ -1,3 +1,10 @@
+## 1.0.15
+
+Changes:
+* ( functions.php ) Fixed an issue with the unload_meta method in the layout class (an ID does not need to be passed to the method)
+
+---
+
 ## 1.0.14
 
 Changes:

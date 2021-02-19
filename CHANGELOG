@@ -1,3 +1,14 @@
+## 1.1.0
+
+This release implements a new abstract layout class, called Method_Layout, which the theme layout class now extends. This makes it possible to upgrade the core layout class as new versions are released, as the utility functions are now seperated from theme-specific code. Going forward, releases will include the option to download only the layout class.
+
+Changes:
+* ( new file: class-method-layout.php ) Added the new parent layout class
+* ( functions.php ) Fixed a reference to an undeclared variable in the check_key() function.
+* ( functions.php ) Rewrote the theme layout class to extend the new Method_Layout class.
+
+---
+
 ## 1.0.15
 
 Changes:

@@ -2,22 +2,22 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.1.0
+// METHOD LAYOUT CLASS v1.1.1
 //
 // You probably don't want to edit this file.
 //
 //======================================================================
 
 abstract class Method_Layout {
-	private $elements = array();
-	private $meta = array();
-	private $loaded_meta = array();
-	private $opts = array();
-	private $id;
-	private $html;
-	private $modals;
-	private $scripts;
-	private $attr = array();
+	protected $elements = array();
+	protected $meta = array();
+	protected $loaded_meta = array();
+	protected $opts = array();
+	protected $id;
+	protected $html;
+	protected $modals;
+	protected $scripts;
+	protected $attr = array();
 
 	abstract protected function set_opts();
 

@@ -1,3 +1,13 @@
+## 1.1.1
+
+Changes:
+* Fixed an issue with the core layout class that caused a fatal error (attributes were private and are now protected)
+* Updated Bootstrap to v5.0.0-beta2 and moved variable customization into the theme.scss file. This makes it possible to upgrade Bootstrap without having to worry about any overrides being lost.
+* Bootstrap js and scss files can now be found under inc/bootstrap
+* Renamed the theme layout class.
+
+---
+
 ## 1.1.0
 
 This release implements a new abstract layout class, called Method_Layout, which the theme layout class now extends. This makes it possible to upgrade the core layout class as new versions are released, as the utility functions are now seperated from theme-specific code. Going forward, releases will include the option to download only the layout class.

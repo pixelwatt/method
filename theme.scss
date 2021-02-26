@@ -2,9 +2,13 @@
 THEME STYLES
 */
 
-// Import Bootstrap
+// Import Bootstrap. Place any overrides before the import.
 
-@import "assets/css/bootstrap/bootstrap.scss";
+$green: #4BFD9F;
+$primary: $green;
+
+@import "inc/bootstrap/scss/bootstrap.scss";
+
 
 // Jarallax CSS
 

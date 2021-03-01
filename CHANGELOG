@@ -1,3 +1,17 @@
+## 1.1.3
+
+This release includes several new methods and enhancements for the Method_Layout class.
+
+Changes:
+* ( class-method-layout.php ) Added a new argument to the array_to_p() method for keeping a provided seperator visible.
+* ( class-method-layout.php ) Added a new method, get_headline_from_option(), for building a headline from a retrieved theme option.
+* ( class-method-layout.php ) Added a new method, get_content_from_option(), for building filtered content from a retrieved theme option.
+* ( class-method-layout.php ) Added a new method, get_loaded_content(), for building filtered content from a loaded meta key.
+* ( class-method-layout.php ) Added a new method, get_content(), for building filtered content from a meta key belonging to the current post ID.
+* ( class-method-layout.php ) Reformated the file to be more readable and structured.
+
+---
+
 ## 1.1.2
 
 This release implements bug fixes and enhancements to the Method_Layout class.

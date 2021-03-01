@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.1.2
+// METHOD LAYOUT CLASS v1.1.3
 //
 // You probably don't want or need to edit this file.
 //
@@ -19,7 +19,9 @@ abstract class Method_Layout {
 	protected $scripts;
 	protected $attr = array();
 
-	abstract protected function set_opts();
+	//======================================================================
+	// CORE METHODS
+	//======================================================================
 
 	public function build_page( $pid = '', $archive = false ) {
 		$this->set_opts();
@@ -68,6 +70,12 @@ abstract class Method_Layout {
 		return;
 	}
 
+	//======================================================================
+	// ABSTRACT METHODS
+	//======================================================================
+
+	abstract protected function set_opts();
+
 	abstract protected function determine_attributes();
 
 	abstract protected function build_header();
@@ -76,26 +84,182 @@ abstract class Method_Layout {
 
 	abstract protected function build_components();
 
-	protected function inject_modal( $mid, $mclass = '', $title, $content, $prefiltered = false, $lg = false, $scrollable = false ) {
-		$this->modals .= '
-			<div class="modal fade" id="' . $mid . '" tabindex="-1" role="dialog" aria-labelledby="' . $mid . 'Label" aria-hidden="true">
-				<div class="modal-dialog' . ( $scrollable ? ' modal-dialog-scrollable' : '' ) . ( $lg ? ' modal-lg' : '' ) . '" role="document">
-					<div class="modal-content">
-      					<div class="modal-header">
-        					<h5 class="modal-title" id="' . $mid . 'Label">' . $title . '</h5>
-        					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          						<span aria-hidden="true">&times;</span>
-        					</button>
-      					</div>
-      					<div class="modal-body">
-      						' . ( $prefiltered ? $content : $this->filter_content( $content ) ) . '
-      					</div>  
-    				</div>
-  				</div>
-			</div>
+	//======================================================================
+	// POST META METHODS
+	//======================================================================
 
-		';
+	//-----------------------------------------------------
+	// Get data for a meta key (current post)
+	//-----------------------------------------------------
+
+	protected function get_meta( $key ) {
+		$output = false;
+		if ( isset( $this->meta[ "{$key}" ][0] ) ) {
+			if ( ! empty( $this->meta[ "{$key}" ][0] ) ) {
+				$output = $this->meta[ "{$key}" ][0];
+			}
+		}
+		return $output;
 	}
+
+	//-----------------------------------------------------
+	// Get unserialized data for a serialized meta key (current post)
+	//-----------------------------------------------------
+
+	protected function get_serialized_meta( $key ) {
+		$output = false;
+		if ( isset( $this->meta[ "{$key}" ][0] ) ) {
+			if ( ! empty( $this->meta[ "{$key}" ][0] ) ) {
+				$output = maybe_unserialize( $this->meta[ "{$key}" ][0] );
+			}
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Build a headline from a meta key (current post)
+	//-----------------------------------------------------
+
+	protected function get_headline( $key, $before, $after, $fallback = '' ) {
+		$output = '';
+		if ( ( $this->get_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
+			$output = $before . ( $this->get_meta( $key ) ? $this->format_tags( esc_html( $this->get_meta( $key ) ) ) : $fallback ) . $after;
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Build filtered content from a meta key (current post)
+	//-----------------------------------------------------
+
+	protected function get_content( $key, $before, $after, $fallback = '' ) {
+		$output = '';
+		if ( ( $this->get_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
+			$output = $before . ( $this->get_meta( $key ) ? $this->filter_content( $this->get_meta( $key ) ) : $fallback ) . $after;
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Load all meta for a specified post and store in the
+	// loaded_meta property.
+	//-----------------------------------------------------
+
+	protected function load_meta( $id ) {
+		$this->loaded_meta = get_post_meta( $id );
+		return;
+	}
+
+	//-----------------------------------------------------
+	// Reset loaded_meta to an empty array.
+	//-----------------------------------------------------
+
+	protected function unload_meta() {
+		$this->loaded_meta = array();
+		return;
+	}
+
+	//-----------------------------------------------------
+	// Get data for a meta key (loaded meta)
+	//-----------------------------------------------------
+
+	protected function get_loaded_meta( $key ) {
+		$output = false;
+		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
+			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
+				$output = $this->loaded_meta[ "{$key}" ][0];
+			}
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Get unserialized data for a serialized meta key (loaded meta)
+	//-----------------------------------------------------
+
+	protected function get_serialized_loaded_meta( $key ) {
+		$output = false;
+		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
+			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
+				$output = maybe_unserialize( $this->loaded_meta[ "{$key}" ][0] );
+			}
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Build a headline from a meta key (loaded meta)
+	//-----------------------------------------------------
+
+	protected function get_loaded_headline( $key, $before, $after, $fallback = '' ) {
+		$output = '';
+		if ( ( $this->get_loaded_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
+			$output = $before . ( $this->get_loaded_meta( $key ) ? $this->format_tags( esc_html( $this->get_loaded_meta( $key ) ) ) : $fallback ) . $after;
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Build filtered content from a meta key (loaded meta)
+	//-----------------------------------------------------
+
+	protected function get_loaded_content( $key, $before, $after, $fallback = '' ) {
+		$output = '';
+		if ( ( $this->get_loaded_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
+			$output = $before . ( $this->get_loaded_meta( $key ) ? $this->filter_content( $this->get_loaded_meta( $key ) ) : $fallback ) . $after;
+		}
+		return $output;
+	}
+
+	//======================================================================
+	// THEME OPTION METHODS
+	//======================================================================
+
+	//-----------------------------------------------------
+	// Get an option from retrieved theme options
+	//-----------------------------------------------------
+
+	protected function get_option( $key ) {
+		$output = false;
+		if ( isset( $this->opts[ "{$key}" ] ) ) {
+			if ( ! empty( $this->opts[ "{$key}" ] ) ) {
+				$output = $this->opts[ "{$key}" ];
+			}
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Build a headline from a retrieved theme option
+	//-----------------------------------------------------
+
+	protected function get_headline_from_option( $key, $before, $after, $fallback = '' ) {
+		$output = '';
+		if ( ( $this->get_option( $key ) ) || ( ! empty( $fallback ) ) ) {
+			$output = $before . ( $this->get_option( $key ) ? $this->format_tags( esc_html( $this->get_option( $key ) ) ) : $fallback ) . $after;
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Build filtered content from a retrieved theme option
+	//-----------------------------------------------------
+
+	protected function get_content_from_option( $key, $before, $after, $fallback = '' ) {
+		$output = '';
+		if ( ( $this->get_option( $key ) ) || ( ! empty( $fallback ) ) ) {
+			$output = $before . ( $this->get_option( $key ) ? $this->filter_content( $this->get_option( $key ) ) : $fallback ) . $after;
+		}
+		return $output;
+	}
+
+	//======================================================================
+	// UTILITY METHODS
+	//======================================================================
+
+	//-----------------------------------------------------
+	// Create an unordered list from an array
+	//-----------------------------------------------------
 
 	protected function array_to_ul( $array ) {
 		$array  = maybe_unserialize( $array );
@@ -113,7 +277,11 @@ abstract class Method_Layout {
 		return $output;
 	}
 
-	protected function array_to_p( $array, $class = '', $seperator = '' ) {
+	//-----------------------------------------------------
+	// Create a paragraph with line breaks from an array
+	//-----------------------------------------------------
+
+	protected function array_to_p( $array, $class = '', $seperator = '', $show_seperator = false ) {
 		$array  = maybe_unserialize( $array );
 		$output = '';
 
@@ -123,7 +291,7 @@ abstract class Method_Layout {
 				$ac      = count( $array );
 				$i       = 1;
 				foreach ( $array as $item ) {
-					$output .= $this->format_tags( esc_html( $item ) ) . ( $i != $ac ? ( ! empty( $seperator ) ? '<span class="visually-hidden">' . $seperator . '</span>' : '' ) . '<br>' : '' );
+					$output .= $this->format_tags( esc_html( $item ) ) . ( $i != $ac ? ( ! empty( $seperator ) ? ( ! $show_seperator ? '<span class="visually-hidden">' : '' ) . $seperator . ( ! $show_seperator ? '</span>' : '' ) : '' ) . '<br>' : '' );
 					$i++;
 				}
 				$output .= '</p>';
@@ -131,6 +299,10 @@ abstract class Method_Layout {
 		}
 		return $output;
 	}
+
+	//-----------------------------------------------------
+	// Replace format tags in a string with html tags
+	//-----------------------------------------------------
 
 	protected function format_tags( $text ) {
 		$tags = array(
@@ -145,81 +317,9 @@ abstract class Method_Layout {
 		return $this->str_replace_assoc( $tags, $text );
 	}
 
-	protected function get_headline( $key, $before, $after, $fallback = '' ) {
-		$output = '';
-		if ( ( $this->get_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
-			$output = $before . ( $this->get_meta( $key ) ? $this->format_tags( esc_html( $this->get_meta( $key ) ) ) : $fallback ) . $after;
-		}
-		return $output;
-	}
-
-	protected function get_loaded_headline( $key, $before, $after, $fallback = '' ) {
-		$output = '';
-		if ( ( $this->get_loaded_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
-			$output = $before . ( $this->get_loaded_meta( $key ) ? $this->format_tags( esc_html( $this->get_loaded_meta( $key ) ) ) : $fallback ) . $after;
-		}
-		return $output;
-	}
-
-	protected function load_meta( $id ) {
-		$this->loaded_meta = get_post_meta( $id );
-		return;
-	}
-
-	protected function unload_meta() {
-		$this->loaded_meta = array();
-		return;
-	}
-
-	protected function get_loaded_meta( $key ) {
-		$output = false;
-		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
-			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
-				$output = $this->loaded_meta[ "{$key}" ][0];
-			}
-		}
-		return $output;
-	}
-
-	protected function get_serialized_loaded_meta( $key ) {
-		$output = false;
-		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
-			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
-				$output = maybe_unserialize( $this->loaded_meta[ "{$key}" ][0] );
-			}
-		}
-		return $output;
-	}
-
-	protected function get_meta( $key ) {
-		$output = false;
-		if ( isset( $this->meta[ "{$key}" ][0] ) ) {
-			if ( ! empty( $this->meta[ "{$key}" ][0] ) ) {
-				$output = $this->meta[ "{$key}" ][0];
-			}
-		}
-		return $output;
-	}
-
-	protected function get_serialized_meta( $key ) {
-		$output = false;
-		if ( isset( $this->meta[ "{$key}" ][0] ) ) {
-			if ( ! empty( $this->meta[ "{$key}" ][0] ) ) {
-				$output = maybe_unserialize( $this->meta[ "{$key}" ][0] );
-			}
-		}
-		return $output;
-	}
-
-	protected function get_option( $key ) {
-		$output = false;
-		if ( isset( $this->opts[ "{$key}" ] ) ) {
-			if ( ! empty( $this->opts[ "{$key}" ] ) ) {
-				$output = $this->opts[ "{$key}" ];
-			}
-		}
-		return $output;
-	}
+	//-----------------------------------------------------
+	// Check to see if an array key exists.
+	//-----------------------------------------------------
 
 	protected function check_key( $key ) {
 		$output = false;
@@ -249,5 +349,30 @@ abstract class Method_Layout {
 
 	protected function str_replace_assoc( array $replace, $subject ) {
 		return str_replace( array_keys( $replace ), array_values( $replace ), $subject );
+	}
+
+	//-----------------------------------------------------
+	// Add a modal to the layout's HTML
+	//-----------------------------------------------------
+
+	protected function inject_modal( $mid, $mclass = '', $title, $content, $prefiltered = false, $lg = false, $scrollable = false ) {
+		$this->modals .= '
+			<div class="modal fade" id="' . $mid . '" tabindex="-1" role="dialog" aria-labelledby="' . $mid . 'Label" aria-hidden="true">
+				<div class="modal-dialog' . ( $scrollable ? ' modal-dialog-scrollable' : '' ) . ( $lg ? ' modal-lg' : '' ) . '" role="document">
+					<div class="modal-content">
+      					<div class="modal-header">
+        					<h5 class="modal-title" id="' . $mid . 'Label">' . $title . '</h5>
+        					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          						<span aria-hidden="true">&times;</span>
+        					</button>
+      					</div>
+      					<div class="modal-body">
+      						' . ( $prefiltered ? $content : $this->filter_content( $content ) ) . '
+      					</div>  
+    				</div>
+  				</div>
+			</div>
+
+		';
 	}
 }

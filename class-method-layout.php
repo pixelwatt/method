@@ -2,17 +2,17 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.1.1
+// METHOD LAYOUT CLASS v1.1.2
 //
-// You probably don't want to edit this file.
+// You probably don't want or need to edit this file.
 //
 //======================================================================
 
 abstract class Method_Layout {
-	protected $elements = array();
-	protected $meta = array();
+	protected $elements    = array();
+	protected $meta        = array();
 	protected $loaded_meta = array();
-	protected $opts = array();
+	protected $opts        = array();
 	protected $id;
 	protected $html;
 	protected $modals;
@@ -21,42 +21,41 @@ abstract class Method_Layout {
 
 	abstract protected function set_opts();
 
-	/*
-
-		Example:
-		protected function set_opts() {
-			$this->opts = get_option( 'method_options' );
-		}
-
-	*/
-
 	public function build_page( $pid = '', $archive = false ) {
 		$this->set_opts();
 		if ( true == $archive ) {
 			global $wp_query;
 			$this->attr['is_archive'] = true;
-			$this->attr['post_type'] = ( $this->check_key( $wp_query->query_vars['post_type'] ) ? $wp_query->query_vars['post_type'] : 'post' );
+			$this->attr['post_type']  = ( $this->check_key( $wp_query->query_vars['post_type'] ) ? $wp_query->query_vars['post_type'] : 'post' );
+
 			if ( 'post' == $this->attr['post_type'] ) {
 				$this->attr['category'] = ( $this->check_key( $wp_query->queried_object->name ) ? $wp_query->queried_object->name : '' );
 			}
+
 			$this->attr['taxonomy'] = ( $this->check_key( $wp_query->query_vars['taxonomy'] ) ? $wp_query->query_vars['taxonomy'] : '' );
 			$this->determine_attributes();
 			$this->build_layout();
+
 			return $this->html . $this->modals . $this->scripts;
+
 		} elseif ( ( ! empty( $pid ) ) && ( false == $archive ) ) {
 			$this->attr['is_archive'] = false;
-			$this->attr['post_type'] = get_post_type( $this->id );
-			$this->id = $pid;
-			$this->meta = get_post_meta( $this->id );
+			$this->attr['post_type']  = get_post_type( $this->id );
+			$this->id                 = $pid;
+			$this->meta               = get_post_meta( $this->id );
+
 			if ( 'page' == $this->attr['post_type'] ) {
 				$fp = get_option( 'page_on_front' );
 				if ( $fp == $this->id ) {
 					$this->attr['is_front'] = true;
 				}
 			}
+
 			$this->determine_attributes();
 			$this->build_layout();
+
 			return $this->html . $this->modals . $this->scripts;
+
 		} else {
 			return false;
 		}
@@ -69,18 +68,13 @@ abstract class Method_Layout {
 		return;
 	}
 
-
 	abstract protected function determine_attributes();
-
 
 	abstract protected function build_header();
 
-
 	abstract protected function build_footer();
 
-
 	abstract protected function build_components();
-
 
 	protected function inject_modal( $mid, $mclass = '', $title, $content, $prefiltered = false, $lg = false, $scrollable = false ) {
 		$this->modals .= '
@@ -88,7 +82,7 @@ abstract class Method_Layout {
 				<div class="modal-dialog' . ( $scrollable ? ' modal-dialog-scrollable' : '' ) . ( $lg ? ' modal-lg' : '' ) . '" role="document">
 					<div class="modal-content">
       					<div class="modal-header">
-        					<h5 class="modal-title" id="exampleModalLabel">' . $title . '</h5>
+        					<h5 class="modal-title" id="' . $mid . 'Label">' . $title . '</h5>
         					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           						<span aria-hidden="true">&times;</span>
         					</button>
@@ -103,16 +97,15 @@ abstract class Method_Layout {
 		';
 	}
 
-
 	protected function array_to_ul( $array ) {
-		$array = maybe_unserialize( $array );
+		$array  = maybe_unserialize( $array );
 		$output = '';
 
 		if ( ! empty( $array ) ) {
 			if ( is_array( $array ) ) {
-				$output .= '<ul>';
+				$output .= '<ul' . ( ! empty( $class ) ? ' class="' . $class . '"' : '' ) . '>';
 				foreach ( $array as $item ) {
-					$output .= '<li>' . esc_html( $item ) . '</li>';
+					$output .= '<li>' . $this->format_tags( esc_html( $item ) ) . '</li>';
 				}
 				$output .= '</ul>';
 			}
@@ -120,17 +113,17 @@ abstract class Method_Layout {
 		return $output;
 	}
 
-	protected function array_to_p( $array, $class = '' ) {
-		$array = maybe_unserialize( $array );
+	protected function array_to_p( $array, $class = '', $seperator = '' ) {
+		$array  = maybe_unserialize( $array );
 		$output = '';
 
 		if ( ! empty( $array ) ) {
 			if ( is_array( $array ) ) {
 				$output .= '<p' . ( ! empty( $class ) ? ' class="' . $class . '"' : '' ) . '>';
-				$ac = count( $array );
-				$i = 1;
+				$ac      = count( $array );
+				$i       = 1;
 				foreach ( $array as $item ) {
-					$output .= esc_html( $item ) . ( $i != $ac ? '<br>' : '' );
+					$output .= $this->format_tags( esc_html( $item ) ) . ( $i != $ac ? ( ! empty( $seperator ) ? '<span class="visually-hidden">' . $seperator . '</span>' : '' ) . '<br>' : '' );
 					$i++;
 				}
 				$output .= '</p>';
@@ -141,13 +134,13 @@ abstract class Method_Layout {
 
 	protected function format_tags( $text ) {
 		$tags = array(
-			'[br]' => '<br>',
-			'[mbr]' => '<br class="d-inline d-md-none">',
-			'[dbr]' => '<br class="d-xs-none d-sm-none d-md-inline">',
-			'[strong]' => '<strong>',
+			'[br]'      => '<br>',
+			'[mbr]'     => '<br class="d-inline d-sm-inline d-md-none d-lg-none d-xl-none d-xxl-none">',
+			'[dbr]'     => '<br class="d-none d-sm-none d-md-inline d-lg-inline d-xl-inline d-xxl-inline">',
+			'[strong]'  => '<strong>',
 			'[/strong]' => '</strong>',
-			'[em]' => '<em>',
-			'[/em]' => '</em>',
+			'[em]'      => '<em>',
+			'[/em]'     => '</em>',
 		);
 		return $this->str_replace_assoc( $tags, $text );
 	}
@@ -239,7 +232,7 @@ abstract class Method_Layout {
 	}
 
 	//-----------------------------------------------------
-	// Run a string through Wordpress' content filter
+	// Run a string through WordPress' content filter
 	//-----------------------------------------------------
 
 	protected function filter_content( $content ) {

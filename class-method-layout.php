@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.1.3
+// METHOD LAYOUT CLASS v1.1.4
 //
 // You probably don't want or need to edit this file.
 //
@@ -318,6 +318,14 @@ abstract class Method_Layout {
 	}
 
 	//-----------------------------------------------------
+	// Escape html in a string and run through format_tags()
+	//-----------------------------------------------------
+
+	protected function format_headline( $text ) {
+		return $this->format_tags( esc_html( $text ) );
+	}
+
+	//-----------------------------------------------------
 	// Check to see if an array key exists.
 	//-----------------------------------------------------
 
@@ -355,15 +363,16 @@ abstract class Method_Layout {
 	// Add a modal to the layout's HTML
 	//-----------------------------------------------------
 
-	protected function inject_modal( $mid, $mclass = '', $title, $content, $prefiltered = false, $lg = false, $scrollable = false ) {
+	protected function inject_modal( $mid, $mclass = '', $title, $content, $prefiltered = false, $lg = false, $scrollable = false, $v5 = true ) {
+		$close = ( $v5 ? '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' : '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		<span aria-hidden="true">&times;</span>' );
 		$this->modals .= '
-			<div class="modal fade" id="' . $mid . '" tabindex="-1" role="dialog" aria-labelledby="' . $mid . 'Label" aria-hidden="true">
+			<div class="modal fade' . ( ! empty( $mclass ) ? ' ' . $mclass : '' ) . '" id="' . $mid . '" tabindex="-1" role="dialog" aria-labelledby="' . $mid . 'Label" aria-hidden="true">
 				<div class="modal-dialog' . ( $scrollable ? ' modal-dialog-scrollable' : '' ) . ( $lg ? ' modal-lg' : '' ) . '" role="document">
 					<div class="modal-content">
       					<div class="modal-header">
         					<h5 class="modal-title" id="' . $mid . 'Label">' . $title . '</h5>
-        					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          						<span aria-hidden="true">&times;</span>
+        					' . $close . '
         					</button>
       					</div>
       					<div class="modal-body">
@@ -374,5 +383,55 @@ abstract class Method_Layout {
 			</div>
 
 		';
+	}
+
+	protected function inject_bs_modal( $args ) {
+		$defaults = array(
+			'id'          => 'bsModal',
+			'title'       => '',
+			'hide_title'  => false,
+			'content'     => '',
+			'prefiltered' => false,
+			'size'        => '',
+			'scrollable'  => false,
+		);
+		$parsed = wp_parse_args( $args, $defaults );
+		$this->modals .= '
+			<div class="modal fade" id="' . $parsed['id'] . '" tabindex="-1" role="dialog" aria-labelledby="' . $parsed['id'] . 'Label" aria-hidden="true">
+				<div class="modal-dialog' . ( $parsed['scrollable'] ? ' modal-dialog-scrollable' : '' ) . ( ! empty( $parsed['size'] ) ? ' modal-' . $parsed['size'] : '' ) . '" role="document">
+					<div class="modal-content">
+      					<div class="modal-header">
+        					<h5 class="modal-title' . ( $parsed['hide_title'] ? ' visually-hidden' : '' ) . '" id="' . $parsed['id'] . 'Label">' . $parsed['title'] . '</h5>
+        					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        					</button>
+      					</div>
+      					<div class="modal-body">
+      						' . ( $parsed['prefiltered'] ? $parsed['content'] : $this->filter_content( $parsed['content'] ) ) . '
+      					</div>  
+    				</div>
+  				</div>
+			</div>
+
+		';
+	}
+
+	//-----------------------------------------------------
+	// Build an inline style for a background image from ID.
+	//-----------------------------------------------------
+
+	protected function get_bg_inline_style( $id, $size ) {
+		$output = '';
+		if ( ( $id ) && ( ! empty( $id ) ) ) {
+			$output .= ' style="background-image: url(\'' . wp_get_attachment_image_url( $id, $size ) . '\')"';
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Check if a nunber is odd or even.
+	//-----------------------------------------------------
+
+	protected function odd_or_even( $i, $even_text = 'even', $odd_text = 'odd' ) {
+		return ( 0 == $i % 2 ? $even_text : $odd_text );
 	}
 }

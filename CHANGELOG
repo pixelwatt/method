@@ -1,3 +1,19 @@
+## 1.1.4
+
+This release includes bug fixes and additions for the layout class.
+
+Fixes:
+* ( class-method-layout.php ) Revised the inject_modal() method to use Bootstrap 5 markup for the close button by default. A new argument can be passed as false to use Bootstrap 4 markup if needed.
+* ( class-method-layout.php ) Fixed a bug with the inject_modal() method, in which custom CSS classes passed to the method were ignored.
+
+Additions:
+* ( class-method-layout.php ) Added a new method, format_headline(), which escapes html in a string, then runs the string through the format_tags() method.
+* ( class-method-layout.php ) Added a new method to replace the existing inject_modal() method. This new method, inject_bs_modal(), accepts arguments as an array and uses WordPress' standardized method to merge passed args with an array of defaults. This new method also adds support for using the small and extra-large modal sizes, and includes an argument for hiding the modal title. The inject_modal() modal will continue to be included for backwards compatability.
+* ( class-method-layout.php ) Added a new method, get_bg_inline_style(), for conditionally building an inline style tag for a background image, based on whether the passed attachment ID evaluates as true.
+* ( class-method-layout.php ) Added a new method, odd_or_even(), which returns a distinct value based on whether a passed number is odd or even. 'odd' or 'even' is returned by default, but custom values can be passed to the method if needed.
+
+---
+
 ## 1.1.3
 
 This release includes several new methods and enhancements for the Method_Layout class.

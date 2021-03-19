@@ -2,14 +2,13 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.1.4
+// METHOD LAYOUT CLASS v1.1.5
 //
 // You probably don't want or need to edit this file.
 //
 //======================================================================
 
 abstract class Method_Layout {
-	protected $elements    = array();
 	protected $meta        = array();
 	protected $loaded_meta = array();
 	protected $opts        = array();
@@ -261,7 +260,7 @@ abstract class Method_Layout {
 	// Create an unordered list from an array
 	//-----------------------------------------------------
 
-	protected function array_to_ul( $array ) {
+	protected function array_to_ul( $array, $class = '' ) {
 		$array  = maybe_unserialize( $array );
 		$output = '';
 
@@ -365,7 +364,7 @@ abstract class Method_Layout {
 
 	protected function inject_modal( $mid, $mclass = '', $title, $content, $prefiltered = false, $lg = false, $scrollable = false, $v5 = true ) {
 		$close = ( $v5 ? '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' : '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		<span aria-hidden="true">&times;</span>' );
+		<span aria-hidden="true">&times;</span></button>' );
 		$this->modals .= '
 			<div class="modal fade' . ( ! empty( $mclass ) ? ' ' . $mclass : '' ) . '" id="' . $mid . '" tabindex="-1" role="dialog" aria-labelledby="' . $mid . 'Label" aria-hidden="true">
 				<div class="modal-dialog' . ( $scrollable ? ' modal-dialog-scrollable' : '' ) . ( $lg ? ' modal-lg' : '' ) . '" role="document">
@@ -373,7 +372,6 @@ abstract class Method_Layout {
       					<div class="modal-header">
         					<h5 class="modal-title" id="' . $mid . 'Label">' . $title . '</h5>
         					' . $close . '
-        					</button>
       					</div>
       					<div class="modal-body">
       						' . ( $prefiltered ? $content : $this->filter_content( $content ) ) . '
@@ -403,7 +401,6 @@ abstract class Method_Layout {
       					<div class="modal-header">
         					<h5 class="modal-title' . ( $parsed['hide_title'] ? ' visually-hidden' : '' ) . '" id="' . $parsed['id'] . 'Label">' . $parsed['title'] . '</h5>
         					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        					</button>
       					</div>
       					<div class="modal-body">
       						' . ( $parsed['prefiltered'] ? $parsed['content'] : $this->filter_content( $parsed['content'] ) ) . '
@@ -431,7 +428,7 @@ abstract class Method_Layout {
 	// Check if a nunber is odd or even.
 	//-----------------------------------------------------
 
-	protected function odd_or_even( $i, $even_text = 'even', $odd_text = 'odd' ) {
+	protected function odd_or_even( $i, $odd_text = 'odd', $even_text = 'even' ) {
 		return ( 0 == $i % 2 ? $even_text : $odd_text );
 	}
 }

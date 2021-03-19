@@ -1,3 +1,12 @@
+## 1.1.5
+
+Fixes:
+* ( class-method-layout.php ) Added the missing $class argument to the array_to_ul() method.
+* ( class-method-layout.php ) Fixed a bug in the inject_modal() and inject_bs_modal() methods in which an extra button closing tag was being added into the modal header.
+* ( class-method-layout.php ) Reversed the order of the $even_text and $odd_text arguments for the odd_or_even() method.
+
+---
+
 ## 1.1.4
 
 This release includes bug fixes and additions for the layout class.

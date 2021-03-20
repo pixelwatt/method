@@ -13,6 +13,17 @@ del = require('del'),
 watchSass = require("gulp-watch-sass"),
 cleanCSS = require('gulp-clean-css');
 
+gulp.task('assets', function () {
+	var postcss = require('gulp-postcss');
+	var assets  = require('postcss-assets');
+   
+	return gulp.src('./*.css')
+	  .pipe(postcss([assets({
+		loadPaths: ['inc/bootstrap-icons/']
+	  })]))
+	  .pipe(gulp.dest('.'));
+  });
+
 gulp.task('styles', function() {
     return gulp.src('./theme.scss')
       .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
@@ -28,11 +39,11 @@ gulp.task('styles', function() {
 gulp.task('serve', function() {
 
     browserSync.init({
-        proxy: "spitfire.test"
+        proxy: "method.test"
     });
 
     // Watch .scss files
-    gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.task('styles'));
+    gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.series('styles', 'assets'));
 
     gulp.watch(['./**/*.*', '!./node_modules/', '!./.git/']).on('change', browserSync.reload);
     
@@ -54,6 +65,6 @@ gulp.task('scripts', function() {
 gulp.task('watch', function() {
     
       // Watch .scss files
-      gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.task('styles'));
+      gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.series('styles', 'assets'));
     
 });

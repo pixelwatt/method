@@ -1,3 +1,15 @@
+## 1.1.6
+
+This release adds Bootstrap Icons (v1.4.0) to the theme and provides ways to easily included embeded/inline svgs in frontend markup and CSS. This release also includes minor organization of the /inc folder.
+
+Changes:
+* ( class-method-layout.php ) Added a new method, get_bs_icon_svg(), for retrieving an embeded svg element for a passed Bootstrap icon (if the icon exists). The method supports custom sizing, custom classes, and the inclusion of an aria-label attribute on the svg element, if needed.
+* ( inc/bootstrap-icons/ ) Added Bootstrap Icons v1.4.0.
+* ( package.json / gulpfile.js ) Added a new _assets_ gulp task and dependencies. This task uses gulp-postcss and postcss-assets to check newly-compiled css files for svg paths pointed to specific directiories, and converts them into inline SVGs if wrapped in inline(…). the _serve_ and _watch_ tasks now run this task after completing the _styles_ task.
+* ( inc/ ) Organized files in the root of inc/ into folders and removed a legacy bootstrap.bundle file. Paths have been updated in functions.php and gulpfile.js
+
+---
+
 ## 1.1.5
 
 Fixes:

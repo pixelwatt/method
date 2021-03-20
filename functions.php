@@ -31,7 +31,7 @@ require_once('class-method-layout.php');
 // Import a custom navwalker for Bootstrap 4
 //-----------------------------------------------------
 
-require_once get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php';
+require_once get_template_directory() . '/inc/wp-bootstrap-navwalker/class-wp-bootstrap-navwalker.php';
 
 
 //-----------------------------------------------------
@@ -82,7 +82,7 @@ add_image_size( 'header_bg', 1400, 600, true );
 // Configure required plugins
 //-----------------------------------------------------
 
-require_once get_template_directory() . '/inc/class-tgm-plugin-activation.php';
+require_once get_template_directory() . '/inc/tgm-plugin-activation/class-tgm-plugin-activation.php';
 
 add_action( 'tgmpa_register', 'method_register_required_plugins' );
 
@@ -123,8 +123,8 @@ function method_register_required_plugins() {
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.1.5' );
-	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.1.5', false );
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.1.6' );
+	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.1.6', false );
 
 	if ( ! is_admin() ) {
 		wp_deregister_script( 'jquery' );
@@ -141,7 +141,7 @@ function method_admin_scripts() {
 	$wp_scripts = wp_scripts();
 	wp_enqueue_script( 'jquery-ui-dialog' );
     wp_enqueue_style( 'jquery-ui', 'https://ajax.googleapis.com/ajax/libs/jqueryui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css', '', '', false );
-    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin-styles.css', '', '1.1.5' );
+    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin-styles.css', '', '1.1.6' );
 }
 
 add_action( 'admin_enqueue_scripts', 'method_admin_scripts' );

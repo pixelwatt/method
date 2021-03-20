@@ -23,8 +23,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^3.0.0",
     "gulp-watch-sass": "^1.2.4",
-    "jshint": "2.8.0",
-    "postcss-assets": "5.0.0",
-    "gulp-postcss": "9.0.0"
+    "jshint": "2.8.0"
   }
 }

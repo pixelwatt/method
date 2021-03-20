@@ -50,7 +50,7 @@ gulp.task('serve', function() {
 });
 
 gulp.task('scripts', function() {
-    return gulp.src(['inc/bootstrap/js/bootstrap.bundle.js','inc/jquery.matchHeight.js','inc/jarallax.js'])
+    return gulp.src(['inc/bootstrap/js/bootstrap.bundle.js','inc/matchHeight/jquery.matchHeight.js','inc/jarallax/jarallax.js'])
       .pipe(jshint('.jshintrc'))
       .pipe(jshint.reporter('default'))
       .pipe(concat('assets/js/scripts.js'))

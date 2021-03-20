@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.1.5
+// METHOD LAYOUT CLASS v1.1.6
 //
 // You probably don't want or need to edit this file.
 //
@@ -430,5 +430,35 @@ abstract class Method_Layout {
 
 	protected function odd_or_even( $i, $odd_text = 'odd', $even_text = 'even' ) {
 		return ( 0 == $i % 2 ? $even_text : $odd_text );
+	}
+
+	//-----------------------------------------------------
+	// Get a Bootstrap icon
+	//-----------------------------------------------------
+
+	protected function get_bs_icon_svg( $icon, $size = '16', $class = '', $label = '' ) {
+		$output = '';
+		$file = get_template_directory() . '/inc/bootstrap-icons/' . $icon . '.svg';
+		if ( file_exists( $file ) ) {
+			$svg = file_get_contents( $file );
+			$svg = str_replace( 'width="16"', 'width="' . $size . '"', $svg );
+			$svg = str_replace( 'height="16"', 'height="' . $size . '"', $svg );
+			if ( ! empty( $class ) ) {
+				$svg = str_replace( 'class="bi bi-' . $icon . '"', 'class="bi bi-' . $icon . ' ' . $class . '"', $svg );
+			}
+			if ( ! empty ( $label ) ) {
+				$svg_d = new DOMDocument();
+				$svg_d->loadHTML( $svg );
+				$svg_attr = $svg_d->createAttribute( 'aria-label' );
+				$svg_attr->value = $label;
+				$elements = $svg_d->getElementsByTagName( 'svg' );
+				foreach ( $elements as $element ) {
+					$element->appendChild( $svg_attr );
+				}
+				$svg = $svg_d->saveHTML();
+			}
+			$output = $svg;
+		}
+		return $output;
 	}
 }

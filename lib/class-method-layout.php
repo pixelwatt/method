@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.1.6
+// METHOD LAYOUT CLASS v1.2.0
 //
 // You probably don't want or need to edit this file.
 //
@@ -446,7 +446,7 @@ abstract class Method_Layout {
 			if ( ! empty( $class ) ) {
 				$svg = str_replace( 'class="bi bi-' . $icon . '"', 'class="bi bi-' . $icon . ' ' . $class . '"', $svg );
 			}
-			if ( ! empty ( $label ) ) {
+			if ( ! empty( $label ) ) {
 				$svg_d = new DOMDocument();
 				$svg_d->loadHTML( $svg );
 				$svg_attr = $svg_d->createAttribute( 'aria-label' );

@@ -42,19 +42,6 @@ function method_filter_content( $content ) {
 
 
 //-----------------------------------------------------
-// Get content by ID
-//-----------------------------------------------------
-
-
-function method_get_content( $id ) {
-	$content_post = get_post( $id );
-	$content = $content_post->post_content;
-	$content = apply_filters( 'the_content', $content );
-	$content = str_replace( ']]>', ']]&gt;', $content );
-	return $content;
-}
-
-//-----------------------------------------------------
 // Check an array key to see if it exists
 //-----------------------------------------------------
 
@@ -89,8 +76,8 @@ if ( ! function_exists( 'array_key_first' ) ) {
 
 function method_get_post_array( $type, $none = false ) {
 	//lets create an array of boroughs to loop through
-	if ( true == $none ) {
-		$output[0] = 'None';
+	if ( ! empty( $none ) ) {
+		$output[0] = $none;
 	} else {
 		$output = array();
 	}
@@ -116,8 +103,8 @@ function method_get_post_array( $type, $none = false ) {
 
 function method_get_term_array( $tax, $none = false ) {
 	//lets create an array of boroughs to loop through
-	if ( true == $none ) {
-		$output[0] = 'None';
+	if ( ! empty( $none ) ) {
+		$output[0] = $none;
 	} else {
 		$output = array();
 	}

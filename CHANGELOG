@@ -1,3 +1,11 @@
+## 1.2.0
+
+This release splits the functions.php file out into several categorized files to support a more streamlined development workflow. These files are located under the /lib folder. For an overview of how files are structured as of this release, visit the [project wiki](https://github.com/pixelwatt/method/wiki).
+
+Other Changes:
+* ( inc/helper-functions.php ) For both the method_get_post_array() and method_get_term_array() functions, the $none argument now defaults to being an empty string, with the function ignoring it if empty. If a non-empty string is provided, a "none" item will be added to the returned array as the first array value, with an empty key.
+* ( inc/helper-functions.php ) The method_get_content() function was removed. Instead, use: `method_filter_content( get_the_content( null, false, $post->ID ) )` (if outside the layout class) or `$this->filter_content( get_the_content( null, false, $this->id ) )` (if inside the layout class)
+
 ## 1.1.6
 
 This release adds Bootstrap Icons (v1.4.0) to the theme and provides ways to easily included embeded/inline svgs in frontend markup and CSS. This release also includes minor organization of the /inc folder.

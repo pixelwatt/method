@@ -5,18 +5,18 @@ This release splits the functions.php file out into several categorized files to
 Other Changes:
 * ( gulpfile.js ) The styles tasks was renamed to compile-styles, and the assets tasks was renamed to process-styles. The styles task now triggers a series consisting of the 2 tasks.
 * ( gulpfile.js ) The scope of files processed during the process-styles task has been narrowed to only include the theme.css and theme.min.css files, and the tasks now loads the theme's images folder alongside Bootstrap Icons.
-* ( lib/class-method-layout.php ) The get_bs_icon_svg() method now adds `focasable="false"` to returned SVGs to prevent Internet Explorer and legacy Edge from automatically focusing on them.
+* ( lib/class-method-layout.php ) The get_bs_icon_svg() method now adds `focusable="false"` to returned SVGs to prevent Internet Explorer and legacy Edge from automatically focusing on them.
 * ( lib/class-method-layout.php ) A new argument, $hidden, was added to the get_bs_icon_svg() method. If set to true, an aria-hidden attribute (set to true) will be added to the returned SVG element, hiding it from screen readers. The argument is false by default.
 * ( lib/class-method-layout.php ) The get_bs_icon_svg() method was retrofitted to easily support adding multiple attributes to the SVG tag.
 * ( lib/class-method-layout.php ) A fix was added to the get_bs_icon_svg() method to prevent PHP warnings from triggering due to what DOMDocument considers invalid HTML.
-* ( lib/class-method-layout.php ) The build_social_icons() method was moved from the theme layout class into Method layout, and includes several fixes. These include: embeded Bootstrap icons are now used for social icons, the method now ensures that social options have been configured before generating output, and the hidden label for screen users now uses the correct Bootstrap 5 class names for visually-hidden content.
+* ( lib/class-method-layout.php ) The build_social_icons() method was moved from the theme layout class into Method layout, and includes several fixes. These include: embedded Bootstrap icons are now used for social icons, the method now ensures that social options have been configured before generating output, and the hidden label for screen users now uses the correct Bootstrap 5 class names for visually-hidden content.
 * ( lib/class-method-layout.php ) A custom class name for the ul element and the size for embedded icon SVGs can now be passed to the build_social_icons() method.
 * ( lib/cmb2-options-loader.php ) A $prefix variable is now set on each pass through the loop.
 * ( lib/helper-functions.php ) The returned classes for 'full_width_outer_col' now includes the 'full-width-outer-col' class.
 * ( lib/helper-functions.php ) For both the method_get_post_array() and method_get_term_array() functions, the $none argument now defaults to being an empty string, with the function ignoring it if empty. If a non-empty string is provided, a "none" item will be added to the returned array as the first array value, with an empty key.
 * ( lib/helper-functions.php ) The method_get_content() function was removed. Instead, use: `method_filter_content( get_the_content( null, false, $post->ID ) )` (if outside the layout class) or `$this->filter_content( get_the_content( null, false, $this->id ) )` (if inside the layout class)
 * ( lib/theme-customization.php ) In the repeatable options group for social media accounts, the service is now picked via a select element and not radio buttons. Additionally, an option for _None_ was added, and is now the default.
-* ( lib/theme-setup.php ) WordPress' jQuery library is no longer overriden. The option to override jQuery is still available in method-generator if needed.
+* ( lib/theme-setup.php ) WordPress' jQuery library is no longer overridden. The option to override jQuery is still available in method-generator if needed.
 
 ---
 

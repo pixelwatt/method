@@ -96,51 +96,6 @@ class MethodThemeLayout extends Method_Layout {
 		return;
 	}
 
-	protected function build_social_icons() {
-		$output = '';
-
-		$social_links = $this->get_option( 'social_accounts' );
-		if ( ! empty( $social_links ) ) {
-			if ( is_array( $social_links ) ) {
-				$output .= '<ul class="s-ics">';
-
-				foreach ( $social_links as $link ) {
-					$service = ( isset( $link['service'] ) ? ( ! empty( $link['service'] ) ? $link['service'] : 'facebook' ) : 'facebook' );
-
-					switch ( $service ) {
-						case 'facebook':
-							$fa = 'fab fa-facebook-f';
-							break;
-						case 'twitter':
-							$fa = 'fab fa-twitter';
-							break;
-						case 'linkedin':
-							$fa = 'fab fa-linkedin-in';
-							break;
-						case 'instagram':
-							$fa = 'fab fa-instagram';
-							break;
-						case 'pinterest':
-							$fa = 'fab fa-pinterest';
-							break;
-						case 'youtube':
-							$fa = 'fab fa-youtube';
-							break;
-						default:
-							$fa = 'fab fa-facebook-f';
-							break;
-					}
-
-					$output .= ' <li>' . ( isset( $link['url'] ) ? ( ! empty( $link['url'] ) ? '<a href="' . $link['url'] . '">' : '' ) : '' ) . '<i class="' . $fa . '"></i><span class="sr-only sr-only-focusable"> ' . ucwords( $service ) . '</span>' . ( isset( $link['url'] ) ? ( ! empty( $link['url'] ) ? '</a>' : '' ) : '' ) . '</li>';
-				}
-
-				$output .= '</ul>';
-			}
-		}
-
-		return $output;
-	}
-
 	/*
 	Usage for archive pages:
 	get_header();

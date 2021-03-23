@@ -436,29 +436,91 @@ abstract class Method_Layout {
 	// Get a Bootstrap icon
 	//-----------------------------------------------------
 
-	protected function get_bs_icon_svg( $icon, $size = '16', $class = '', $label = '' ) {
+	protected function get_bs_icon_svg( $icon, $size = '16', $class = '', $label = '', $hidden = false ) {
 		$output = '';
 		$file = get_template_directory() . '/inc/bootstrap-icons/' . $icon . '.svg';
 		if ( file_exists( $file ) ) {
 			$svg = file_get_contents( $file );
 			$svg = str_replace( 'width="16"', 'width="' . $size . '"', $svg );
-			$svg = str_replace( 'height="16"', 'height="' . $size . '"', $svg );
+			$svg = str_replace( 'height="16"', 'height="' . $size . '" focusable="false"', $svg );
 			if ( ! empty( $class ) ) {
 				$svg = str_replace( 'class="bi bi-' . $icon . '"', 'class="bi bi-' . $icon . ' ' . $class . '"', $svg );
 			}
-			if ( ! empty( $label ) ) {
+			if ( ( ! empty( $label ) ) || ( $hidden ) ) {
+				$attrs = array();
 				$svg_d = new DOMDocument();
-				$svg_d->loadHTML( $svg );
-				$svg_attr = $svg_d->createAttribute( 'aria-label' );
-				$svg_attr->value = $label;
-				$elements = $svg_d->getElementsByTagName( 'svg' );
-				foreach ( $elements as $element ) {
-					$element->appendChild( $svg_attr );
+				libxml_use_internal_errors( true );
+				if ( ! empty( $label ) ) {
+					$attrs['aria-label'] = $label;
 				}
-				$svg = $svg_d->saveHTML();
+				if ( $hidden ) {
+					$attrs['aria-hidden'] = 'true';
+				}
+				foreach ( $attrs as $key => $value ) {
+					$svg_d->loadHTML( $svg );
+					libxml_clear_errors();
+					$svg_attr = $svg_d->createAttribute( $key );
+					$svg_attr->value = $value;
+					$elements = $svg_d->getElementsByTagName( 'svg' );
+					foreach ( $elements as $element ) {
+						$element->appendChild( $svg_attr );
+					}
+					$svg = $svg_d->saveHTML();
+				}
 			}
 			$output = $svg;
 		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Build social icons from theme options
+	//-----------------------------------------------------
+
+	protected function build_social_icons( $class = 's-ics', $icon_size = 16 ) {
+		$output = '';
+
+		$social_links = $this->get_option( 'social_accounts' );
+		if ( ! empty( $social_links ) ) {
+			if ( is_array( $social_links ) ) {
+				if ( $this->check_key( $social_links[0]['service'] ) ) {
+					$output .= '<ul class="' . $class . '">';
+
+					foreach ( $social_links as $link ) {
+						$service = $link['service'];
+
+						switch ( $service ) {
+							case 'facebook':
+								$icon = $this->get_bs_icon_svg( 'facebook', $icon_size );
+								break;
+							case 'twitter':
+								$icon = $this->get_bs_icon_svg( 'twitter', $icon_size );
+								break;
+							case 'linkedin':
+								$icon = $this->get_bs_icon_svg( 'linkedin', $icon_size );
+								break;
+							case 'instagram':
+								$icon = $this->get_bs_icon_svg( 'instagram', $icon_size );
+								break;
+							case 'pinterest':
+								$icon = $this->get_bs_icon_svg( 'pinterest', $icon_size );
+								break;
+							case 'youtube':
+								$icon = $this->get_bs_icon_svg( 'youtube', $icon_size );
+								break;
+							default:
+								$icon = '';
+								break;
+						}
+
+						$output .= ' <li>' . ( isset( $link['url'] ) ? ( ! empty( $link['url'] ) ? '<a href="' . $link['url'] . '">' : '' ) : '' ) . $icon . '<span class="visually-hidden-focusable"> ' . ucwords( $service ) . '</span>' . ( isset( $link['url'] ) ? ( ! empty( $link['url'] ) ? '</a>' : '' ) : '' ) . '</li>';
+					}
+
+					$output .= '</ul>';
+				}
+			}
+		}
+
 		return $output;
 	}
 }

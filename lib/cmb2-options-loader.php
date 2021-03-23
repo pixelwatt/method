@@ -6,6 +6,7 @@
 
 function method_load_cmb2_options( &$obj, $temps ) {
 	foreach ( $temps as $temp ) {
+		$prefix = str_replace( '-', '_', $temp );
 		switch ( $temp ) {
 			case 'example':
 				$obj->add_field(

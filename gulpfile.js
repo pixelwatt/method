@@ -13,18 +13,18 @@ del = require('del'),
 watchSass = require("gulp-watch-sass"),
 cleanCSS = require('gulp-clean-css');
 
-gulp.task('assets', function () {
+gulp.task('process-styles', function () {
 	var postcss = require('gulp-postcss');
 	var assets  = require('postcss-assets');
    
-	return gulp.src('./*.css')
+	return gulp.src(['./theme.css','theme.min.css'])
 	  .pipe(postcss([assets({
-		loadPaths: ['inc/bootstrap-icons/']
+		loadPaths: ['inc/bootstrap-icons/','assets/images/']
 	  })]))
 	  .pipe(gulp.dest('.'));
   });
 
-gulp.task('styles', function() {
+gulp.task('compile-styles', function() {
     return gulp.src('./theme.scss')
       .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
       .pipe(autoprefixer('last 2 versions'))
@@ -36,14 +36,16 @@ gulp.task('styles', function() {
       .pipe(notify({ message: 'Styles task complete' }));
   });
 
+gulp.task('styles', gulp.series('compile-styles', 'process-styles'));
+
 gulp.task('serve', function() {
 
     browserSync.init({
-        proxy: "method.test"
+        proxy: "method.test:8080"
     });
 
     // Watch .scss files
-    gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.series('styles', 'assets'));
+    gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.series('compile-styles', 'process-styles'));
 
     gulp.watch(['./**/*.*', '!./node_modules/', '!./.git/']).on('change', browserSync.reload);
     
@@ -65,6 +67,6 @@ gulp.task('scripts', function() {
 gulp.task('watch', function() {
     
       // Watch .scss files
-      gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.series('styles', 'assets'));
+      gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.series('compile-styles', 'process-styles'));
     
 });

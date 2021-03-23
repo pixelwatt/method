@@ -64,8 +64,9 @@ function method_register_theme_options_metabox() {
 		array(
 			'name' => 'Service',
 			'id'   => 'service',
-			'type' => 'radio',
-			'default' => 'facebook',
+			'type' => 'select',
+			'show_option_none' => true,
+			'default' => '',
 			'desc' => __( 'Which service are you adding a link for?', 'method' ),
 			'options' => array(
 				'facebook' => esc_attr__( 'Facebook', 'method' ),

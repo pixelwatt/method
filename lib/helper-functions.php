@@ -15,7 +15,7 @@ function method_get_class( $class ) {
 	if ( ! empty( $class ) ) {
 		switch ( $class ) {
 			case 'full_width_outer_col':
-				$output = 'col-12 col-sm-11';
+				$output = 'full-width-outer-col col-12 col-sm-11';
 				break;
 			case 'full_width_container':
 				$output = 'full-width-container';
@@ -74,7 +74,7 @@ if ( ! function_exists( 'array_key_first' ) ) {
 // Get an array of post IDs and titles
 //-----------------------------------------------------
 
-function method_get_post_array( $type, $none = false ) {
+function method_get_post_array( $type, $none = '' ) {
 	//lets create an array of boroughs to loop through
 	if ( ! empty( $none ) ) {
 		$output[0] = $none;
@@ -101,7 +101,7 @@ function method_get_post_array( $type, $none = false ) {
 // Get an array of term ids and names
 //-----------------------------------------------------
 
-function method_get_term_array( $tax, $none = false ) {
+function method_get_term_array( $tax, $none = '' ) {
 	//lets create an array of boroughs to loop through
 	if ( ! empty( $none ) ) {
 		$output[0] = $none;

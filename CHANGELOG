@@ -1,3 +1,9 @@
+## 1.2.1
+
+This release upgrades Bootstrap to v5.0.0-beta3 and includes changes to the theme's .gitignore file. The theme's stylesheet and compiled js file are no longer tracked, and will need to be generated using the following command: `gulp scripts styles`.
+
+---
+
 ## 1.2.0
 
 This release splits the functions.php file out into several categorized files to support a more streamlined development workflow. These files are located under the /lib folder. For an overview of how files are structured as of this release, visit the [project wiki](https://github.com/pixelwatt/method/wiki).

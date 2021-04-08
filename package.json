@@ -1,6 +1,6 @@
 {
   "name": "method",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A barebones foundation for custom theme development.",
   "main": "index.js",
   "scripts": {

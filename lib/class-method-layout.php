@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.2.0
+// METHOD LAYOUT CLASS v1.2.2
 //
 // You probably don't want or need to edit this file.
 //
@@ -523,4 +523,35 @@ abstract class Method_Layout {
 
 		return $output;
 	}
+
+	//-----------------------------------------------------
+	// Build js for an interactive observer
+	//-----------------------------------------------------
+
+	protected function build_observer( $elements, $threshold = 1 ) {
+		$output = '
+			var observer = new IntersectionObserver(function(entries) {
+				for (let entry of entries) {
+					if(entry.isIntersecting === true) {
+						if(entry[\'intersectionRatio\'] === 1) {
+		';
+		foreach ( $elements as $key => $value ) {
+			$output .= 'if(entry[\'target\'][\'id\'] === "' . $key . '") {';
+			foreach ( $value as $line ) {
+				$output .= $line . ';';
+			}
+			$output .= 'observer.unobserve(document.querySelector("#' . $key . '")); }';
+		}
+		$output .= '
+						}
+					}
+				}
+			}, { threshold: ' . $threshold . ', root:null });
+		';
+		foreach ( $elements as $key => $value ) {
+			$output .= 'observer.observe(document.querySelector("#' . $key . '"));';
+		}
+		return $output;
+	}
+
 }

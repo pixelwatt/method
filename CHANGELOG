@@ -1,3 +1,9 @@
+## 1.2.2
+
+Added a new method to the Method_Layout class, build_observer(), for building intersection observers that trigger specified actions when a tracked element is fully in view.
+
+---
+
 ## 1.2.1
 
 This release upgrades Bootstrap to v5.0.0-beta3 and includes changes to the theme's .gitignore file. The theme's stylesheet and compiled js file are no longer tracked, and will need to be generated using the following command: `gulp scripts styles`.

@@ -51,10 +51,10 @@
 //======================================================================
 
 //-----------------------------------------------------
-// Import a custom navwalker for Bootstrap 4
+// Import a custom navwalker for Bootstrap 5
 //-----------------------------------------------------
 
-require_once get_template_directory() . '/inc/wp-bootstrap-navwalker/class-wp-bootstrap-navwalker.php';
+require_once get_template_directory() . '/inc/bootstrap-5-navwalker/class-bootstrap_5_wp_nav_menu_walker.php';
 
 //-----------------------------------------------------
 // Import theme files.

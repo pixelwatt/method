@@ -1,6 +1,6 @@
 {
   "name": "method",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A barebones foundation for custom theme development.",
   "main": "index.js",
   "scripts": {
@@ -9,22 +9,16 @@
   "author": "Rob Clark",
   "license": "LGPL",
   "devDependencies": {
-	"browser-sync": "^2.26.3",
-    "del": "^3.0.0",
-    "gulp": "^4.0.0",
-    "gulp-autoprefixer": "^4.0.0",
-    "gulp-cache": "^1.0.1",
+    "browser-sync": "^2.26.14",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
-    "gulp-dart-sass": "^0.9.1",
-    "gulp-imagemin": "^4.0.0",
-    "gulp-jshint": "^2.0.4",
-    "gulp-notify": "^3.0.0",
+    "gulp-dart-sass": "^1.0.2",
+    "gulp-notify": "^4.0.0",
     "gulp-postcss": "9.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^3.0.0",
-    "gulp-watch-sass": "^1.2.4",
-    "jshint": "2.8.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-uglify": "^3.0.2",
     "postcss-assets": "5.0.0"
   }
 }

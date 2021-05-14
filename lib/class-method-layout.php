@@ -522,6 +522,11 @@ abstract class Method_Layout {
 		return $output;
 	}
 
+	//-----------------------------------------------------
+	// This method provides the same functionality of php8's str_ends_with()
+	// Provided by javalc6@gmail.com https://www.php.net/manual/en/function.str-ends-with.php#125967
+	//-----------------------------------------------------
+
 	protected function endsWith($haystack, $needle) {
 		$length = strlen($needle);
 		return $length > 0 ? substr($haystack, -$length) === $needle : true;

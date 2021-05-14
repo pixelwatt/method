@@ -1,3 +1,12 @@
+## 1.2.5
+
+Changes:
+* ( lib/class-method-layout.php ) Added a new 'hide_header' argument to the inject_bs_modal() method, which, when true, will hide the modal header and move the close button into the modal body.
+* ( lib/class-method-layout.php ) Added a new method, get_svg(), for inlining svgs set through custom editor options (by attachment ID). The method falls back to wp_get_attachment_image() if the attachment ID is not for an svg.
+* ( lib/class-method-layout.php ) Added a new method, endsWith(), to mimic the functionality of php8's str_ends_with() function.
+
+---
+
 ## 1.2.4
 
 This release contains optimizations for gulpfile.js, includes several upgrades for bundled libraries, and switches to a new Bootstrap navwalker. 

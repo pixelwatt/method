@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.2.2
+// METHOD LAYOUT CLASS v1.2.5
 //
 // You probably don't want or need to edit this file.
 //
@@ -392,18 +392,22 @@ abstract class Method_Layout {
 			'prefiltered' => false,
 			'size'        => '',
 			'scrollable'  => false,
+			'hide_header' => false,
 		);
 		$parsed = wp_parse_args( $args, $defaults );
 		$this->modals .= '
 			<div class="modal fade" id="' . $parsed['id'] . '" tabindex="-1" role="dialog" aria-labelledby="' . $parsed['id'] . 'Label" aria-hidden="true">
 				<div class="modal-dialog' . ( $parsed['scrollable'] ? ' modal-dialog-scrollable' : '' ) . ( ! empty( $parsed['size'] ) ? ' modal-' . $parsed['size'] : '' ) . '" role="document">
 					<div class="modal-content">
-      					<div class="modal-header">
+      					<div class="modal-header' . ( $parsed['hide_header'] ? ' visually-hidden' : '' ) . '">
         					<h5 class="modal-title' . ( $parsed['hide_title'] ? ' visually-hidden' : '' ) . '" id="' . $parsed['id'] . 'Label">' . $parsed['title'] . '</h5>
-        					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							' . ( $parsed['hide_header'] ? '' : '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' ) . '
       					</div>
       					<div class="modal-body">
-      						' . ( $parsed['prefiltered'] ? $parsed['content'] : $this->filter_content( $parsed['content'] ) ) . '
+						  	<div class="content-wrap">
+						  		' . ( $parsed['hide_header'] ? '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' : '' ) . '
+      							' . ( $parsed['prefiltered'] ? $parsed['content'] : $this->filter_content( $parsed['content'] ) ) . '
+							</div>
       					</div>  
     				</div>
   				</div>
@@ -471,6 +475,56 @@ abstract class Method_Layout {
 			$output = $svg;
 		}
 		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Inline a SVG
+	//-----------------------------------------------------
+
+	protected function get_svg( $id, $class = '', $label = '', $hidden = false, $fallback_size = 'full' ) {
+		$output = '';
+		$file = get_attached_file( $id );
+		if ( file_exists( $file ) ) {
+			if ( $this->endsWith( $file, '.svg' ) ) {
+				$svg = file_get_contents( $file );
+				if ( ( ! empty( $label ) ) || ( ! empty( $class ) ) || ( $hidden ) ) {
+					$attrs = array();
+					$svg_d = new DOMDocument();
+					libxml_use_internal_errors( true );
+					if ( ! empty( $label ) ) {
+						$attrs['aria-label'] = $label;
+					} else {
+						$attrs['aria-label'] = esc_attr( wp_get_attachment_caption( $id ) );
+					}
+					if ( ! empty( $class ) ) {
+						$attrs['class'] = $class;
+					}
+					if ( $hidden ) {
+						$attrs['aria-hidden'] = 'true';
+					}
+					foreach ( $attrs as $key => $value ) {
+						$svg_d->loadHTML( $svg );
+						libxml_clear_errors();
+						$svg_attr = $svg_d->createAttribute( $key );
+						$svg_attr->value = $value;
+						$elements = $svg_d->getElementsByTagName( 'svg' );
+						foreach ( $elements as $element ) {
+							$element->appendChild( $svg_attr );
+						}
+						$svg = $svg_d->saveHTML();
+					}
+				}
+			} else {
+				$svg = wp_get_attachment_image( $id, $fallback_size, false, array( 'class' => $class ) );
+			}
+			$output = $svg;
+		}
+		return $output;
+	}
+
+	protected function endsWith($haystack, $needle) {
+		$length = strlen($needle);
+		return $length > 0 ? substr($haystack, -$length) === $needle : true;
 	}
 
 	//-----------------------------------------------------

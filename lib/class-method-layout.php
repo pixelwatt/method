@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.2.5
+// METHOD LAYOUT CLASS v1.3.0
 //
 // You probably don't want or need to edit this file.
 //
@@ -69,6 +69,23 @@ abstract class Method_Layout {
 		return;
 	}
 
+	public function init_page( $pid, $standalone = false ) {
+		$this->set_opts();
+		$this->attr['standalone'] = $standalone;
+		$this->attr['is_archive'] = false;
+		$this->attr['post_type']  = get_post_type( $this->id );
+		$this->id                 = $pid;
+		$this->meta               = get_post_meta( $this->id );
+
+		if ( 'page' == $this->attr['post_type'] ) {
+			$fp = get_option( 'page_on_front' );
+			if ( $fp == $this->id ) {
+				$this->attr['is_front'] = true;
+			}
+		}
+		return;
+	}
+
 	//======================================================================
 	// ABSTRACT METHODS
 	//======================================================================
@@ -84,6 +101,102 @@ abstract class Method_Layout {
 	abstract protected function build_components();
 
 	//======================================================================
+	// FRONTEND METHODS
+	//======================================================================
+
+	//-----------------------------------------------------
+	// A public method for building a single component
+	//-----------------------------------------------------
+
+	public function build_component( $component ) {
+		if ( $this->attr['standalone'] ) {
+			$this->reset_markup();
+		} else {
+			$this->reset_html();
+		}
+		$output = '';
+		$this->attr['components'] = array();
+		$this->attr['components'][] = $component;
+		$this->build_components( $items );
+		if ( $this->attr['standalone'] ) {
+			$output = $this->get_merged_markup();
+			$this->reset_markup();
+		} else {
+			$output = $this->html;
+			$this->reset_html();
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// A public method for getting the header
+	//-----------------------------------------------------
+
+	public function get_header_markup() {
+		if ( $this->attr['standalone'] ) {
+			$this->reset_markup();
+		} else {
+			$this->reset_html();
+		}
+		$output = '';
+		$this->build_header();
+		if ( $this->attr['standalone'] ) {
+			$output = $this->get_merged_markup();
+			$this->reset_markup();
+		} else {
+			$output = $this->html;
+			$this->reset_html();
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// A public method for getting the footer
+	//-----------------------------------------------------
+
+	public function get_footer_markup() {
+		if ( $this->attr['standalone'] ) {
+			$this->reset_markup();
+		} else {
+			$this->reset_html();
+		}
+		$output = '';
+		$this->build_footer();
+		// Any components built after calling this function on the frontend will need to be built with $standalone passed as true
+		$output = $this->get_merged_markup();
+		$this->reset_markup();
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Get all markup fields as a combined string
+	//-----------------------------------------------------
+
+	protected function get_merged_markup() {
+		return $this->html . $this->modals . $this->scripts;
+	}
+
+	//-----------------------------------------------------
+	// Reset html
+	//-----------------------------------------------------
+
+	protected function reset_html() {
+		$this->html = '';
+		return;
+	}
+
+	//-----------------------------------------------------
+	// Reset markup fields
+	//-----------------------------------------------------
+
+	protected function reset_markup() {
+		$this->html = '';
+		$this->scripts = '';
+		$this->modals = '';
+		return;
+	}
+
+	//======================================================================
 	// POST META METHODS
 	//======================================================================
 
@@ -91,7 +204,7 @@ abstract class Method_Layout {
 	// Get data for a meta key (current post)
 	//-----------------------------------------------------
 
-	protected function get_meta( $key ) {
+	public function get_meta( $key ) {
 		$output = false;
 		if ( isset( $this->meta[ "{$key}" ][0] ) ) {
 			if ( ! empty( $this->meta[ "{$key}" ][0] ) ) {
@@ -105,7 +218,7 @@ abstract class Method_Layout {
 	// Get unserialized data for a serialized meta key (current post)
 	//-----------------------------------------------------
 
-	protected function get_serialized_meta( $key ) {
+	public function get_serialized_meta( $key ) {
 		$output = false;
 		if ( isset( $this->meta[ "{$key}" ][0] ) ) {
 			if ( ! empty( $this->meta[ "{$key}" ][0] ) ) {
@@ -119,7 +232,7 @@ abstract class Method_Layout {
 	// Build a headline from a meta key (current post)
 	//-----------------------------------------------------
 
-	protected function get_headline( $key, $before, $after, $fallback = '' ) {
+	public function get_headline( $key, $before, $after, $fallback = '' ) {
 		$output = '';
 		if ( ( $this->get_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
 			$output = $before . ( $this->get_meta( $key ) ? $this->format_tags( esc_html( $this->get_meta( $key ) ) ) : $fallback ) . $after;
@@ -131,7 +244,7 @@ abstract class Method_Layout {
 	// Build filtered content from a meta key (current post)
 	//-----------------------------------------------------
 
-	protected function get_content( $key, $before, $after, $fallback = '' ) {
+	public function get_content( $key, $before, $after, $fallback = '' ) {
 		$output = '';
 		if ( ( $this->get_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
 			$output = $before . ( $this->get_meta( $key ) ? $this->filter_content( $this->get_meta( $key ) ) : $fallback ) . $after;
@@ -144,7 +257,7 @@ abstract class Method_Layout {
 	// loaded_meta property.
 	//-----------------------------------------------------
 
-	protected function load_meta( $id ) {
+	public function load_meta( $id ) {
 		$this->loaded_meta = get_post_meta( $id );
 		return;
 	}
@@ -153,7 +266,7 @@ abstract class Method_Layout {
 	// Reset loaded_meta to an empty array.
 	//-----------------------------------------------------
 
-	protected function unload_meta() {
+	public function unload_meta() {
 		$this->loaded_meta = array();
 		return;
 	}
@@ -162,7 +275,7 @@ abstract class Method_Layout {
 	// Get data for a meta key (loaded meta)
 	//-----------------------------------------------------
 
-	protected function get_loaded_meta( $key ) {
+	public function get_loaded_meta( $key ) {
 		$output = false;
 		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
 			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
@@ -176,7 +289,7 @@ abstract class Method_Layout {
 	// Get unserialized data for a serialized meta key (loaded meta)
 	//-----------------------------------------------------
 
-	protected function get_serialized_loaded_meta( $key ) {
+	public function get_serialized_loaded_meta( $key ) {
 		$output = false;
 		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
 			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
@@ -190,7 +303,7 @@ abstract class Method_Layout {
 	// Build a headline from a meta key (loaded meta)
 	//-----------------------------------------------------
 
-	protected function get_loaded_headline( $key, $before, $after, $fallback = '' ) {
+	public function get_loaded_headline( $key, $before, $after, $fallback = '' ) {
 		$output = '';
 		if ( ( $this->get_loaded_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
 			$output = $before . ( $this->get_loaded_meta( $key ) ? $this->format_tags( esc_html( $this->get_loaded_meta( $key ) ) ) : $fallback ) . $after;
@@ -202,7 +315,7 @@ abstract class Method_Layout {
 	// Build filtered content from a meta key (loaded meta)
 	//-----------------------------------------------------
 
-	protected function get_loaded_content( $key, $before, $after, $fallback = '' ) {
+	public function get_loaded_content( $key, $before, $after, $fallback = '' ) {
 		$output = '';
 		if ( ( $this->get_loaded_meta( $key ) ) || ( ! empty( $fallback ) ) ) {
 			$output = $before . ( $this->get_loaded_meta( $key ) ? $this->filter_content( $this->get_loaded_meta( $key ) ) : $fallback ) . $after;
@@ -218,7 +331,7 @@ abstract class Method_Layout {
 	// Get an option from retrieved theme options
 	//-----------------------------------------------------
 
-	protected function get_option( $key ) {
+	public function get_option( $key ) {
 		$output = false;
 		if ( isset( $this->opts[ "{$key}" ] ) ) {
 			if ( ! empty( $this->opts[ "{$key}" ] ) ) {
@@ -232,7 +345,7 @@ abstract class Method_Layout {
 	// Build a headline from a retrieved theme option
 	//-----------------------------------------------------
 
-	protected function get_headline_from_option( $key, $before, $after, $fallback = '' ) {
+	public function get_headline_from_option( $key, $before, $after, $fallback = '' ) {
 		$output = '';
 		if ( ( $this->get_option( $key ) ) || ( ! empty( $fallback ) ) ) {
 			$output = $before . ( $this->get_option( $key ) ? $this->format_tags( esc_html( $this->get_option( $key ) ) ) : $fallback ) . $after;
@@ -244,7 +357,7 @@ abstract class Method_Layout {
 	// Build filtered content from a retrieved theme option
 	//-----------------------------------------------------
 
-	protected function get_content_from_option( $key, $before, $after, $fallback = '' ) {
+	public function get_content_from_option( $key, $before, $after, $fallback = '' ) {
 		$output = '';
 		if ( ( $this->get_option( $key ) ) || ( ! empty( $fallback ) ) ) {
 			$output = $before . ( $this->get_option( $key ) ? $this->filter_content( $this->get_option( $key ) ) : $fallback ) . $after;
@@ -260,7 +373,7 @@ abstract class Method_Layout {
 	// Create an unordered list from an array
 	//-----------------------------------------------------
 
-	protected function array_to_ul( $array, $class = '' ) {
+	public function array_to_ul( $array, $class = '' ) {
 		$array  = maybe_unserialize( $array );
 		$output = '';
 
@@ -280,7 +393,7 @@ abstract class Method_Layout {
 	// Create a paragraph with line breaks from an array
 	//-----------------------------------------------------
 
-	protected function array_to_p( $array, $class = '', $seperator = '', $show_seperator = false ) {
+	public function array_to_p( $array, $class = '', $seperator = '', $show_seperator = false ) {
 		$array  = maybe_unserialize( $array );
 		$output = '';
 
@@ -303,7 +416,7 @@ abstract class Method_Layout {
 	// Replace format tags in a string with html tags
 	//-----------------------------------------------------
 
-	protected function format_tags( $text ) {
+	public function format_tags( $text ) {
 		$tags = array(
 			'[br]'      => '<br>',
 			'[mbr]'     => '<br class="d-inline d-sm-inline d-md-none d-lg-none d-xl-none d-xxl-none">',
@@ -320,7 +433,7 @@ abstract class Method_Layout {
 	// Escape html in a string and run through format_tags()
 	//-----------------------------------------------------
 
-	protected function format_headline( $text ) {
+	public function format_headline( $text ) {
 		return $this->format_tags( esc_html( $text ) );
 	}
 
@@ -328,7 +441,7 @@ abstract class Method_Layout {
 	// Check to see if an array key exists.
 	//-----------------------------------------------------
 
-	protected function check_key( $key ) {
+	public function check_key( $key ) {
 		$output = false;
 		if ( isset( $key ) ) {
 			if ( ! empty( $key ) ) {
@@ -342,7 +455,7 @@ abstract class Method_Layout {
 	// Run a string through WordPress' content filter
 	//-----------------------------------------------------
 
-	protected function filter_content( $content ) {
+	public function filter_content( $content ) {
 		if ( ! empty( $content ) ) {
 			$content = apply_filters( 'the_content', $content );
 		}
@@ -354,7 +467,7 @@ abstract class Method_Layout {
 	// src: https://www.php.net/manual/en/function.str-replace.php#95198
 	//-----------------------------------------------------
 
-	protected function str_replace_assoc( array $replace, $subject ) {
+	public function str_replace_assoc( array $replace, $subject ) {
 		return str_replace( array_keys( $replace ), array_values( $replace ), $subject );
 	}
 
@@ -362,7 +475,7 @@ abstract class Method_Layout {
 	// Add a modal to the layout's HTML
 	//-----------------------------------------------------
 
-	protected function inject_modal( $mid, $mclass = '', $title, $content, $prefiltered = false, $lg = false, $scrollable = false, $v5 = true ) {
+	public function inject_modal( $mid, $mclass = '', $title, $content, $prefiltered = false, $lg = false, $scrollable = false, $v5 = true ) {
 		$close = ( $v5 ? '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' : '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		<span aria-hidden="true">&times;</span></button>' );
 		$this->modals .= '
@@ -383,7 +496,7 @@ abstract class Method_Layout {
 		';
 	}
 
-	protected function inject_bs_modal( $args ) {
+	public function inject_bs_modal( $args ) {
 		$defaults = array(
 			'id'          => 'bsModal',
 			'title'       => '',
@@ -393,34 +506,46 @@ abstract class Method_Layout {
 			'size'        => '',
 			'scrollable'  => false,
 			'hide_header' => false,
+			'prepend_header' => '',
+			'append_header' => '',
+			'prepend_body' => '<div class="content-wrap">',
+			'append_body' => '</div>',
+			'return'  => false,
 		);
 		$parsed = wp_parse_args( $args, $defaults );
-		$this->modals .= '
+		$output .= '
 			<div class="modal fade" id="' . $parsed['id'] . '" tabindex="-1" role="dialog" aria-labelledby="' . $parsed['id'] . 'Label" aria-hidden="true">
 				<div class="modal-dialog' . ( $parsed['scrollable'] ? ' modal-dialog-scrollable' : '' ) . ( ! empty( $parsed['size'] ) ? ' modal-' . $parsed['size'] : '' ) . '" role="document">
 					<div class="modal-content">
       					<div class="modal-header' . ( $parsed['hide_header'] ? ' visually-hidden' : '' ) . '">
+							' . $parsed['prepend_header'] . '
         					<h5 class="modal-title' . ( $parsed['hide_title'] ? ' visually-hidden' : '' ) . '" id="' . $parsed['id'] . 'Label">' . $parsed['title'] . '</h5>
 							' . ( $parsed['hide_header'] ? '' : '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' ) . '
+							' . $parsed['append_header'] . '
       					</div>
       					<div class="modal-body">
-						  	<div class="content-wrap">
-						  		' . ( $parsed['hide_header'] ? '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' : '' ) . '
-      							' . ( $parsed['prefiltered'] ? $parsed['content'] : $this->filter_content( $parsed['content'] ) ) . '
-							</div>
+						  	' . $parsed['prepend_body'] . '
+							' . ( $parsed['hide_header'] ? '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' : '' ) . '
+							' . ( $parsed['prefiltered'] ? $parsed['content'] : $this->filter_content( $parsed['content'] ) ) . '
+							' . $parsed['append_body'] . '
       					</div>  
     				</div>
   				</div>
 			</div>
-
 		';
+		if ( $parsed['return'] ) {
+			return $output;
+		} else {
+			$this->modals .= $output;
+			return;
+		}
 	}
 
 	//-----------------------------------------------------
 	// Build an inline style for a background image from ID.
 	//-----------------------------------------------------
 
-	protected function get_bg_inline_style( $id, $size ) {
+	public function get_bg_inline_style( $id, $size ) {
 		$output = '';
 		if ( ( $id ) && ( ! empty( $id ) ) ) {
 			$output .= ' style="background-image: url(\'' . wp_get_attachment_image_url( $id, $size ) . '\')"';
@@ -432,7 +557,7 @@ abstract class Method_Layout {
 	// Check if a nunber is odd or even.
 	//-----------------------------------------------------
 
-	protected function odd_or_even( $i, $odd_text = 'odd', $even_text = 'even' ) {
+	public function odd_or_even( $i, $odd_text = 'odd', $even_text = 'even' ) {
 		return ( 0 == $i % 2 ? $even_text : $odd_text );
 	}
 
@@ -440,7 +565,7 @@ abstract class Method_Layout {
 	// Get a Bootstrap icon
 	//-----------------------------------------------------
 
-	protected function get_bs_icon_svg( $icon, $size = '16', $class = '', $label = '', $hidden = false ) {
+	public function get_bs_icon_svg( $icon, $size = '16', $class = '', $label = '', $hidden = false ) {
 		$output = '';
 		$file = get_template_directory() . '/inc/bootstrap-icons/' . $icon . '.svg';
 		if ( file_exists( $file ) ) {
@@ -481,7 +606,7 @@ abstract class Method_Layout {
 	// Inline a SVG
 	//-----------------------------------------------------
 
-	protected function get_svg( $id, $class = '', $label = '', $hidden = false, $fallback_size = 'full' ) {
+	public function get_svg( $id, $class = '', $label = '', $hidden = false, $fallback_size = 'full' ) {
 		$output = '';
 		$file = get_attached_file( $id );
 		if ( file_exists( $file ) ) {
@@ -522,12 +647,7 @@ abstract class Method_Layout {
 		return $output;
 	}
 
-	//-----------------------------------------------------
-	// This method provides the same functionality of php8's str_ends_with()
-	// Provided by javalc6@gmail.com https://www.php.net/manual/en/function.str-ends-with.php#125967
-	//-----------------------------------------------------
-
-	protected function endsWith($haystack, $needle) {
+	public function endsWith($haystack, $needle) {
 		$length = strlen($needle);
 		return $length > 0 ? substr($haystack, -$length) === $needle : true;
 	}
@@ -536,7 +656,7 @@ abstract class Method_Layout {
 	// Build social icons from theme options
 	//-----------------------------------------------------
 
-	protected function build_social_icons( $class = 's-ics', $icon_size = 16 ) {
+	public function build_social_icons( $class = 's-ics', $icon_size = 16 ) {
 		$output = '';
 
 		$social_links = $this->get_option( 'social_accounts' );
@@ -587,7 +707,7 @@ abstract class Method_Layout {
 	// Build js for an interactive observer
 	//-----------------------------------------------------
 
-	protected function build_observer( $elements, $threshold = 1 ) {
+	public function build_observer( $elements, $threshold = 1 ) {
 		$output = '
 			var observer = new IntersectionObserver(function(entries) {
 				for (let entry of entries) {

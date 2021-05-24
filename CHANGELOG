@@ -1,3 +1,20 @@
+## 1.3.0
+
+This release makes it possible to build layouts directly inside template files, while still being able to use the theme layout class for the header, footer, and any needed reusable components. It also includes new arguments for Method_Layout's inject_bs_modal() method and an upgraded Bootstrap release.
+
+Changes:
+* ( lib/class-method-layout.php ) Added a new method, init_page(), for setting up the layout class from a template file. This method is intended to be used in the place of the build_layout() method, which requires all layout code to be contained within the theme's layout class. By default, the build_component(), get_header_markup(), and get_footer_markup() methods will only return markup from $this->html. Any added scripts or modals will be returned with get_footer_markup() when it is called. If you do no intend to call get_footer_markup(), pass the $standalone argument for init_page() as true. When set to true, build_component(), get_header_markup(), and get_footer_markup() will return merged output containing the contents of $this->html, $this->scripts, and $this->modals, resetting the contents of each every time one of the methods is called.
+* ( lib/class-method-layout.php ) Added a new method, build_component(), for building a single component contained within the theme layout class build_components() method.
+* ( lib/class-method-layout.php ) Added a new method, get_header_markup(), for returning the contents of the build_header() method.
+* ( lib/class-method-layout.php ) Added a new method, get_footer_markup(), for returning the contents of the build_footer() method.
+* ( lib/class-method-layout.php ) Added new methods (get_merged_markup(), reset_html(), and reset_markup()) for merging and resetting the contents of $this->html, $this->modals, and $this->scripts as needed.
+* ( lib/class-method-layout.php ) Added new arguments to the inject_bs_modal() method ('prepend_header', 'append_header', 'prepend_body', 'append_body') for appending and prepending markup to the modal-header and modal-body divs
+* ( lib/class-method-layout.php ) Added a new argument, 'return', to the inject_bs_modal() method to control whether modal markup is returned or added to the class modal attribute. By default, this argument is false.
+* ( lib/class-method-layout.php ) The following methods are now public and can be used outside of the theme layout class: get_meta(), get_serialized_meta(), get_headline(), get_content(), load_meta(), unload_meta(), get_loaded_meta(), get_serialized_loaded_meta(), get_loaded_headline(), get_loaded_content(), get_option(), get_headline_from_option(), get_content_from_option(), array_to_ul(), array_to_p(), format_tags(), format_headline(), check_key(), filter_content(), str_replace_assoc(), inject_modal(), inject_bs_modal(), get_bg_inline_style(), odd_or_even(), get_bs_icon_svg(), get_svg(), endsWith(), build_social_icons(), build_observer()
+* ( inc/bootstrap ) Bundled Bootstrap assets upgraded to Bootstrap v5.0.1
+
+---
+
 ## 1.2.5
 
 Changes:

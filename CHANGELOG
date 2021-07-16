@@ -1,3 +1,12 @@
+## 1.3.2
+
+Changes:
+* ( lib/class-method-layout.php ) Fixed an issue in init_page() that could cause the post type to not be correctly set.
+* ( README.md ) Updated copy and linked to the new Method wiki.
+* Migrated to new theme branding.
+
+---
+
 ## 1.3.0
 
 This release makes it possible to build layouts directly inside template files, while still being able to use the theme layout class for the header, footer, and any needed reusable components. It also includes new arguments for Method_Layout's inject_bs_modal() method and an upgraded Bootstrap release.

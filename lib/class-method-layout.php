@@ -73,8 +73,8 @@ abstract class Method_Layout {
 		$this->set_opts();
 		$this->attr['standalone'] = $standalone;
 		$this->attr['is_archive'] = false;
-		$this->attr['post_type']  = get_post_type( $this->id );
 		$this->id                 = $pid;
+		$this->attr['post_type']  = get_post_type( $this->id );
 		$this->meta               = get_post_meta( $this->id );
 
 		if ( 'page' == $this->attr['post_type'] ) {

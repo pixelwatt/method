@@ -20,9 +20,9 @@ body.login input[type=text]:focus {
 }
 .login h1 a {
     background-image: url('assets/images/login-logo.svg') !important;
-    background-size: 250px 80px !important;
+    background-size: 250px 68px !important;
     width: 250px !important;
-    height: 80px !important;
+    height: 68px !important;
 }
 .message { 
 	background-color: #4BFD9F !important; 

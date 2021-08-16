@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.3.0
+// METHOD LAYOUT CLASS v1.3.3
 //
 // You probably don't want or need to edit this file.
 //
@@ -425,6 +425,8 @@ abstract class Method_Layout {
 			'[/strong]' => '</strong>',
 			'[em]'      => '<em>',
 			'[/em]'     => '</em>',
+			'[u]'      => '<span class="method-underlined">',
+			'[/u]'     => '</span>',
 		);
 		return $this->str_replace_assoc( $tags, $text );
 	}
@@ -545,10 +547,13 @@ abstract class Method_Layout {
 	// Build an inline style for a background image from ID.
 	//-----------------------------------------------------
 
-	public function get_bg_inline_style( $id, $size ) {
+	public function get_bg_inline_style( $id, $size, $fallback = '' ) {
 		$output = '';
 		if ( ( $id ) && ( ! empty( $id ) ) ) {
 			$output .= ' style="background-image: url(\'' . wp_get_attachment_image_url( $id, $size ) . '\')"';
+		}
+		if ( ( empty( $output ) ) && ( ! empty( $fallback ) ) ) {
+			$output .= ' style="background-image: url(\'' . $fallback . '\')"';
 		}
 		return $output;
 	}

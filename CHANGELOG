@@ -1,3 +1,12 @@
+## 1.3.3
+
+Changes:
+* ( lib/class-method-layout.php ) Fixed version number in file.
+* ( lib/class-method-layout.php ) Added a $fallback argument to the get_bg_inline_style() method. If provided, an inline style attribute will be generated for the fallback image path if building the attribute using an attachment id fails.
+* ( lib/class-method-layout.php ) Added format tags for underlined text (\[u\]...\[/u\]). CSS will have to be provided for this tag based on individual use cases. Text wrapped in this format tag will be wrapped in a span with the class "method-underlined"
+
+---
+
 ## 1.3.2
 
 Changes:

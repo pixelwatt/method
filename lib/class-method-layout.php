@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.3.3
+// METHOD LAYOUT CLASS v1.3.4
 //
 // You probably don't want or need to edit this file.
 //
@@ -204,14 +204,14 @@ abstract class Method_Layout {
 	// Get data for a meta key (current post)
 	//-----------------------------------------------------
 
-	public function get_meta( $key ) {
+	public function get_meta( $key, $fallback = '' ) {
 		$output = false;
 		if ( isset( $this->meta[ "{$key}" ][0] ) ) {
 			if ( ! empty( $this->meta[ "{$key}" ][0] ) ) {
 				$output = $this->meta[ "{$key}" ][0];
 			}
 		}
-		return $output;
+		return ( false === $output ? ( ! empty( $fallback ) ? $fallback : false ) : $output );
 	}
 
 	//-----------------------------------------------------
@@ -275,14 +275,14 @@ abstract class Method_Layout {
 	// Get data for a meta key (loaded meta)
 	//-----------------------------------------------------
 
-	public function get_loaded_meta( $key ) {
+	public function get_loaded_meta( $key, $fallback = '' ) {
 		$output = false;
 		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
 			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
 				$output = $this->loaded_meta[ "{$key}" ][0];
 			}
 		}
-		return $output;
+		return ( false === $output ? ( ! empty( $fallback ) ? $fallback : false ) : $output );
 	}
 
 	//-----------------------------------------------------
@@ -331,14 +331,14 @@ abstract class Method_Layout {
 	// Get an option from retrieved theme options
 	//-----------------------------------------------------
 
-	public function get_option( $key ) {
+	public function get_option( $key, $fallback = '' ) {
 		$output = false;
 		if ( isset( $this->opts[ "{$key}" ] ) ) {
 			if ( ! empty( $this->opts[ "{$key}" ] ) ) {
 				$output = $this->opts[ "{$key}" ];
 			}
 		}
-		return $output;
+		return ( false === $output ? ( ! empty( $fallback ) ? $fallback : false ) : $output );
 	}
 
 	//-----------------------------------------------------
@@ -427,8 +427,9 @@ abstract class Method_Layout {
 			'[/em]'     => '</em>',
 			'[u]'      => '<span class="method-underlined">',
 			'[/u]'     => '</span>',
+			'[bull]'   => '<span class="method-bull">&bull;</span>',
 		);
-		return $this->str_replace_assoc( $tags, $text );
+		return $this->str_replace_assoc( apply_filters( 'method_format_tags', $tags ), $text );
 	}
 
 	//-----------------------------------------------------

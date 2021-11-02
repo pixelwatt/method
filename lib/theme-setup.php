@@ -49,8 +49,8 @@ add_image_size( 'header_bg', 1400, 600, true );
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.3.4' );
-	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.3.4', false );
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.3.5' );
+	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.3.5', false );
 
 
 }

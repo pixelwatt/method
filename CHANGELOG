@@ -1,3 +1,14 @@
+## 1.3.5
+
+Changes:
+* Updated bundled Bootstrap to v5.1.3
+* Updated bundled Boostrap Icons to v1.7.0
+* Updated bundled Jarallax to v1.12.8
+* Jarallax Video is now bundled with the theme, but not included in the gulpfile's scripts task (must be manually added if needed)
+* ( lib/class-method-layout.php ) Added additional format tags: [b]...[/b], which is shorthand for [strong]...[/strong]
+
+---
+
 ## 1.3.4
 
 Changes:

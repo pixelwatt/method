@@ -423,11 +423,13 @@ abstract class Method_Layout {
 			'[dbr]'     => '<br class="d-none d-sm-none d-md-inline d-lg-inline d-xl-inline d-xxl-inline">',
 			'[strong]'  => '<strong>',
 			'[/strong]' => '</strong>',
+			'[b]'       => '<strong>',
+			'[/b]'      => '</strong>',
 			'[em]'      => '<em>',
 			'[/em]'     => '</em>',
-			'[u]'      => '<span class="method-underlined">',
-			'[/u]'     => '</span>',
-			'[bull]'   => '<span class="method-bull">&bull;</span>',
+			'[u]'       => '<span class="method-underlined">',
+			'[/u]'      => '</span>',
+			'[bull]'    => '<span class="method-bull">&bull;</span>',
 		);
 		return $this->str_replace_assoc( apply_filters( 'method_format_tags', $tags ), $text );
 	}

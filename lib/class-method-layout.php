@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.3.4
+// METHOD LAYOUT CLASS v1.3.6
 //
 // You probably don't want or need to edit this file.
 //
@@ -83,6 +83,19 @@ abstract class Method_Layout {
 				$this->attr['is_front'] = true;
 			}
 		}
+		return;
+	}
+
+	public function init_archive( $standalone = false ) {
+		$this->set_opts();
+		$this->attr['standalone'] = $standalone;
+		$this->attr['is_archive'] = true;
+		return;
+	}
+
+	public function init_search( $standalone = false ) {
+		$this->set_opts();
+		$this->attr['standalone'] = $standalone;
 		return;
 	}
 
@@ -504,6 +517,7 @@ abstract class Method_Layout {
 	public function inject_bs_modal( $args ) {
 		$defaults = array(
 			'id'          => 'bsModal',
+			'class'       => '',
 			'title'       => '',
 			'hide_title'  => false,
 			'content'     => '',
@@ -515,22 +529,23 @@ abstract class Method_Layout {
 			'append_header' => '',
 			'prepend_body' => '<div class="content-wrap">',
 			'append_body' => '</div>',
+			'button_html' => '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>',
 			'return'  => false,
 		);
 		$parsed = wp_parse_args( $args, $defaults );
 		$output .= '
-			<div class="modal fade" id="' . $parsed['id'] . '" tabindex="-1" role="dialog" aria-labelledby="' . $parsed['id'] . 'Label" aria-hidden="true">
+			<div class="modal fade' . ( ! empty( $parsed['class'] ) ? ' ' . $parsed['class'] : '' ) . '" id="' . $parsed['id'] . '" tabindex="-1" role="dialog" aria-labelledby="' . $parsed['id'] . 'Label" aria-hidden="true">
 				<div class="modal-dialog' . ( $parsed['scrollable'] ? ' modal-dialog-scrollable' : '' ) . ( ! empty( $parsed['size'] ) ? ' modal-' . $parsed['size'] : '' ) . '" role="document">
 					<div class="modal-content">
       					<div class="modal-header' . ( $parsed['hide_header'] ? ' visually-hidden' : '' ) . '">
 							' . $parsed['prepend_header'] . '
         					<h5 class="modal-title' . ( $parsed['hide_title'] ? ' visually-hidden' : '' ) . '" id="' . $parsed['id'] . 'Label">' . $parsed['title'] . '</h5>
-							' . ( $parsed['hide_header'] ? '' : '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' ) . '
+							' . ( $parsed['hide_header'] ? '' : $parsed['button_html'] ) . '
 							' . $parsed['append_header'] . '
       					</div>
       					<div class="modal-body">
 						  	' . $parsed['prepend_body'] . '
-							' . ( $parsed['hide_header'] ? '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' : '' ) . '
+							' . ( $parsed['hide_header'] ? $parsed['button_html'] : '' ) . '
 							' . ( $parsed['prefiltered'] ? $parsed['content'] : $this->filter_content( $parsed['content'] ) ) . '
 							' . $parsed['append_body'] . '
       					</div>  

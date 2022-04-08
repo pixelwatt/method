@@ -122,6 +122,28 @@ function method_get_term_array( $tax, $none = '' ) {
 }
 
 
+//-----------------------------------------------------
+// Get an array of nav menus created in the menu editor
+//-----------------------------------------------------
+
+function method_get_menus_array() {
+	$menus  = get_terms( 'nav_menu', array( 'hide_empty' => true ) );
+	$output = array();
+
+	if ( ! empty( $menus ) ) {
+		foreach ( $menus as $menu ) {
+			$output[ $menu->term_id ] = $menu->name;
+		}
+	}
+
+	return $output;
+}
+
+
+//-----------------------------------------------------
+// Additional utility functions
+//-----------------------------------------------------
+
 function method_str_replace_assoc( array $replace, $subject ) {
 	return str_replace( array_keys( $replace ), array_values( $replace ), $subject );
 }

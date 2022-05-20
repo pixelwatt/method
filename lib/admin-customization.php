@@ -4,7 +4,7 @@ function method_admin_scripts() {
 	$wp_scripts = wp_scripts();
 	wp_enqueue_script( 'jquery-ui-dialog' );
     wp_enqueue_style( 'jquery-ui', 'https://ajax.googleapis.com/ajax/libs/jqueryui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css', '', '', false );
-    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin-styles.css', '', '1.3.6' );
+    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin-styles.css', '', '1.3.7' );
 }
 
 add_action( 'admin_enqueue_scripts', 'method_admin_scripts' );
@@ -25,20 +25,22 @@ function method_admin_footer_function() {
 		  });
 		</script>
 
-		<div id="method-tags-dialog" title="About Tags">
-		  <p>Format tags allow you to safely format text for certain options that don\'t support HTML formatting, such as headlines. Below is a listing of currently-available tags:</p>
-		  <hr>
-		  <h5>[strong]...[/strong]</h5>
-		  <p>This tag allows you to bold portions of text by wrapping the desired text in <code>[strong]...[/strong]</code>.<br><em>(Ex: "I want [strong]this[/strong] to be bold.")</em></p>
-		  <hr>
-		  <h5>[em]...[/em]</h5>
-		  <p>Similiar to the [strong] tag, this tag allows you to italicize portions of text by wrapping the desired text in <code>[em]...[/em]</code>.<br><em>(Ex: "I want [em]this[/em] to be italic.")</em></p>
-		  <hr>
-		  <h5>[br]</h5>
-		  <p>This tags allows you to insert a line break. Use <code>[br]</code> for the line break to appear on all devices, <code>[mbr]</code> for the line break to only appear on mobile, and <code>[dbr]</code> for the break to only appear on desktop.<br><em>(Ex: "I want this text on line 1,[br]and this text on line 2.")</em></p>
+		<div style="display: none; visibility: hidden;">
+			<div id="method-tags-dialog" title="About Tags">
+			  <p>Format tags allow you to safely format text for certain options that don\'t support HTML formatting, such as headlines. Below is a listing of currently-available tags:</p>
+			  <hr>
+			  <h5>[strong]...[/strong]</h5>
+			  <p>This tag allows you to bold portions of text by wrapping the desired text in <code>[strong]...[/strong]</code>.<br><em>(Ex: "I want [strong]this[/strong] to be bold.")</em></p>
+			  <hr>
+			  <h5>[em]...[/em]</h5>
+			  <p>Similiar to the [strong] tag, this tag allows you to italicize portions of text by wrapping the desired text in <code>[em]...[/em]</code>.<br><em>(Ex: "I want [em]this[/em] to be italic.")</em></p>
+			  <hr>
+			  <h5>[br]</h5>
+			  <p>This tags allows you to insert a line break. Use <code>[br]</code> for the line break to appear on all devices, <code>[mbr]</code> for the line break to only appear on mobile, and <code>[dbr]</code> for the break to only appear on desktop.<br><em>(Ex: "I want this text on line 1,[br]and this text on line 2.")</em></p>
 	';
 	do_action( 'method_after_tags_dialog_html' );
 	echo '
+			</div>
 		</div>
 	';
 }

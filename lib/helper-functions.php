@@ -15,10 +15,10 @@ function method_get_class( $class ) {
 	if ( ! empty( $class ) ) {
 		switch ( $class ) {
 			case 'full_width_outer_col':
-				$output = 'full-width-outer-col col-12 col-sm-11';
+				$output = 'method-full-width-outer-col col-12 col-sm-11';
 				break;
 			case 'full_width_container':
-				$output = 'full-width-container';
+				$output = 'method-full-width-container';
 				break;
 			default:
 				break;

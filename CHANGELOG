@@ -1,3 +1,13 @@
+## 1.3.7
+
+Changes:
+* ( lib/admin-customization.php ) Markup for the format tags dialogue is now wrapped in a hidden, undisplayed div so that markup does not appear at the bottom of admin pages while admin js is loading.
+* ( lib/helper-functions.php ) The theme name has been prepended to the "full-width-outer-col" and "full-width-container" classes for consistency
+* ( theme.scss ) The class name "full-width-container" has been updated to "method-full-width-container"
+* ( inc/bootstrap-icons/ ) Updated bundled Bootstrap Icons to v1.8.2
+
+No updates were made to lib/class-method-layout.php in this release.
+
 ## 1.3.6
 
 Changes:

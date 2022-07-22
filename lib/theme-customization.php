@@ -75,6 +75,8 @@ function method_register_theme_options_metabox() {
 				'instagram' => esc_attr__( 'Instagram', 'method' ),
 				'pinterest' => esc_attr__( 'Pinterest', 'method' ),
 				'youtube' => esc_attr__( 'YouTube', 'method' ),
+				'twitch' => esc_attr__( 'Twitch', 'method' ),
+				'tiktok' => esc_attr__( 'TikTok', 'method' ),
 			),
 		)
 	);

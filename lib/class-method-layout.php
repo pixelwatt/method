@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.3.6
+// METHOD LAYOUT CLASS v1.3.8
 //
 // You probably don't want or need to edit this file.
 //
@@ -709,6 +709,12 @@ abstract class Method_Layout {
 								break;
 							case 'youtube':
 								$icon = $this->get_bs_icon_svg( 'youtube', $icon_size );
+								break;
+							case 'twitch':
+								$icon = $this->get_bs_icon_svg( 'twitch', $icon_size );
+								break;
+							case 'tiktok':
+								$icon = $this->get_bs_icon_svg( 'tiktok', $icon_size );
 								break;
 							default:
 								$icon = '';

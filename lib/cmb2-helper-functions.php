@@ -4,6 +4,24 @@
 // CMB2 HELPER FUNCTIONS
 //======================================================================
 
+function method_cmb2_tinymce_options( $temp, $class = '' ) {
+	$output = array();
+	if ( ! empty( $class ) ) {
+		$output['tinymce']['body_class'] = $class;
+	}
+	switch ( $temp ) {
+		case 'minimal':
+			$output['media_buttons'] = false;
+			$output['textarea_rows'] = 8;
+			$output['teeny'] = true;
+			break;
+		default:
+			// code...
+			break;
+	}
+	return $output;
+}
+
 /**
 * Include metabox only on the default page template (page.php). Heavily based of Ed Townend's front-page solution
 * @author Rob Clark

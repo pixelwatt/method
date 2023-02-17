@@ -2,21 +2,22 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.3.8
+// METHOD LAYOUT CLASS v1.3.9
 //
 // You probably don't want or need to edit this file.
 //
 //======================================================================
 
 abstract class Method_Layout {
-	protected $meta        = array();
-	protected $loaded_meta = array();
-	protected $opts        = array();
+	protected $meta             = array();
+	protected $loaded_meta      = array();
+	protected $loaded_term_meta = array();
+	protected $opts             = array();
 	protected $id;
 	protected $html;
 	protected $modals;
 	protected $scripts;
-	protected $attr = array();
+	protected $attr             = array();
 
 	//======================================================================
 	// CORE METHODS
@@ -24,16 +25,17 @@ abstract class Method_Layout {
 
 	public function build_page( $pid = '', $archive = false ) {
 		$this->set_opts();
+		$this->attr['is_front'] = false;
 		if ( true == $archive ) {
 			global $wp_query;
 			$this->attr['is_archive'] = true;
-			$this->attr['post_type']  = ( $this->check_key( $wp_query->query_vars['post_type'] ) ? $wp_query->query_vars['post_type'] : 'post' );
+			$this->attr['post_type']  = ( $this->check_array_key( $wp_query->query_vars, 'post_type' ) ? $wp_query->query_vars['post_type'] : 'post' );
 
 			if ( 'post' == $this->attr['post_type'] ) {
 				$this->attr['category'] = ( $this->check_key( $wp_query->queried_object->name ) ? $wp_query->queried_object->name : '' );
 			}
 
-			$this->attr['taxonomy'] = ( $this->check_key( $wp_query->query_vars['taxonomy'] ) ? $wp_query->query_vars['taxonomy'] : '' );
+			$this->attr['taxonomy'] = ( $this->check_array_key( $wp_query->query_vars, 'taxonomy' ) ? $wp_query->query_vars['taxonomy'] : '' );
 			$this->determine_attributes();
 			$this->build_layout();
 
@@ -71,6 +73,7 @@ abstract class Method_Layout {
 
 	public function init_page( $pid, $standalone = false ) {
 		$this->set_opts();
+		$this->attr['is_front'] = false;
 		$this->attr['standalone'] = $standalone;
 		$this->attr['is_archive'] = false;
 		$this->id                 = $pid;
@@ -219,8 +222,8 @@ abstract class Method_Layout {
 
 	public function get_meta( $key, $fallback = '' ) {
 		$output = false;
-		if ( isset( $this->meta[ "{$key}" ][0] ) ) {
-			if ( ! empty( $this->meta[ "{$key}" ][0] ) ) {
+		if ( $this->check_array_key( $this->meta, $key ) ) {
+			if ( $this->check_array_key( $this->meta[ "{$key}" ], 0 ) ) {
 				$output = $this->meta[ "{$key}" ][0];
 			}
 		}
@@ -233,8 +236,8 @@ abstract class Method_Layout {
 
 	public function get_serialized_meta( $key ) {
 		$output = false;
-		if ( isset( $this->meta[ "{$key}" ][0] ) ) {
-			if ( ! empty( $this->meta[ "{$key}" ][0] ) ) {
+		if ( $this->check_array_key( $this->meta, $key ) ) {
+			if ( $this->check_array_key( $this->meta[ "{$key}" ], 0 ) ) {
 				$output = maybe_unserialize( $this->meta[ "{$key}" ][0] );
 			}
 		}
@@ -290,8 +293,8 @@ abstract class Method_Layout {
 
 	public function get_loaded_meta( $key, $fallback = '' ) {
 		$output = false;
-		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
-			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
+		if ( $this->check_array_key( $this->loaded_meta, $key ) ) {
+			if ( $this->check_array_key( $this->loaded_meta[ "{$key}" ], 0 ) ) {
 				$output = $this->loaded_meta[ "{$key}" ][0];
 			}
 		}
@@ -304,8 +307,8 @@ abstract class Method_Layout {
 
 	public function get_serialized_loaded_meta( $key ) {
 		$output = false;
-		if ( isset( $this->loaded_meta[ "{$key}" ][0] ) ) {
-			if ( ! empty( $this->loaded_meta[ "{$key}" ][0] ) ) {
+		if ( $this->check_array_key( $this->loaded_meta, $key ) ) {
+			if ( $this->check_array_key( $this->loaded_meta[ "{$key}" ], 0 ) ) {
 				$output = maybe_unserialize( $this->loaded_meta[ "{$key}" ][0] );
 			}
 		}
@@ -336,6 +339,39 @@ abstract class Method_Layout {
 		return $output;
 	}
 
+	//-----------------------------------------------------
+	// Load all meta for a specified term and store in the
+	// loaded_term_meta property.
+	//-----------------------------------------------------
+
+	public function load_term_meta( $id ) {
+		$this->loaded_term_meta = get_term_meta( $id );
+		return;
+	}
+
+	//-----------------------------------------------------
+	// Reset loaded_term_meta to an empty array.
+	//-----------------------------------------------------
+
+	public function unload_term_meta() {
+		$this->loaded_term_meta = array();
+		return;
+	}
+
+	//-----------------------------------------------------
+	// Get data for a meta key (loaded term meta)
+	//-----------------------------------------------------
+
+	public function get_loaded_term_meta( $key, $fallback = '' ) {
+		$output = false;
+		if ( $this->check_array_key( $this->loaded_term_meta, $key ) ) {
+			if ( $this->check_array_key( $this->loaded_term_meta[ "{$key}" ], 0 ) ) {
+				$output = $this->loaded_term_meta[ "{$key}" ][0];
+			}
+		}
+		return ( false === $output ? ( ! empty( $fallback ) ? $fallback : false ) : $output );
+	}
+
 	//======================================================================
 	// THEME OPTION METHODS
 	//======================================================================
@@ -346,10 +382,8 @@ abstract class Method_Layout {
 
 	public function get_option( $key, $fallback = '' ) {
 		$output = false;
-		if ( isset( $this->opts[ "{$key}" ] ) ) {
-			if ( ! empty( $this->opts[ "{$key}" ] ) ) {
-				$output = $this->opts[ "{$key}" ];
-			}
+		if ( $this->check_array_key( $this->opts, $key ) ) {
+			$output = $this->opts[ "{$key}" ];
 		}
 		return ( false === $output ? ( ! empty( $fallback ) ? $fallback : false ) : $output );
 	}
@@ -470,6 +504,41 @@ abstract class Method_Layout {
 	}
 
 	//-----------------------------------------------------
+	// Check to see if an array key exists, more cleanly.
+	//-----------------------------------------------------
+
+	public function check_array_key( $item, $key ) {
+		$output = false;
+		if ( is_array( $item ) ) {
+			if ( array_key_exists( $key, $item ) ) {
+				if ( ! empty( $item["{$key}"] ) ) {
+					$output = true;
+				}
+			}
+		}
+		return $output;
+	}
+
+	//-----------------------------------------------------
+	// Check to see if an array has content.
+	//-----------------------------------------------------
+
+	public function check_array( $item, $key ) {
+		$output = false;
+		if ( $item ) {
+			if ( is_array( $item ) ) {
+				if ( 1 <=count( $item ) ) {
+					if ( $this->check_array_key( $item[0], $key ) ) {
+						$output = true;
+					}
+				}
+			}
+		}
+		return $output;
+	}
+
+
+	//-----------------------------------------------------
 	// Run a string through WordPress' content filter
 	//-----------------------------------------------------
 
@@ -533,7 +602,7 @@ abstract class Method_Layout {
 			'return'  => false,
 		);
 		$parsed = wp_parse_args( $args, $defaults );
-		$output .= '
+		$output = '
 			<div class="modal fade' . ( ! empty( $parsed['class'] ) ? ' ' . $parsed['class'] : '' ) . '" id="' . $parsed['id'] . '" tabindex="-1" role="dialog" aria-labelledby="' . $parsed['id'] . 'Label" aria-hidden="true">
 				<div class="modal-dialog' . ( $parsed['scrollable'] ? ' modal-dialog-scrollable' : '' ) . ( ! empty( $parsed['size'] ) ? ' modal-' . $parsed['size'] : '' ) . '" role="document">
 					<div class="modal-content">
@@ -685,7 +754,7 @@ abstract class Method_Layout {
 		$social_links = $this->get_option( 'social_accounts' );
 		if ( ! empty( $social_links ) ) {
 			if ( is_array( $social_links ) ) {
-				if ( $this->check_key( $social_links[0]['service'] ) ) {
+				if ( $this->check_array( $social_links, 'service' ) ) {
 					$output .= '<ul class="' . $class . '">';
 
 					foreach ( $social_links as $link ) {

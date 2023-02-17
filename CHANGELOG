@@ -1,3 +1,16 @@
+## 1.3.9
+
+Changes:
+* ( lib/class-method-layout.php ) Added new methods for loading and retrieving term meta: load_term_meta(), unload_term_meta(), get_loaded_term_meta()
+* ( lib/class-method-layout.php ) Added new property, loaded_term_meta, for storing term meta
+* ( lib/class-method-layout.php ) Added a new method, check_array_key(), for checking whether an array key exists. This essentially accomplishes the same end as check_key(), but is cleaner (no undefined errors) and has slightly different syntax. check_key() is still available, but should now be considered deprecated
+* ( lib/class-method-layout.php ) Refactored methods calling the check_key() method to use check_array_key() instead
+* ( lib/class-method-layout.php ) Added a new method, check_array(), for seeing if a specific key exists and is set in the first key of an indexed array
+* ( lib/class-method-layout.php ) Fixed an issue in the inject_bs_modal() method that could potentially trigger an undefined variable warning
+* ( lib/class-method-layout.php ) The build_page() and init_page() methods now set the 'is_front' key of the $attr property to false before evaluating whether it should be true, so that it always has a value
+
+---
+
 ## 1.3.8
 
 Changes:

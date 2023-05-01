@@ -44,7 +44,7 @@ gulp.task('styles', gulp.series('compile-styles', 'process-styles'));
 
 gulp.task('serve', function() {
     browserSync.init({
-        proxy: "method.test:8080"
+        proxy: "method.test"
     });
     // Watch .scss files
     gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.series('compile-styles', 'process-styles'));

@@ -42,7 +42,7 @@ function method_filter_content( $content ) {
 
 
 //-----------------------------------------------------
-// Check an array key to see if it exists
+// DEPRECATED: Check an array key to see if it exists
 //-----------------------------------------------------
 
 function method_check_key( $key ) {
@@ -50,6 +50,42 @@ function method_check_key( $key ) {
 	if ( isset( $key ) ) {
 		if ( ! empty( $key ) ) {
 			$output = true;
+		}
+	}
+	return $output;
+}
+
+
+//------------------------------------------------------------
+// Updated function to check an array key to see if it exists
+//------------------------------------------------------------
+
+function method_check_array_key( $item, $key ) {
+	$output = false;
+	if ( is_array( $item ) ) {
+		if ( array_key_exists( $key, $item ) ) {
+			if ( ! empty( $item["{$key}"] ) ) {
+				$output = true;
+			}
+		}
+	}
+	return $output;
+}
+
+
+//-----------------------------------------------------
+// Check to see if an array has content.
+//-----------------------------------------------------
+
+function method_check_array( $item, $key ) {
+	$output = false;
+	if ( $item ) {
+		if ( is_array( $item ) ) {
+			if ( 1 <=count( $item ) ) {
+				if ( $this->check_array_key( $item[0], $key ) ) {
+					$output = true;
+				}
+			}
 		}
 	}
 	return $output;

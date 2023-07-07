@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.3.9
+// METHOD LAYOUT CLASS v1.4.0
 //
 // You probably don't want or need to edit this file.
 //
@@ -537,6 +537,21 @@ abstract class Method_Layout {
 		return $output;
 	}
 
+	//-----------------------------------------------------
+	// Check to see if an property exists and has content.
+	//-----------------------------------------------------
+
+	public function check_property( $item, $key ) {
+		$output = false;
+		if ( is_object( $item ) ) {
+			if ( property_exists( $item, $key ) ) {
+				if ( ! empty( $item->{$key} ) ) {
+					$output = true;
+				}
+			}
+		}
+		return $output;
+	}
 
 	//-----------------------------------------------------
 	// Run a string through WordPress' content filter

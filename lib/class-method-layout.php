@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.4.0
+// METHOD LAYOUT CLASS v1.4.1
 //
 // You probably don't want or need to edit this file.
 //
@@ -102,6 +102,10 @@ abstract class Method_Layout {
 		return;
 	}
 
+	public function init_meta( $pid ) {
+		$this->meta  = get_post_meta( $pid );
+	}
+
 	//======================================================================
 	// ABSTRACT METHODS
 	//======================================================================
@@ -133,7 +137,7 @@ abstract class Method_Layout {
 		$output = '';
 		$this->attr['components'] = array();
 		$this->attr['components'][] = $component;
-		$this->build_components( $items );
+		$this->build_components();
 		if ( $this->attr['standalone'] ) {
 			$output = $this->get_merged_markup();
 			$this->reset_markup();

@@ -1,3 +1,11 @@
+## 1.4.2
+
+Changes:
+* ( lib/class-method-utility.php ) Added a new class, Method_Utility, for working with loaded post meta and theme options. This class is essentially a stripped-down version of Method_Layout, with its loaded meta and options methods. Meta must be loaded via the load_meta() method, while theme options are loaded automatically via __construct(). To set the correct options key for custom method builds, the method_utility_option_key filter is used. A callback is now included to set options keys in Method Generator v1.4.2.
+* ( lib/cmb2-helper-functions.php ) A "no-media" template is now available by default for the method_cmb2_tinymce_options() function
+
+---
+
 ## 1.4.0
 
 Changes:

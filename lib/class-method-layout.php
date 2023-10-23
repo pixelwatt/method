@@ -2,7 +2,7 @@
 
 //======================================================================
 //
-// METHOD LAYOUT CLASS v1.4.1
+// METHOD LAYOUT CLASS v1.4.2
 //
 // You probably don't want or need to edit this file.
 //

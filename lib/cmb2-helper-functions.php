@@ -15,6 +15,10 @@ function method_cmb2_tinymce_options( $temp, $class = '' ) {
 			$output['textarea_rows'] = 8;
 			$output['teeny'] = true;
 			break;
+		case 'no-media':
+			$output['media_buttons'] = false;
+			$output['textarea_rows'] = 8;
+			break;
 		default:
 			// code...
 			break;

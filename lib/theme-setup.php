@@ -49,13 +49,24 @@ add_image_size( 'method_1400_600', 1400, 600, true );
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.4.0' );
-	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.4.0', false );
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.4.2' );
+	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.4.2', false );
 
 
 }
 
 add_action( 'wp_enqueue_scripts', 'method_scripts' );
+
+
+//-----------------------------------------------------
+// Set option key for Method_Utility class
+//-----------------------------------------------------
+
+function method_method_utility_option_key_callback( $string ) {
+    // (maybe) modify $string.
+    return 'method_options';
+}
+add_filter( 'method_utility_option_key', 'method_method_utility_option_key_callback', 10, 1 );
 
 
 //-----------------------------------------------------

@@ -767,10 +767,10 @@ abstract class Method_Layout {
 	// Build social icons from theme options
 	//-----------------------------------------------------
 
-	public function build_social_icons( $class = 's-ics', $icon_size = 16 ) {
+	public function build_social_icons( $class = 's-ics', $icon_size = 16, $key = 'social_accounts' ) {
 		$output = '';
 
-		$social_links = $this->get_option( 'social_accounts' );
+		$social_links = $this->get_option( $key );
 		if ( ! empty( $social_links ) ) {
 			if ( is_array( $social_links ) ) {
 				if ( $this->check_array( $social_links, 'service' ) ) {
@@ -784,7 +784,7 @@ abstract class Method_Layout {
 								$icon = $this->get_bs_icon_svg( 'facebook', $icon_size );
 								break;
 							case 'twitter':
-								$icon = $this->get_bs_icon_svg( 'twitter', $icon_size );
+								$icon = $this->get_bs_icon_svg( 'twitter-x', $icon_size );
 								break;
 							case 'linkedin':
 								$icon = $this->get_bs_icon_svg( 'linkedin', $icon_size );
@@ -803,6 +803,12 @@ abstract class Method_Layout {
 								break;
 							case 'tiktok':
 								$icon = $this->get_bs_icon_svg( 'tiktok', $icon_size );
+								break;
+							case 'threads':
+								$icon = $this->get_bs_icon_svg( 'threads', $icon_size );
+								break;
+							case 'bluesky':
+								$icon = $this->get_bs_icon_svg( 'square-fill', $icon_size );
 								break;
 							default:
 								$icon = '';

@@ -70,13 +70,15 @@ function method_register_theme_options_metabox() {
 			'desc' => __( 'Which service are you adding a link for?', 'method' ),
 			'options' => array(
 				'facebook' => esc_attr__( 'Facebook', 'method' ),
-				'twitter' => esc_attr__( 'Twitter', 'method' ),
+				'twitter' => esc_attr__( 'Twitter (X)', 'method' ),
 				'linkedin' => esc_attr__( 'LinkedIn', 'method' ),
 				'instagram' => esc_attr__( 'Instagram', 'method' ),
 				'pinterest' => esc_attr__( 'Pinterest', 'method' ),
 				'youtube' => esc_attr__( 'YouTube', 'method' ),
 				'twitch' => esc_attr__( 'Twitch', 'method' ),
 				'tiktok' => esc_attr__( 'TikTok', 'method' ),
+				'threads' => esc_attr__( 'Threads', 'method' ),
+				'bluesky' => esc_attr__( 'Bluesky', 'method' ),
 			),
 		)
 	);

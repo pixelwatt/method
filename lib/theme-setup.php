@@ -49,8 +49,8 @@ add_image_size( 'method_1400_600', 1400, 600, true );
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.4.2' );
-	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.4.2', false );
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.4.3' );
+	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.4.3', false );
 
 
 }
@@ -107,3 +107,57 @@ function method_register_required_plugins() {
 
 	tgmpa( $plugins, $config );
 }
+
+
+//-----------------------------------------------------
+// Function for conditionally enabling the block editor
+// for specific posts. Uncomment and modify as needed.
+//-----------------------------------------------------
+/* 
+function method_enable_block_editor_for_post( $use_block_editor, $post ) {
+	$output = false;
+	$id = $post->ID;
+	$pt = get_post_type( $id );
+	if ( 'page' == $pt ) {
+		$template = get_post_meta( $id, '_wp_page_template', true );
+		if ( 'templates/page-template-mytemplate.php' == $template ) {
+			$output = true;
+		}
+	}
+	return $output;
+}
+
+add_filter( 'use_block_editor_for_post', 'method_enable_block_editor_for_post', 10, 2 );
+*/
+
+
+//-----------------------------------------------------
+// Function for condigitally suppressing specific
+// WordPress features, mainly the editor. Uncomment
+// and modify as needed.
+//-----------------------------------------------------
+/*
+function method_remove_editor() {
+	if ( isset( $_GET['post'] ) ) {
+		$id = $_GET['post'];
+		$pt = get_post_type( $id );
+		if ( 'page' == $pt ) {
+			$template = get_post_meta( $id, '_wp_page_template', true );
+			$front_page = get_option( 'page_on_front' );
+			if ( $id == $front_page ) {
+				remove_post_type_support( 'page', 'editor' );
+			}
+			switch ( $template ) {
+				case 'templates/page-template-gateway.php':
+					remove_post_type_support( 'page', 'editor' );
+					break;
+				default:
+					# code...
+					break;
+			}
+		}
+	}
+	return;
+}
+add_action( 'init', 'method_remove_editor' );
+*/

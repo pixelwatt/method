@@ -49,8 +49,8 @@ add_image_size( 'method_1400_600', 1400, 600, true );
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.4.3' );
-	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.4.3', false );
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.4.4-prerelease' );
+	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.4.4-prerelease', false );
 
 
 }

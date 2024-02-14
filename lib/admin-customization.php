@@ -4,7 +4,7 @@ function method_admin_scripts() {
 	$wp_scripts = wp_scripts();
 	wp_enqueue_script( 'jquery-ui-dialog' );
     wp_enqueue_style( 'jquery-ui', 'https://ajax.googleapis.com/ajax/libs/jqueryui/' . $wp_scripts->registered['jquery-ui-core']->ver . '/themes/smoothness/jquery-ui.css', '', '', false );
-    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin-styles.css', '', '1.4.3' );
+    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin-styles.css', '', '1.4.4-prerelease' );
 }
 
 add_action( 'admin_enqueue_scripts', 'method_admin_scripts' );

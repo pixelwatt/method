@@ -9,7 +9,7 @@
 // Get common CSS classes
 //-----------------------------------------------------
 
-function method_get_class( $class ) {
+function method_get_class( $class, $echo = false ) {
 	$output = '';
 
 	if ( ! empty( $class ) ) {
@@ -25,7 +25,11 @@ function method_get_class( $class ) {
 		}
 	}
 
-	return $output;
+	if ( $echo ) {
+		echo $output;
+	} else {
+		return $output;
+	}
 }
 
 
@@ -110,7 +114,7 @@ if ( ! function_exists( 'array_key_first' ) ) {
 // Get an array of post IDs and titles
 //-----------------------------------------------------
 
-function method_get_post_array( $type, $none = '' ) {
+function method_get_post_array( $type, $none = '', $labels = false ) {
 	//lets create an array of boroughs to loop through
 	if ( ! empty( $none ) ) {
 		$output[0] = $none;
@@ -118,13 +122,27 @@ function method_get_post_array( $type, $none = '' ) {
 		$output = array();
 	}
 
+	$args = array(
+		'post_type' => $type,
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+		'orderby' => 'title',
+		'order' => 'ASC'
+	);
+
 	//The Query
-	$items = get_posts( 'post_type=' . $type . '&post_status=publish&posts_per_page=-1' );
+	$items = get_posts( $args );
 
 	if ( $items ) {
 		foreach ( $items as $post ) :
 			setup_postdata( $post );
-			$output[ "{$post->ID}" ] = get_the_title( $post->ID );
+			$ptl = '';
+			if ( $labels ) {
+				global $wp_post_types;
+				$lbs = $wp_post_types[$post->post_type]->labels;
+				$ptl = ' (' . $lbs->singular_name . ')';
+			}
+			$output[ "{$post->ID}" ] = get_the_title( $post->ID ) . $ptl;
 		endforeach;
 		wp_reset_postdata();
 	}

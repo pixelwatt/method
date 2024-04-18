@@ -62,6 +62,7 @@ require_once get_template_directory() . '/inc/bootstrap-5-navwalker/class-bootst
 
 require_once('lib/class-method-layout.php');
 require_once('lib/class-theme-layout.php');
+require_once('lib/class-method-bs-accordion.php');
 require_once('lib/theme-setup.php');
 require_once('lib/admin-customization.php');
 require_once('lib/theme-customization.php');

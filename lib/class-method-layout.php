@@ -17,6 +17,7 @@ abstract class Method_Layout {
 	protected $html;
 	protected $modals;
 	protected $scripts;
+	protected $grouped_scripts  = array();
 	protected $attr             = array();
 
 	//======================================================================
@@ -39,7 +40,7 @@ abstract class Method_Layout {
 			$this->determine_attributes();
 			$this->build_layout();
 
-			return $this->html . $this->modals . $this->scripts;
+			return $this->html . $this->modals . $this->scripts . $this->group_scripts();
 
 		} elseif ( ( ! empty( $pid ) ) && ( false == $archive ) ) {
 			$this->attr['is_archive'] = false;
@@ -57,7 +58,7 @@ abstract class Method_Layout {
 			$this->determine_attributes();
 			$this->build_layout();
 
-			return $this->html . $this->modals . $this->scripts;
+			return $this->html . $this->modals . $this->scripts . $this->group_scripts();
 
 		} else {
 			return false;
@@ -69,6 +70,24 @@ abstract class Method_Layout {
 		$this->build_components();
 		$this->build_footer();
 		return;
+	}
+
+	public function add_script( $script, $group = 'default' ) {
+		if ( ! $this->check_array_key( $this->grouped_scripts, $group ) ) {
+			$this->grouped_scripts[ $group ] = array();
+		}
+		$this->grouped_scripts[ $group ][] = $script;
+		return;
+	}
+
+	private function group_scripts() {
+		$output = '';
+		foreach ( $this->grouped_scripts as $key => $value ) {
+			$output .= '<!-- start ' . $key . ' script --><script>
+			' . implode( ' ', $value) . '
+			</script><!-- end ' . $key . ' script -->';
+		}
+		return $output;
 	}
 
 	public function init_page( $pid, $standalone = false ) {
@@ -193,7 +212,7 @@ abstract class Method_Layout {
 	//-----------------------------------------------------
 
 	protected function get_merged_markup() {
-		return $this->html . $this->modals . $this->scripts;
+		return $this->html . $this->modals . $this->scripts . $this->group_scripts();
 	}
 
 	//-----------------------------------------------------

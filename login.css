@@ -1,35 +1,61 @@
 body.login {
-	background-image: url('assets/images/login-bg.jpg') !important;
-	background-size: cover !important;
-	background-position: center center !important;
-	background-repeat: no-repeat !important;
-	background-color:  !important;
+	background: linear-gradient(0deg,rgba(242, 135, 41, 1) 0%, rgba(217, 74, 100, 1) 49%, rgba(134, 94, 191, 1) 100%);
+	background: linear-gradient(0deg,rgba(245, 123, 78, 1) 0%, rgba(242, 87, 116, 1) 49%, rgba(191, 54, 129, 1) 100%);
+	/* background: #D94A64; */
 }
 body.login .button-primary {
-	background: #4BFD9F !important;
-	border-color: #4BFD9F !important;
-	color: #000 !important;
+	background: #49BF9E !important;
+	border-color: #49BF9E !important;
+	color: #fff !important;
+	border-radius: 8px;
+	padding: 10px 18px !important;
+	line-height: 1 !important;
+	font-size: 15px;
+	font-weight: 500;
 }
 body.login .button-secondary {
-	color: #4BFD9F !important;
+	color: #49BF9E !important;
 }
 body.login input[type=password]:focus,
 body.login input[type=text]:focus {
-	border-color: #4BFD9F !important;
-	box-shadow: 0 0 0 1px #4BFD9F !important;
+	border-color: #49BF9E !important;
+	box-shadow: 0 0 0 1px #49BF9E !important;
 }
+
+body.login input[type=password],
+body.login input[type=text] {
+	/*border-radius: 0 !important;
+	border: 0 !important;
+	box-shadow: 0 !important;
+	border-bottom: 1px solid #D94A64 !important; */
+}
+
+#login {
+	width: 100%;
+	max-width: 360px;
+}
+
+.login form {
+	border-radius: 20px;
+	padding: 32px;
+	box-shadow: 0 6px 6px 0 rgba(0,0,0,0.1);
+}
+
 .login h1 a {
-    background-image: url('assets/images/login-logo.svg') !important;
-    background-size: 250px 68px !important;
-    width: 250px !important;
-    height: 68px !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='56' height='56' viewBox='0 0 56 56' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.2511 26.2027L0 15.8892V0.512695L11.2511 10.92L27.7527 26.0152L44.2543 10.92L55.5992 0.512695V55.4556H44.2543V26.2027L27.7527 41.2979L11.2511 26.2027ZM11.2511 40.4541L0 30.1406V55.4556H11.2511V40.4541Z' fill='white'/%3E%3C/svg%3E%0A");
+    background-size: 100px 100px !important;
+    width: 100px !important;
+    height: 100px !important;
+	margin-bottom: 36px !important;
 }
 .message { 
-	background-color: #4BFD9F !important; 
-	color: #000 !important; 
-	font-weight: 500 !important; 
+	background-color: #49BF9E !important; 
+	color: #fff !important; 
+	font-weight: 600 !important; 
 	border-left: none !important; 
-	border-radius: 4px !important; 
+	border-radius: 20px !important;
+	padding: 20px 32px !important;
+	box-shadow: 0 6px 6px 0 rgba(0,0,0,0.1) !important;
 }
 #login {
 	position: relative;
@@ -39,13 +65,13 @@ p#nav {
 	text-align: center;
 }
 p#nav a {
-	color: #4BFD9F !important;
+	color: #fff !important;
 	font-size: 15px !important;
+	text-decoration: underline !important;
+	font-weight: 500 !important;
 }
 p#backtoblog {
 	display: none;
 	visibility: hidden;
 }
-form#loginform {
-	border-radius: 4px !important;
-}
+

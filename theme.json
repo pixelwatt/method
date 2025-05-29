@@ -1,0 +1,157 @@
+{
+	"version": 2,
+    "templateParts": [
+		{
+			"area": "header",
+			"name": "header",
+			"title": "Site Header"
+		},
+		{
+			"area": "footer",
+			"name": "footer",
+			"title": "Site Footer"
+		}
+	],
+	"settings": {
+        "appearanceTools": true,
+        "useRootPaddingAwareAlignments": true,
+		"layout": {
+			"contentSize": "1272px",
+			"wideSize": "1273px"
+		},
+        "border": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		},
+        "color": {
+            "background": true,
+			"custom": true,
+			"customDuotone": true,
+			"customGradient": true,
+			"defaultDuotone": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+            "link": true,
+            "text": true,
+			"palette": [
+				{
+					"color": "#D94A64",
+					"name": "Method Cabaret",
+					"slug": "method-cabaret"
+				},
+                {
+					"color": "#865EBF",
+					"name": "Method Fuchsia",
+					"slug": "method-fuchsia"
+				},
+                {
+					"color": "#F28729",
+					"name": "Method Orange",
+					"slug": "method-orange"
+				},
+                {
+					"color": "#F24C27",
+					"name": "Method Pomegranate",
+					"slug": "method-pomegranate"
+				},
+                {
+					"color": "#592222",
+					"name": "Method Cocoa",
+					"slug": "method-cocoa"
+				}
+			],
+            "gradients": [
+                {
+                    "slug": "sunset",
+                    "gradient": "linear-gradient(90deg, #13294B, #981D97)",
+                    "name": "Sunset"
+                }
+            ]
+		},
+        "spacing": {
+			"blockGap": true,
+			"customSpacingSize": true,
+			"margin": true,
+			"padding": true,
+			"units": [ "px","em","rem", "%", "vw", "vh" ]
+        },
+		"typography": {
+			"textTransform": true,
+			"customFontSize": true,
+			"fontFamilies": [
+				{
+					"name": "Sans Serif",
+					"slug": "sans-serif",
+					"fontFamily": "system-ui, -apple-system, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", \"Liberation Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
+				}
+			]
+		}
+	},
+    "styles": {
+        "spacing": {
+			"padding": {
+				"top": "0",
+				"bottom": "0",
+				"left": "32px",
+				"right": "32px"
+			}
+		},
+		"color": {
+			"text": "#010101",
+			"background": "#fff"
+		},
+        "typography": {
+			"fontSize": "1.25rem",
+            "lineHeight": "1.55",
+            "fontWeight": "400",
+            "fontFamily": "var(--wp--preset--font-family--sans-serif)"
+		},
+		"elements": {
+			"h1": {
+				"typography": {
+					"fontWeight": "500",
+                    "fontSize": "6.25rem",
+                    "lineHeight": "0.9",
+                    "fontFamily": "var(--wp--preset--font-family--sans-serif)"
+				},
+				"spacing": {
+					"margin": {
+                        "top": "0",
+						"bottom": "2.75rem"
+					}
+				}
+			},
+			"h2": {
+				"typography": {
+					"fontWeight": "500",
+                    "fontSize": "4.375rem",
+                    "lineHeight": "1",
+                    "fontFamily": "var(--wp--preset--font-family--sans-serif)"
+				},
+				"spacing": {
+					"margin": {
+						"top": "0",
+                        "bottom": "2rem"
+					}
+				}
+			},
+			"h3": {
+				"typography": {
+					"fontWeight": "500",
+                    "fontSize": "2rem",
+                    "lineHeight": "1.1",
+					"textTransform": "uppercase",
+                    "fontFamily": "var(--wp--preset--font-family--sans-serif)"
+				},
+				"spacing": {
+					"margin": {
+						"top": "0",
+                        "bottom": "2rem"
+					}
+				}
+			}
+		}
+    }
+}

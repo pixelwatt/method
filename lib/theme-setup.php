@@ -41,7 +41,8 @@ add_action( 'after_setup_theme', 'method_register_custom_nav_menus' );
 // Custom Image Sizes
 //-----------------------------------------------------
 
-add_image_size( 'method_1400_600', 1400, 600, true );
+add_image_size( 'method_hd', 1920, 1080, true );
+add_image_size( 'method_qhd', 2560, 1440, true );
 
 
 //-----------------------------------------------------
@@ -49,10 +50,10 @@ add_image_size( 'method_1400_600', 1400, 600, true );
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', '1.4.4-prerelease' );
-	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), '1.4.4-prerelease', false );
+	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', METHOD_VERSION );
+	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), METHOD_VERSION, false );
 
-
+	
 }
 
 add_action( 'wp_enqueue_scripts', 'method_scripts' );

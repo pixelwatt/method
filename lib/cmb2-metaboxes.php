@@ -5,9 +5,10 @@
 //======================================================================
 
 /**
- * Front Page Metabox
+ * Front Page Metabox (uncomment funtion below to enable)
  */
 
+/*
 add_action( 'cmb2_admin_init', 'method_register_page_front_metabox' );
 
 function method_register_page_front_metabox() {
@@ -24,13 +25,14 @@ function method_register_page_front_metabox() {
 	);
 
 	method_load_cmb2_options( $cmb_options, array( 'elements' ) );
-
 }
+*/
 
 /**
- * Default Page Metabox
+ * Default Page Metabox (uncomment funtion below to enable)
  */
 
+/*
 add_action( 'cmb2_admin_init', 'method_register_page_default_metabox' );
 
 function method_register_page_default_metabox() {
@@ -46,9 +48,9 @@ function method_register_page_default_metabox() {
 		)
 	);
 
-	method_load_cmb2_options( $cmb_options, array( 'example' ) );
-
+	method_load_cmb2_options( $cmb_options, array( 'elements' ) );
 }
+*/
 
 /*
 Example CMB2 registration for a custom page template:
@@ -70,7 +72,6 @@ function method_register_page_template_tmpname_metabox() {
 	);
 
 	method_load_cmb2_options( $cmb_options, array( 'elements' ) );
-
 }
 
 */

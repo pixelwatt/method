@@ -50,7 +50,7 @@ add_image_size( 'method_qhd', 2560, 1440, true );
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method', get_template_directory_uri() . '/theme.min.css', '', METHOD_VERSION );
+	wp_enqueue_style( 'method-front', get_template_directory_uri() . '/assets/css/front.min.css', '', METHOD_VERSION );
 	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), METHOD_VERSION, false );
 
 	

@@ -16,8 +16,9 @@
         "appearanceTools": true,
         "useRootPaddingAwareAlignments": true,
 		"layout": {
-			"contentSize": "1272px",
-			"wideSize": "1273px"
+			"contentSize": "1300px",
+			"wideSize": "1301px",
+			"allowCustomContentAndWideSize": false
 		},
         "border": {
 			"color": true,
@@ -35,6 +36,7 @@
 			"defaultPalette": false,
             "link": true,
             "text": true,
+			"useClasses": true,
 			"palette": [
 				{
 					"color": "#D94A64",
@@ -75,7 +77,8 @@
 			"customSpacingSize": true,
 			"margin": true,
 			"padding": true,
-			"units": [ "px","em","rem", "%", "vw", "vh" ]
+			"units": [ "px","em","rem", "%", "vw", "vh" ],
+			"defaultSpacingSizes": false
         },
 		"typography": {
 			"textTransform": true,

@@ -4,54 +4,80 @@ autoprefixer = require('gulp-autoprefixer'),
 uglify = require('gulp-uglify'),
 rename = require('gulp-rename'),
 concat = require('gulp-concat'),
-notify = require('gulp-notify'),
 browserSync = require('browser-sync').create(),
-cleanCSS = require('gulp-clean-css'),
-postcss = require('gulp-postcss'),
-assets  = require('postcss-assets');
+cleanCSS = require('gulp-clean-css');
 
 gulp.task('scripts', function() {
-    return gulp.src(['inc/bootstrap/js/bootstrap.bundle.js','inc/matchHeight/jquery.matchHeight.js','inc/jarallax/jarallax.js'])
+    return gulp.src(['inc/bootstrap/js/bootstrap.bundle.js','inc/matchHeight/jquery.matchHeight.js'])
       .pipe(concat('assets/js/scripts.js'))
       .pipe(gulp.dest('.'))
       .pipe(rename({suffix: '.min'}))
       .pipe(uglify())
-      .pipe(gulp.dest('.'))
-      .pipe(notify({ message: 'Scripts task complete' }));
+      .pipe(gulp.dest('.'));
 });
 
-gulp.task('process-styles', function () {
-	return gulp.src(['./theme.css','theme.min.css'])
-	  .pipe(postcss([assets({
-		loadPaths: ['inc/bootstrap-icons/','assets/images/']
-	  })]))
-	  .pipe(gulp.dest('.'));
-  });
+gulp.task('compile-front-styles', function () {
+    console.log('Running compile-front-styles'); // Debug output
 
-gulp.task('compile-styles', function() {
-    return gulp.src('./theme.scss')
+    return gulp.src('./assets/scss/front.scss')
+        .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
+        .pipe(autoprefixer('last 2 versions'))
+        .pipe(gulp.dest('./assets/css/'))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(cleanCSS({ level: 2 }))
+        .pipe(gulp.dest('./assets/css/'))
+        .pipe(browserSync.stream());
+});
+
+gulp.task('compile-global-styles', function() {
+    console.log('Running compile-global-styles'); // Debug output
+
+    return gulp.src('./assets/scss/global.scss')
       .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
       .pipe(autoprefixer('last 2 versions'))
-      .pipe(gulp.dest('.'))
+      .pipe(gulp.dest('./assets/css/'))
+      .pipe(browserSync.stream())
       .pipe(rename({suffix: '.min'}))
       .pipe(cleanCSS('level: 2'))
-      .pipe(gulp.dest('.'))
-      .pipe(browserSync.stream())
-      .pipe(notify({ message: 'Styles task complete' }));
+      .pipe(gulp.dest('./assets/css/'));
   });
 
-gulp.task('styles', gulp.series('compile-styles', 'process-styles'));
+gulp.task('compile-admin-styles', function() {
+    console.log('Running compile-admin-styles'); // Debug output
 
-gulp.task('serve', function() {
+    return gulp.src('./assets/scss/admin.scss')
+      .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+      .pipe(autoprefixer('last 2 versions'))
+      .pipe(gulp.dest('./assets/css/'))
+      .pipe(browserSync.stream())
+      .pipe(rename({suffix: '.min'}))
+      .pipe(cleanCSS('level: 2'))
+      .pipe(gulp.dest('./assets/css/'));
+  });
+
+// Leaving this in for now while I decide on task naming
+gulp.task('styles', gulp.series('compile-front-styles', 'compile-global-styles', 'compile-admin-styles'));
+gulp.task('compile-all-styles', gulp.series('compile-front-styles', 'compile-global-styles', 'compile-admin-styles'));
+
+gulp.task('serve', function () {
     browserSync.init({
         proxy: "method.test"
     });
-    // Watch .scss files
-    gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.series('compile-styles', 'process-styles'));
-    gulp.watch(['./**/*.*', '!./node_modules/', '!./.git/', '!./**/*.scss', '!./theme.css', '!./theme.min.css']).on('change', browserSync.reload);
-});
 
-gulp.task('watch', function() {
-      // Watch .scss files
-      gulp.watch(['./**/*.scss', '!./node_modules/', '!./.git/'], gulp.series('compile-styles', 'process-styles'));
+    // Watch all SCSS files for live injection
+    gulp.watch(
+        ['./**/*.scss', '!./node_modules/**', '!./.git/**'],
+        gulp.series('compile-all-styles')
+    );
+
+    // Watch everything else for browser reload (exclude compiled CSS and SCSS)
+    gulp.watch(
+        [
+            './**/*',
+            '!./**/*.scss',
+            '!./**/*.css',
+            '!./node_modules/**',
+            '!./.git/**'
+        ]
+    ).on('change', browserSync.reload);
 });

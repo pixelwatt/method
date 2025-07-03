@@ -206,3 +206,17 @@ function method_str_replace_assoc( array $replace, $subject ) {
 function method_get_tags_badge() {
 	return '<span class="method-tags-opener">Tags Supported</span> ';
 }
+
+
+function method_get_block_breakpoints() {
+	$breakpoint_mobile_max =  METHOD_OPTIONS['breakpoints']['mobile_max'];
+	$breakpoint_tablet_min =  METHOD_OPTIONS['breakpoints']['tablet_min'];
+	$breakpoint_tablet_max =  METHOD_OPTIONS['breakpoints']['tablet_max'];
+	$breakpoint_wide_min =  METHOD_OPTIONS['breakpoints']['wide_min'];
+	return array(
+		'mobile_max' => ( METHOD_OPTIONS['breakpoints']['dimensions']["{$breakpoint_mobile_max}"] - 1 ) . METHOD_OPTIONS['breakpoints']['units'],
+		'tablet_min' => METHOD_OPTIONS['breakpoints']['dimensions']["{$breakpoint_tablet_min}"] . METHOD_OPTIONS['breakpoints']['units'],
+		'tablet_max' => ( METHOD_OPTIONS['breakpoints']['dimensions']["{$breakpoint_tablet_max}"] - 1 ) . METHOD_OPTIONS['breakpoints']['units'],
+		'wide_min' => METHOD_OPTIONS['breakpoints']['dimensions']["{$breakpoint_wide_min}"] . METHOD_OPTIONS['breakpoints']['units'],
+	);
+}

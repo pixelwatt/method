@@ -1,0 +1,36 @@
+@use 'sass:math';
+
+$variable-prefix:             bs-; // Deprecated in v5.2.0 for the shorter `$prefix`
+$prefix:                      $variable-prefix;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1600px
+);
+
+$grid-columns:                24;
+$grid-gutter-width:           1.5rem;
+$grid-row-columns:            6;
+
+$orange: #FD6110;
+$teal: #009CA6;
+$green: #78B320;
+$purple: #981D97;
+$blue: #0072CE;
+$darkblue: #13294B;
+
+@import "../../inc/bootstrap/scss/_functions.scss";
+@import "../../inc/bootstrap/scss/mixins/_grid.scss";
+@import "../../inc/bootstrap/scss/mixins/_breakpoints.scss";
+
+// Now that we can use the breakpoint-max mixin 
+// from Bootstrap, we profit.
+
+$method-mobile-max: breakpoint-max(md);
+$method-tablet-min: map-get($grid-breakpoints, md);
+$method-tablet-max: breakpoint-max(xl);
+$method-wide-min: map-get($grid-breakpoints, xxl);

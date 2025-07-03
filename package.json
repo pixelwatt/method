@@ -1,7 +1,7 @@
 {
-  "name": "method",
-  "version": "1.4.4-prerelease",
-  "description": "A barebones foundation for custom theme development.",
+  "name": "Method",
+  "version": "2.0.0",
+  "description": "All of the blocks!",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,9 +16,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-dart-sass": "^1.0.2",
     "gulp-notify": "^4.0.0",
-    "gulp-postcss": "9.0.0",
     "gulp-rename": "^2.0.0",
-    "gulp-uglify": "^3.0.2",
-    "postcss-assets": "5.0.0"
+    "gulp-uglify": "^3.0.2"
   }
 }

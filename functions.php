@@ -54,14 +54,6 @@
 //======================================================================
 
 //-----------------------------------------------------
-// Create a constant for easily referencing the theme
-// version number. To update the version number, edit
-// the "Version" value in style.css
-//-----------------------------------------------------
-
-define( 'METHOD_VERSION', wp_get_theme()->get( 'Version' ) );
-
-//-----------------------------------------------------
 // Import a custom navwalker for Bootstrap 5
 //-----------------------------------------------------
 
@@ -71,6 +63,7 @@ require_once get_template_directory() . '/inc/bootstrap-5-navwalker/class-bootst
 // Import theme files.
 //-----------------------------------------------------
 
+require_once('lib/config.php');
 require_once('lib/theme-setup.php');
 require_once('lib/theme-options.php');
 require_once('lib/blocks.php');

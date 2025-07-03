@@ -1,7 +1,7 @@
 <?php
 
 function method_admin_scripts() {
-    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin-styles.css', '', METHOD_VERSION );
+    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin.css', '', METHOD_VERSION );
 }
 
 add_action( 'admin_enqueue_scripts', 'method_admin_scripts' );
@@ -66,3 +66,7 @@ function method_login_scripts() {
 
 add_action( 'login_enqueue_scripts', 'method_login_scripts' );
 
+add_filter('update_footer', 'replace_admin_footer_version', 999);
+function replace_admin_footer_version($footer_text) {
+    return 'Method v' . METHOD_VERSION . ' | Powered by WordPress v' . get_bloginfo('version');
+}

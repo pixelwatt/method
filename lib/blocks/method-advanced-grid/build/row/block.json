@@ -1,0 +1,105 @@
+{
+  "apiVersion": 2,
+  "name": "method/advanced-grid-row",
+  "title": "Grid Row",
+  "category": "method-layout-blocks",
+  "icon": "columns",
+  "parent": [
+    "method/advanced-grid"
+  ],
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "responsiveSettings": {
+      "type": "object",
+      "default": {
+        "base": {
+          "enabled": true,
+          "padding": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          },
+          "margin": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          },
+          "gap": {
+            "top": "0rem",
+            "bottom": "0rem"
+          },
+          "fontSize": "1.25rem",
+          "lineHeight": "1.55"
+        },
+        "mobile": {
+          "enabled": false,
+          "padding": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          },
+          "margin": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          },
+          "gap": {
+            "top": "0rem",
+            "bottom": "0rem"
+          },
+          "fontSize": "1.25rem",
+          "lineHeight": "1.55"
+        },
+        "tablet": {
+          "enabled": false,
+          "padding": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          },
+          "margin": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          },
+          "gap": {
+            "top": "0rem",
+            "bottom": "0rem"
+          },
+          "fontSize": "1.25rem",
+          "lineHeight": "1.55"
+        },
+        "wide": {
+          "enabled": false,
+          "padding": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          },
+          "margin": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          },
+          "gap": {
+            "top": "0rem",
+            "bottom": "0rem"
+          },
+          "fontSize": "1.25rem",
+          "lineHeight": "1.55"
+        }
+      }
+    }
+  },
+  "editorScript": "file:./index.js"
+}

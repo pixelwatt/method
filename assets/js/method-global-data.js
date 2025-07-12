@@ -1,0 +1,1 @@
+window.methodGlobalData = window.methodGlobalData || {};

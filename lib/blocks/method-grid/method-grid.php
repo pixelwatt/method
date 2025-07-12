@@ -20,14 +20,6 @@ function method_grid_register_block() {
 }
 add_action('init', 'method_grid_register_block');
 
-function method_grid_localize_block() {
-    wp_enqueue_script('method-grid-block-editor-script');
-    wp_localize_script('method-grid-block-editor-script', 'methodGridData', array(
-        'breakpoints' => method_get_block_breakpoints()
-    ));
-}
-add_action('enqueue_block_editor_assets', 'method_grid_localize_block');
-
 
 function method_render_grid_block( $block_attributes, $content, $block ) {
     // Block wrapper setup

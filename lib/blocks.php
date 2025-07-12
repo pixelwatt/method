@@ -1,5 +1,24 @@
 <?php
 
+add_action( 'enqueue_block_editor_assets', function() {
+    // Register a placeholder script to attach localization to
+    wp_register_script(
+        'method-global-data',
+        get_template_directory_uri() . '/assets/js/method-global-data.js', // Can be blank
+        [],
+        null,
+        true
+    );
+
+    // Localize the breakpoints
+    wp_localize_script( 'method-global-data', 'methodGlobalData', [
+        'breakpoints' => method_get_block_breakpoints()
+    ]);
+
+    // Enqueue the script (editor only)
+    wp_enqueue_script( 'method-global-data' );
+});
+
 //-----------------------------------------------------
 // Register stylesheets for a 24 column Bootstrap grid
 // and Method's blocks.
@@ -80,6 +99,7 @@ add_filter( 'block_categories_all' , function( $categories ) {
 // Load Method's custom blocks.
 //-----------------------------------------------------
 
+require_once('blocks/method-advanced-grid/method-advanced-grid.php');
 require_once('blocks/method-button/method-button.php');
 require_once('blocks/method-buttons/method-buttons.php');
 require_once('blocks/method-container-full/method-container-full.php');

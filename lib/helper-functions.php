@@ -220,3 +220,21 @@ function method_get_block_breakpoints() {
 		'wide_min' => METHOD_OPTIONS['breakpoints']['dimensions']["{$breakpoint_wide_min}"] . METHOD_OPTIONS['breakpoints']['units'],
 	);
 }
+
+function method_get_breakpoint_colors() {
+	$output = array(
+		'mobile' => '#007CBA',
+		'tablet' => '#007CBA',
+		'wide' => '#007CBA',
+	);
+	if ( method_check_array_key( METHOD_OPTIONS, 'breakpoint-colors' ) ) {
+		if ( method_check_array_key( METHOD_OPTIONS['breakpoint-colors'], 'enabled' ) ) {
+			$output = array(
+				'mobile' => ( method_check_array_key( METHOD_OPTIONS['breakpoint-colors'], 'mobile' ) ? METHOD_OPTIONS['breakpoint-colors']['mobile'] : '#007CBA' ),
+				'tablet' => ( method_check_array_key( METHOD_OPTIONS['breakpoint-colors'], 'tablet' ) ? METHOD_OPTIONS['breakpoint-colors']['tablet'] : '#007CBA' ),
+				'wide' => ( method_check_array_key( METHOD_OPTIONS['breakpoint-colors'], 'wide' ) ? METHOD_OPTIONS['breakpoint-colors']['wide'] : '#007CBA' ),
+			);
+		}
+	}
+	return $output;
+}

@@ -1,22 +1,47 @@
 {
   "apiVersion": 3,
-  "name": "method/advanced-grid-row",
-  "title": "Row",
+  "name": "method/container",
+  "title": "Container",
   "category": "method-layout-blocks",
-  "parent": [
-    "method/advanced-grid"
-  ],
   "supports": {
     "html": false
   },
   "attributes": {
+    "textColor": {
+      "type": "string"
+    },
+    "linkColor": {
+      "type": "string"
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "bgGradient": {
+      "type": "string"
+    },
+    "bgShadeColor": {
+      "type": "string"
+    },
+    "bgShadeGradient": {
+      "type": "string"
+    },
+    "bgImg": {
+      "type": "object",
+      "default": {
+        "full": "",
+        "large": "",
+        "id": ""
+      }
+    },
+    "bgImgAlign": {
+      "type": "string",
+      "default": "center center"
+    },
     "responsiveSettings": {
       "type": "object",
       "default": {
         "base": {
           "enabled": true,
-          "alignItems": "start",
-          "justifyContent": "start",
           "padding": {
             "top": "0rem",
             "bottom": "0rem",
@@ -29,20 +54,19 @@
             "left": "0rem",
             "right": "0rem"
           },
-          "gap": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "1.5rem",
-            "right": "1.5rem"
-          },
           "fontSize": "1.25rem",
           "lineHeight": "1.55",
-          "allowNegative": false
+          "allowNegative": false,
+          "border": "",
+          "borderRadius": {
+            "topLeft": "0rem",
+            "topRight": "0rem",
+            "bottomLeft": "0rem",
+            "bottomRight": "0rem"
+          }
         },
         "mobile": {
           "enabled": false,
-          "alignItems": "start",
-          "justifyContent": "start",
           "padding": {
             "top": "0rem",
             "bottom": "0rem",
@@ -55,20 +79,19 @@
             "left": "0rem",
             "right": "0rem"
           },
-          "gap": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "1.5rem",
-            "right": "1.5rem"
-          },
           "fontSize": "1.25rem",
           "lineHeight": "1.55",
-          "allowNegative": false
+          "allowNegative": false,
+          "border": "",
+          "borderRadius": {
+            "topLeft": "0rem",
+            "topRight": "0rem",
+            "bottomLeft": "0rem",
+            "bottomRight": "0rem"
+          }
         },
         "tablet": {
           "enabled": false,
-          "alignItems": "start",
-          "justifyContent": "start",
           "padding": {
             "top": "0rem",
             "bottom": "0rem",
@@ -81,20 +104,19 @@
             "left": "0rem",
             "right": "0rem"
           },
-          "gap": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "1.5rem",
-            "right": "1.5rem"
-          },
           "fontSize": "1.25rem",
           "lineHeight": "1.55",
-          "allowNegative": false
+          "allowNegative": false,
+          "border": "",
+          "borderRadius": {
+            "topLeft": "0rem",
+            "topRight": "0rem",
+            "bottomLeft": "0rem",
+            "bottomRight": "0rem"
+          }
         },
         "wide": {
           "enabled": false,
-          "alignItems": "start",
-          "justifyContent": "start",
           "padding": {
             "top": "0rem",
             "bottom": "0rem",
@@ -107,15 +129,16 @@
             "left": "0rem",
             "right": "0rem"
           },
-          "gap": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "1.5rem",
-            "right": "1.5rem"
-          },
           "fontSize": "1.25rem",
           "lineHeight": "1.55",
-          "allowNegative": false
+          "allowNegative": false,
+          "border": "",
+          "borderRadius": {
+            "topLeft": "0rem",
+            "topRight": "0rem",
+            "bottomLeft": "0rem",
+            "bottomRight": "0rem"
+          }
         }
       }
     }

@@ -23,6 +23,9 @@ function method_enable_theme_support() {
 
 	// Add theme support for post thumbnails
 	add_theme_support( 'post-thumbnails' );
+
+
+	add_theme_support( 'editor-gradient-presets' );
 }
 add_action( 'after_setup_theme', 'method_enable_theme_support' );
 

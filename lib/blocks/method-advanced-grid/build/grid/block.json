@@ -1,13 +1,16 @@
 {
-  "apiVersion": 2,
+  "apiVersion": 3,
   "name": "method/advanced-grid",
   "title": "Advanced Grid",
   "category": "method-layout-blocks",
-  "icon": "table-row-after",
   "supports": {
     "html": false
   },
   "attributes": {
+    "highlightGrid": {
+      "type": "boolean",
+      "default": false
+    },
     "responsiveSettings": {
       "type": "object",
       "default": {
@@ -30,7 +33,8 @@
             "bottom": "0rem"
           },
           "fontSize": "1.25rem",
-          "lineHeight": "1.55"
+          "lineHeight": "1.55",
+          "allowNegative": false
         },
         "mobile": {
           "enabled": false,
@@ -51,7 +55,8 @@
             "bottom": "0rem"
           },
           "fontSize": "1.25rem",
-          "lineHeight": "1.55"
+          "lineHeight": "1.55",
+          "allowNegative": false
         },
         "tablet": {
           "enabled": false,
@@ -72,7 +77,8 @@
             "bottom": "0rem"
           },
           "fontSize": "1.25rem",
-          "lineHeight": "1.55"
+          "lineHeight": "1.55",
+          "allowNegative": false
         },
         "wide": {
           "enabled": false,
@@ -93,7 +99,8 @@
             "bottom": "0rem"
           },
           "fontSize": "1.25rem",
-          "lineHeight": "1.55"
+          "lineHeight": "1.55",
+          "allowNegative": false
         }
       }
     }

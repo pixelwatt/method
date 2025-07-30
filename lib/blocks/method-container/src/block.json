@@ -1,15 +1,41 @@
 {
     "apiVersion": 3,
-    "name": "method/advanced-grid",
-    "title": "Advanced Grid",
+    "name": "method/container",
+    "title": "Container",
     "category": "method-layout-blocks",
     "supports": {
         "html": false
     },
     "attributes": {
-        "highlightGrid": {
-            "type": "boolean",
-            "default": false
+        "textColor": {
+            "type": "string"
+        },
+        "linkColor": {
+            "type": "string"
+        },
+        "bgColor": {
+            "type": "string"
+        },
+        "bgGradient": {
+            "type": "string"
+        },
+        "bgShadeColor": {
+            "type": "string"
+        },
+        "bgShadeGradient": {
+            "type": "string"
+        },
+        "bgImg": {
+            "type": "object",
+            "default": {
+                "full": "",
+                "large": "",
+                "id": ""
+            }
+        },
+        "bgImgAlign": {
+            "type": "string",
+            "default": "center center"
         },
         "responsiveSettings": {
             "type": "object",
@@ -28,13 +54,16 @@
                         "left": "0rem",
                         "right": "0rem"
                     },
-                    "gap": {
-                        "top": "0rem",
-                        "bottom": "0rem"
-                    },
                     "fontSize": "1.25rem",
                     "lineHeight": "1.55",
-                    "allowNegative": false
+                    "allowNegative": false,
+                    "border": "",
+                    "borderRadius": {
+                        "topLeft": "0rem",
+                        "topRight": "0rem",
+                        "bottomLeft": "0rem",
+                        "bottomRight": "0rem"
+                    }
                 },
                 "mobile": {
                     "enabled": false,
@@ -50,13 +79,16 @@
                         "left": "0rem",
                         "right": "0rem"
                     },
-                    "gap": {
-                        "top": "0rem",
-                        "bottom": "0rem"
-                    },
                     "fontSize": "1.25rem",
                     "lineHeight": "1.55",
-                    "allowNegative": false
+                    "allowNegative": false,
+                    "border": "",
+                    "borderRadius": {
+                        "topLeft": "0rem",
+                        "topRight": "0rem",
+                        "bottomLeft": "0rem",
+                        "bottomRight": "0rem"
+                    }
                 },
                 "tablet": {
                     "enabled": false,
@@ -72,13 +104,16 @@
                         "left": "0rem",
                         "right": "0rem"
                     },
-                    "gap": {
-                        "top": "0rem",
-                        "bottom": "0rem"
-                    },
                     "fontSize": "1.25rem",
                     "lineHeight": "1.55",
-                    "allowNegative": false
+                    "allowNegative": false,
+                    "border": "",
+                    "borderRadius": {
+                        "topLeft": "0rem",
+                        "topRight": "0rem",
+                        "bottomLeft": "0rem",
+                        "bottomRight": "0rem"
+                    }
                 },
                 "wide": {
                     "enabled": false,
@@ -94,13 +129,16 @@
                         "left": "0rem",
                         "right": "0rem"
                     },
-                    "gap": {
-                        "top": "0rem",
-                        "bottom": "0rem"
-                    },
                     "fontSize": "1.25rem",
                     "lineHeight": "1.55",
-                    "allowNegative": false
+                    "allowNegative": false,
+                    "border": "",
+                    "borderRadius": {
+                        "topLeft": "0rem",
+                        "topRight": "0rem",
+                        "bottomLeft": "0rem",
+                        "bottomRight": "0rem"
+                    }
                 }
             }
         }

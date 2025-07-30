@@ -34,6 +34,13 @@
 			"defaultDuotone": false,
 			"defaultGradients": false,
 			"defaultPalette": false,
+			"gradients": [
+				{
+					"gradient": "linear-gradient(to bottom, #f57b4e, #f25774, #bf3681)",
+					"name": "Method Bright",
+					"slug": "method-bright"
+				}
+			],
             "link": true,
             "text": true,
 			"useClasses": true,
@@ -63,14 +70,8 @@
 					"name": "Method Cocoa",
 					"slug": "method-cocoa"
 				}
-			],
-            "gradients": [
-                {
-                    "slug": "sunset",
-                    "gradient": "linear-gradient(90deg, #13294B, #981D97)",
-                    "name": "Sunset"
-                }
-            ]
+			]
+            
 		},
         "spacing": {
 			"blockGap": true,

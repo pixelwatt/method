@@ -1,51 +1,106 @@
 {
-  "apiVersion": 2,
-  "name": "method/advanced-grid-col",
-  "title": "Grid Col",
-  "category": "method-layout-blocks",
-  "icon": "insert-after",
-  "parent": [ "method/advanced-grid-row" ],
-  "supports": {
-    "html": false
-  },
-  "attributes": {
-    "responsiveSettings": {
-        "type": "object",
-        "default": {
-            "base": {
-                "enabled": true,
-                "gridCols": 8,
-                "padding": { "top": "0rem", "bottom": "0rem" },
-                "margin": { "top": "0rem", "bottom": "0rem" },
-                "fontSize": "1.25rem",
-                "lineHeight": "1.55"
-            },
-            "mobile": {
-                "enabled": false,
-                "gridCols": 24,
-                "padding": { "top": "0rem", "bottom": "0rem" },
-                "margin": { "top": "0rem", "bottom": "0rem" },
-                "fontSize": "1.25rem",
-                "lineHeight": "1.55"
-            },
-            "tablet": {
-                "enabled": false,
-                "gridCols": 12,
-                "padding": { "top": "0rem", "bottom": "0rem" },
-                "margin": { "top": "0rem", "bottom": "0rem" },
-                "fontSize": "1.25rem",
-                "lineHeight": "1.55"
-            },
-            "wide": {
-                "enabled": false,
-                "gridCols": 6,
-                "padding": { "top": "0rem", "bottom": "0rem" },
-                "margin": { "top": "0rem", "bottom": "0rem" },
-                "fontSize": "1.25rem",
-                "lineHeight": "1.55"
-            }
-        }
-    }
-  },
-  "editorScript": "file:./index.js"
+	"apiVersion": 3,
+	"name": "method/advanced-grid-col",
+	"title": "Column",
+	"category": "method-layout-blocks",
+	"parent": [
+		"method/advanced-grid-row"
+	],
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"textColor": {
+			"type": "string"
+		},
+		"linkColor": {
+			"type": "string"
+		},
+		"bgColor": {
+			"type": "string"
+		},
+		"bgGradient": {
+			"type": "string"
+		},
+		"bgShadeColor": {
+			"type": "string"
+		},
+		"bgShadeGradient": {
+			"type": "string"
+		},
+		"responsiveSettings": {
+			"type": "object",
+			"default": {
+				"base": {
+					"enabled": true,
+					"gridCols": 8,
+					"padding": {
+						"top": "0rem",
+						"bottom": "0rem",
+						"left": "0rem",
+						"right": "0rem"
+					},
+					"margin": {
+						"top": "0rem",
+						"bottom": "0rem"
+					},
+					"fontSize": "1.25rem",
+					"lineHeight": "1.55",
+					"allowNegative": false
+				},
+				"mobile": {
+					"enabled": false,
+					"gridCols": 24,
+					"padding": {
+						"top": "0rem",
+						"bottom": "0rem",
+						"left": "0rem",
+						"right": "0rem"
+					},
+					"margin": {
+						"top": "0rem",
+						"bottom": "0rem"
+					},
+					"fontSize": "1.25rem",
+					"lineHeight": "1.55",
+					"allowNegative": false
+				},
+				"tablet": {
+					"enabled": false,
+					"gridCols": 12,
+					"padding": {
+						"top": "0rem",
+						"bottom": "0rem",
+						"left": "0rem",
+						"right": "0rem"
+					},
+					"margin": {
+						"top": "0rem",
+						"bottom": "0rem"
+					},
+					"fontSize": "1.25rem",
+					"lineHeight": "1.55",
+					"allowNegative": false
+				},
+				"wide": {
+					"enabled": false,
+					"gridCols": 6,
+					"padding": {
+						"top": "0rem",
+						"bottom": "0rem",
+						"left": "0rem",
+						"right": "0rem"
+					},
+					"margin": {
+						"top": "0rem",
+						"bottom": "0rem"
+					},
+					"fontSize": "1.25rem",
+					"lineHeight": "1.55",
+					"allowNegative": false
+				}
+			}
+		}
+	},
+	"editorScript": "file:./index.js"
 }

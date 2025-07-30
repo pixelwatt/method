@@ -38,6 +38,36 @@ define('METHOD_OPTIONS', array(
         'tablet_max' => 'xl',
         'wide_min' => 'xxl',
     ),
+    'breakpoint-colors' => array(
+        'enabled' => true, // if false, the default blue (#007CBA) will be passed to Method controls
+        'mobile' => '#865EBF',
+        'tablet' => '#D94A64',
+        'wide' => '#F28729',
+    ),
+    'typography' => array(
+        'font-size-presets' => array(
+            array(
+                'name' => 'Small',
+                'slug' => 'sm',
+                'size' => '1rem',
+            ),
+            array(
+                'name' => 'Medium',
+                'slug' => 'md',
+                'size' => '1.25rem',
+            ),
+            array(
+                'name' => 'Large',
+                'slug' => 'lg',
+                'size' => '1.5rem',
+            ),
+            array(
+                'name' => 'Extra Large',
+                'slug' => 'xl',
+                'size' => '2rem',
+            ),
+        ),
+    ),
     'blocks' => array(
         'method/accordion-item' => array(
             'arrow-svg' => '',

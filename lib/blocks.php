@@ -12,12 +12,15 @@ add_action( 'enqueue_block_editor_assets', function() {
 
     // Localize the breakpoints
     wp_localize_script( 'method-global-data', 'methodGlobalData', [
-        'breakpoints' => method_get_block_breakpoints()
+        'breakpoints' => method_get_block_breakpoints(),
+		'breakpointColors' => method_get_breakpoint_colors(),
+		'fontSizePresets' => METHOD_OPTIONS['typography']['font-size-presets'],
     ]);
 
     // Enqueue the script (editor only)
     wp_enqueue_script( 'method-global-data' );
 });
+
 
 //-----------------------------------------------------
 // Register stylesheets for a 24 column Bootstrap grid
@@ -102,6 +105,7 @@ add_filter( 'block_categories_all' , function( $categories ) {
 require_once('blocks/method-advanced-grid/method-advanced-grid.php');
 require_once('blocks/method-button/method-button.php');
 require_once('blocks/method-buttons/method-buttons.php');
+require_once('blocks/method-container/method-container.php');
 require_once('blocks/method-container-full/method-container-full.php');
 require_once('blocks/method-grid/method-grid.php');
 require_once('blocks/method-grid-item/method-grid-item.php');
@@ -426,3 +430,40 @@ function method_sanitize_flex_align( $align ) {
 	}
 	return $align;
 }
+
+function myplugin_inline_editor_styles() {
+	$custom_css = '';
+	$colors = method_get_breakpoint_colors();
+	$ranges = array( 'mobile', 'tablet', 'wide' );
+	foreach ( $ranges as $range ) {
+		$custom_css .= '
+			.method-tab-' . $range . '.components-tab-panel__tabs-item:after {
+				background-color: ' . $colors["{$range}"] . ';
+			}
+			.method-responsive-control-tab-' . $range . ' .components-range-control__track {
+				background: ' . $colors["{$range}"] . ' !important;
+				color: ' . $colors["{$range}"] . ' !important;
+			}
+			.method-responsive-control-tab-' . $range . ' .components-range-control__thumb-wrapper,
+			.method-responsive-control-tab-' . $range . ' .components-range-control__thumb-wrapper span {
+				background-color: ' . $colors["{$range}"] . ' !important;
+			}
+			.method-responsive-control-tab-' . $range . ' .components-form-toggle .components-form-toggle__input {
+				border-color: ' . $colors["{$range}"] . ' !important;
+				box-shadow: 0 0 0 1px ' . $colors["{$range}"] . ' !important;
+			}
+			.method-responsive-control-tab-' . $range . ' .components-form-toggle .components-form-toggle__input:focus+.components-form-toggle__track {
+				box-shadow: 0 0 0 var(--wp-admin-border-width-focus) #fff,0 0 0 calc(var(--wp-admin-border-width-focus)*2) ' . $colors["{$range}"] . ';
+				border-color: ' . $colors["{$range}"] . ' !important;
+			}
+			.method-responsive-control-tab-' . $range . ' .components-toggle-control .components-form-toggle.is-checked .components-form-toggle__track {
+				background-color: ' . $colors["{$range}"] . ';
+			}
+			.tab-enabled.tab-enabled-' . $range . ' .dashicon:after {
+				background-color: ' . $colors["{$range}"] . ';
+			}
+		';
+	}
+	wp_add_inline_style( 'wp-edit-blocks', $custom_css );
+}
+add_action( 'enqueue_block_editor_assets', 'myplugin_inline_editor_styles' );

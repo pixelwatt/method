@@ -921,6 +921,8 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
 
 .method-container {
   position: relative;
+}
+.method-container .method-container-content {
   overflow: hidden;
 }
 .method-container .method-container-shade {

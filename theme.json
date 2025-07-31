@@ -1,6 +1,6 @@
 {
 	"version": 2,
-    "templateParts": [
+	"templateParts": [
 		{
 			"area": "header",
 			"name": "header",
@@ -13,21 +13,21 @@
 		}
 	],
 	"settings": {
-        "appearanceTools": true,
-        "useRootPaddingAwareAlignments": true,
+		"appearanceTools": true,
+		"useRootPaddingAwareAlignments": true,
 		"layout": {
 			"contentSize": "1300px",
 			"wideSize": "1301px",
 			"allowCustomContentAndWideSize": false
 		},
-        "border": {
+		"border": {
 			"color": true,
 			"radius": true,
 			"style": true,
 			"width": true
 		},
-        "color": {
-            "background": true,
+		"color": {
+			"background": true,
 			"custom": true,
 			"customDuotone": true,
 			"customGradient": true,
@@ -41,8 +41,8 @@
 					"slug": "method-bright"
 				}
 			],
-            "link": true,
-            "text": true,
+			"link": true,
+			"text": true,
 			"useClasses": true,
 			"palette": [
 				{
@@ -50,37 +50,43 @@
 					"name": "Method Cabaret",
 					"slug": "method-cabaret"
 				},
-                {
+				{
 					"color": "#865EBF",
 					"name": "Method Fuchsia",
 					"slug": "method-fuchsia"
 				},
-                {
+				{
 					"color": "#F28729",
 					"name": "Method Orange",
 					"slug": "method-orange"
 				},
-                {
+				{
 					"color": "#F24C27",
 					"name": "Method Pomegranate",
 					"slug": "method-pomegranate"
 				},
-                {
+				{
 					"color": "#592222",
 					"name": "Method Cocoa",
 					"slug": "method-cocoa"
 				}
 			]
-            
 		},
-        "spacing": {
+		"spacing": {
 			"blockGap": true,
 			"customSpacingSize": true,
 			"margin": true,
 			"padding": true,
-			"units": [ "px","em","rem", "%", "vw", "vh" ],
+			"units": [
+				"px",
+				"em",
+				"rem",
+				"%",
+				"vw",
+				"vh"
+			],
 			"defaultSpacingSizes": false
-        },
+		},
 		"typography": {
 			"textTransform": true,
 			"customFontSize": true,
@@ -93,8 +99,8 @@
 			]
 		}
 	},
-    "styles": {
-        "spacing": {
+	"styles": {
+		"spacing": {
 			"padding": {
 				"top": "0",
 				"bottom": "0",
@@ -106,56 +112,55 @@
 			"text": "#010101",
 			"background": "#fff"
 		},
-        "typography": {
+		"typography": {
 			"fontSize": "1.25rem",
-            "lineHeight": "1.55",
-            "fontWeight": "400",
-            "fontFamily": "var(--wp--preset--font-family--sans-serif)"
+			"lineHeight": "1.55",
+			"fontWeight": "400",
+			"fontFamily": "var(--wp--preset--font-family--sans-serif)"
 		},
 		"elements": {
 			"h1": {
 				"typography": {
-					"fontWeight": "500",
-                    "fontSize": "6.25rem",
-                    "lineHeight": "0.9",
-                    "fontFamily": "var(--wp--preset--font-family--sans-serif)"
+					"fontWeight": "800",
+					"fontSize": "5rem",
+					"lineHeight": "0.9",
+					"fontFamily": "var(--wp--preset--font-family--sans-serif)"
 				},
 				"spacing": {
 					"margin": {
-                        "top": "0",
-						"bottom": "2.75rem"
+						"top": "0",
+						"bottom": "2rem"
 					}
 				}
 			},
 			"h2": {
 				"typography": {
-					"fontWeight": "500",
-                    "fontSize": "4.375rem",
-                    "lineHeight": "1",
-                    "fontFamily": "var(--wp--preset--font-family--sans-serif)"
+					"fontWeight": "800",
+					"fontSize": "3rem",
+					"lineHeight": "1",
+					"fontFamily": "var(--wp--preset--font-family--sans-serif)"
 				},
 				"spacing": {
 					"margin": {
 						"top": "0",
-                        "bottom": "2rem"
+						"bottom": "1.5rem"
 					}
 				}
 			},
 			"h3": {
 				"typography": {
-					"fontWeight": "500",
-                    "fontSize": "2rem",
-                    "lineHeight": "1.1",
-					"textTransform": "uppercase",
-                    "fontFamily": "var(--wp--preset--font-family--sans-serif)"
+					"fontWeight": "700",
+					"fontSize": "2rem",
+					"lineHeight": "1.1",
+					"fontFamily": "var(--wp--preset--font-family--sans-serif)"
 				},
 				"spacing": {
 					"margin": {
 						"top": "0",
-                        "bottom": "2rem"
+						"bottom": "1rem"
 					}
 				}
 			}
 		}
-    }
+	}
 }

@@ -1095,7 +1095,11 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
 
 .method-container {
     position: relative;
-    overflow: hidden;
+
+
+    .method-container-content {
+        overflow: hidden;
+    }
 
     .method-container-shade {
         position: absolute;

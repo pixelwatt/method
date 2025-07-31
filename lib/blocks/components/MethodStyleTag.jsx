@@ -37,39 +37,42 @@ function getBreakpointStyle(
 		const styleProps = {};
 		props.forEach((prop) => {
 			if (prop === 'borderRadius') {
-				if (settings.borderRadius?.topLeft) {
-					styleProps['border-top-left-radius'] =
-						settings.borderRadius.topLeft;
-					styleProps['border-top-right-radius'] =
-						settings.borderRadius.topRight;
-					styleProps['border-bottom-left-radius'] =
-						settings.borderRadius.bottomLeft;
-					styleProps['border-bottom-right-radius'] =
-						settings.borderRadius.bottomRight;
-				} else if (settings?.borderRadius) {
-					styleProps['border-radius'] = settings.borderRadius;
-				} else {
+				if (breakpoint === 'base' || settings.customBorders === true) {
+					if (settings.borderRadius?.topLeft) {
+						styleProps['border-top-left-radius'] =
+							settings.borderRadius.topLeft;
+						styleProps['border-top-right-radius'] =
+							settings.borderRadius.topRight;
+						styleProps['border-bottom-left-radius'] =
+							settings.borderRadius.bottomLeft;
+						styleProps['border-bottom-right-radius'] =
+							settings.borderRadius.bottomRight;
+					} else if (settings?.borderRadius) {
+						styleProps['border-radius'] = settings.borderRadius;
+					}
 				}
 			} else if (prop === 'border') {
-				if (settings.border?.width) {
-					styleProps['border'] =
-						`${settings.border.width} ${settings.border?.style ? settings.border.style : 'solid'} ${settings.border?.color ? settings.border.color : ''}`;
-				} else if (settings.border?.top) {
-					if (settings.border.top?.width) {
-						styleProps['border-top'] =
-							`${settings.border.top.width} ${settings.border.top?.style ? settings.border.top.style : 'solid'} ${settings.border.top?.color ? settings.border.top.color : ''}`;
-					}
-					if (settings.border.bottom?.width) {
-						styleProps['border-bottom'] =
-							`${settings.border.bottom.width} ${settings.border.bottom?.style ? settings.border.bottom.style : 'solid'} ${settings.border.bottom?.color ? settings.border.bottom.color : ''}`;
-					}
-					if (settings.border.left?.width) {
-						styleProps['border-left'] =
-							`${settings.border.left.width} ${settings.border.left?.style ? settings.border.left.style : 'solid'} ${settings.border.left?.color ? settings.border.left.color : ''}`;
-					}
-					if (settings.border.right?.width) {
-						styleProps['border-right'] =
-							`${settings.border.right.width} ${settings.border.right?.style ? settings.border.right.style : 'solid'} ${settings.border.right?.color ? settings.border.right.color : ''}`;
+				if (breakpoint === 'base' || settings.customBorders === true) {
+					if (settings.border?.width) {
+						styleProps['border'] =
+							`${settings.border.width} ${settings.border?.style ? settings.border.style : 'solid'} ${settings.border?.color ? settings.border.color : ''}`;
+					} else if (settings.border?.top) {
+						if (settings.border.top?.width) {
+							styleProps['border-top'] =
+								`${settings.border.top.width} ${settings.border.top?.style ? settings.border.top.style : 'solid'} ${settings.border.top?.color ? settings.border.top.color : ''}`;
+						}
+						if (settings.border.bottom?.width) {
+							styleProps['border-bottom'] =
+								`${settings.border.bottom.width} ${settings.border.bottom?.style ? settings.border.bottom.style : 'solid'} ${settings.border.bottom?.color ? settings.border.bottom.color : ''}`;
+						}
+						if (settings.border.left?.width) {
+							styleProps['border-left'] =
+								`${settings.border.left.width} ${settings.border.left?.style ? settings.border.left.style : 'solid'} ${settings.border.left?.color ? settings.border.left.color : ''}`;
+						}
+						if (settings.border.right?.width) {
+							styleProps['border-right'] =
+								`${settings.border.right.width} ${settings.border.right?.style ? settings.border.right.style : 'solid'} ${settings.border.right?.color ? settings.border.right.color : ''}`;
+						}
 					}
 				}
 			} else if (
@@ -107,19 +110,49 @@ function getBreakpointStyle(
 							.join(' ');
 					}
 				}
-			} else if (prop === 'gapAsVars') {
-				if (settings.gap?.top)
-					styleProps['--bs-gutter-y'] = settings.gap.top;
-				if (settings.gap?.left || settings.gap?.right)
-					styleProps['--bs-gutter-x'] =
-						settings.gap.left || settings.gap.right;
+			} else if (prop === 'fontSize' || prop === 'lineHeight') {
+				if (breakpoint === 'base' || settings.customType === true) {
+					const value = (() => {
+						if (prop in settings) return settings[prop];
+						return null;
+					})();
+					if (value != null) styleProps[prop] = value;
+				}
+			} else if (
+				prop === 'gap' ||
+				prop === 'gapAsVars' ||
+				prop === 'padding-left' ||
+				prop === 'padding-right' ||
+				prop === 'padding-top' ||
+				prop === 'padding-bottom' ||
+				prop === 'margin-left' ||
+				prop === 'margin-right' ||
+				prop === 'margin-top' ||
+				prop === 'margin-bottom'
+			) {
+				if (breakpoint === 'base' || settings.customSpacing === true) {
+					if (prop === 'gapAsVars') {
+						if (settings.gap?.top)
+							styleProps['--bs-gutter-y'] = settings.gap.top;
+						if (settings.gap?.left || settings.gap?.right)
+							styleProps['--bs-gutter-x'] =
+								settings.gap.left || settings.gap.right;
+					} else {
+						const value = (() => {
+							if (prop in settings) return settings[prop];
+							const match = prop.match(
+								/^(padding|margin)-(top|bottom|left|right)$/
+							);
+							if (match)
+								return settings[match[1]]?.[match[2]] ?? '0';
+							return null;
+						})();
+						if (value != null) styleProps[prop] = value;
+					}
+				}
 			} else {
 				const value = (() => {
 					if (prop in settings) return settings[prop];
-					const match = prop.match(
-						/^(padding|margin)-(top|bottom|left|right)$/
-					);
-					if (match) return settings[match[1]]?.[match[2]] ?? '0';
 					return null;
 				})();
 				if (value != null) styleProps[prop] = value;

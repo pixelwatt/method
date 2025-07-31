@@ -67,6 +67,9 @@
         },
         "mobile": {
           "enabled": false,
+          "customSpacing": false,
+          "customBorders": false,
+          "customType": false,
           "padding": {
             "top": "0rem",
             "bottom": "0rem",
@@ -92,6 +95,9 @@
         },
         "tablet": {
           "enabled": false,
+          "customSpacing": false,
+          "customBorders": false,
+          "customType": false,
           "padding": {
             "top": "0rem",
             "bottom": "0rem",
@@ -117,6 +123,9 @@
         },
         "wide": {
           "enabled": false,
+          "customSpacing": false,
+          "customBorders": false,
+          "customType": false,
           "padding": {
             "top": "0rem",
             "bottom": "0rem",

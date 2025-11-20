@@ -9,7 +9,8 @@ const getBreakpoints = () => window?.methodGlobalData?.breakpoints || {};
 const cssPropertyMap = {
 	fontSize: 'font-size',
 	lineHeight: 'line-height',
-	// Add more as needed
+	minHeight: 'min-height',
+	minWidth: 'min-width',
 };
 
 function generateCSS(properties) {
@@ -36,7 +37,108 @@ function getBreakpointStyle(
 	Object.entries(selectorMap).forEach(([selector, props]) => {
 		const styleProps = {};
 		props.forEach((prop) => {
-			if (prop === 'borderRadius') {
+			if (
+				prop === 'aspectRatio' &&
+				breakpoint === 'base' &&
+				!!settings.aspectUses
+			) {
+				if (settings.aspectUses === 'height') {
+					if (!!settings.height) {
+						styleProps['height'] = settings.height;
+						styleProps['padding-top'] = '0';
+					}
+				}
+				if (settings.aspectUses === 'percentage') {
+					if (!!settings.aspectPercentage) {
+						styleProps['padding-top'] = settings.aspectPercentage;
+						styleProps['height'] = '0';
+					}
+				}
+			} else if (prop === 'boxShadow') {
+				if (breakpoint === 'base') {
+					if (!!settings.shadow?.x) {
+						const {
+							x = 0,
+							y = 0,
+							blur = 0,
+							spread = 0,
+							color = 'rgba(0,0,0,0)',
+						} = settings.shadow || {};
+						styleProps['box-shadow'] =
+							`${x}px ${y}px ${blur}px ${spread}px ${color}`;
+					}
+				}
+			} else if (
+				prop === 'bgPosition' ||
+				prop === 'bgSize' ||
+				prop === 'bgRepeat' ||
+				prop === 'bgImg'
+			) {
+				if (breakpoint === 'base' || settings.customBg === true) {
+					if (prop === 'bgPosition') {
+						const alignDefault = 'center center';
+						const [yAlign, xAlign] = (
+							settings?.bgImgAlign || alignDefault
+						).split(' ');
+						const xOffset = settings?.bgOffsetX || '';
+						const yOffset = settings?.bgOffsetY || '';
+						styleProps['background-position'] =
+							`${xAlign} ${xOffset} ${yAlign} ${yOffset}`;
+					}
+					if (prop === 'bgImg') {
+						const chosenSize = settings?.bgImgSize;
+						if (
+							!!chosenSize &&
+							!!attributes?.bgImg?.[chosenSize]?.url
+						) {
+							styleProps['background-image'] =
+								`url("${attributes.bgImg[chosenSize].url}")`;
+						}
+					}
+					if (prop === 'bgSize') {
+						if (
+							settings?.bgDisplaySize === 'contain' ||
+							settings?.bgDisplaySize === 'cover'
+						) {
+							styleProps['background-size'] =
+								settings.bgDisplaySize;
+						} else if (settings?.bgDisplaySize === 'custom') {
+							const bgWidth = settings?.bgWidth || '';
+							const bgHeight = settings?.bgHeight || '';
+							if (
+								!!bgHeight &&
+								!!bgWidth &&
+								!bgHeight.startsWith('0') &&
+								!bgWidth.startsWith('0')
+							) {
+								styleProps['background-size'] =
+									`${bgWidth} ${bgHeight}`;
+							}
+						}
+					}
+					if (prop === 'bgRepeat') {
+						if (!!settings?.bgRepeat) {
+							styleProps['background-repeat'] = settings.bgRepeat;
+						} else {
+							styleProps['background-repeat'] = 'no-repeat';
+						}
+					}
+				}
+			} else if (
+				prop === 'minHeight' ||
+				prop === 'height' ||
+				prop === 'minWidth' ||
+				prop === 'width'
+			) {
+				if (
+					breakpoint === 'base' ||
+					settings.customDimensions === true
+				) {
+					if (settings[prop] && !settings[prop].startsWith('0')) {
+						styleProps[prop] = settings[prop];
+					}
+				}
+			} else if (prop === 'borderRadius') {
 				if (breakpoint === 'base' || settings.customBorders === true) {
 					if (settings.borderRadius?.topLeft) {
 						styleProps['border-top-left-radius'] =
@@ -137,14 +239,35 @@ function getBreakpointStyle(
 						if (settings.gap?.left || settings.gap?.right)
 							styleProps['--bs-gutter-x'] =
 								settings.gap.left || settings.gap.right;
+					} else if (prop === 'gap') {
+						let ygap = '0';
+						let xgap = '0';
+						if (settings.gap?.top) ygap = settings.gap.top;
+						if (settings.gap?.left) xgap = settings.gap.left;
+						styleProps['gap'] = ygap + ' ' + xgap;
 					} else {
 						const value = (() => {
 							if (prop in settings) return settings[prop];
 							const match = prop.match(
 								/^(padding|margin)-(top|bottom|left|right)$/
 							);
-							if (match)
+							if (match) {
+								if (match[1] === 'margin') {
+									if (
+										match[2] === 'left' ||
+										match[2] === 'right'
+									) {
+										if (
+											settings[match[1]]?.[
+												match[2]
+											].startsWith('0')
+										) {
+											return null;
+										}
+									}
+								}
 								return settings[match[1]]?.[match[2]] ?? '0';
+							}
 							return null;
 						})();
 						if (value != null) styleProps[prop] = value;

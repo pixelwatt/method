@@ -10,6 +10,9 @@
 		"html": false
 	},
 	"attributes": {
+		"methodId": {
+			"type": "string"
+		},
 		"textColor": {
 			"type": "string"
 		},
@@ -44,8 +47,8 @@
 						"top": "0rem",
 						"bottom": "0rem"
 					},
-					"fontSize": "1.25rem",
-					"lineHeight": "1.55",
+					"fontSize": "",
+					"lineHeight": "",
 					"allowNegative": false
 				},
 				"mobile": {
@@ -61,8 +64,8 @@
 						"top": "0rem",
 						"bottom": "0rem"
 					},
-					"fontSize": "1.25rem",
-					"lineHeight": "1.55",
+					"fontSize": "",
+					"lineHeight": "",
 					"allowNegative": false
 				},
 				"tablet": {
@@ -78,8 +81,8 @@
 						"top": "0rem",
 						"bottom": "0rem"
 					},
-					"fontSize": "1.25rem",
-					"lineHeight": "1.55",
+					"fontSize": "",
+					"lineHeight": "",
 					"allowNegative": false
 				},
 				"wide": {
@@ -95,8 +98,8 @@
 						"top": "0rem",
 						"bottom": "0rem"
 					},
-					"fontSize": "1.25rem",
-					"lineHeight": "1.55",
+					"fontSize": "",
+					"lineHeight": "",
 					"allowNegative": false
 				}
 			}

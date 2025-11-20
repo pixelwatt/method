@@ -1,0 +1,156 @@
+{
+    "apiVersion": 3,
+    "name": "method/section",
+    "title": "Section",
+    "category": "method-layout-blocks",
+    "supports": {
+        "html": false,
+        "align": [
+            "full"
+        ]
+    },
+    "attributes": {
+        "methodId": {
+            "type": "string"
+        },
+        "textColor": {
+            "type": "string"
+        },
+        "linkColor": {
+            "type": "string"
+        },
+        "bgColor": {
+            "type": "string"
+        },
+        "bgGradient": {
+            "type": "string"
+        },
+        "bgShadeColor": {
+            "type": "string"
+        },
+        "bgShadeGradient": {
+            "type": "string"
+        },
+        "bgImg": {
+            "type": "object",
+            "default": {
+                "id": ""
+            }
+        },
+        "bgSize": {
+            "type": "string"
+        },
+        "bgImgAlign": {
+            "type": "string",
+            "default": "center center"
+        },
+        "responsiveSettings": {
+            "type": "object",
+            "default": {
+                "base": {
+                    "enabled": true,
+                    "padding": {
+                        "top": "0rem",
+                        "bottom": "0rem",
+                        "left": "0rem",
+                        "right": "0rem"
+                    },
+                    "margin": {
+                        "top": "0rem",
+                        "bottom": "0rem",
+                        "left": "0rem",
+                        "right": "0rem"
+                    },
+                    "allowNegative": false,
+                    "border": "",
+                    "borderRadius": {
+                        "topLeft": "0rem",
+                        "topRight": "0rem",
+                        "bottomLeft": "0rem",
+                        "bottomRight": "0rem"
+                    }
+                },
+                "mobile": {
+                    "enabled": false,
+                    "customSpacing": false,
+                    "customBorders": false,
+                    "customType": false,
+                    "customBg": false,
+                    "padding": {
+                        "top": "0rem",
+                        "bottom": "0rem",
+                        "left": "0rem",
+                        "right": "0rem"
+                    },
+                    "margin": {
+                        "top": "0rem",
+                        "bottom": "0rem",
+                        "left": "0rem",
+                        "right": "0rem"
+                    },
+                    "allowNegative": false,
+                    "border": "",
+                    "borderRadius": {
+                        "topLeft": "0rem",
+                        "topRight": "0rem",
+                        "bottomLeft": "0rem",
+                        "bottomRight": "0rem"
+                    }
+                },
+                "tablet": {
+                    "enabled": false,
+                    "customSpacing": false,
+                    "customBorders": false,
+                    "customType": false,
+                    "padding": {
+                        "top": "0rem",
+                        "bottom": "0rem",
+                        "left": "0rem",
+                        "right": "0rem"
+                    },
+                    "margin": {
+                        "top": "0rem",
+                        "bottom": "0rem",
+                        "left": "0rem",
+                        "right": "0rem"
+                    },
+                    "allowNegative": false,
+                    "border": "",
+                    "borderRadius": {
+                        "topLeft": "0rem",
+                        "topRight": "0rem",
+                        "bottomLeft": "0rem",
+                        "bottomRight": "0rem"
+                    }
+                },
+                "wide": {
+                    "enabled": false,
+                    "customSpacing": false,
+                    "customBorders": false,
+                    "customType": false,
+                    "padding": {
+                        "top": "0rem",
+                        "bottom": "0rem",
+                        "left": "0rem",
+                        "right": "0rem"
+                    },
+                    "margin": {
+                        "top": "0rem",
+                        "bottom": "0rem",
+                        "left": "0rem",
+                        "right": "0rem"
+                    },
+                    "allowNegative": false,
+                    "border": "",
+                    "borderRadius": {
+                        "topLeft": "0rem",
+                        "topRight": "0rem",
+                        "bottomLeft": "0rem",
+                        "bottomRight": "0rem"
+                    }
+                }
+            }
+        }
+    },
+    "editorScript": "file:./index.js"
+}

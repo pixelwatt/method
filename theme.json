@@ -1,5 +1,5 @@
 {
-	"version": 2,
+	"version": 3,
 	"templateParts": [
 		{
 			"area": "header",
@@ -14,12 +14,12 @@
 	],
 	"settings": {
 		"appearanceTools": true,
-		"useRootPaddingAwareAlignments": true,
 		"layout": {
 			"contentSize": "1300px",
 			"wideSize": "1301px",
 			"allowCustomContentAndWideSize": false
 		},
+		"useRootPaddingAwareAlignments": true,
 		"border": {
 			"color": true,
 			"radius": true,
@@ -159,6 +159,16 @@
 						"top": "0",
 						"bottom": "1rem"
 					}
+				}
+			}
+		},
+		"blocks": {
+			"core/p": {
+				"typography": {
+					"fontSize": "1.25rem",
+					"lineHeight": "1.55",
+					"fontWeight": "400",
+					"fontFamily": "var(--wp--preset--font-family--sans-serif)"
 				}
 			}
 		}

@@ -49,6 +49,46 @@ add_image_size( 'method_qhd', 2560, 1440, true );
 
 
 //-----------------------------------------------------
+// Make image sizes available in the block editor
+//-----------------------------------------------------
+
+add_filter( 'wp_prepare_attachment_for_js', function( $response, $attachment ) {
+	if ( $attachment->post_type === 'attachment' && wp_attachment_is_image( $attachment->ID ) ) {
+		$sizes = array( 'method_hd', 'method_qhd' );
+		foreach ( $sizes as $size ) {
+			$image = wp_get_attachment_image_src( $attachment->ID, $size );
+			if ( $image ) {
+				$response['sizes']["{$size}"] = [
+					'url'    => $image[0],
+					'width'  => $image[1],
+					'height' => $image[2],
+					'orientation' => $image[1] > $image[2] ? 'landscape' : 'portrait',
+				];
+			}
+		}
+	}
+	return $response;
+}, 10, 2 );
+
+
+add_theme_support( 'editor-image-sizes' );
+
+add_filter( 'block_editor_settings_all', function( $settings ) {
+	$settings['imageSizes'][] = [
+		'slug' => 'method_hd',
+		'name' => __( 'HD', 'your-textdomain' ),
+		// Note: you can also include width/height, but it's optional here
+	];
+	$settings['imageSizes'][] = [
+		'slug' => 'method_qhd',
+		'name' => __( 'QHD', 'your-textdomain' ),
+		// Note: you can also include width/height, but it's optional here
+	];
+	return $settings;
+} );
+
+
+//-----------------------------------------------------
 // Enqueue scripts and styles
 //-----------------------------------------------------
 

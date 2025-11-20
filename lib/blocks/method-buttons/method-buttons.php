@@ -1,32 +1,114 @@
 <?php
 
-function method_buttons_register_block() {
-    // Automatically load dependencies and version from the generated `block.asset.php` file.
-    
-    // Enqueue block editor JS
+// Block registrations
+
+function register_method_buttons_block() {
+	register_block_type( __DIR__ . '/build/buttons', [
+        'render_callback' => 'render_method_buttons_block'
+    ]);
+}
+add_action( 'init', 'register_method_buttons_block' );
+
+function register_method_button_block() {
+	register_block_type( __DIR__ . '/build/button', [
+        'render_callback' => 'render_method_button_block'
+    ]);
+}
+add_action( 'init', 'register_method_button_block' );
+
+function register_method_theme_button_block() {
     wp_register_script(
-        'method-buttons-editor-script',
-        get_stylesheet_directory_uri() . '/lib/blocks/method-buttons/build/block.js',
+        'method-theme-button-block-editor-script',
+        get_stylesheet_directory_uri() . '/lib/blocks/method-buttons/build/theme-button/index.js',
         array('react-jsx-runtime'),
-        METHOD_VERSION,
+        THEME_VERSION,
         true
     );
 
-    // Register the block
-    register_block_type('method/buttons', array(
-        'editor_script' => 'method-buttons-editor-script',
-        'render_callback' => 'method_render_buttons_block',
+	register_block_type( __DIR__ . '/build/theme-button', [
+        'editor_script' => 'method-theme-button-block-editor-script',
+        'render_callback' => 'render_method_theme_button_block'
+    ]);
+}
+add_action( 'init', 'register_method_theme_button_block' );
+
+function method_theme_button_enqueue_block_assets() {
+    $defaults = array(
+        'default' => 'Default Style',
+        'inverted' => 'Inverted',
+    );
+    wp_enqueue_script('method-theme-button-block-editor-script');
+    wp_localize_script('method-theme-button-block-editor-script', 'themeButtonData', array(
+        'buttonStyles' => apply_filters( 'method_block_theme_button_styles', $defaults ),
+        'afterLabel' => apply_filters( 'method_block_theme_button_after_label', '' ),
+        'beforeLabel' => apply_filters( 'method_block_theme_button_before_label', '' ),
     ));
 }
-add_action('init', 'method_buttons_register_block');
 
-function method_render_buttons_block( $block_attributes, $content, $block ) {
-    $wrapper_attributes = get_block_wrapper_attributes();
-    $inlined = method_get_block_inline_styles( $block_attributes );
-    return '
-        <div ' . $wrapper_attributes . $inlined .  '>
+add_action('enqueue_block_editor_assets', 'method_theme_button_enqueue_block_assets');
+
+function render_method_buttons_block( $block_attributes, $content, $block ) {
+    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $cssargs = array(
+        '#' . $methodId => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'margin-top', 'margin-bottom' ),
+        '#' . $methodId . ' > .method-buttons-inner-blocks' => array( 'gap' ),
+    );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+
+    $output = '
+        <div ' . get_block_wrapper_attributes( ['class' => 'method-buttons', 'id' => $methodId] ) . '>
             ' . do_blocks( $content ) . '
         </div>
-        <pre>' . print_r( method_get_block_breakpoints(), true ) . '</pre>
     ';
+    return $output . $responsive;
+}
+
+function render_method_button_block( $block_attributes, $block ) {
+    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $cssargs = array(
+        '#' . $methodId => array( 'borderRadius', 'boxShadow', 'textColor', 'bgColor', 'border', 'fontSize', 'lineHeight', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' ),
+    );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+
+    $openTag = '<div ' . get_block_wrapper_attributes( ['class' => 'method-button', 'id' => $methodId] ) . '>';
+    $closeTag = '</div>';
+
+    if ( method_check_array_key( $block_attributes, 'link' ) ) {
+        if ( method_check_array_key( $block_attributes['link'], 'url' ) ) {
+            $btnTarget = ( method_check_array_key( $block_attributes['link'], 'target' ) ? '_blank' : '_self' );
+            $openTag = '<a target="' . $btnTarget . '" href="' . $block_attributes['link']['url'] . '" ' . get_block_wrapper_attributes( ['class' => 'method-button', 'id' => $methodId] ) . '>';
+            $closeTag = '</a>';
+        }
+    }
+
+    $output = $openTag . '<span class="method-button-label">' . ( method_check_array_key( $block_attributes, 'btnLabel' ) ? $block_attributes['btnLabel'] : '' ) . '</span>' . $closeTag;
+    return $output . $responsive;
+}
+
+function render_method_theme_button_block( $block_attributes, $block ) {
+    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+
+    $extraclass = '';
+    if ( method_check_array_key( $block_attributes, 'btnStyle' ) ) {
+        $extraclass = ' method-theme-button-' . $block_attributes['btnStyle'];
+    }
+
+    $openTag = '<div ' . get_block_wrapper_attributes( ['class' => 'method-theme-button' . $extraclass, 'id' => $methodId] ) . '>';
+    $closeTag = '</div>';
+
+    $beforeLabel = apply_filters( 'method_block_theme_button_before_label', '' );
+    $beforeLabel = ( ! empty( $beforeLabel ) ? '<span class="method-button-icon method-button-icon-before">' . $beforeLabel . '</span>' : '' );
+    $afterLabel = apply_filters( 'method_block_theme_button_after_label', '' );
+    $afterLabel = ( ! empty( $afterLabel ) ? '<span class="method-button-icon method-button-icon-after">' . $afterLabel . '</span>' : '' );
+
+    if ( method_check_array_key( $block_attributes, 'link' ) ) {
+        if ( method_check_array_key( $block_attributes['link'], 'url' ) ) {
+            $btnTarget = ( method_check_array_key( $block_attributes['link'], 'target' ) ? '_blank' : '_self' );
+            $openTag = '<a target="' . $btnTarget . '" href="' . $block_attributes['link']['url'] . '" ' . get_block_wrapper_attributes( ['class' => 'method-theme-button' . $extraclass, 'id' => $methodId] ) . '>';
+            $closeTag = '</a>';
+        }
+    }
+
+    $output = $openTag . $beforeLabel . '<span class="method-button-label">' . ( method_check_array_key( $block_attributes, 'btnLabel' ) ? $block_attributes['btnLabel'] : '' ) . '</span>' . $afterLabel . $closeTag;
+    return $output;
 }

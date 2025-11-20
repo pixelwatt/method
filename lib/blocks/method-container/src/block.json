@@ -7,6 +7,9 @@
         "html": false
     },
     "attributes": {
+        "methodId": {
+            "type": "string"
+        },
         "textColor": {
             "type": "string"
         },
@@ -28,14 +31,18 @@
         "bgImg": {
             "type": "object",
             "default": {
-                "full": "",
-                "large": "",
                 "id": ""
             }
+        },
+        "bgSize": {
+            "type": "string"
         },
         "bgImgAlign": {
             "type": "string",
             "default": "center center"
+        },
+        "link": {
+            "type": "object"
         },
         "responsiveSettings": {
             "type": "object",
@@ -54,8 +61,8 @@
                         "left": "0rem",
                         "right": "0rem"
                     },
-                    "fontSize": "1.25rem",
-                    "lineHeight": "1.55",
+                    "fontSize": "",
+                    "lineHeight": "",
                     "allowNegative": false,
                     "border": "",
                     "borderRadius": {
@@ -70,6 +77,7 @@
                     "customSpacing": false,
                     "customBorders": false,
                     "customType": false,
+                    "customBg": false,
                     "padding": {
                         "top": "0rem",
                         "bottom": "0rem",
@@ -82,8 +90,8 @@
                         "left": "0rem",
                         "right": "0rem"
                     },
-                    "fontSize": "1.25rem",
-                    "lineHeight": "1.55",
+                    "fontSize": "",
+                    "lineHeight": "",
                     "allowNegative": false,
                     "border": "",
                     "borderRadius": {
@@ -110,8 +118,8 @@
                         "left": "0rem",
                         "right": "0rem"
                     },
-                    "fontSize": "1.25rem",
-                    "lineHeight": "1.55",
+                    "fontSize": "",
+                    "lineHeight": "",
                     "allowNegative": false,
                     "border": "",
                     "borderRadius": {
@@ -138,8 +146,8 @@
                         "left": "0rem",
                         "right": "0rem"
                     },
-                    "fontSize": "1.25rem",
-                    "lineHeight": "1.55",
+                    "fontSize": "",
+                    "lineHeight": "",
                     "allowNegative": false,
                     "border": "",
                     "borderRadius": {

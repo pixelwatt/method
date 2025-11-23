@@ -37,13 +37,13 @@ function render_method_container_block( $block_attributes, $content, $block ) {
     $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
 
     $output = '
-        <div ' . get_block_wrapper_attributes( ['class' => 'method-container', 'id' => $methodId] ) . '>
+        ' . $openTag . '
             <div class="method-container-content method-fit-img-container' . ( $align ? ' align-items-' . $align : '' ) . '">
                 <div class="method-container-bgimg">&nbsp;</div>
                 <div class="method-container-shade">&nbsp;</div>
                 ' . do_blocks( $content ) . '
             </div>
-        </div>
+        ' . $closeTag . '
     ';
 
     return $output . $responsive;

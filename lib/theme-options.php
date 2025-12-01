@@ -24,7 +24,7 @@ function method_register_theme_options_metabox() {
 
 			'option_key'      => 'method_options', // The option key and admin menu page slug.
 			'icon_url'        => 'data:image/svg+xml;base64,' . base64_encode('<svg width="153" height="153" viewBox="0 0 153 153" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M46.2419 72.7477L25.2229 53.4803V24.7544L46.2419 44.1969L77.0696 72.3973L107.897 44.1969L129.092 24.7544V127.397H107.897V72.7477L77.0696 100.948L46.2419 72.7477ZM46.2419 99.3717L25.2229 80.1043V127.397H46.2419V99.3717Z" fill="currentCOlor"/></svg>'), // Menu icon. Only applicable if 'parent_slug' is left empty.
-			'menu_title'      => esc_html__( 'Theme Settings', 'method' ), // Falls back to 'title' (above).
+			'menu_title'      => esc_html__( 'Method Settings', 'method' ), // Falls back to 'title' (above).
 			// 'parent_slug'     => 'themes.php', // Make options page a submenu item of the themes menu.
 			// 'capability'      => 'manage_options', // Cap required to view options-page.
 			'position'        => 2, // Menu position. Only applicable if 'parent_slug' is left empty.

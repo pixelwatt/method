@@ -19,7 +19,7 @@ add_action( 'init', 'register_method_button_block' );
 function register_method_theme_button_block() {
     wp_register_script(
         'method-theme-button-block-editor-script',
-        get_stylesheet_directory_uri() . '/lib/blocks/method-buttons/build/theme-button/index.js',
+        get_template_directory_uri() . '/lib/blocks/method-buttons/build/theme-button/index.js',
         array('react-jsx-runtime'),
         THEME_VERSION,
         true

@@ -146,4 +146,27 @@ class Method_Utility {
 	public function str_replace_assoc( array $replace, $subject ) {
 		return str_replace( array_keys( $replace ), array_values( $replace ), $subject );
 	}
+
+	//-----------------------------------------------------
+	// Create a paragraph with line breaks from an array
+	//-----------------------------------------------------
+
+	public function array_to_p( $array, $class = '', $seperator = '', $show_seperator = false ) {
+		$array  = maybe_unserialize( $array );
+		$output = '';
+
+		if ( ! empty( $array ) ) {
+			if ( is_array( $array ) ) {
+				$output .= '<p' . ( ! empty( $class ) ? ' class="' . $class . '"' : '' ) . '>';
+				$ac      = count( $array );
+				$i       = 1;
+				foreach ( $array as $item ) {
+					$output .= $this->format_tags( esc_html( $item ) ) . ( $i != $ac ? ( ! empty( $seperator ) ? ( ! $show_seperator ? '<span class="visually-hidden">' : '' ) . $seperator . ( ! $show_seperator ? '</span>' : '' ) : '' ) . '<br>' : '' );
+					$i++;
+				}
+				$output .= '</p>';
+			}
+		}
+		return $output;
+	}
 }

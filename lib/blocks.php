@@ -103,12 +103,12 @@ add_filter( 'block_categories_all' , function( $categories ) {
 //-----------------------------------------------------
 
 require_once('blocks/method-advanced-grid/method-advanced-grid.php');
+require_once('blocks/method-basic-grid/method-basic-grid.php');
 require_once('blocks/method-buttons/method-buttons.php');
 require_once('blocks/method-container/method-container.php');
 require_once('blocks/method-fitted-image/method-fitted-image.php');
-//require_once('blocks/method-grid/method-grid.php');
-//require_once('blocks/method-grid-item/method-grid-item.php');
 require_once('blocks/method-section/method-section.php');
+require_once('blocks/method-social-nav/method-social-nav.php');
 
 
 //-----------------------------------------------------

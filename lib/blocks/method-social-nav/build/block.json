@@ -1,0 +1,14 @@
+{
+  "apiVersion": 3,
+  "name": "method/social-nav",
+  "title": "Social Nav",
+  "category": "method-component-blocks",
+  "icon": "block-default",
+  "supports": {
+    "html": false,
+    "align": [
+      "full"
+    ]
+  },
+  "editorScript": "file:./index.js"
+}

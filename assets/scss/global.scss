@@ -156,8 +156,8 @@ div[data-type="method/grid-item"],
     padding-bottom: 0;
 }
 
-.method-grid-rendered {
-    .method-inner-blocks {
+.method-basic-grid {
+    &>.method-inner-blocks {
         @include make-row();
         display: flex;
         box-sizing: border-box;
@@ -171,39 +171,39 @@ div[data-type="method/grid-item"],
     }
 
     &.method-align-end {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             align-items: flex-end;
         }
     }
 
     &.method-align-center {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             align-items: center;
         }
     }
 
     // Justify Classes
     &.method-justify-end {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             justify-content: flex-end;
         }
     }
 
     &.method-justify-center {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             justify-content: center;
         }
     }
 
     &.method-justify-between {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             justify-content: space-between;
         }
     }
 
     // Base styles (desktop-first)
     &.method-layout-1 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @include make-col(24);
             }
@@ -211,7 +211,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-2 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @include make-col(12);
             }
@@ -219,7 +219,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-3 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @include make-col(8);
             }
@@ -227,7 +227,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-4 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @include make-col(6);
             }
@@ -235,7 +235,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-5 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 flex: 0 0 auto;
                 width: 20%;
@@ -244,7 +244,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-6 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @include make-col(4);
             }
@@ -253,7 +253,7 @@ div[data-type="method/grid-item"],
 
     // Mobile styles
     &.method-layout-mobile-1 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (max-width: $method-mobile-max) {
                     @include make-col(24);
@@ -263,7 +263,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-mobile-2 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (max-width: $method-mobile-max) {
                     @include make-col(12);
@@ -273,7 +273,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-mobile-3 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (max-width: $method-mobile-max) {
                     @include make-col(8);
@@ -283,7 +283,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-mobile-4 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (max-width: $method-mobile-max) {
                     @include make-col(6);
@@ -293,7 +293,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-mobile-5 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (max-width: $method-mobile-max) {
                     flex: 0 0 auto;
@@ -304,7 +304,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-mobile-6 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (max-width: $method-mobile-max) {
                     @include make-col(4);
@@ -314,7 +314,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-mobile-align-end {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (max-width: $method-mobile-max) {
                 align-items: flex-end !important;
             }
@@ -322,7 +322,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-mobile-align-center {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (max-width: $method-mobile-max) {
                 align-items: center !important;
             }
@@ -330,7 +330,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-mobile-justify-end {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (max-width: $method-mobile-max) {
                 justify-content: flex-end !important;
             }
@@ -338,7 +338,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-mobile-justify-center {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (max-width: $method-mobile-max) {
                 justify-content: center !important;
             }
@@ -346,7 +346,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-mobile-justify-between {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (max-width: $method-mobile-max) {
                 justify-content: space-between;
             }
@@ -355,7 +355,7 @@ div[data-type="method/grid-item"],
 
     // Tablet styles
     &.method-layout-tablet-1 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                     @include make-col(24);
@@ -365,7 +365,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-tablet-2 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                     @include make-col(12);
@@ -375,7 +375,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-tablet-3 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                     @include make-col(8);
@@ -385,7 +385,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-tablet-4 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                     @include make-col(6);
@@ -395,7 +395,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-tablet-5 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                     flex: 0 0 auto;
@@ -406,7 +406,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-tablet-6 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                     @include make-col(4);
@@ -416,7 +416,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-tablet-align-end {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                 align-items: flex-end !important;
             }
@@ -424,7 +424,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-tablet-align-center {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                 align-items: center !important;
             }
@@ -432,7 +432,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-tablet-justify-end {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                 justify-content: flex-end !important;
             }
@@ -440,7 +440,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-tablet-justify-center {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                 justify-content: center !important;
             }
@@ -448,7 +448,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-tablet-justify-between {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
                 justify-content: space-between;
             }
@@ -457,7 +457,7 @@ div[data-type="method/grid-item"],
 
     // Wide styles
     &.method-layout-wide-1 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-wide-min) {
                     @include make-col(24);
@@ -467,7 +467,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-wide-2 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-wide-min) {
                     @include make-col(12);
@@ -477,7 +477,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-wide-3 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-wide-min) {
                     @include make-col(8);
@@ -487,7 +487,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-wide-4 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-wide-min) {
                     @include make-col(6);
@@ -497,7 +497,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-wide-5 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-wide-min) {
                     flex: 0 0 auto;
@@ -508,7 +508,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-layout-wide-6 {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             .method-grid-item-component {
                 @media (min-width: $method-wide-min) {
                     @include make-col(4);
@@ -518,7 +518,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-wide-align-end {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-wide-min) {
                 align-items: flex-end !important;
             }
@@ -526,7 +526,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-wide-align-center {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-wide-min) {
                 align-items: center !important;
             }
@@ -534,7 +534,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-wide-justify-end {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-wide-min) {
                 justify-content: flex-end !important;
             }
@@ -542,7 +542,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-wide-justify-center {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-wide-min) {
                 justify-content: center !important;
             }
@@ -550,7 +550,7 @@ div[data-type="method/grid-item"],
     }
 
     &.method-wide-justify-between {
-        .method-inner-blocks {
+        &>.method-inner-blocks {
             @media (min-width: $method-wide-min) {
                 justify-content: space-between;
             }
@@ -558,427 +558,9 @@ div[data-type="method/grid-item"],
     }
 
     // For grid items set as full width, always show as full width
-    .method-inner-blocks {
+    &>.method-inner-blocks {
         .method-grid-item-component[data-gfw="true"] {
             @include make-col(24);
-        }
-    }
-}
-
-div[data-type="method/grid"] {
-    .method-inner-blocks>.block-editor-inner-blocks {
-        //margin-left: -0.75rem;
-        //margin-right: -0.75rem;
-        box-sizing: border-box !important;
-    }
-
-    .method-grid .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @include make-row();
-            box-sizing: border-box !important;
-
-            &>.block-editor-block-list__block {
-                @include make-col-ready();
-                box-sizing: border-box !important;
-            }
-        }
-    }
-
-    // Align
-    .method-align-end .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            align-items: flex-end !important;
-        }
-    }
-
-    .method-align-center .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            align-items: center !important;
-        }
-    }
-
-    // Justify
-    .method-justify-end .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            justify-content: flex-end !important;
-        }
-    }
-
-    .method-justify-center .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            justify-content: center !important;
-        }
-    }
-
-    .method-justify-between .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            justify-content: space-between !important;
-        }
-    }
-
-    .method-layout-2 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @include make-col(12);
-
-            }
-        }
-    }
-
-    .method-layout-3 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @include make-col(8);
-            }
-        }
-    }
-
-    .method-layout-4 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @include make-col(6);
-            }
-        }
-    }
-
-    .method-layout-5 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                flex: 0 0 auto;
-                width: 20%;
-            }
-        }
-    }
-
-    //flex: 0 0 auto;
-    //width: 20%;
-
-    .method-layout-6 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @include make-col(4);
-            }
-        }
-    }
-
-    .method-mobile-align-end .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (max-width: $method-mobile-max) {
-                align-items: flex-end !important;
-            }
-        }
-    }
-
-    .method-mobile-align-center .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (max-width: $method-mobile-max) {
-                align-items: center !important;
-            }
-        }
-    }
-
-    .method-mobile-justify-end .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (max-width: $method-mobile-max) {
-                justify-content: flex-end !important;
-            }
-        }
-    }
-
-    .method-mobile-justify-center .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (max-width: $method-mobile-max) {
-                justify-content: center !important;
-            }
-        }
-    }
-
-    .method-mobile-justify-between .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (max-width: $method-mobile-max) {
-                justify-content: space-between !important;
-            }
-        }
-    }
-
-    .method-layout-mobile-1 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (max-width: $method-mobile-max) {
-                    @include make-col(24);
-                }
-            }
-        }
-    }
-
-    .method-layout-mobile-2 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (max-width: $method-mobile-max) {
-                    @include make-col(12);
-                }
-            }
-        }
-    }
-
-    .method-layout-mobile-3 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (max-width: $method-mobile-max) {
-                    @include make-col(8);
-                }
-            }
-        }
-    }
-
-    .method-layout-mobile-4 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (max-width: $method-mobile-max) {
-                    @include make-col(6);
-                }
-            }
-        }
-    }
-
-    .method-layout-mobile-5 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (max-width: $method-mobile-max) {
-                    flex: 0 0 auto;
-                    width: 20%;
-                }
-            }
-        }
-    }
-
-    .method-layout-mobile-6 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (max-width: $method-mobile-max) {
-                    @include make-col(4);
-                }
-            }
-        }
-    }
-
-    // move tablet here
-
-    // wide
-
-    .method-wide-align-end .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-wide-min) {
-                align-items: flex-end !important;
-            }
-        }
-    }
-
-    .method-wide-align-center .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-wide-min) {
-                align-items: center !important;
-            }
-        }
-    }
-
-    .method-wide-justify-end .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-wide-min) {
-                justify-content: flex-end !important;
-            }
-        }
-    }
-
-    .method-wide-justify-center .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-wide-min) {
-                justify-content: center !important;
-            }
-        }
-    }
-
-    .method-wide-justify-between .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-wide-min) {
-                justify-content: space-between !important;
-            }
-        }
-    }
-
-    .method-layout-wide-1 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-wide-min) {
-                    @include make-col(24);
-                }
-            }
-        }
-    }
-
-    .method-layout-wide-2 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-wide-min) {
-                    @include make-col(12);
-                }
-            }
-        }
-    }
-
-    .method-layout-wide-3 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-wide-min) {
-                    @include make-col(8);
-                }
-            }
-        }
-    }
-
-    .method-layout-wide-4 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-wide-min) {
-                    @include make-col(6);
-                }
-            }
-        }
-    }
-
-    .method-layout-wide-5 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-wide-min) {
-                    flex: 0 0 auto;
-                    width: 20%;
-                }
-            }
-        }
-    }
-
-    .method-layout-wide-6 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-wide-min) {
-                    @include make-col(4);
-                }
-            }
-        }
-    }
-
-
-
-    .method-tablet-align-end .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                align-items: end !important;
-            }
-        }
-    }
-
-    .method-tablet-align-center .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                align-items: center !important;
-            }
-        }
-    }
-
-    .method-tablet-justify-end .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                justify-content: flex-end !important;
-            }
-        }
-    }
-
-    .method-tablet-justify-center .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                justify-content: center !important;
-            }
-        }
-    }
-
-    .method-tablet-justify-between .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                justify-content: space-between !important;
-            }
-        }
-    }
-
-    .method-layout-tablet-1 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                    @include make-col(24);
-                }
-            }
-        }
-    }
-
-    .method-layout-tablet-2 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                    @include make-col(12);
-                }
-            }
-        }
-    }
-
-    .method-layout-tablet-3 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                    @include make-col(8);
-                }
-            }
-        }
-    }
-
-    .method-layout-tablet-4 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                    @include make-col(6);
-                }
-            }
-        }
-    }
-
-    .method-layout-tablet-5 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                    flex: 0 0 auto;
-                    width: 20%;
-                }
-            }
-        }
-    }
-
-    .method-layout-tablet-6 .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block {
-                @media (min-width: $method-tablet-min) and (max-width: $method-tablet-max) {
-                    @include make-col(4);
-                }
-            }
-        }
-    }
-
-    .method-inner-blocks>.block-editor-inner-blocks {
-        &>.block-editor-block-list__layout {
-            &>.block-editor-block-list__block:has(*[data-gfw="true"]) {
-                @include make-col(24);
-            }
-
-            &>.block-editor-block-list__block {
-                margin: 0;
-            }
         }
     }
 }

@@ -1,0 +1,60 @@
+{
+  "apiVersion": 3,
+  "name": "method/basic-grid-item",
+  "parent": [
+    "method/basic-grid"
+  ],
+  "title": "Basic Grid Item",
+  "icon": "block-default",
+  "category": "method-component-blocks",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "methodId": {
+      "type": "string"
+    },
+    "responsiveSettings": {
+      "type": "object",
+      "default": {
+        "base": {
+          "enabled": true,
+          "padding": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          }
+        },
+        "mobile": {
+          "enabled": false,
+          "padding": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          }
+        },
+        "tablet": {
+          "enabled": false,
+          "padding": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          }
+        },
+        "wide": {
+          "enabled": false,
+          "padding": {
+            "top": "0rem",
+            "bottom": "0rem",
+            "left": "0rem",
+            "right": "0rem"
+          }
+        }
+      }
+    }
+  },
+  "editorScript": "file:./index.js"
+}

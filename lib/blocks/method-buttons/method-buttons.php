@@ -21,7 +21,7 @@ function register_method_theme_button_block() {
         'method-theme-button-block-editor-script',
         get_template_directory_uri() . '/lib/blocks/method-buttons/build/theme-button/index.js',
         array('react-jsx-runtime'),
-        THEME_VERSION,
+        METHOD_VERSION,
         true
     );
 

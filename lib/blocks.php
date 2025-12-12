@@ -210,19 +210,19 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 		$customBg = true;
 		$customBorders = true;
 	} elseif ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
-		if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'customSpacing' ) ) {
+		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customSpacing' ) ) {
 			$customSpacing = true;
 		}
-		if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'customType' ) ) {
+		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customType' ) ) {
 			$customType = true;
 		}
-		if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'customDimensions' ) ) {
+		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customDimensions' ) ) {
 			$customDimensions = true;
 		}
-		if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'customBg' ) ) {
+		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customBg' ) ) {
 			$customBg = true;
 		}
-		if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'customBorders' ) ) {
+		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customBorders' ) ) {
 			$customBorders = true;
 		}
 	}
@@ -650,22 +650,30 @@ function method_get_block_responsive_styles( $block_attributes, $selectors = arr
 			$bps = method_get_block_breakpoints();
 			$output = '<style>';
 			foreach( $ranges as $range ) {
-				if ( ( method_check_array_key( $block_attributes, 'custom' . ucfirst( $range ) ) ) || ( 'base' == $range ) ) {
-					$output .= '/* ' . $range . ' */ ';
-					if ( 'mobile' == $range ) {
-						$output .= ' @media (max-width:' . $bps['mobile_max'] . ') { ';
-					}
-					if ( 'tablet' == $range ) {
-						$output .= ' @media (min-width:' . $bps['tablet_min'] . ') and (max-width:' . $bps['tablet_max'] . ') { ';
-					}
-					if ( 'wide' == $range ) {
-						$output .= ' @media (min-width:' . $bps['wide_min'] . ') { ';
-					}
-					foreach ( $selectors as $key => $value ) {
-						$output .= method_get_block_media_query_declarations( $block_attributes, $range, $value, $key );
-					}
-					if ( 'base' != $range ) {
-						$output .= '} ';
+				$rangeOut = '';
+				$rangeOut .= '/* ' . $range . ' */ ';
+				if ( 'mobile' == $range ) {
+					$rangeOut .= ' @media (max-width:' . $bps['mobile_max'] . ') { ';
+				}
+				if ( 'tablet' == $range ) {
+					$rangeOut .= ' @media (min-width:' . $bps['tablet_min'] . ') and (max-width:' . $bps['tablet_max'] . ') { ';
+				}
+				if ( 'wide' == $range ) {
+					$rangeOut .= ' @media (min-width:' . $bps['wide_min'] . ') { ';
+				}
+				foreach ( $selectors as $key => $value ) {
+					$rangeOut .= method_get_block_media_query_declarations( $block_attributes, $range, $value, $key );
+				}
+				if ( 'base' != $range ) {
+					$rangeOut .= '} ';
+				}
+				if ( 'base' == $range ) {
+					$output .= $rangeOut;
+				} elseif ( ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) ) {
+					if ( ( method_check_array_key( $block_attributes['responsiveSettings'], $range ) ) ) {
+						if ( ( method_check_array_key( $block_attributes['responsiveSettings'][$range], 'enabled' ) ) ) {
+							$output .= $rangeOut;
+						}
 					}
 				}
 			}

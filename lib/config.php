@@ -14,7 +14,8 @@
 // the "Version" value in style.css
 //-----------------------------------------------------
 
-define( 'METHOD_VERSION', wp_get_theme()->get( 'Version' ) );
+$theme = wp_get_theme();
+define( 'METHOD_VERSION', $theme->parent() ? $theme->parent()->get( 'Version' ) : $theme->get( 'Version' ) );
 
 //-----------------------------------------------------
 // The METHOD_OPTIONS constant can be used to customize

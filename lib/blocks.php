@@ -412,8 +412,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 							if ( ! str_starts_with( $border['width'], '0' ) ) {
 								$declarations['border'] = $border['width'] . ' ' . ( method_check_array_key( $border, 'style' ) ? $border['style'] : 'solid' ) . ' ' . ( method_check_array_key( $border, 'color' ) ? $border['color'] : 'rgba(0,0,0,0)' );
 							}
-						}
-						if ( method_check_array_key( $border, 'top' ) ) {
+						} elseif ( ( method_check_array_key( $border, 'top' ) ) || ( method_check_array_key( $border, 'bottom' ) ) || ( method_check_array_key( $border, 'left' ) ) || ( method_check_array_key( $border, 'right' ) ) ) {
 							foreach ( $border as $key => $value ) {
 								if ( ! str_starts_with( $value["width"], '0' ) ) {
 									$declarations["border-{$key}"] = $value["width"] . ' ' . ( method_check_array_key( $value, 'style' ) ? $value['style'] : 'solid' ) . ' ' . ( method_check_array_key( $value, 'color' ) ? $value['color'] : 'rgba(0,0,0,0)' );

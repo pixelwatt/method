@@ -14,7 +14,7 @@ add_action( 'init', 'register_method_fitted_image_block' );
 function render_method_fitted_image_block( $block_attributes, $block ) {
     $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
     $cssargs = array(
-        '#' . $methodId => array( 'borderRadius', 'margin-left', 'margin-right', 'margin-top', 'margin-bottom', 'boxShadow' ),
+        '#' . $methodId => array( 'borderRadius', 'marginLeftNonZero', 'marginRightNonZero', 'margin-top', 'margin-bottom', 'boxShadow' ),
         '#' . $methodId . ' > .method-block-content' => array( 'color', 'bgColor', 'borderRadius', 'border', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' ),
         '#' . $methodId . ' > .method-block-content > .method-block-shade' => array( 'bgShade' ),
         '#' . $methodId . ' > .method-block-content > .method-fit-img-container' => array( 'aspectRatio' ),

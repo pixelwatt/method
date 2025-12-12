@@ -50,7 +50,7 @@ function render_method_advanced_grid_row_block( $block_attributes, $content, $bl
     $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
     $cssargs = array(
         '#' . $methodId => array( 'margin-top', 'margin-bottom', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height' ),
-        '#' . $methodId . ' > .method-advanced-grid-row.row' => array( 'gapAsVars' )
+        '#' . $methodId . ' > .method-advanced-grid-row' => array( 'gapAsVars' )
     );
 
     $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
@@ -94,6 +94,13 @@ function render_method_advanced_grid_col_block( $block_attributes, $content, $bl
         }
     }
 
+    $cssargs = array(
+        '.method-basic-grid > .method-inner-blocks .method-grid-item-component#' . $methodId => array( 'margin-top', 'margin-bottom', 'font-size', 'line-height', 'gapAsVars' ),
+        '#' . $methodId . ' > .method-advanced-grid-col-content' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' )
+    );
+
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+
     // And now, profit.
-    return '<div ' . get_block_wrapper_attributes( ['class' => $colClasses, 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>';
+    return '<div ' . get_block_wrapper_attributes( ['class' => $colClasses, 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>' . $responsive;
 }

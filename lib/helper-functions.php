@@ -86,7 +86,7 @@ function method_check_array( $item, $key ) {
 	if ( $item ) {
 		if ( is_array( $item ) ) {
 			if ( 1 <=count( $item ) ) {
-				if ( $this->check_array_key( $item[0], $key ) ) {
+				if ( method_check_array_key( $item[0], $key ) ) {
 					$output = true;
 				}
 			}

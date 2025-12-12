@@ -9,6 +9,10 @@
 
 @import "./variables.scss";
 
+.wp-site-blocks {
+    overflow: hidden;
+}
+
 .method-fit-img {
     position: absolute !important;
     object-fit: cover !important;
@@ -763,9 +767,11 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
     display: block;
     text-decoration: none;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 
     .method-section-content {
-        overflow: hidden;
+        overflow: visible;
         display: flex;
         position: relative;
         box-sizing: border-box;
@@ -789,11 +795,19 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
         z-index: 2;
     }
 
+    .method-section-inner-blocks {
+        box-sizing: border-box;
+        position: relative;
+        //overflow: hidden;
+
+    }
+
     .method-section-content-inner {
         position: relative;
         z-index: 3;
         display: block;
         width: 100%;
+        box-sizing: border-box;
     }
 }
 
@@ -892,4 +906,10 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
     &-9-16 {
         padding-top: 177.8% !important;
     }
+}
+
+.method-section.method-section-video>.method-section-content {
+    height: 0;
+    width: 100%;
+    padding-top: 56.2% !important;
 }

@@ -96,7 +96,8 @@ function method_scripts() {
 	wp_enqueue_style( 'method-front', get_template_directory_uri() . '/assets/css/front.min.css', '', METHOD_VERSION );
 	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), METHOD_VERSION, false );
 
-	
+	wp_enqueue_script( 'jarallax', get_template_directory_uri() . '/inc/jarallax/jarallax.min.js', array(), METHOD_VERSION, false );
+	wp_enqueue_script( 'jarallax-video', get_template_directory_uri() . '/inc/jarallax/jarallax-video.min.js', array( 'jarallax' ), METHOD_VERSION, false );
 }
 
 add_action( 'wp_enqueue_scripts', 'method_scripts' );

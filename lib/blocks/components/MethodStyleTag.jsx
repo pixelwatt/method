@@ -158,7 +158,12 @@ function getBreakpointStyle(
 					if (settings.border?.width) {
 						styleProps['border'] =
 							`${settings.border.width} ${settings.border?.style ? settings.border.style : 'solid'} ${settings.border?.color ? settings.border.color : ''}`;
-					} else if (settings.border?.top) {
+					} else if (
+						settings.border?.top ||
+						settings.border?.bottom ||
+						settings.border?.left ||
+						settings.border?.right
+					) {
 						if (settings.border.top?.width) {
 							styleProps['border-top'] =
 								`${settings.border.top.width} ${settings.border.top?.style ? settings.border.top.style : 'solid'} ${settings.border.top?.color ? settings.border.top.color : ''}`;

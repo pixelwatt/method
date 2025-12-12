@@ -68,5 +68,5 @@ add_action( 'login_enqueue_scripts', 'method_login_scripts' );
 
 add_filter('update_footer', 'replace_admin_footer_version', 999);
 function replace_admin_footer_version($footer_text) {
-    return 'Method v' . METHOD_VERSION . ' | Powered by WordPress v' . get_bloginfo('version');
+    return 'Built with Method v' . METHOD_VERSION . ' | Powered by WordPress v' . get_bloginfo('version');
 }

@@ -10,7 +10,11 @@
         ]
     },
     "attributes": {
-        "methodId": {
+        "unconstrained": {
+            "type": "bool",
+            "default": false
+        },
+        "bgVideo": {
             "type": "string"
         },
         "textColor": {

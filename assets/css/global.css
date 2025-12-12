@@ -1,3 +1,7 @@
+.wp-site-blocks {
+  overflow: hidden;
+}
+
 .method-fit-img {
   position: absolute !important;
   -o-object-fit: cover !important;
@@ -686,9 +690,11 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   text-decoration: none;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 .method-section .method-section-content {
-  overflow: hidden;
+  overflow: visible;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -712,11 +718,18 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   right: 0;
   z-index: 2;
 }
+.method-section .method-section-inner-blocks {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+}
 .method-section .method-section-content-inner {
   position: relative;
   z-index: 3;
   display: block;
   width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .method-bgalign-control-wrap {
@@ -810,4 +823,10 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
 }
 .method-ratio-9-16 {
   padding-top: 177.8% !important;
+}
+
+.method-section.method-section-video > .method-section-content {
+  height: 0;
+  width: 100%;
+  padding-top: 56.2% !important;
 }

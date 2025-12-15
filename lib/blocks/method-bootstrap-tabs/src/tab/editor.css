@@ -1,0 +1,10 @@
+/* Editor-only: ensure minimum height for empty tab panes */
+.wp-block-method-tab.tab-pane {
+	min-height: 80px;
+}
+
+/* Editor-only: add subtle border when tab is active/visible */
+.wp-block-method-tab.tab-pane.show.active {
+	outline: 1px dashed #ccc;
+	outline-offset: -1px;
+}

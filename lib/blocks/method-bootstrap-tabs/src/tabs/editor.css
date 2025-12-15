@@ -1,0 +1,10 @@
+/* Editor-only: add visual boundary to tabs container */
+.wp-block-method-tabs {
+	border: 1px dashed #ddd;
+	padding: 1rem;
+}
+
+/* Editor-only: ensure nav buttons are clickable and styled consistently */
+.wp-block-method-tabs .nav-link {
+	cursor: pointer;
+}

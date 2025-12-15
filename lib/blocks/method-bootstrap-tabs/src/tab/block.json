@@ -1,0 +1,26 @@
+{
+	"apiVersion": 3,
+	"name": "method/tab",
+	"title": "Tab",
+	"category": "method-layout-blocks",
+	"parent": ["method/tabs"],
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"methodId": {
+			"type": "string"
+		},
+		"label": {
+			"type": "string",
+			"default": "Tab"
+		},
+		"icon": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"usesContext": ["method/tabs/activeTabId"],
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css"
+}

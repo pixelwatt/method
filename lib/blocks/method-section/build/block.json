@@ -17,6 +17,10 @@
     "bgVideo": {
       "type": "string"
     },
+    "useParallax": {
+      "type": "bool",
+      "default": false
+    },
     "textColor": {
       "type": "string"
     },

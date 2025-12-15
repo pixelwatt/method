@@ -1,0 +1,39 @@
+{
+	"apiVersion": 3,
+	"name": "method/tabs",
+	"title": "Tabs",
+	"category": "method-layout-blocks",
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"methodId": {
+			"type": "string"
+		},
+		"activeTabId": {
+			"type": "string",
+			"default": ""
+		},
+		"navPlacement": {
+			"type": "string",
+			"default": "top"
+		},
+		"navAlignment": {
+			"type": "string",
+			"default": "start"
+		},
+		"navStyle": {
+			"type": "string",
+			"default": "tabs"
+		},
+		"navFill": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"providesContext": {
+		"method/tabs/activeTabId": "activeTabId"
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css"
+}

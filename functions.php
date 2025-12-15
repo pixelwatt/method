@@ -69,6 +69,7 @@ require_once('lib/theme-options.php');
 require_once('lib/blocks.php');
 require_once('lib/class-method-utility.php');
 require_once('lib/class-method-bs-accordion.php');
+require_once('lib/class-method-css-collector.php');
 require_once('lib/admin-customization.php');
 require_once('lib/post-types-and-taxonomies.php');
 require_once('lib/helper-functions.php');

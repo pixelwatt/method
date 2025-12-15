@@ -53,14 +53,16 @@ function render_method_buttons_block( $block_attributes, $content, $block ) {
         '#' . $methodId => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'margin-top', 'margin-bottom' ),
         '#' . $methodId . ' > .method-buttons-inner-blocks' => array( 'gap' ),
     );
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
+
 
     $output = '
         <div ' . get_block_wrapper_attributes( ['class' => 'method-buttons', 'id' => $methodId] ) . '>
             ' . do_blocks( $content ) . '
         </div>
     ';
-    return $output . $responsive;
+    return $output;
 }
 
 function render_method_button_block( $block_attributes, $block ) {
@@ -68,7 +70,8 @@ function render_method_button_block( $block_attributes, $block ) {
     $cssargs = array(
         '#' . $methodId => array( 'borderRadius', 'boxShadow', 'textColor', 'bgColor', 'border', 'fontSize', 'lineHeight', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' ),
     );
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
 
     $openTag = '<div ' . get_block_wrapper_attributes( ['class' => 'method-button', 'id' => $methodId] ) . '>';
     $closeTag = '</div>';
@@ -82,7 +85,7 @@ function render_method_button_block( $block_attributes, $block ) {
     }
 
     $output = $openTag . '<span class="method-button-label">' . ( method_check_array_key( $block_attributes, 'btnLabel' ) ? $block_attributes['btnLabel'] : '' ) . '</span>' . $closeTag;
-    return $output . $responsive;
+    return $output;
 }
 
 function render_method_theme_button_block( $block_attributes, $block ) {

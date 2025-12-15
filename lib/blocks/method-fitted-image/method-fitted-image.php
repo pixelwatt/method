@@ -19,7 +19,8 @@ function render_method_fitted_image_block( $block_attributes, $block ) {
         '#' . $methodId . ' > .method-block-content > .method-block-shade' => array( 'bgShade' ),
         '#' . $methodId . ' > .method-block-content > .method-fit-img-container' => array( 'aspectRatio' ),
     );
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
     $chosenSize = method_get_responsive_setting( $block_attributes, 'base', 'bgImgSize', 'full' );
     $chosenFit = method_get_responsive_setting( $block_attributes, 'base', 'bgDisplaySize', '' );
     $chosenImg = '';
@@ -56,5 +57,5 @@ function render_method_fitted_image_block( $block_attributes, $block ) {
             </div>
         ' . $closeTag . '
     ';
-    return $output . $responsive;
+    return $output;
 }

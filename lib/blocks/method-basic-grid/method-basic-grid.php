@@ -24,8 +24,9 @@ function render_method_basic_grid_block( $block_attributes, $content, $block ) {
         '#' . $methodId => array( 'margin-top', 'margin-bottom' ),
         '#' . $methodId . ' > .method-basic-grid > .method-inner-blocks' => array( 'gapAsVars', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' )
     );
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
-    return $output . $responsive;
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
+    return $output;
 }
 
 function render_method_basic_grid_item_block( $block_attributes, $content, $block ) {
@@ -34,6 +35,7 @@ function render_method_basic_grid_item_block( $block_attributes, $content, $bloc
     $cssargs = array(
         '#' . $methodId . ' > .method-inner-blocks' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' )
     );
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
-    return $output . $responsive;
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
+    return $output;
 }

@@ -644,12 +644,12 @@ function method_get_block_media_query_declarations( $block_attributes, $context 
 }
 
 
-function method_get_block_responsive_styles( $block_attributes, $selectors = array(), $ranges = array( 'mobile', 'tablet', 'wide' ) ) {
+function method_get_block_responsive_styles( $block_attributes, $selectors = array(), $ranges = array( 'mobile', 'tablet', 'wide' ), $wrap = true ) {
 	$output = '';
 	if ( is_array( $selectors ) ) {
 		if ( 0 < count( $selectors ) ) {
 			$bps = method_get_block_breakpoints();
-			$output = '<style>';
+			$output .= ( $wrap ? '<style>' : '' );
 			foreach( $ranges as $range ) {
 				$rangeOut = '';
 				$rangeOut .= '/* ' . $range . ' */ ';
@@ -678,7 +678,7 @@ function method_get_block_responsive_styles( $block_attributes, $selectors = arr
 					}
 				}
 			}
-			$output .= '</style>';
+			$output .= ( $wrap ? '</style>' : '' );
 		}
 	}
 	return $output;

@@ -37,9 +37,10 @@ function render_method_advanced_grid_block( $block_attributes, $content, $block 
         '#' . $methodId . ' > .row > .col-24 > .method-advanced-grid-rows' => array( 'padding-left', 'padding-right', 'gapAsVars' )
     );
 
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
 
-    return '<div ' . get_block_wrapper_attributes( ['class' => 'method-advanced-grid', 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>' . $responsive;
+    return '<div ' . get_block_wrapper_attributes( ['class' => 'method-advanced-grid', 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>';
 }
 
 //-----------------------------------------------------
@@ -53,9 +54,10 @@ function render_method_advanced_grid_row_block( $block_attributes, $content, $bl
         '#' . $methodId . ' > .method-advanced-grid-row' => array( 'gapAsVars' )
     );
 
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
 
-    return '<div ' . get_block_wrapper_attributes( ['class' => 'method-advanced-grid-row-wrap', 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>' . $responsive;
+    return '<div ' . get_block_wrapper_attributes( ['class' => 'method-advanced-grid-row-wrap', 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>';
 }
 
 //-----------------------------------------------------
@@ -99,8 +101,9 @@ function render_method_advanced_grid_col_block( $block_attributes, $content, $bl
         '#' . $methodId . ' > .method-advanced-grid-col-content' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' )
     );
 
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
 
     // And now, profit.
-    return '<div ' . get_block_wrapper_attributes( ['class' => $colClasses, 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>' . $responsive;
+    return '<div ' . get_block_wrapper_attributes( ['class' => $colClasses, 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>';
 }

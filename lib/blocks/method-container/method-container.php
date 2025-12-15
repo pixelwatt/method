@@ -34,7 +34,8 @@ function render_method_container_block( $block_attributes, $content, $block ) {
         }
     }
 
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ) );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
 
     $output = '
         ' . $openTag . '
@@ -46,5 +47,5 @@ function render_method_container_block( $block_attributes, $content, $block ) {
         ' . $closeTag . '
     ';
 
-    return $output . $responsive;
+    return $output;
 }

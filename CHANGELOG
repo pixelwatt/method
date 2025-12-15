@@ -1,3 +1,11 @@
+## 2.0.0-alpha5
+
+Changes:
+* ( lib/class-method-css-collector.php ) Added a new php class, Method_CSS_Collector, to collect all block CSS and output in a single, minified style tag
+* ( lib/blocks.php ) Added an argument to method_get_block_responsive_styles() that, when set to false, does not wrap output in style tags
+* Implemented Method_CSS_Collector (via method_collect_css() function) into Section, Fitted Image, Countainer, Button, Basic Grid, and Advanced Grid render callbacks.
+* Removed previous, unused grid block implementations from the theme.
+
 ## 1.4.2
 
 Changes:

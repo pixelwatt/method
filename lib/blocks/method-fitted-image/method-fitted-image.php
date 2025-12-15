@@ -4,7 +4,8 @@
 
 function register_method_fitted_image_block() {
 	register_block_type( __DIR__ . '/build', [
-        'render_callback' => 'render_method_fitted_image_block'
+        'render_callback' => 'render_method_fitted_image_block',
+        'uses_context' => [ 'postId' ],
     ]);
 }
 add_action( 'init', 'register_method_fitted_image_block' );
@@ -12,6 +13,7 @@ add_action( 'init', 'register_method_fitted_image_block' );
 
 
 function render_method_fitted_image_block( $block_attributes, $block ) {
+    $post_id = $block->context['postId'] ?? get_the_ID();
     $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
     $cssargs = array(
         '#' . $methodId => array( 'borderRadius', 'marginLeftNonZero', 'marginRightNonZero', 'margin-top', 'margin-bottom', 'boxShadow' ),
@@ -24,7 +26,12 @@ function render_method_fitted_image_block( $block_attributes, $block ) {
     $chosenSize = method_get_responsive_setting( $block_attributes, 'base', 'bgImgSize', 'full' );
     $chosenFit = method_get_responsive_setting( $block_attributes, 'base', 'bgDisplaySize', '' );
     $chosenImg = '';
-    if ( method_check_array_key( $block_attributes, 'bgImg' ) ) {
+    if ( method_check_array_key( $block_attributes, 'useFeaturedImage' ) ) {
+        $chosenImg = get_the_post_thumbnail( $post_id, 'large', array( 'class' => 'method-fit-img' ) );
+        if ( ! $chosenImg ) {
+            return;
+        }
+    } elseif ( method_check_array_key( $block_attributes, 'bgImg' ) ) {
         if ( method_check_array_key( $block_attributes['bgImg'], 'id' ) ) {
             $chosenImg = wp_get_attachment_image( $block_attributes['bgImg']['id'], $chosenSize, false, array( 'class' => 'method-fit-img' . $chosenFit ) );
         }

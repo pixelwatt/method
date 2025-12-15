@@ -3,6 +3,9 @@
   "name": "method/fitted-image",
   "title": "Fitted Image",
   "category": "method-component-blocks",
+  "usesContext": [
+    "postId"
+  ],
   "supports": {
     "html": false
   },
@@ -30,6 +33,10 @@
     },
     "link": {
       "type": "object"
+    },
+    "useFeaturedImage": {
+      "type": "boolean",
+      "default": false
     },
     "responsiveSettings": {
       "type": "object",

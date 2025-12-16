@@ -178,6 +178,10 @@ function method_get_block_inline_styles( $block_attributes, $set_margins = true 
 }
 
 // Method's inline styles
+
+// This function will be refactored in the very near future. Its nightmarish existence
+// in its current form is the result of tight deadlines and a lot, and I mean a lot, of
+// sleep deprivation.
 function method_get_block_css_declarations( $block_attributes, $context = 'base', $cssprops = array(), $prioritize = false ) {
 	$output = '';
 	$suffix = ( $prioritize ? ' !important' : '' );

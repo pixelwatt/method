@@ -98,6 +98,9 @@ function method_scripts() {
 
 	wp_enqueue_script( 'jarallax', get_template_directory_uri() . '/inc/jarallax/jarallax.min.js', array(), METHOD_VERSION, false );
 	wp_enqueue_script( 'jarallax-video', get_template_directory_uri() . '/inc/jarallax/jarallax-video.min.js', array( 'jarallax' ), METHOD_VERSION, false );
+
+	wp_enqueue_script('swiper', get_template_directory_uri() . '/inc/swiper/swiper-bundle.min.js', [], METHOD_VERSION, true);
+    wp_enqueue_style('swiper', get_template_directory_uri() . '/inc/swiper/swiper-bundle.min.css');
 }
 
 add_action( 'wp_enqueue_scripts', 'method_scripts' );

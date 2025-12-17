@@ -896,3 +896,38 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
 .tab-content > .tab-pane.fade.show {
   opacity: 1;
 }
+
+.method-fluid-img {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+.method-swiper-gallery .swiper {
+  overflow: hidden;
+  position: relative;
+}
+.method-swiper-gallery .swiper-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.method-swiper-gallery .swiper-slide {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.method-swiper-gallery .method-fluid-img {
+  margin-left: auto;
+  margin-right: auto;
+}
+.method-swiper-gallery .method-swiper-img-container {
+  position: relative;
+}
+.method-swiper-gallery .method-img-shade {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+}

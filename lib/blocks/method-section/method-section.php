@@ -9,6 +9,12 @@ function register_method_section_block() {
 }
 add_action( 'init', 'register_method_section_block' );
 
+function method_section_enqueue_assets() {
+    wp_enqueue_script('jarallax', get_template_directory_uri() . '/inc/jarallax/jarallax.min.js', [], null, true);
+    wp_enqueue_script('jarallax-video', get_template_directory_uri() . '/inc/jarallax/jarallax-video.min.js', ['jarallax'], null, true);
+}
+add_action('enqueue_block_assets', 'method_section_enqueue_assets');
+
 
 
 function render_method_section_block( $block_attributes, $content, $block ) {

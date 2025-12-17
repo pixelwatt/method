@@ -110,6 +110,7 @@ require_once('blocks/method-container/method-container.php');
 require_once('blocks/method-fitted-image/method-fitted-image.php');
 require_once('blocks/method-section/method-section.php');
 require_once('blocks/method-social-nav/method-social-nav.php');
+require_once('blocks/method-swiper-gallery/method-swiper-gallery.php');
 
 
 //-----------------------------------------------------

@@ -6,6 +6,17 @@
 //
 // The map defined in the `$grid-breakpoints` global variable is used as the `$breakpoints` argument by default.
 
+// WordPress editor preview class mappings
+// Maps breakpoint names to editor preview body classes
+$editor-preview-classes: (
+  "mobile": ".is-mobile-preview",
+  "tablet": ".is-tablet-preview",
+  // Add more mappings as needed based on your breakpoint names
+  "sm": ".is-mobile-preview",
+  "md": ".is-tablet-preview",
+  "lg": ".is-tablet-preview"
+  ) !default;
+
 // Name of the next breakpoint, or null for the last breakpoint.
 //
 //    >> breakpoint-next(sm)
@@ -15,11 +26,14 @@
 //    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl xxl))
 //    md
 @function breakpoint-next($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
-  $n: index($breakpoint-names, $name);
-  @if not $n {
-    @error "breakpoint `#{$name}` not found in `#{$breakpoints}`";
-  }
-  @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+  $n: index($breakpoint-names, $name
+  );
+
+@if not $n {
+  @error "breakpoint `#{$name}` not found in `#{$breakpoints}`";
+}
+
+@return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
 }
 
 // Minimum breakpoint width. Null for the smallest (first) breakpoint.
@@ -28,7 +42,7 @@
 //    576px
 @function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
   $min: map-get($breakpoints, $name);
-  @return if($min != 0, $min, null);
+  @return if($min !=0, $min, null);
 }
 
 // Maximum breakpoint width.
@@ -53,31 +67,64 @@
 //    >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1400px))
 //    "-sm"
 @function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
-  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+  @return if(breakpoint-min($name, $breakpoints)==null, "", "-#{$name}");
 }
 
 // Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
 // Makes the @content apply to the given breakpoint and wider.
 @mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
   $min: breakpoint-min($name, $breakpoints);
+
   @if $min {
     @media (min-width: $min) {
       @content;
     }
-  } @else {
+  }
+
+  @else {
     @content;
   }
 }
 
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.
 // Makes the @content apply to the given breakpoint and narrower.
-@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+// Also outputs WordPress editor preview classes for block editor support.
+@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints, $editor-support: true) {
   $max: breakpoint-max($name, $breakpoints);
+
   @if $max {
+
+    // Standard media query for frontend
     @media (max-width: $max) {
       @content;
     }
-  } @else {
+
+    // WordPress editor preview support
+    // Only works when mixin is used nested inside a selector
+    @if $editor-support and & {
+      $preview-class: map-get($editor-preview-classes, $name);
+
+      @if $preview-class {
+        body#{$preview-class} & {
+          @content;
+        }
+      }
+
+      // For tablet and larger breakpoints, also apply to mobile preview
+      // since mobile is smaller than tablet
+      @if $name !="sm" and $name !="mobile" {
+        $mobile-class: map-get($editor-preview-classes, "mobile");
+
+        @if $mobile-class {
+          body#{$mobile-class} & {
+            @content;
+          }
+        }
+      }
+    }
+  }
+
+  @else {
     @content;
   }
 }
@@ -88,15 +135,19 @@
   $min: breakpoint-min($lower, $breakpoints);
   $max: breakpoint-max($upper, $breakpoints);
 
-  @if $min != null and $max != null {
+  @if $min !=null and $max !=null {
     @media (min-width: $min) and (max-width: $max) {
       @content;
     }
-  } @else if $max == null {
+  }
+
+  @else if $max ==null {
     @include media-breakpoint-up($lower, $breakpoints) {
       @content;
     }
-  } @else if $min == null {
+  }
+
+  @else if $min ==null {
     @include media-breakpoint-down($upper, $breakpoints) {
       @content;
     }
@@ -107,21 +158,39 @@
 // No minimum for the smallest breakpoint, and no maximum for the largest one.
 // Makes the @content apply only to the given breakpoint, not viewports any wider or narrower.
 @mixin media-breakpoint-only($name, $breakpoints: $grid-breakpoints) {
-  $min:  breakpoint-min($name, $breakpoints);
+  $min: breakpoint-min($name, $breakpoints);
   $next: breakpoint-next($name, $breakpoints);
-  $max:  breakpoint-max($next, $breakpoints);
+  $max: breakpoint-max($next, $breakpoints);
 
-  @if $min != null and $max != null {
+  @if $min !=null and $max !=null {
     @media (min-width: $min) and (max-width: $max) {
       @content;
     }
-  } @else if $max == null {
+  }
+
+  @else if $max ==null {
     @include media-breakpoint-up($name, $breakpoints) {
       @content;
     }
-  } @else if $min == null {
+  }
+
+  @else if $min ==null {
     @include media-breakpoint-down($next, $breakpoints) {
       @content;
     }
+  }
+}
+
+// Convenience mixin for mobile-only styles (both frontend and editor)
+@mixin mobile {
+  @include media-breakpoint-down(sm) {
+    @content;
+  }
+}
+
+// Convenience mixin for tablet and down styles (both frontend and editor)
+@mixin tablet-down {
+  @include media-breakpoint-down(md) {
+    @content;
   }
 }

@@ -12,7 +12,7 @@ add_action( 'init', 'register_method_container_block' );
 
 
 function render_method_container_block( $block_attributes, $content, $block ) {
-    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $methodId = uniqid( 'method-' );
     $align = method_get_responsive_setting( $block_attributes, 'base', 'alignItems' );
 
     $cssargs = array(

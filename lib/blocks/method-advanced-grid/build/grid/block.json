@@ -11,9 +11,6 @@
       "type": "boolean",
       "default": false
     },
-    "methodId": {
-      "type": "string"
-    },
     "responsiveSettings": {
       "type": "object",
       "default": {

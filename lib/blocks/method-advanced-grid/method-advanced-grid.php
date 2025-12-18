@@ -31,7 +31,7 @@ add_action( 'init', 'register_method_advanced_grid_col_block' );
 //-----------------------------------------------------
 
 function render_method_advanced_grid_block( $block_attributes, $content, $block ) {
-    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $methodId = uniqid( 'method-' );
     $cssargs = array(
         '#' . $methodId => array( 'margin-top', 'margin-bottom', 'marginLeftNonZero', 'marginRightNonZero', 'padding-top', 'padding-bottom', 'font-size', 'line-height' ),
         '#' . $methodId . ' > .row > .col-24 > .method-advanced-grid-rows' => array( 'padding-left', 'padding-right', 'gapAsVars' )
@@ -48,7 +48,7 @@ function render_method_advanced_grid_block( $block_attributes, $content, $block 
 //-----------------------------------------------------
 
 function render_method_advanced_grid_row_block( $block_attributes, $content, $block ) {
-    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $methodId = uniqid( 'method-' );
     $cssargs = array(
         '#' . $methodId => array( 'margin-top', 'margin-bottom', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height' ),
         '#' . $methodId . ' > .method-advanced-grid-row' => array( 'gapAsVars' )
@@ -65,7 +65,7 @@ function render_method_advanced_grid_row_block( $block_attributes, $content, $bl
 //-----------------------------------------------------
 
 function render_method_advanced_grid_col_block( $block_attributes, $content, $block ) {
-    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $methodId = uniqid( 'method-' );
 
     // Since column classes are (and need to be) applied to the outermost container, we'll need to rebuild the classlist first
     $baseCols = 8;

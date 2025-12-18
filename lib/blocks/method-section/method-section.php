@@ -18,7 +18,7 @@ add_action('enqueue_block_assets', 'method_section_enqueue_assets');
 
 
 function render_method_section_block( $block_attributes, $content, $block ) {
-    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $methodId = uniqid( 'method-' );
     $align = method_get_responsive_setting( $block_attributes, 'base', 'alignItems' );
 
     $extraClasses = '';

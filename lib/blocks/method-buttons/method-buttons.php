@@ -48,7 +48,7 @@ function method_theme_button_enqueue_block_assets() {
 add_action('enqueue_block_editor_assets', 'method_theme_button_enqueue_block_assets');
 
 function render_method_buttons_block( $block_attributes, $content, $block ) {
-    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $methodId = uniqid( 'method-' );
     $cssargs = array(
         '#' . $methodId => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'margin-top', 'margin-bottom' ),
         '#' . $methodId . ' > .method-buttons-inner-blocks' => array( 'gap' ),
@@ -66,7 +66,7 @@ function render_method_buttons_block( $block_attributes, $content, $block ) {
 }
 
 function render_method_button_block( $block_attributes, $block ) {
-    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $methodId = uniqid( 'method-' );
     $cssargs = array(
         '#' . $methodId => array( 'borderRadius', 'boxShadow', 'textColor', 'bgColor', 'border', 'fontSize', 'lineHeight', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' ),
     );
@@ -89,7 +89,7 @@ function render_method_button_block( $block_attributes, $block ) {
 }
 
 function render_method_theme_button_block( $block_attributes, $block ) {
-    $methodId = ( method_check_array_key( $block_attributes, 'methodId' ) ? $block_attributes['methodId'] : uniqid( 'method-' ) );
+    $methodId = uniqid( 'method-' );
 
     $extraclass = '';
     if ( method_check_array_key( $block_attributes, 'btnStyle' ) ) {

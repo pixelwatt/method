@@ -11,9 +11,6 @@
         "html": false
     },
     "attributes": {
-        "methodId": {
-            "type": "string"
-        },
         "responsiveSettings": {
             "type": "object",
             "default": {

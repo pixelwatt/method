@@ -10,9 +10,6 @@
         "html": false
     },
     "attributes": {
-        "methodId": {
-            "type": "string"
-        },
         "btnStyle": {
             "type": "string"
         },

@@ -69,32 +69,4 @@ define('METHOD_OPTIONS', array(
             ),
         ),
     ),
-    'blocks' => array(
-        'accordion-item' => array(
-            'arrow-svg' => '',
-            'open-svg' => '',
-            'close-svg' => '',
-        ),
-        'button' => array(
-            'style' => array(
-                'padding' => array(
-                    'top' => '0.75rem',
-                    'bottom' => '0.75rem',
-                    'left' => '1.5rem',
-                    'right' => '1.5rem',
-                ),
-                'borderRadius' => array(
-                    'topLeft' => '8px',
-                    'topRight' => '8px',
-                    'bottomLeft' => '8px',
-                    'bottomRight' => '8px',
-                )
-            ),
-        ),
-        'collapse' => array(
-            'arrow-svg' => '',
-            'open-svg' => '',
-            'close-svg' => '',
-        ),
-    ),
 ));

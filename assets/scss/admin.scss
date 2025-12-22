@@ -1,1 +1,307 @@
 @import "./variables.scss";
+
+.visually-hidden,
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.visually-hidden:not(caption),
+.visually-hidden-focusable:not(:focus):not(:focus-within):not(caption) {
+    position: absolute !important;
+}
+
+body:has(.method-options-panel) {
+    //background: rgb(141, 34, 93);
+    //background: #fff;
+    //background-color: #f7f7f7;
+    padding-bottom: 0;
+
+    #wpbody-content {
+        padding-bottom: 0;
+    }
+
+    #wpfooter {
+        display: none;
+        visibility: hidden;
+    }
+
+    .cmb2-options-page {
+        margin: 0 0 0 2px !important;
+        height: 100%;
+        min-height: calc(100vh - 32px);
+        background-image: url('../images/admin-lines.png');
+        background-size: contain;
+        background-position: center top;
+        background-repeat: repeat-y;
+        box-sizing: border-box;
+        padding-top: 32px;
+
+        &>h2 {
+            width: calc(100% / 3);
+            margin-bottom: 36px;
+            color: #1d2327;
+            font-weight: 300;
+            font-size: 18px;
+
+            .method-logo-wrap {
+                display: block;
+                height: 0 !important;
+                width: 100%;
+                padding-top: 17.06%;
+                background-image: url('../images/admin-logo.svg');
+                background-size: contain;
+                background-position: left center;
+                background-repeat: no-repeat;
+                margin-bottom: 12px;
+            }
+        }
+
+        .cmb2-metabox {
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.1) !important;
+            overflow: hidden;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+
+            .cmb-row {
+                background-color: transparent !important;
+                border: none;
+                box-shadow: none;
+                margin: 0;
+
+
+            }
+
+            .cmb-type-title {
+                h3.cmb2-metabox-title {
+                    text-transform: none;
+                    font-size: 16px;
+                    line-height: 1;
+                    color: #fff;
+                    font-weight: 700;
+                }
+
+                .cmb2-metabox-description {
+                    color: #fff;
+                    padding-top: 0.375rem;
+                    font-weight: 300;
+                }
+            }
+
+            .cmb-type-radio-inline {
+                ul {
+                    display: flex;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                }
+
+                li {
+                    position: relative;
+                    padding: 0;
+                    margin: 0;
+
+                    input {
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                        appearance: none;
+                        opacity: 0;
+                        z-index: 2;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    label {
+                        z-index: 1;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        line-height: 1;
+                        background-color: rgba(0, 0, 0, 0.05);
+                        border: 1px solid rgba(0, 0, 0, 0.1);
+                        padding: 6px 8px;
+                        border-radius: 8px;
+                    }
+
+                    &:has(input:checked) {
+                        label {
+                            background-color: #F24C27;
+                            border-color: #d24121;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+
+            .cmb-repeatable-grouping {
+                border-radius: 8px;
+                border: 2px solid rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                margin-bottom: 8px;
+                padding-bottom: 0;
+
+                h3.cmbhandle-title {
+                    background: transparent;
+                    padding-top: 12px;
+                    padding-bottom: 12px;
+                    font-weight: 700;
+
+                    span:after {
+                        font-weight: 300;
+                    }
+                }
+
+                button.dashicons-before {
+                    top: 10px;
+                }
+
+                .cmbhandle:before {
+                    padding: 12px 10px;
+                }
+
+                &:not(.closed) {
+                    h3.cmbhandle-title {
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                    }
+                }
+
+                &:has(input[value='']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Generic Link';
+                    }
+                }
+
+                &:has(input[value='bluesky']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Bluesky';
+                    }
+                }
+
+                &:has(input[value='facebook']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Facebook';
+                    }
+                }
+
+                &:has(input[value='flickr']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Flickr';
+                    }
+                }
+
+                &:has(input[value='github']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / GitHub';
+                    }
+                }
+
+                &:has(input[value='instagram']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Instagram';
+                    }
+                }
+
+                &:has(input[value='issuu']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Issuu';
+                    }
+                }
+
+                &:has(input[value='linkedin']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / LinkedIn';
+                    }
+                }
+
+                &:has(input[value='pinterest']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Pinterest';
+                    }
+                }
+
+                &:has(input[value='threads']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Threads';
+                    }
+                }
+
+                &:has(input[value='tiktok']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / TikTok';
+                    }
+                }
+
+                &:has(input[value='twitch']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Twitch';
+                    }
+                }
+
+                &:has(input[value='twitter']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / X (Twitter)';
+                    }
+                }
+
+                &:has(input[value='vimeo']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / Vimeo';
+                    }
+                }
+
+                &:has(input[value='youtube']:checked) {
+                    h3.cmbhandle-title span:after {
+                        content: ' / YouTube';
+                    }
+                }
+            }
+
+            &>.cmb-row {
+                padding: 1.5rem !important;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+
+                &:has(h3.cmb2-metabox-title) {
+                    padding: 0.875rem 1.5rem !important;
+                    background-color: #49BF9E !important;
+
+                }
+            }
+        }
+    }
+
+    .button-primary,
+    .button-secondary {
+        background: #49BF9E !important;
+        border-color: #42b191 !important;
+        border-width: 1px;
+        color: #fff !important;
+        border-radius: 8px;
+        padding: 10px 18px !important;
+        line-height: 1 !important;
+        font-size: 15px;
+        font-weight: 500;
+
+        &[type="submit"] {
+            background: #20473c !important;
+            border-color: #2a5e50 !important;
+            color: #54e6bd !important;
+            min-width: calc(100% / 6);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 16px 24px !important;
+            border-radius: 12px;
+        }
+    }
+
+
+}

@@ -1,7 +1,7 @@
 <?php
 
 function method_admin_scripts() {
-    wp_enqueue_style( 'method', get_template_directory_uri() . '/assets/css/admin.css', '', METHOD_VERSION );
+    wp_enqueue_style( 'method-admin', get_template_directory_uri() . '/assets/css/admin.css', '', METHOD_VERSION );
 }
 
 add_action( 'admin_enqueue_scripts', 'method_admin_scripts' );

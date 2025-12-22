@@ -14,7 +14,7 @@ add_action( 'enqueue_block_editor_assets', function() {
     wp_localize_script( 'method-global-data', 'methodGlobalData', [
         'breakpoints' => method_get_block_breakpoints(),
 		'breakpointColors' => method_get_breakpoint_colors(),
-		'fontSizePresets' => METHOD_OPTIONS['typography']['font-size-presets'],
+		'fontSizePresets' => method_get_font_size_presets(),
     ]);
 
     // Enqueue the script (editor only)

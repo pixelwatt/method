@@ -207,32 +207,51 @@ function method_get_tags_badge() {
 	return '<span class="method-tags-opener">Tags Supported</span> ';
 }
 
+function method_get_font_size_presets() {
+	if ( defined( 'METHOD_CHILD_OPTIONS' ) ) {
+		$theme_data = METHOD_CHILD_OPTIONS;
+	} else {
+		$theme_data = METHOD_OPTIONS;
+	}
+	return $theme_data['typography']['font-size-presets'];
+}
+
 
 function method_get_block_breakpoints() {
-	$breakpoint_mobile_max =  METHOD_OPTIONS['breakpoints']['mobile_max'];
-	$breakpoint_tablet_min =  METHOD_OPTIONS['breakpoints']['tablet_min'];
-	$breakpoint_tablet_max =  METHOD_OPTIONS['breakpoints']['tablet_max'];
-	$breakpoint_wide_min =  METHOD_OPTIONS['breakpoints']['wide_min'];
+	if ( defined( 'METHOD_CHILD_OPTIONS' ) ) {
+		$theme_data = METHOD_CHILD_OPTIONS;
+	} else {
+		$theme_data = METHOD_OPTIONS;
+	}
+	$breakpoint_mobile_max =  $theme_data['breakpoints']['mobile_max'];
+	$breakpoint_tablet_min =  $theme_data['breakpoints']['tablet_min'];
+	$breakpoint_tablet_max =  $theme_data['breakpoints']['tablet_max'];
+	$breakpoint_wide_min =  $theme_data['breakpoints']['wide_min'];
 	return array(
-		'mobile_max' => ( METHOD_OPTIONS['breakpoints']['dimensions']["{$breakpoint_mobile_max}"] - 1 ) . METHOD_OPTIONS['breakpoints']['units'],
-		'tablet_min' => METHOD_OPTIONS['breakpoints']['dimensions']["{$breakpoint_tablet_min}"] . METHOD_OPTIONS['breakpoints']['units'],
-		'tablet_max' => ( METHOD_OPTIONS['breakpoints']['dimensions']["{$breakpoint_tablet_max}"] - 1 ) . METHOD_OPTIONS['breakpoints']['units'],
-		'wide_min' => METHOD_OPTIONS['breakpoints']['dimensions']["{$breakpoint_wide_min}"] . METHOD_OPTIONS['breakpoints']['units'],
+		'mobile_max' => ( $theme_data['breakpoints']['dimensions']["{$breakpoint_mobile_max}"] - 1 ) . $theme_data['breakpoints']['units'],
+		'tablet_min' => $theme_data['breakpoints']['dimensions']["{$breakpoint_tablet_min}"] . $theme_data['breakpoints']['units'],
+		'tablet_max' => ( $theme_data['breakpoints']['dimensions']["{$breakpoint_tablet_max}"] - 1 ) . $theme_data['breakpoints']['units'],
+		'wide_min' => $theme_data['breakpoints']['dimensions']["{$breakpoint_wide_min}"] . $theme_data['breakpoints']['units'],
 	);
 }
 
 function method_get_breakpoint_colors() {
+	if ( defined( 'METHOD_CHILD_OPTIONS' ) ) {
+		$theme_data = METHOD_CHILD_OPTIONS;
+	} else {
+		$theme_data = METHOD_OPTIONS;
+	}
 	$output = array(
 		'mobile' => '#007CBA',
 		'tablet' => '#007CBA',
 		'wide' => '#007CBA',
 	);
-	if ( method_check_array_key( METHOD_OPTIONS, 'breakpoint-colors' ) ) {
-		if ( method_check_array_key( METHOD_OPTIONS['breakpoint-colors'], 'enabled' ) ) {
+	if ( method_check_array_key( $theme_data, 'breakpoint-colors' ) ) {
+		if ( method_check_array_key( $theme_data['breakpoint-colors'], 'enabled' ) ) {
 			$output = array(
-				'mobile' => ( method_check_array_key( METHOD_OPTIONS['breakpoint-colors'], 'mobile' ) ? METHOD_OPTIONS['breakpoint-colors']['mobile'] : '#007CBA' ),
-				'tablet' => ( method_check_array_key( METHOD_OPTIONS['breakpoint-colors'], 'tablet' ) ? METHOD_OPTIONS['breakpoint-colors']['tablet'] : '#007CBA' ),
-				'wide' => ( method_check_array_key( METHOD_OPTIONS['breakpoint-colors'], 'wide' ) ? METHOD_OPTIONS['breakpoint-colors']['wide'] : '#007CBA' ),
+				'mobile' => ( method_check_array_key( $theme_data['breakpoint-colors'], 'mobile' ) ? $theme_data['breakpoint-colors']['mobile'] : '#007CBA' ),
+				'tablet' => ( method_check_array_key( $theme_data['breakpoint-colors'], 'tablet' ) ? $theme_data['breakpoint-colors']['tablet'] : '#007CBA' ),
+				'wide' => ( method_check_array_key( $theme_data['breakpoint-colors'], 'wide' ) ? $theme_data['breakpoint-colors']['wide'] : '#007CBA' ),
 			);
 		}
 	}

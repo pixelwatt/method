@@ -93,7 +93,7 @@ add_filter( 'block_editor_settings_all', function( $settings ) {
 //-----------------------------------------------------
 
 function method_scripts() {
-	wp_enqueue_style( 'method-front', get_template_directory_uri() . '/assets/css/front.min.css', '', METHOD_VERSION );
+	//wp_enqueue_style( 'method-front', get_template_directory_uri() . '/assets/css/front.min.css', '', METHOD_VERSION );
 	wp_enqueue_script( 'method', get_template_directory_uri() . '/assets/js/scripts.min.js', array( 'jquery' ), METHOD_VERSION, false );
 
 	wp_enqueue_script( 'jarallax', get_template_directory_uri() . '/inc/jarallax/jarallax.min.js', array(), METHOD_VERSION, false );

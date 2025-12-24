@@ -97,8 +97,8 @@ function render_method_advanced_grid_col_block( $block_attributes, $content, $bl
     }
 
     $cssargs = array(
-        '.method-basic-grid > .method-inner-blocks .method-grid-item-component#' . $methodId => array( 'margin-top', 'margin-bottom', 'font-size', 'line-height', 'gapAsVars' ),
-        '#' . $methodId . ' > .method-advanced-grid-col-content' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' )
+        '#' . $methodId . ' > .method-advanced-grid-col-content' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height', 'color' ),
+        '#' . $methodId . ' > .method-advanced-grid-col-content a' => array( 'linkColor' )
     );
 
     $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );

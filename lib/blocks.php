@@ -34,18 +34,6 @@ function method_block_assets() {
 
 add_action( 'enqueue_block_assets', 'method_block_assets' );
 
-function mytheme_editor_styles() {
-    add_editor_style( 'editor-style.css' ); // optional, if using classic style sheet
-
-    wp_enqueue_style(
-        'mytheme-editor-style',
-        get_template_directory_uri() . '/editor-style.css',
-        array( 'wp-edit-blocks' ), // Important!
-        filemtime( get_template_directory() . '/editor-style.css' )
-    );
-}
-add_action( 'enqueue_block_editor_assets', 'mytheme_editor_styles' );
-
 
 
 add_theme_support( 'editor-styles' );

@@ -78,7 +78,7 @@ function render_method_button_block( $block_attributes, $block ) {
 
     if ( method_check_array_key( $block_attributes, 'link' ) ) {
         if ( method_check_array_key( $block_attributes['link'], 'url' ) ) {
-            $btnTarget = ( method_check_array_key( $block_attributes['link'], 'target' ) ? '_blank' : '_self' );
+            $btnTarget = ( method_check_array_key( $block_attributes['link'], 'opensInNewTab' ) ? '_blank' : '_self' );
             $openTag = '<a target="' . $btnTarget . '" href="' . $block_attributes['link']['url'] . '" ' . get_block_wrapper_attributes( ['class' => 'method-button', 'id' => $methodId] ) . '>';
             $closeTag = '</a>';
         }
@@ -106,7 +106,7 @@ function render_method_theme_button_block( $block_attributes, $block ) {
 
     if ( method_check_array_key( $block_attributes, 'link' ) ) {
         if ( method_check_array_key( $block_attributes['link'], 'url' ) ) {
-            $btnTarget = ( method_check_array_key( $block_attributes['link'], 'target' ) ? '_blank' : '_self' );
+            $btnTarget = ( method_check_array_key( $block_attributes['link'], 'opensInNewTab' ) ? '_blank' : '_self' );
             $openTag = '<a target="' . $btnTarget . '" href="' . $block_attributes['link']['url'] . '" ' . get_block_wrapper_attributes( ['class' => 'method-theme-button' . $extraclass, 'id' => $methodId] ) . '>';
             $closeTag = '</a>';
         }

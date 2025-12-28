@@ -72,12 +72,43 @@ $editor-preview-classes: (
 
 // Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
 // Makes the @content apply to the given breakpoint and wider.
-@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+// Also handles WordPress editor preview by excluding styles when in smaller preview modes.
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints, $editor-support: true) {
   $min: breakpoint-min($name, $breakpoints);
 
   @if $min {
+
+    // Standard media query for frontend
     @media (min-width: $min) {
       @content;
+    }
+
+    // WordPress editor preview support
+    // The editor iframe width doesn't respond to media queries reliably,
+    // so we output styles WITHOUT a media query, but scoped to body classes.
+    // These only apply when NOT in a smaller preview mode.
+    @if $editor-support and & {
+
+      // For lg and up, only show when not in tablet or mobile preview
+      @if $name =="lg" or $name =="xl" or $name =="xxl" or $name =="wide" {
+        body.block-editor-iframe__body:not(.is-tablet-preview):not(.is-mobile-preview) & {
+          @content;
+        }
+      }
+
+      // For md and up, only show when not in mobile preview
+      @else if $name =="md" or $name =="tablet" {
+        body.block-editor-iframe__body:not(.is-mobile-preview) & {
+          @content;
+        }
+      }
+
+      // For sm and up, always show in editor (it's basically "all")
+      @else if $name =="sm" {
+        body.block-editor-iframe__body & {
+          @content;
+        }
+      }
     }
   }
 
@@ -105,7 +136,7 @@ $editor-preview-classes: (
       $preview-class: map-get($editor-preview-classes, $name);
 
       @if $preview-class {
-        body#{$preview-class} & {
+        body.block-editor-iframe__body#{$preview-class} & {
           @content;
         }
       }
@@ -116,7 +147,7 @@ $editor-preview-classes: (
         $mobile-class: map-get($editor-preview-classes, "mobile");
 
         @if $mobile-class {
-          body#{$mobile-class} & {
+          body.block-editor-iframe__body#{$mobile-class} & {
             @content;
           }
         }

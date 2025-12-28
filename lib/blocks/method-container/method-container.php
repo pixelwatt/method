@@ -28,7 +28,7 @@ function render_method_container_block( $block_attributes, $content, $block ) {
 
     if ( method_check_array_key( $block_attributes, 'link' ) ) {
         if ( method_check_array_key( $block_attributes['link'], 'url' ) ) {
-            $btnTarget = ( method_check_array_key( $block_attributes['link'], 'target' ) ? '_blank' : '_self' );
+            $btnTarget = ( method_check_array_key( $block_attributes['link'], 'opensInNewTab' ) ? '_blank' : '_self' );
             $openTag = '<a target="' . $btnTarget . '" href="' . $block_attributes['link']['url'] . '" ' . get_block_wrapper_attributes( ['class' => 'method-container', 'id' => $methodId] ) . '>';
             $closeTag = '</a>';
         }

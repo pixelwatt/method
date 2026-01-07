@@ -1,6 +1,7 @@
 {
     "apiVersion": 3,
     "name": "method/theme-button",
+    "description": "Theme Buttons allow you to quickly create buttons using prebuilt styles, as configured by your developer.",
     "parent": [
         "method/buttons"
     ],
@@ -11,6 +12,12 @@
     },
     "attributes": {
         "btnStyle": {
+            "type": "string"
+        },
+        "beforeIcon": {
+            "type": "string"
+        },
+        "afterIcon": {
             "type": "string"
         },
         "btnLabel": {

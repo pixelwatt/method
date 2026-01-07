@@ -12,14 +12,23 @@ add_action( 'enqueue_block_editor_assets', function() {
 
     // Localize the breakpoints
     wp_localize_script( 'method-global-data', 'methodGlobalData', [
+		'breakpointPrefixes' => method_get_breakpoint_class_prefixes(),
         'breakpoints' => method_get_block_breakpoints(),
 		'breakpointColors' => method_get_breakpoint_colors(),
 		'fontSizePresets' => method_get_font_size_presets(),
+		'bsBreakpoints' => method_get_all_bs_breakpoint_options(),
+		'socialNavItems' => method_build_social_nav_items(),
     ]);
 
     // Enqueue the script (editor only)
     wp_enqueue_script( 'method-global-data' );
 });
+
+
+add_theme_support( 'editor-styles' );
+add_theme_support( 'wp-block-styles' );
+add_theme_support( 'editor-color-palette' ); // Optional, legacy
+add_theme_support( 'experimental-link-color' ); // If needed
 
 
 //-----------------------------------------------------
@@ -28,18 +37,23 @@ add_action( 'enqueue_block_editor_assets', function() {
 //-----------------------------------------------------
 
 function method_block_assets() {
-    wp_enqueue_style( 'method-global', get_template_directory_uri() . '/assets/css/global.css', ( ! is_admin() ? array('wp-block-library', 'wp-block-library-theme', 'global-styles') : '' ), METHOD_VERSION );
-    wp_enqueue_style( 'method-bs-grid', get_template_directory_uri() . '/assets/css/bootstrap-grid.css', ( ! is_admin() ? array('wp-block-library', 'wp-block-library-theme', 'global-styles') : '' ), METHOD_VERSION );
+	if ( ! is_admin() ) {
+    	wp_enqueue_style( 'method-global', get_template_directory_uri() . '/assets/css/global.min.css', array('wp-block-library', 'wp-block-library-theme', 'global-styles'), METHOD_VERSION );
+    	wp_enqueue_style( 'method-bs-grid', get_template_directory_uri() . '/assets/css/bootstrap-grid.css', array('wp-block-library', 'wp-block-library-theme', 'global-styles'), METHOD_VERSION );
+	} else {
+		// Even though global styles are now being loaded via add_editor_style, we still need to
+		// load styles for editor UI that falls outside of the iFrame, which is done below.
+		wp_enqueue_style( 'method-editorui', get_template_directory_uri() . '/assets/css/editorui.min.css', array(), METHOD_VERSION );
+	}
 }
 
 add_action( 'enqueue_block_assets', 'method_block_assets' );
 
 
-
-add_theme_support( 'editor-styles' );
-add_theme_support( 'wp-block-styles' );
-add_theme_support( 'editor-color-palette' ); // Optional, legacy
-add_theme_support( 'experimental-link-color' ); // If needed
+add_action('after_setup_theme', function() {
+    add_editor_style( get_parent_theme_file_uri( 'assets/css/global.min.css' ) );
+	add_editor_style( get_parent_theme_file_uri( 'assets/css/bootstrap-grid.min.css' ) );
+});
 
 
 //-----------------------------------------------------
@@ -96,6 +110,7 @@ require_once('blocks/method-bootstrap-tabs/method-bootstrap-tabs.php');
 require_once('blocks/method-buttons/method-buttons.php');
 require_once('blocks/method-container/method-container.php');
 require_once('blocks/method-fitted-image/method-fitted-image.php');
+//require_once('blocks/method-navbar/method-navbar.php');
 require_once('blocks/method-section/method-section.php');
 require_once('blocks/method-social-nav/method-social-nav.php');
 require_once('blocks/method-swiper-gallery/method-swiper-gallery.php');
@@ -419,6 +434,33 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 		}
 
+		if ( 'flexDirection' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'flexDirection', 'row' ) ) {
+				$declarations['flex-direction'] = method_get_responsive_setting( $block_attributes, $context, 'flexDirection' ) . $suffix;
+			}
+		}
+
+		if ( 'justifyContent' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'justifyContent' ) ) {
+				$declarations['justify-content'] = method_get_responsive_setting( $block_attributes, $context, 'justifyContent' ) . $suffix;
+			}
+		}
+
+		if ( 'order' == $cssprop ) {
+			if ( ( ! empty ( method_get_responsive_setting( $block_attributes, $context, 'order' ) ) ) && ( '0' != method_get_responsive_setting( $block_attributes, $context, 'order' ) ) ) {
+				$declarations['order'] = method_get_responsive_setting( $block_attributes, $context, 'order' ) . $suffix;
+			}
+		}
+
+		if ( 'equalDimensions' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'dimensions' ) ) {
+				if ( ! str_starts_with( method_get_responsive_setting( $block_attributes, $context, 'dimensions' ), '0' ) ) {
+					$declarations['width'] = method_get_responsive_setting( $block_attributes, $context, 'dimensions' ) . $suffix;
+					$declarations['height'] = method_get_responsive_setting( $block_attributes, $context, 'dimensions' ) . $suffix;
+				}
+			}
+		}
+
 		if ( $customDimensions ) {
 			// Min Height
 			if ( 'minHeight' == $cssprop ) {
@@ -628,11 +670,8 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 function method_get_block_media_query_declarations( $block_attributes, $context = '', $cssprops = array(), $cssSelector ) {
 	$output = '';
-	
-	
-		$output .= $cssSelector . ' {' . method_get_block_css_declarations( $block_attributes, $context, $cssprops, true ) . '} ';
-	
-	
+	$declarations = method_get_block_css_declarations( $block_attributes, $context, $cssprops, true );
+	$output .= ( ! empty( $declarations ) ? $cssSelector . ' {' . $declarations . '} ' : '' );
 	return $output;
 }
 

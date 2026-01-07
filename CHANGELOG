@@ -1,3 +1,30 @@
+## 2.0.0-beta4
+
+This update contains several bug fixes and new features:
+* Enhancement: Social media icons and the method/social-nav block have been reworked. Social media platforms can now be added from a child theme by using the 'method_available_social_platforms' filter. Once added via the filter, new platforms will appear as options under the "Social Media Links" section of the Method Settings admin tab, and will render in the Social Nav block without any additional development needed. For both the frontend and block editor, markup is now rendered via the same set of php functions.
+* Enhancement: Several options have been added to the method/social-nav block to control how social media icons are displayed.
+* Enhancement: The method/theme-button block no longer shows a styles option unless custom style options have been passed via filter. Going forward, custom styles should be set via register_block_style() from a child theme instead of using the filter.
+* Enhancement: The method/theme-button block will now display options to choose an icon for display before and/or after the button label, if custom icons have been passed via the new 'method_block_theme_button_icons' filter from a child theme. If no icons have been passed, these options will simply not appear.
+* Enhancement: Additional data is now globally-injected into the block editor that contains breakpoint data for all Bootstrap breakpoints (to be used in the new Navbar block coming in beta5), prefixes for Method's four responsive ranges (mobile, tablet, base, wide), and internal markup for the method/social-nav block (no longer rendered by the block itself, markup can now be used in other blocks)
+* Enhancement: Column offsets can now be added to method/advanced-grid-col blocks and customized for mobile, tablet, and wide devices.
+* Enhancement: method/advanced-grid-col blocks in the same method/advanced-grid-row block can now be reordered for mobile, tablet, and wide devices via a new setting in the block's Responsive Settings.
+* Enhancement: Column width and offset classes generated for each method/advanced-grid-col block now use the breakpoints specified in METHOD_OPTIONS or METHOD_CHILD_OPTIONS, making it possible to easily change which breakpoint corresponds to each responsive range (for example, changing METHOD_CHILD_OPTIONS['breakpoints']['base'] to 'lg' would change all columns to include col-lg-* and offset-lg-* classes instead of the default 'xl' classes). This change makes it possible to easily change which breakpoints are used for each responsive range quickly, only requiting edits to a few lines of the child theme's config.php file.
+* Fix: In situations where mobile overrides have been set for a method/advanced-grid-col block, but not for tablet, tablets will no longer inherit column widths set for mobile
+* Fix: Removed unused code from lib/theme-setup.php
+* Fix: Block editor styles are now registered via add_editor_style() to prevent styles from impacting block editor UI (this approach limits styles to only impacting the content iframe of the block editor)
+* Fix: A new css file, editorui.css, was added to house styles meant to impact the block editor UI. This file is enqueued via the method_block_assets() function and only targets admin.
+* Fix: Minified assets are now enqueued wherever possible (was previously using unminified versions)
+* Fix: A new gulp task, compile-editorui-styles, was added to compile the new editorui.css file
+* Fix: Editor UI styles have been removed from global styles (moved to editorui styles)
+* Enhancement: global styles updated to contain new styles for the reworked method/social-nav block and upcoming method/navbar block
+* Enhancement: Updated css generation functions/components to support flex-direction (flexDirection), justify-content (justifyContent), order, and equalDimensions (using one dimensions key to set both width and height)
+* Fix: Updated method_get_block_media_query_declarations() to not return empty CSS declarations.
+* Enhancement: Updated the MethodAlignmentControls component to be usable in the MethodResponsiveTabs component, with a checkbox appearing to opt-in if rendering settings for mobile, tablet, or wide.
+* Fix: The php callback function that renders method/container blocks now only generate css for left and right margins if those margins are more than 0
+* Enhancement: Added initial code for method/navbar, but the block will not be included in the block editor until the next beta (though it can be enabled by commenting out line 113 of lib/blocks.php)
+
+
+
 ## 2.0.0-alpha5
 
 Changes:

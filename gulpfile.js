@@ -34,6 +34,20 @@ gulp.task('compile-front-styles', function () {
         .pipe(browserSync.stream());
 });
 
+gulp.task('compile-editorui-styles', function () {
+    console.log('Running compile-editorui-styles'); // Debug output
+
+    return gulp
+        .src('./assets/scss/editorui.scss')
+        .pipe(sass({ outputStyle: 'expanded' }).on('error', sass.logError))
+        .pipe(autoprefixer('last 2 versions'))
+        .pipe(gulp.dest('./assets/css/'))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(cleanCSS({ level: 2 }))
+        .pipe(gulp.dest('./assets/css/'))
+        .pipe(browserSync.stream());
+});
+
 gulp.task('compile-global-styles', function () {
     console.log('Running compile-global-styles'); // Debug output
 
@@ -67,6 +81,7 @@ gulp.task(
     'styles',
     gulp.series(
         'compile-front-styles',
+        'compile-editorui-styles',
         'compile-global-styles',
         'compile-admin-styles'
     )
@@ -75,6 +90,7 @@ gulp.task(
     'compile-all-styles',
     gulp.series(
         'compile-front-styles',
+        'compile-editorui-styles',
         'compile-global-styles',
         'compile-admin-styles'
     )

@@ -1,0 +1,29 @@
+{
+    "apiVersion": 3,
+    "name": "method/navbar",
+    "title": "Site Navbar",
+    "category": "method-page-blocks",
+    "icon": "block-default",
+    "supports": {
+        "html": false,
+        "align": [
+            "full",
+            "wide"
+        ]
+    },
+    "attributes": {
+        "expandAt": {
+            "type": "string",
+            "default": "lg"
+        },
+        "neverExpand": {
+            "type": "bool",
+            "default": false
+        },
+        "includeSocialNav": {
+            "type": "bool",
+            "default": false
+        }
+    },
+    "editorScript": "file:./index.js"
+}

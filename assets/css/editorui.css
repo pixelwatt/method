@@ -1,0 +1,47 @@
+.method-box-control-wrap {
+  display: block !important;
+  width: 100% !important;
+}
+.method-box-control-wrap .components-base-control {
+  margin-bottom: 0 !important;
+}
+.method-box-control-wrap .components-base-control .components-base-control__field {
+  margin-bottom: 0 !important;
+}
+
+.tab-enabled .dashicon {
+  position: relative;
+}
+.tab-enabled .dashicon:after {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 40px;
+  background-color: #007CBA;
+  display: block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  content: "";
+}
+
+.method-margin-options-wrap .components-checkbox-control__label {
+  font-size: 0.75rem !important;
+}
+.method-margin-options-wrap .components-checkbox-control__input {
+  border-color: rgb(177, 177, 177) !important;
+}
+
+.method-bgalign-control-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 16px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.method-bgalign-control-wrap-value {
+  text-transform: capitalize;
+}

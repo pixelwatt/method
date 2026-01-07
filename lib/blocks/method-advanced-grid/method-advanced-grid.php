@@ -67,36 +67,25 @@ function render_method_advanced_grid_row_block( $block_attributes, $content, $bl
 function render_method_advanced_grid_col_block( $block_attributes, $content, $block ) {
     $methodId = uniqid( 'method-' );
 
-    // Since column classes are (and need to be) applied to the outermost container, we'll need to rebuild the classlist first
-    $baseCols = 8;
-    if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
-        if ( method_check_array_key( $block_attributes['responsiveSettings'], 'base' ) ) {
-            if ( method_check_array_key( $block_attributes['responsiveSettings']['base'], 'gridCols' ) ) {
-                $baseCols = $block_attributes['responsiveSettings']['base']['gridCols'];
-            }
+    $breakpoints = method_get_breakpoint_class_prefixes();
+    $baseCols = method_get_responsive_setting( $block_attributes, 'base', 'gridCols', 8 );
+    $baseOffset = method_get_responsive_setting( $block_attributes, 'base', 'offset', 0 );
+    $colClasses = array();
+    foreach( $breakpoints as $key => $value ) {
+        $prefix = ( 'mobile' !== $key ? $value . '-' : '' );
+        if ( ( 'base' !== $key ) && ( method_get_responsive_setting( $block_attributes, $key, 'enabled' ) ) ) {
+            $breakpointCols = method_get_responsive_setting( $block_attributes, $key, 'gridCols', $baseCols );
+            $breakpointOffset = method_get_responsive_setting( $block_attributes, $key, 'offset', $baseOffset );
+        } else {
+            $breakpointCols = $baseCols;
+            $breakpointOffset = $baseOffset;
         }
-    }
-
-    $colClasses = 'col-' . $baseCols . ' col-xl-' . $baseCols;
-    if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
-        if ( method_check_array_key( $block_attributes['responsiveSettings'], 'mobile' ) ) {
-            if ( method_check_array_key( $block_attributes['responsiveSettings']['mobile'], 'enabled' ) ) {
-                $colClasses = 'col-' . $block_attributes['responsiveSettings']['mobile']['gridCols'] . ' col-xl-' . $baseCols;
-            }
-        }
-        if ( method_check_array_key( $block_attributes['responsiveSettings'], 'tablet' ) ) {
-            if ( method_check_array_key( $block_attributes['responsiveSettings']['tablet'], 'enabled' ) ) {
-                $colClasses .= ' col-md-' . $block_attributes['responsiveSettings']['tablet']['gridCols'];
-            }
-        }
-        if ( method_check_array_key( $block_attributes['responsiveSettings'], 'wide' ) ) {
-            if ( method_check_array_key( $block_attributes['responsiveSettings']['wide'], 'enabled' ) ) {
-                $colClasses .= ' col-xxl-' . $block_attributes['responsiveSettings']['wide']['gridCols'];
-            }
-        }
+        $colClasses[] = 'col-' . $prefix . $breakpointCols;
+        $colClasses[] = 'offset-' . $prefix . $breakpointOffset;
     }
 
     $cssargs = array(
+        '#' . $methodId => array( 'order' ),
         '#' . $methodId . ' > .method-advanced-grid-col-content' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height', 'color' ),
         '#' . $methodId . ' > .method-advanced-grid-col-content a' => array( 'linkColor' )
     );
@@ -105,5 +94,5 @@ function render_method_advanced_grid_col_block( $block_attributes, $content, $bl
     method_collect_css( $responsive, '#' . $methodId, 10);
 
     // And now, profit.
-    return '<div ' . get_block_wrapper_attributes( ['class' => $colClasses, 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>';
+    return '<div ' . get_block_wrapper_attributes( ['class' => implode( ' ', $colClasses ), 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>';
 }

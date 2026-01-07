@@ -16,7 +16,7 @@ function render_method_container_block( $block_attributes, $content, $block ) {
     $align = method_get_responsive_setting( $block_attributes, 'base', 'alignItems' );
 
     $cssargs = array(
-        '#' . $methodId => array( 'borderRadius', 'margin-left', 'margin-right', 'margin-top', 'margin-bottom', 'boxShadow' ),
+        '#' . $methodId => array( 'borderRadius', 'marginLeftNonZero', 'marginRightNonZero', 'margin-top', 'margin-bottom', 'boxShadow' ),
         '#' . $methodId . ' > .method-container-content' => array( 'color', 'bgColor', 'borderRadius', 'border', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'fontSize', 'lineHeight', 'height', 'minHeight' ),
         '#' . $methodId . ' > .method-container-content > .method-container-bgimg' => array( 'bgImg', 'bgPosition', 'bgSize', 'bgRepeat' ),
         '#' . $methodId . ' > .method-container-content > .method-container-shade' => array( 'bgShade' ),

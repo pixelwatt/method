@@ -3,12 +3,58 @@
   "name": "method/social-nav",
   "title": "Social Nav",
   "category": "method-component-blocks",
-  "icon": "block-default",
   "supports": {
-    "html": false,
-    "align": [
-      "full"
-    ]
+    "html": false
+  },
+  "styles": [
+    {
+      "name": "default",
+      "label": "Icons",
+      "isDefault": true
+    },
+    {
+      "name": "enclosed",
+      "label": "Enclosed Icons"
+    },
+    {
+      "name": "with-text",
+      "label": "Icons with Text"
+    },
+    {
+      "name": "enclosed-with-text",
+      "label": "Enclosed Icons with Text"
+    }
+  ],
+  "attributes": {
+    "linkColor": {
+      "type": "string"
+    },
+    "textColor": {
+      "type": "string"
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "bgGradient": {
+      "type": "string"
+    },
+    "responsiveSettings": {
+      "type": "object",
+      "default": {
+        "base": {
+          "enabled": true
+        },
+        "mobile": {
+          "enabled": false
+        },
+        "tablet": {
+          "enabled": false
+        },
+        "wide": {
+          "enabled": false
+        }
+      }
+    }
   },
   "editorScript": "file:./index.js"
 }

@@ -33,13 +33,11 @@ function register_method_theme_button_block() {
 add_action( 'init', 'register_method_theme_button_block' );
 
 function method_theme_button_enqueue_block_assets() {
-    $defaults = array(
-        'default' => 'Default Style',
-        'inverted' => 'Inverted',
-    );
+    $defaults = false;
     wp_enqueue_script('method-theme-button-block-editor-script');
     wp_localize_script('method-theme-button-block-editor-script', 'themeButtonData', array(
         'buttonStyles' => apply_filters( 'method_block_theme_button_styles', $defaults ),
+        'buttonIcons' => apply_filters( 'method_block_theme_button_icons', $defaults ),
         'afterLabel' => apply_filters( 'method_block_theme_button_after_label', '' ),
         'beforeLabel' => apply_filters( 'method_block_theme_button_before_label', '' ),
     ));
@@ -90,6 +88,7 @@ function render_method_button_block( $block_attributes, $block ) {
 
 function render_method_theme_button_block( $block_attributes, $block ) {
     $methodId = uniqid( 'method-' );
+    $buttonIcons = apply_filters( 'method_block_theme_button_icons', false );
 
     $extraclass = '';
     if ( method_check_array_key( $block_attributes, 'btnStyle' ) ) {
@@ -99,10 +98,27 @@ function render_method_theme_button_block( $block_attributes, $block ) {
     $openTag = '<div ' . get_block_wrapper_attributes( ['class' => 'method-theme-button' . $extraclass, 'id' => $methodId] ) . '>';
     $closeTag = '</div>';
 
-    $beforeLabel = apply_filters( 'method_block_theme_button_before_label', '' );
-    $beforeLabel = ( ! empty( $beforeLabel ) ? '<span class="method-button-icon method-button-icon-before">' . $beforeLabel . '</span>' : '' );
-    $afterLabel = apply_filters( 'method_block_theme_button_after_label', '' );
-    $afterLabel = ( ! empty( $afterLabel ) ? '<span class="method-button-icon method-button-icon-after">' . $afterLabel . '</span>' : '' );
+    if ( ( is_array( $buttonIcons ) ) && ( method_check_array_key( $block_attributes, 'beforeIcon' ) ) ) {
+        if ( method_check_array_key( $buttonIcons, $block_attributes['beforeIcon'] ) ) {
+            $beforeLabel = '<span class="method-button-icon method-button-icon-before">' . $buttonIcons["{$block_attributes['beforeIcon']}"]['svg'] . '</span>';
+        }
+    } else {
+        $beforeLabel = apply_filters( 'method_block_theme_button_before_label', '' );
+        $beforeLabel = ( ! empty( $beforeLabel ) ? '<span class="method-button-icon method-button-icon-before">' . $beforeLabel . '</span>' : '' );
+    }
+
+    if ( ( is_array( $buttonIcons ) ) && ( method_check_array_key( $block_attributes, 'afterIcon' ) ) ) {
+        if ( method_check_array_key( $buttonIcons, $block_attributes['afterIcon'] ) ) {
+            $afterLabel = '<span class="method-button-icon method-button-icon-after">' . $buttonIcons["{$block_attributes['afterIcon']}"]['svg'] . '</span>';
+        }
+    } else {
+        $afterLabel = apply_filters( 'method_block_theme_button_after_label', '' );
+        $afterLabel = ( ! empty( $afterLabel ) ? '<span class="method-button-icon method-button-icon-after">' . $afterLabel . '</span>' : '' );
+    }
+    
+    
+    
+    
 
     if ( method_check_array_key( $block_attributes, 'link' ) ) {
         if ( method_check_array_key( $block_attributes['link'], 'url' ) ) {

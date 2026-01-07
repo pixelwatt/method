@@ -37,6 +37,7 @@ define('METHOD_OPTIONS', array(
         'mobile_max' => 'md',
         'tablet_min' => 'md',
         'tablet_max' => 'xl',
+        'base' => 'xl',
         'wide_min' => 'xxl',
     ),
     'breakpoint-colors' => array(

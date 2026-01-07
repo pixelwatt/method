@@ -74,7 +74,7 @@ function getBreakpointStyle(
 				prop === 'bgRepeat' ||
 				prop === 'bgImg'
 			) {
-				if (breakpoint === 'base' || settings.customBg === true) {
+				if (breakpoint === 'base' || settings?.customBg === true) {
 					if (prop === 'bgPosition') {
 						const alignDefault = 'center center';
 						const [yAlign, xAlign] = (
@@ -125,6 +125,40 @@ function getBreakpointStyle(
 					}
 				}
 			} else if (
+				prop === 'order' &&
+				settings?.order &&
+				!settings?.order.startsWith('0')
+			) {
+				styleProps['order'] = settings.order;
+			} else if (
+				prop === 'equalDimensions' &&
+				settings?.dimensions &&
+				!settings?.dimensions.startsWith('0')
+			) {
+				styleProps['width'] = settings.dimensions;
+				styleProps['height'] = settings.dimensions;
+			} else if (
+				prop === 'justifyContent' ||
+				prop === 'alignItems' ||
+				prop === 'flexDirection'
+			) {
+				if (breakpoint === 'base' || settings?.customAlign === true) {
+					if (prop === 'justifyContent' && settings?.justifyContent) {
+						styleProps['justify-content'] = settings.justifyContent;
+					}
+					if (prop === 'alignItems' && settings?.alignItems) {
+						styleProps['align-items'] = settings.alignItems;
+					}
+					if (prop === 'flexDirection') {
+						if (settings?.flexDirection) {
+							styleProps['flex-direction'] =
+								settings.flexDirection;
+						} else {
+							styleProps['flex-direction'] = 'row';
+						}
+					}
+				}
+			} else if (
 				prop === 'minHeight' ||
 				prop === 'height' ||
 				prop === 'minWidth' ||
@@ -132,15 +166,15 @@ function getBreakpointStyle(
 			) {
 				if (
 					breakpoint === 'base' ||
-					settings.customDimensions === true
+					settings?.customDimensions === true
 				) {
 					if (settings[prop] && !settings[prop].startsWith('0')) {
 						styleProps[prop] = settings[prop];
 					}
 				}
 			} else if (prop === 'borderRadius') {
-				if (breakpoint === 'base' || settings.customBorders === true) {
-					if (settings.borderRadius?.topLeft) {
+				if (breakpoint === 'base' || settings?.customBorders === true) {
+					if (settings?.borderRadius?.topLeft) {
 						styleProps['border-top-left-radius'] =
 							settings.borderRadius.topLeft;
 						styleProps['border-top-right-radius'] =
@@ -155,14 +189,14 @@ function getBreakpointStyle(
 				}
 			} else if (prop === 'border') {
 				if (breakpoint === 'base' || settings.customBorders === true) {
-					if (settings.border?.width) {
+					if (settings?.border?.width) {
 						styleProps['border'] =
 							`${settings.border.width} ${settings.border?.style ? settings.border.style : 'solid'} ${settings.border?.color ? settings.border.color : ''}`;
 					} else if (
-						settings.border?.top ||
-						settings.border?.bottom ||
-						settings.border?.left ||
-						settings.border?.right
+						settings?.border?.top ||
+						settings?.border?.bottom ||
+						settings?.border?.left ||
+						settings?.border?.right
 					) {
 						if (settings.border.top?.width) {
 							styleProps['border-top'] =
@@ -237,18 +271,18 @@ function getBreakpointStyle(
 				prop === 'margin-top' ||
 				prop === 'margin-bottom'
 			) {
-				if (breakpoint === 'base' || settings.customSpacing === true) {
+				if (breakpoint === 'base' || settings?.customSpacing === true) {
 					if (prop === 'gapAsVars') {
-						if (settings.gap?.top)
+						if (settings?.gap?.top)
 							styleProps['--bs-gutter-y'] = settings.gap.top;
-						if (settings.gap?.left || settings.gap?.right)
+						if (settings?.gap?.left || settings.gap?.right)
 							styleProps['--bs-gutter-x'] =
 								settings.gap.left || settings.gap.right;
 					} else if (prop === 'gap') {
 						let ygap = '0';
 						let xgap = '0';
-						if (settings.gap?.top) ygap = settings.gap.top;
-						if (settings.gap?.left) xgap = settings.gap.left;
+						if (settings?.gap?.top) ygap = settings.gap.top;
+						if (settings?.gap?.left) xgap = settings.gap.left;
 						styleProps['gap'] = ygap + ' ' + xgap;
 					} else {
 						const value = (() => {

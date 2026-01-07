@@ -1,3 +1,7 @@
+## 2.0.0-beta4b
+
+This release removes Bootstrap files for the upcoming method/navbar block (coming next beta) to prevent conflicts with themes using custom navbar blocks. These styles will be refactored prior to next beta.
+
 ## 2.0.0-beta4
 
 This update contains several bug fixes and new features:

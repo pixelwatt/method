@@ -154,6 +154,7 @@ picture.jarallax-img img {
    COLLAPSE (required for navbar-collapse)
    ========================================================================== */
 
+/*
 .collapse:not(.show) {
     display: none;
 }
@@ -178,10 +179,11 @@ picture.jarallax-img img {
     }
 }
 
+*/
 /* ==========================================================================
    DROPDOWN
    ========================================================================== */
-
+/*
 .dropdown,
 .dropdown-center,
 .dropend,
@@ -329,8 +331,9 @@ picture.jarallax-img img {
         }
     }
 }
-
+*/
 // Dropend
+/*
 .dropend {
     .dropdown-menu[data-bs-popper] {
         top: 0;
@@ -428,11 +431,11 @@ picture.jarallax-img img {
     display: block;
     padding: 0.25rem 1rem;
 }
-
+*/
 /* ==========================================================================
    NAV (base for navbar-nav)
    ========================================================================== */
-
+/*
 .nav {
     display: flex;
     flex-wrap: wrap;
@@ -462,11 +465,11 @@ picture.jarallax-img img {
         cursor: default;
     }
 }
-
+*/
 /* ==========================================================================
    NAVBAR
    ========================================================================== */
-
+/*
 .navbar {
     position: relative;
     display: flex;
@@ -564,11 +567,11 @@ picture.jarallax-img img {
     max-height: 75vh;
     overflow-y: auto;
 }
-
+*/
 /* ==========================================================================
    NAVBAR EXPAND VARIANTS
    ========================================================================== */
-
+/*
 // Mixin for expanded navbar state
 @mixin navbar-expanded {
     flex-wrap: nowrap;
@@ -664,11 +667,11 @@ picture.jarallax-img img {
 .navbar-expand {
     @include navbar-expanded;
 }
-
+*/
 /* ==========================================================================
    OFFCANVAS
    ========================================================================== */
-
+/*
 $offcanvas-zindex: 1045;
 $offcanvas-width: 400px;
 $offcanvas-height: 30vh;
@@ -849,11 +852,11 @@ $offcanvas-transition: transform 0.3s ease-in-out;
     padding: $offcanvas-padding-y $offcanvas-padding-x;
     overflow-y: auto;
 }
-
+*/
 /* ==========================================================================
    CLOSE BUTTON (for offcanvas header)
    ========================================================================== */
-
+/*
 .btn-close {
     box-sizing: content-box;
     width: 1em;
@@ -881,6 +884,7 @@ $offcanvas-transition: transform 0.3s ease-in-out;
         opacity: 0.25;
     }
 }
+*/
 
 .wp-block-method-buttons {
     display: flex;

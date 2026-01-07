@@ -52,7 +52,7 @@ add_action( 'enqueue_block_assets', 'method_block_assets' );
 
 add_action('after_setup_theme', function() {
     add_editor_style( get_parent_theme_file_uri( 'assets/css/global.min.css' ) );
-	add_editor_style( get_parent_theme_file_uri( 'assets/css/bootstrap-grid.min.css' ) );
+	add_editor_style( get_parent_theme_file_uri( 'assets/css/bootstrap-grid.css' ) );
 });
 
 

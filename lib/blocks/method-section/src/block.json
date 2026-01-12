@@ -6,7 +6,8 @@
     "supports": {
         "html": false,
         "align": [
-            "full"
+            "full",
+            "wide"
         ]
     },
     "attributes": {

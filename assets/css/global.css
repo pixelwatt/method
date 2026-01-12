@@ -1714,3 +1714,15 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   width: 60%;
   height: 60%;
 }
+
+.method-flex .method-flex-inner-blocks {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.method-flex .method-flex-inner-blocks .method-flex-item,
+.method-flex .method-flex-inner-blocks .method-theme-button {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}

@@ -1843,3 +1843,14 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
         }
     }
 }
+
+.method-flex {
+    .method-flex-inner-blocks {
+        display: flex;
+
+        .method-flex-item,
+        .method-theme-button {
+            display: inline-flex;
+        }
+    }
+}

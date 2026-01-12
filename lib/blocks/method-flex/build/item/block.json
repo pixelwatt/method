@@ -1,0 +1,35 @@
+{
+  "apiVersion": 3,
+  "name": "method/flex-item",
+  "title": "Flex Item",
+  "category": "method-layout-blocks",
+  "parent": [
+    "method/flex"
+  ],
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "responsiveSettings": {
+      "type": "object",
+      "default": {
+        "base": {
+          "enabled": true,
+          "alignItems": "start",
+          "justifyContent": "start",
+          "flexDirection": "row"
+        },
+        "mobile": {
+          "enabled": false
+        },
+        "tablet": {
+          "enabled": false
+        },
+        "wide": {
+          "enabled": false
+        }
+      }
+    }
+  },
+  "editorScript": "file:./index.js"
+}

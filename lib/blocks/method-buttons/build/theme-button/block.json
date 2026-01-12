@@ -3,7 +3,8 @@
   "name": "method/theme-button",
   "description": "Theme Buttons allow you to quickly create buttons using prebuilt styles, as configured by your developer.",
   "parent": [
-    "method/buttons"
+    "method/buttons",
+    "method/flex"
   ],
   "title": "Theme Button",
   "category": "method-component-blocks",
@@ -12,6 +13,9 @@
   },
   "attributes": {
     "btnStyle": {
+      "type": "string"
+    },
+    "labelStyle": {
       "type": "string"
     },
     "beforeIcon": {

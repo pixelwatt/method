@@ -4,7 +4,10 @@
     "title": "Container",
     "category": "method-layout-blocks",
     "supports": {
-        "html": false
+        "html": false,
+        "align": [
+            "wide"
+        ]
     },
     "attributes": {
         "textColor": {

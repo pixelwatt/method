@@ -1,0 +1,32 @@
+{
+  "apiVersion": 3,
+  "name": "method/flex",
+  "title": "Flex Container",
+  "category": "method-layout-blocks",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "responsiveSettings": {
+      "type": "object",
+      "default": {
+        "base": {
+          "enabled": true,
+          "alignItems": "start",
+          "justifyContent": "start",
+          "flexDirection": "row"
+        },
+        "mobile": {
+          "enabled": false
+        },
+        "tablet": {
+          "enabled": false
+        },
+        "wide": {
+          "enabled": false
+        }
+      }
+    }
+  },
+  "editorScript": "file:./index.js"
+}

@@ -26,6 +26,8 @@ function method_enable_theme_support() {
 
 
 	add_theme_support( 'editor-gradient-presets' );
+
+	add_theme_support('editor-styles');
 }
 add_action( 'after_setup_theme', 'method_enable_theme_support' );
 

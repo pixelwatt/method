@@ -1408,6 +1408,11 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   display: block;
   width: 100%;
 }
+.method-container .method-container-inner-blocks > .alignwide {
+  max-width: var(--wp--style--global--wide-size);
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .method-section {
   position: relative;

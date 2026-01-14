@@ -24,7 +24,7 @@ function render_method_section_block( $block_attributes, $content, $block ) {
     $extraClasses = '';
     if ( method_check_array_key( $block_attributes, 'align' ) ) {
         if ( ( 'full' == $block_attributes['align'] ) && ( ! method_check_array_key( $block_attributes, 'unconstrained' ) ) ) {
-            $extraClasses = ' is-layout-constrained wp-block-block has-global-padding';
+            //$extraClasses = ' is-layout-constrained wp-block-block has-global-padding';
         }
     }
 

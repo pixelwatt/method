@@ -141,6 +141,42 @@ User Agent: ' . $_SERVER['HTTP_USER_AGENT'] . '
 			)
 		)
 	);
+	
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'HTTP Auth Support', 'method' ),
+			'id'       => 'http_auth_title',
+			'desc'	   => 'If this hosting environment has basic http auth enabled, provide credentials below to enable support if encountering broken block editor styles or other failed asset loads.',
+			'type'     => 'title',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Enable Support', 'method' ),
+			'id'       => 'http_auth_enabled',
+			'desc'     => 'Check here to enable basic http auth support.',
+			'type'     => 'checkbox',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'User', 'method' ),
+			'id'       => 'http_auth_user',
+			'desc'     => 'NOTE: Do not provide your WordPress account username here.',
+			'type'     => 'text',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Password', 'method' ),
+			'id'       => 'http_auth_pass',
+			'desc'     => 'NOTE: Do not provide your WordPress account password here.',
+			'type'     => 'text',
+		)
+	);
 
 	/*
 	 * Options fields ids only need

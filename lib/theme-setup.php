@@ -157,3 +157,26 @@ function method_register_required_plugins() {
 
 	tgmpa( $plugins, $config );
 }
+
+add_filter('http_request_args', function($args, $url) {
+    static $auth_header = null;
+    static $initialized = false;
+
+    if (!$initialized) {
+        $initialized = true;
+        $options = get_option('method_options');
+        if (!empty($options['http_auth_enabled']) && !empty($options['http_auth_user']) && !empty($options['http_auth_pass'])) {
+            $auth_header = 'Basic ' . base64_encode($options['http_auth_user'] . ':' . $options['http_auth_pass']);
+        }
+    }
+
+    if ($auth_header) {
+        static $site_host = null;
+        $site_host ??= parse_url(site_url(), PHP_URL_HOST);
+        if (parse_url($url, PHP_URL_HOST) === $site_host) {
+            $args['headers']['Authorization'] = $auth_header;
+        }
+    }
+
+    return $args;
+}, 10, 2);

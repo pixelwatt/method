@@ -1479,12 +1479,6 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
         z-index: 3;
         display: block;
         width: 100%;
-
-        &>.alignwide {
-            max-width: var(--wp--style--global--wide-size);
-            margin-left: auto;
-            margin-right: auto;
-        }
     }
 }
 

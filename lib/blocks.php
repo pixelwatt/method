@@ -441,6 +441,12 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 			}
 		}
 
+		if ( 'alignItems' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'alignItems' ) ) {
+				$declarations['align-items'] = method_get_responsive_setting( $block_attributes, $context, 'alignItems' ) . $suffix;
+			}
+		}
+
 		if ( 'justifyContent' == $cssprop ) {
 			if ( method_get_responsive_setting( $block_attributes, $context, 'justifyContent' ) ) {
 				$declarations['justify-content'] = method_get_responsive_setting( $block_attributes, $context, 'justifyContent' ) . $suffix;

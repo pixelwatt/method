@@ -17,7 +17,7 @@ class Method_CSS_Collector {
 
     private function __construct() {
         // Output collected styles in footer (after all blocks have rendered)
-        add_action('wp_footer', [$this, 'output_styles'], 100);
+        add_action('wp_head', [$this, 'output_styles'], 100);
     }
 
     /**

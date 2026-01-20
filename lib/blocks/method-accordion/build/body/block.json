@@ -1,0 +1,14 @@
+{
+  "apiVersion": 3,
+  "name": "method/accordion-body",
+  "title": "Accordion Body",
+  "category": "method-component-blocks",
+  "icon": "block-default",
+  "parent": [
+    "method/accordion-item"
+  ],
+  "supports": {
+    "html": false
+  },
+  "editorScript": "file:./index.js"
+}

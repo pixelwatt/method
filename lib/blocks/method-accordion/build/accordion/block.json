@@ -1,0 +1,19 @@
+{
+  "apiVersion": 3,
+  "name": "method/accordion",
+  "title": "Accordion",
+  "category": "method-component-blocks",
+  "icon": "block-default",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide"
+    ]
+  },
+  "attributes": {
+    "accordionId": {
+      "type": "string"
+    }
+  },
+  "editorScript": "file:./index.js"
+}

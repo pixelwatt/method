@@ -104,6 +104,7 @@ add_filter( 'block_categories_all' , function( $categories ) {
 // Load Method's custom blocks.
 //-----------------------------------------------------
 
+require_once('blocks/method-accordion/method-accordion.php');
 require_once('blocks/method-advanced-grid/method-advanced-grid.php');
 require_once('blocks/method-basic-grid/method-basic-grid.php');
 require_once('blocks/method-bootstrap-tabs/method-bootstrap-tabs.php');

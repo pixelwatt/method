@@ -1,0 +1,25 @@
+{
+  "apiVersion": 3,
+  "name": "method/accordion-item",
+  "title": "Accordion Item",
+  "category": "method-component-blocks",
+  "icon": "block-default",
+  "parent": [
+    "method/accordion"
+  ],
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "headline": {
+      "type": "string"
+    },
+    "itemIndex": {
+      "type": "integer"
+    },
+    "parentAccordionId": {
+      "type": "string"
+    }
+  },
+  "editorScript": "file:./index.js"
+}

@@ -28,7 +28,7 @@ function render_method_fitted_image_block( $block_attributes, $block ) {
     $chosenImg = '';
     if ( method_check_array_key( $block_attributes, 'useFeaturedImage' ) ) {
         $chosenImg = get_the_post_thumbnail( $post_id, 'large', array( 'class' => 'method-fit-img' ) );
-        if ( ! $chosenImg ) {
+        if ( ( ! $chosenImg ) && ( ! method_check_array_key( $block_attributes, 'linkToPost' ) ) ) {
             return;
         }
     } elseif ( method_check_array_key( $block_attributes, 'bgImg' ) ) {
@@ -46,7 +46,10 @@ function render_method_fitted_image_block( $block_attributes, $block ) {
     $openTag = '<div ' . get_block_wrapper_attributes( ['class' => 'method-block-fitted-image', 'id' => $methodId] ) . '>';
     $closeTag = '</div>';
 
-    if ( method_check_array_key( $block_attributes, 'link' ) ) {
+    if ( method_check_array_key( $block_attributes, 'linkToPost' ) ) {
+        $openTag = '<a target="_self" href="' . get_the_permalink( $post_id ) . '" ' . get_block_wrapper_attributes( ['class' => 'method-block-fitted-image', 'id' => $methodId] ) . '>';
+        $closeTag = '</a>';
+    } elseif ( method_check_array_key( $block_attributes, 'link' ) ) {
         if ( method_check_array_key( $block_attributes['link'], 'url' ) ) {
             $btnTarget = ( method_check_array_key( $block_attributes['link'], 'opensInNewTab' ) ? '_blank' : '_self' );
             $openTag = '<a target="' . $btnTarget . '" href="' . $block_attributes['link']['url'] . '" ' . get_block_wrapper_attributes( ['class' => 'method-block-fitted-image', 'id' => $methodId] ) . '>';

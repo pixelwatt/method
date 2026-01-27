@@ -1610,6 +1610,8 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   padding-top: 100%;
   width: 100%;
   z-index: 1;
+}
+.method-block-fitted-image .method-fit-img-container img {
   -o-object-position: center center;
      object-position: center center;
 }

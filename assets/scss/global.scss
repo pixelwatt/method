@@ -1688,7 +1688,10 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
         padding-top: 100%;
         width: 100%;
         z-index: 1;
-        object-position: center center;
+
+        img {
+            object-position: center center;
+        }
     }
 
     .method-block-shade {

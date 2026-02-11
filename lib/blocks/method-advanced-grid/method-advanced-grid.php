@@ -33,7 +33,7 @@ add_action( 'init', 'register_method_advanced_grid_col_block' );
 function render_method_advanced_grid_block( $block_attributes, $content, $block ) {
     $methodId = uniqid( 'method-' );
     $cssargs = array(
-        '#' . $methodId => array( 'margin-top', 'margin-bottom', 'marginLeftNonZero', 'marginRightNonZero', 'padding-top', 'padding-bottom', 'font-size', 'line-height' ),
+        '#' . $methodId => array( 'margin-top', 'margin-bottom', 'marginLeftNonZero', 'marginRightNonZero', 'padding-top', 'padding-bottom', 'font-size', 'line-height', 'text-align' ),
         '#' . $methodId . ' > .row > .col-24 > .method-advanced-grid-rows' => array( 'padding-left', 'padding-right', 'gapAsVars' )
     );
 
@@ -50,7 +50,7 @@ function render_method_advanced_grid_block( $block_attributes, $content, $block 
 function render_method_advanced_grid_row_block( $block_attributes, $content, $block ) {
     $methodId = uniqid( 'method-' );
     $cssargs = array(
-        '#' . $methodId => array( 'margin-top', 'margin-bottom', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height' ),
+        '#' . $methodId => array( 'margin-top', 'margin-bottom', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height', 'text-align' ),
         '#' . $methodId . ' > .method-advanced-grid-row' => array( 'gapAsVars' )
     );
 
@@ -86,7 +86,7 @@ function render_method_advanced_grid_col_block( $block_attributes, $content, $bl
 
     $cssargs = array(
         '#' . $methodId => array( 'order' ),
-        '#' . $methodId . ' > .method-advanced-grid-col-content' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height', 'color' ),
+        '#' . $methodId . ' > .method-advanced-grid-col-content' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height', 'color', 'text-align' ),
         '#' . $methodId . ' > .method-advanced-grid-col-content a' => array( 'linkColor' )
     );
 

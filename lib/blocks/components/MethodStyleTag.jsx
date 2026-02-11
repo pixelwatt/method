@@ -9,6 +9,7 @@ const getBreakpoints = () => window?.methodGlobalData?.breakpoints || {};
 const cssPropertyMap = {
 	fontSize: 'font-size',
 	lineHeight: 'line-height',
+	textAlign: 'text-align',
 	minHeight: 'min-height',
 	minWidth: 'min-width',
 };
@@ -251,7 +252,7 @@ function getBreakpointStyle(
 							.join(' ');
 					}
 				}
-			} else if (prop === 'fontSize' || prop === 'lineHeight') {
+			} else if (prop === 'fontSize' || prop === 'lineHeight' || prop === 'textAlign') {
 				if (breakpoint === 'base' || settings.customType === true) {
 					const value = (() => {
 						if (prop in settings) return settings[prop];

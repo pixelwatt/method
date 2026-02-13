@@ -28,6 +28,11 @@ function render_method_fitted_image_block( $block_attributes, $block ) {
     $chosenImg = '';
     if ( method_check_array_key( $block_attributes, 'useFeaturedImage' ) ) {
         $chosenImg = get_the_post_thumbnail( $post_id, 'large', array( 'class' => 'method-fit-img' ) );
+        if ( ( ! $chosenImg ) && ( method_check_array_key( $block_attributes, 'bgImg' ) ) ) {
+            if ( method_check_array_key( $block_attributes['bgImg'], 'id' ) ) {
+                $chosenImg = wp_get_attachment_image( $block_attributes['bgImg']['id'], $chosenSize, false, array( 'class' => 'method-fit-img' . $chosenFit ) );
+            }
+        }
         if ( ( ! $chosenImg ) && ( ! method_check_array_key( $block_attributes, 'linkToPost' ) ) ) {
             return;
         }

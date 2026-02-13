@@ -74,8 +74,8 @@ function render_method_advanced_grid_col_block( $block_attributes, $content, $bl
     foreach( $breakpoints as $key => $value ) {
         $prefix = ( 'mobile' !== $key ? $value . '-' : '' );
         if ( ( 'base' !== $key ) && ( method_get_responsive_setting( $block_attributes, $key, 'enabled' ) ) ) {
-            $breakpointCols = method_get_responsive_setting( $block_attributes, $key, 'gridCols', $baseCols );
-            $breakpointOffset = method_get_responsive_setting( $block_attributes, $key, 'offset', $baseOffset );
+            $breakpointCols = method_get_responsive_setting( $block_attributes, $key, 'gridCols', 24 );
+            $breakpointOffset = method_get_responsive_setting( $block_attributes, $key, 'offset', 0 );
         } else {
             $breakpointCols = $baseCols;
             $breakpointOffset = $baseOffset;

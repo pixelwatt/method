@@ -38,7 +38,8 @@
             "labelStyle": "",
             "beforeIcon": "",
             "afterIcon": ""
-        }
+        },
+        "viewportWidth": 300
     },
     "editorScript": "file:./index.js"
 }

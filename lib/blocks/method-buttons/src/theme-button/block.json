@@ -31,5 +31,14 @@
             "type": "object"
         }
     },
+    "example": {
+        "attributes": {
+            "btnLabel": "Click Here",
+            "btnStyle": "",
+            "labelStyle": "",
+            "beforeIcon": "",
+            "afterIcon": ""
+        }
+    },
     "editorScript": "file:./index.js"
 }

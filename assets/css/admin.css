@@ -207,6 +207,15 @@ body:has(.method-options-panel) .cmb2-options-page .cmb2-metabox > .cmb-row:has(
   padding: 0.875rem 1.5rem !important;
   background-color: #49BF9E !important;
 }
+body:has(.method-options-panel) .cmb2-options-page .cmb2-metabox > .cmb-row.method-options-subheader:has(h3.cmb2-metabox-title) {
+  padding: 0.625rem 1.5rem !important;
+  background-color: #c7f4e7 !important;
+}
+body:has(.method-options-panel) .cmb2-options-page .cmb2-metabox > .cmb-row.method-options-subheader:has(h3.cmb2-metabox-title) h3.cmb2-metabox-title {
+  color: #222;
+  font-size: 15px;
+  font-weight: 500;
+}
 body:has(.method-options-panel) .button-primary,
 body:has(.method-options-panel) .button-secondary {
   background: #49BF9E !important;

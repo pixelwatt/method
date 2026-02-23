@@ -382,3 +382,67 @@ function method_get_social_platforms() {
 	);
 	return apply_filters( 'method_available_social_platforms', $defaults );
 }
+
+
+function method_get_hierarchical_page_options( $prepend = [], $append = [] ) {
+    $pages = get_pages( [
+        'sort_column'  => 'menu_order, post_title',
+        'sort_order'   => 'ASC',
+    ] );
+
+    $options = [];
+
+    if ( $prepend ) {
+        $options = $prepend;
+    }
+
+    if ( $pages ) {
+        $page_map = [];
+        foreach ( $pages as $page ) {
+            $page_map[ $page->ID ] = $page;
+        }
+
+        foreach ( $pages as $page ) {
+            $depth = 0;
+            $parent = $page->post_parent;
+            while ( $parent ) {
+                $depth++;
+                $parent = isset( $page_map[ $parent ] ) ? $page_map[ $parent ]->post_parent : 0;
+            }
+
+            $prefix = str_repeat( '— ', $depth );
+            $options[ $page->ID ] = $prefix . $page->post_title;
+        }
+    }
+
+    if ( $append ) {
+        $options = $options + $append;
+    }
+
+    return $options;
+}
+
+function method_get_available_archives_options( $prepend = array(), $exclude = false ) {
+	$options = array();
+	if ( $prepend ) {
+        $options = $prepend;
+    }
+	$public_has_archive = get_post_types( [
+		'public'      => true,
+		'has_archive' => true,
+		'_builtin'    => false,
+	], 'objects' );
+	if ( 'post' != $exclude ) {
+		$options['archive_post'] = 'Archive: Posts';
+	}
+	if ( is_array( $public_has_archive ) ) {
+		if ( 0 < count( $public_has_archive ) ) {
+			foreach( $public_has_archive as $pt ) {
+				if ( $pt->name != $exclude ) {
+					$options["archive_{$pt->name}"] = 'Archive: ' . $pt->label;
+				}
+			}
+		}
+	}
+	return $options;
+}

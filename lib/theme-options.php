@@ -86,22 +86,275 @@ function method_register_theme_options_metabox() {
 
 	$cmb_options->add_field(
 		array(
+			'name'     => __( 'Breadcrumb Trail Configuration', 'method' ),
+			'id'       => 'bc_title',
+			'desc'	   => 'Below, configure how breadcrumb trails are generated for diffent types of content.',
+			'type'     => 'title',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Include Home', 'method' ),
+			'id'       => 'bc_home',
+			'desc'     => 'Include a link to the front page as the top-level item for all trails.',
+			'type'     => 'checkbox',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Include Current Item', 'method' ),
+			'id'       => 'bc_current',
+			'desc'     => 'Include the item currently being viewed as the final item in the trail.',
+			'type'     => 'checkbox',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Seperator', 'method' ),
+			'id'       => 'bc_sep',
+			'desc'     => 'Specify the character to use as a seperator between items.',
+			'type'     => 'text_small',
+			'attributes' => array(
+				'placeholder' => '/'
+			)
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Seperator Inclusion', 'method' ),
+			'id'       => 'bc_sep_inclusion',
+			'desc'     => 'Always include the seperator, even after the last item.',
+			'type'     => 'checkbox',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Post Type: Posts', 'method' ),
+			'id'       => 'bc_post_title',
+			'type'     => 'title',
+			'classes'  => 'method-options-subheader',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Parent Page', 'method' ),
+			'id'       => 'bc_post_behavior',
+			'desc'     => 'Choose how breadcreadcrumbs are generated for this post type.',
+			'type'     => 'select',
+			'show_option_none' => false,
+			'options' => method_get_hierarchical_page_options(
+				method_get_available_archives_options( array( '' => 'Posts Archive / Item is Top Level' ), 'post' )
+			),
+		)
+	);
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Archive', 'method' ),
+			'id'       => 'bc_post_archive',
+			'desc'     => 'Include the archive for this post type in the breadcrumb.',
+			'type'     => 'checkbox',
+		)
+	);
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Archive Label', 'method' ),
+			'id'       => 'bc_post_label',
+			'desc'     => 'If included in the breadcrumb, what should the archive title be?',
+			'type'     => 'text',
+			'attributes' => array(
+				'placeholder' => 'Posts'
+			)
+		)
+	);
+
+	// Get options for register public CPTs
+
+	$public_has_archive = get_post_types( [
+		'public'      => true,
+		'has_archive' => true,
+		'_builtin'    => false,
+	], 'objects' );
+
+	$public_no_archive = get_post_types( [
+		'public'      => true,
+		'has_archive' => false,
+		'_builtin'    => false,
+	], 'objects' );
+
+	$public_taxonomies = get_taxonomies( [
+    	'public'   => true,
+    	'_builtin' => false,
+	], 'objects' );
+
+	if ( is_array( $public_has_archive ) ) {
+		if ( 0 < $public_has_archive ) {
+			foreach ( $public_has_archive as $pt ) {
+				$cmb_options->add_field(
+					array(
+						'name'     => __( 'Post Type: ' . $pt->label, 'method' ),
+						'id'       => 'bc_' . $pt->name . '_title',
+						'type'     => 'title',
+						'classes'  => 'method-options-subheader',
+					)
+				);
+				$cmb_options->add_field(
+					array(
+						'name'     => __( 'Parent Page', 'method' ),
+						'id'       => 'bc_' . $pt->name . '_behavior',
+						'desc'     => 'Choose how breadcreadcrumbs are generated for this post type.',
+						'type'     => 'select',
+						'show_option_none' => false,
+						'options' => method_get_hierarchical_page_options(
+							method_get_available_archives_options( array( '' => $pt->label . ' Archive / Item is Top Level' ), $pt->name )
+						),
+					)
+				);
+				$cmb_options->add_field(
+					array(
+						'name'     => __( 'Archive', 'method' ),
+						'id'       => 'bc_' . $pt->name . '_archive',
+						'desc'     => 'Include the archive for this post type in the breadcrumb.',
+						'type'     => 'checkbox',
+					)
+				);
+				$cmb_options->add_field(
+					array(
+						'name'     => __( 'Archive Label', 'method' ),
+						'id'       => 'bc_' . $pt->name . '_label',
+						'desc'     => 'If included in the breadcrumb, what should the archive title be?',
+						'type'     => 'text',
+						'attributes' => array(
+							'placeholder' => $pt->label
+						)
+					)
+				);
+			}
+		}
+	}
+
+	if ( is_array( $public_no_archive ) ) {
+		if ( 0 < $public_no_archive ) {
+			foreach ( $public_no_archive as $pt ) {
+				$cmb_options->add_field(
+					array(
+						'name'     => __( 'Post Type: ' . $pt->label, 'method' ),
+						'id'       => 'bc_' . $pt->name . '_title',
+						'type'     => 'title',
+						'classes'  => 'method-options-subheader',
+					)
+				);
+				$cmb_options->add_field(
+					array(
+						'name'     => __( 'Parent Page', 'method' ),
+						'id'       => 'bc_' . $pt->name . '_behavior',
+						'desc'     => 'Choose how breadcreadcrumbs are generated for this post type.',
+						'type'     => 'select',
+						'show_option_none' => false,
+						'options' => method_get_hierarchical_page_options(
+							method_get_available_archives_options( array( '' => $pt->label . ' Item is Top Level' ) )
+						),
+					)
+				);
+			}
+		}
+	}
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Taxonomy: Categories', 'method' ),
+			'id'       => 'bc_category_title',
+			'type'     => 'title',
+			'classes'  => 'method-options-subheader',
+		)
+	);
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Parent Page', 'method' ),
+			'id'       => 'bc_category_behavior',
+			'desc'     => 'Choose the base for this taxonomy\'s breadcreadcrumb trail.',
+			'type'     => 'select',
+			'show_option_none' => false,
+			'options' => method_get_hierarchical_page_options(
+				method_get_available_archives_options( array( '' => 'Category Term is Top Level' ) )
+			),
+		)
+	);
+
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Taxonomy: Tags', 'method' ),
+			'id'       => 'bc_post_tag_title',
+			'type'     => 'title',
+			'classes'  => 'method-options-subheader',
+		)
+	);
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Parent Page', 'method' ),
+			'id'       => 'bc_post_tag_behavior',
+			'desc'     => 'Choose the base for this taxonomy\'s breadcreadcrumb trail.',
+			'type'     => 'select',
+			'show_option_none' => false,
+			'options' => method_get_hierarchical_page_options(
+				method_get_available_archives_options( array( '' => 'Tag Term is Top Level' ) )
+			),
+		)
+	);
+
+	if ( is_array( $public_taxonomies ) ) {
+		if ( 0 < $public_taxonomies ) {
+			foreach ( $public_taxonomies as $pt ) {
+				$cmb_options->add_field(
+					array(
+						'name'     => __( 'Taxonomy: ' . $pt->label, 'method' ),
+						'id'       => 'bc_' . $pt->name . '_title',
+						'type'     => 'title',
+						'classes'  => 'method-options-subheader',
+					)
+				);
+				$cmb_options->add_field(
+					array(
+						'name'     => __( 'Parent Page', 'method' ),
+						'id'       => 'bc_' . $pt->name . '_behavior',
+						'desc'     => 'Choose the base for this taxonomy\'s breadcreadcrumb trail.',
+						'type'     => 'select',
+						'show_option_none' => false,
+						'options' => method_get_hierarchical_page_options(
+							method_get_available_archives_options( array( '' => $pt->label . ' Term is Top Level' ) )
+						),
+					)
+				);
+			}
+		}
+	}
+
+	$cmb_options->add_field(
+		array(
 			'name'     => __( 'Additional Information', 'method' ),
 			'id'       => 'dia_info',
 			'type'     => 'title',
 		)
 	);
 
-if ( defined( 'METHOD_CHILD_OPTIONS' ) ) {
-	$theme_data = METHOD_CHILD_OPTIONS;
-	$theme_data_desc = __( 'Using child theme overrides.', 'method' );
-} else {
-	$theme_data = METHOD_OPTIONS;
-	$theme_data_desc = __( 'Using Method\'s default configuration.', 'method' );
-}
+	// Additional Information Pane
 
-$childv = '';
-if (defined('THEME_VERSION')) {
+	if ( defined( 'METHOD_CHILD_OPTIONS' ) ) {
+		$theme_data = METHOD_CHILD_OPTIONS;
+		$theme_data_desc = __( 'Using child theme overrides.', 'method' );
+	} else {
+		$theme_data = METHOD_OPTIONS;
+		$theme_data_desc = __( 'Using Method\'s default configuration.', 'method' );
+	}
+
+	$childv = '';
+	if (defined('THEME_VERSION')) {
 $childv = '
 Child Theme Version: v' . THEME_VERSION;
 }

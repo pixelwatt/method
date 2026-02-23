@@ -37,6 +37,7 @@ function method_theme_button_enqueue_block_assets() {
     wp_enqueue_script('method-theme-button-block-editor-script');
     wp_localize_script('method-theme-button-block-editor-script', 'themeButtonData', array(
         'buttonStyles' => apply_filters( 'method_block_theme_button_styles', $defaults ),
+        'buttonStylesLabel' => apply_filters( 'method_block_theme_button_styles_label', 'Button Styles' ),
         'labelStyles' => apply_filters( 'method_block_theme_label_styles', $defaults ),
         'buttonIcons' => apply_filters( 'method_block_theme_button_icons', $defaults ),
         'afterLabel' => apply_filters( 'method_block_theme_button_after_label', '' ),

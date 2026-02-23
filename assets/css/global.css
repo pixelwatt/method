@@ -1869,3 +1869,22 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   display: -ms-inline-flexbox;
   display: inline-flex;
 }
+
+.wp-block-method-bc ol.method-breadcrumb-list {
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 12px;
+}
+.wp-block-method-bc ol.method-breadcrumb-list li {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  gap: 12px;
+  list-style: none;
+}
+.wp-block-method-bc ol.method-breadcrumb-list li a {
+  text-decoration: none;
+}

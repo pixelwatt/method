@@ -275,6 +275,19 @@ body:has(.method-options-panel) {
                     background-color: #49BF9E !important;
 
                 }
+
+                &.method-options-subheader {
+                    &:has(h3.cmb2-metabox-title) {
+                        padding: 0.625rem 1.5rem !important;
+                        background-color: #c7f4e7 !important;
+
+                        h3.cmb2-metabox-title {
+                            color: #222;
+                            font-size: 15px;
+                            font-weight: 500;
+                        }
+                    }
+                }
             }
         }
     }

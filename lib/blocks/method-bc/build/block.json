@@ -1,0 +1,14 @@
+{
+  "apiVersion": 3,
+  "name": "method/bc",
+  "title": "Breadcrumb",
+  "category": "method-component-blocks",
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "editorScript": "file:./index.js"
+}

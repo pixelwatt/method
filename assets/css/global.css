@@ -1888,3 +1888,8 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
 .wp-block-method-bc ol.method-breadcrumb-list li a {
   text-decoration: none;
 }
+
+.aligncenter {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}

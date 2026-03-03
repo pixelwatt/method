@@ -65,15 +65,7 @@ function method_check_key( $key ) {
 //------------------------------------------------------------
 
 function method_check_array_key( $item, $key ) {
-	$output = false;
-	if ( is_array( $item ) ) {
-		if ( array_key_exists( $key, $item ) ) {
-			if ( ! empty( $item["{$key}"] ) ) {
-				$output = true;
-			}
-		}
-	}
-	return $output;
+    return is_array( $item ) && isset( $item[ $key ] ) && ! empty( $item[ $key ] );
 }
 
 

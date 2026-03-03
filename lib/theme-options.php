@@ -35,6 +35,9 @@ function method_register_theme_options_metabox() {
 		)
 	);
 
+	// Allow child theme to inject options fields at the top of the panel
+	do_action( 'method_options_before_fields', $cmb_options );
+
 	$cmb_options->add_field(
 		array(
 			'name'     => __( 'Social Media Links', 'method' ),

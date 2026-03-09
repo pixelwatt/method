@@ -1,0 +1,12 @@
+{
+    "name": "method-core-extensions",
+    "version": "1.0.0",
+    "description": "Method responsive controls for core WordPress blocks",
+    "scripts": {
+        "build": "wp-scripts build",
+        "start": "wp-scripts start"
+    },
+    "devDependencies": {
+        "@wordpress/scripts": "^27.0.0"
+    }
+}

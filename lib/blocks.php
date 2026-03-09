@@ -1,7 +1,10 @@
 <?php
 
-add_action( 'enqueue_block_editor_assets', function() {
+add_action( 'enqueue_block_assets', function() {
     // Register a placeholder script to attach localization to
+	if ( ! is_admin() ) {
+        return;
+    }
     wp_register_script(
         'method-global-data',
         get_template_directory_uri() . '/assets/js/method-global-data.js', // Can be blank
@@ -111,6 +114,7 @@ require_once('blocks/method-bc/method-bc.php');
 require_once('blocks/method-bootstrap-tabs/method-bootstrap-tabs.php');
 require_once('blocks/method-buttons/method-buttons.php');
 require_once('blocks/method-container/method-container.php');
+require_once('blocks/method-core-extensions/method-core-extensions.php');
 require_once('blocks/method-fitted-image/method-fitted-image.php');
 require_once('blocks/method-flex/method-flex.php');
 //require_once('blocks/method-navbar/method-navbar.php');

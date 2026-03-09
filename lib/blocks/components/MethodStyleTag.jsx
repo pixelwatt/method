@@ -252,7 +252,11 @@ function getBreakpointStyle(
 							.join(' ');
 					}
 				}
-			} else if (prop === 'fontSize' || prop === 'lineHeight' || prop === 'textAlign') {
+			} else if (
+				prop === 'fontSize' ||
+				prop === 'lineHeight' ||
+				prop === 'textAlign'
+			) {
 				if (breakpoint === 'base' || settings.customType === true) {
 					const value = (() => {
 						if (prop in settings) return settings[prop];
@@ -331,7 +335,12 @@ function getBreakpointStyle(
 	return css;
 }
 
-export default function MethodStyleTag({ clientId, attributes, selectorMap }) {
+export default function MethodStyleTag({
+	clientId,
+	attributes,
+	selectorMap,
+	excludeBase,
+}) {
 	const styleRef = useRef();
 	const breakpoints = getBreakpoints();
 	const responsive = attributes.responsiveSettings || {};
@@ -339,7 +348,9 @@ export default function MethodStyleTag({ clientId, attributes, selectorMap }) {
 
 	useEffect(() => {
 		let css = '';
-		css += getBreakpointStyle(responsive, selectorMap, 'base', atts);
+		if (!excludeBase) {
+			css += getBreakpointStyle(responsive, selectorMap, 'base', atts);
+		}
 		if (responsive.mobile?.enabled) {
 			css += `@media(max-width: ${breakpoints.mobile_max}) {\n`;
 			css += getBreakpointStyle(responsive, selectorMap, 'mobile', atts);

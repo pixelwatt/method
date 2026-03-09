@@ -1,0 +1,7 @@
+{
+  "apiVersion": 3,
+  "name": "method/core-extensions",
+  "title": "Method Core Extensions",
+  "category": "method-layout-blocks",
+  "editorScript": "file:./index.js"
+}

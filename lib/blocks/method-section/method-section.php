@@ -30,7 +30,7 @@ function render_method_section_block( $block_attributes, $content, $block ) {
 
     $cssargs = array(
         '#' . $methodId => array( 'borderRadius', 'marginLeftNonZero', 'marginRightNonZero', 'margin-top', 'margin-bottom', 'boxShadow' ),
-        '#' . $methodId . ' > .method-section-content' => array( 'color', 'bgColor', 'borderRadius', 'border', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'fontSize', 'lineHeight', 'height', 'minHeight' ),
+        '#' . $methodId . ' > .method-section-content' => array( 'color', 'bgColor', 'borderRadius', 'border', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'fontSize', 'lineHeight', 'height', 'minHeight', 'alignItems' ),
         '#' . $methodId . ' > .method-section-content > .method-section-shade' => array( 'bgShade' ),
         '#' . $methodId . ' a' => array( 'linkColor' )
     );
@@ -40,9 +40,9 @@ function render_method_section_block( $block_attributes, $content, $block ) {
     $chosenImg = '';
     if ( ( ! method_check_array_key( $block_attributes, 'useParallax' ) ) && ( ! method_check_array_key( $block_attributes, 'bgVideo' ) ) ) {
         $cssargs["#{$methodId}  > .method-section-content > .method-section-bgimg"] = array( 'bgImg', 'bgPosition', 'bgSize', 'bgRepeat' );
-        $contentWrap = '<div class="method-section-content' . ( $align ? ' align-items-' . $align : '' ) . '">';
+        $contentWrap = '<div class="method-section-content">';
     } else {
-        $contentWrap = '<div class="method-section-content jarallax' . ( $align ? ' align-items-' . $align : '' ) . '" data-jarallax data-speed="0.8"' . ( method_check_array_key( $block_attributes, 'bgVideo' ) ? ' data-video-src="' . $block_attributes['bgVideo'] . '"' : '' ) . '>';
+        $contentWrap = '<div class="method-section-content jarallax" data-jarallax data-speed="0.8"' . ( method_check_array_key( $block_attributes, 'bgVideo' ) ? ' data-video-src="' . $block_attributes['bgVideo'] . '"' : '' ) . '>';
         $chosenSize = method_get_responsive_setting( $block_attributes, 'base', 'bgImgSize', 'full' );
         if ( method_check_array_key( $block_attributes, 'bgImg' ) ) {
             if ( method_check_array_key( $block_attributes['bgImg'], 'id' ) ) {

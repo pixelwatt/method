@@ -2,6 +2,7 @@
   "apiVersion": 3,
   "name": "method/advanced-grid-row",
   "title": "Row",
+  "description": "A structural row within the Advanced Grid, used to group and align columns across the layout.",
   "category": "method-layout-blocks",
   "parent": [
     "method/advanced-grid"
@@ -14,108 +15,16 @@
       "type": "object",
       "default": {
         "base": {
-          "enabled": true,
-          "alignItems": "start",
-          "justifyContent": "start",
-          "padding": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "margin": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "gap": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "1.5rem",
-            "right": "1.5rem"
-          },
-          "fontSize": "",
-          "lineHeight": "",
-          "allowNegative": false
+          "enabled": true
         },
         "mobile": {
-          "enabled": false,
-          "alignItems": "start",
-          "justifyContent": "start",
-          "padding": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "margin": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "gap": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "1.5rem",
-            "right": "1.5rem"
-          },
-          "fontSize": "",
-          "lineHeight": "",
-          "allowNegative": false
+          "enabled": false
         },
         "tablet": {
-          "enabled": false,
-          "alignItems": "start",
-          "justifyContent": "start",
-          "padding": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "margin": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "gap": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "1.5rem",
-            "right": "1.5rem"
-          },
-          "fontSize": "",
-          "lineHeight": "",
-          "allowNegative": false
+          "enabled": false
         },
         "wide": {
-          "enabled": false,
-          "alignItems": "start",
-          "justifyContent": "start",
-          "padding": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "margin": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "gap": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "1.5rem",
-            "right": "1.5rem"
-          },
-          "fontSize": "",
-          "lineHeight": "",
-          "allowNegative": false
+          "enabled": false
         }
       }
     }

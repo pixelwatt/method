@@ -1624,6 +1624,9 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   pointer-events: none;
   z-index: 2;
 }
+.method-block-fitted-image .method-unset-image {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 
 .method-buttons .method-buttons-inner-blocks {
   display: -webkit-box !important;

@@ -2,6 +2,7 @@
     "apiVersion": 3,
     "name": "method/social-nav",
     "title": "Social Nav",
+    "description": "Renders an icon-based navigation menu of social media links pulled from the site's Method theme options.",
     "category": "method-component-blocks",
     "supports": {
         "html": false

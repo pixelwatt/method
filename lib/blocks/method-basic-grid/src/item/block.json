@@ -5,6 +5,7 @@
         "method/basic-grid"
     ],
     "title": "Basic Grid Item",
+    "description": "An individual item within a Basic Grid, inheriting its size and positioning from the parent grid's layout settings.",
     "icon": "block-default",
     "category": "method-component-blocks",
     "supports": {
@@ -15,40 +16,16 @@
             "type": "object",
             "default": {
                 "base": {
-                    "enabled": true,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    }
+                    "enabled": true
                 },
                 "mobile": {
-                    "enabled": false,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    }
+                    "enabled": false
                 },
                 "tablet": {
-                    "enabled": false,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    }
+                    "enabled": false
                 },
                 "wide": {
-                    "enabled": false,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    }
+                    "enabled": false
                 }
             }
         }

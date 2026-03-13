@@ -1,7 +1,7 @@
 {
   "apiVersion": 3,
   "name": "method/theme-button",
-  "description": "Theme Buttons allow you to quickly create buttons using prebuilt styles, as configured by your developer.",
+  "description": "A theme-driven button block with predefined style sets, optional icon support, and deep customization hooks for child theme control.",
   "parent": [
     "method/buttons",
     "method/flex"

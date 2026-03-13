@@ -56,3 +56,23 @@
         text-transform: capitalize;
     }
 }
+
+.method-responsive-tab-controls {
+    border: 1px solid #ddd;
+
+    .components-panel__row {
+        padding-left: calc(16px);
+        padding-right: calc(16px);
+        padding-top: calc(8px);
+        padding-bottom: calc(8px);
+
+    }
+
+    .method-control-set {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .components-panel__row label {
+        max-width: 100%;
+    }
+}

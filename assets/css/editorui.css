@@ -45,3 +45,19 @@
 .method-bgalign-control-wrap-value {
   text-transform: capitalize;
 }
+
+.method-responsive-tab-controls {
+  border: 1px solid #ddd;
+}
+.method-responsive-tab-controls .components-panel__row {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.method-responsive-tab-controls .method-control-set {
+  border-bottom: 1px solid #ddd;
+}
+.method-responsive-tab-controls .components-panel__row label {
+  max-width: 100%;
+}

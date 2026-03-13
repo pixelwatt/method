@@ -2,6 +2,7 @@
     "apiVersion": 3,
     "name": "method/basic-grid",
     "title": "Basic Grid",
+    "description": "A simple grid container for arranging items in uniform rows, with controls for items per row, alignment, and justification across breakpoints.",
     "category": "method-layout-blocks",
     "supports": {
         "html": false
@@ -12,103 +13,19 @@
             "default": {
                 "base": {
                     "enabled": true,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "margin": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "gap": {
-                        "top": "0rem",
-                        "bottom": "0rem"
-                    },
-                    "fontSize": "",
-                    "lineHeight": "",
-                    "allowNegative": false,
-                    "gridCols": 3,
-                    "alignItems": "start",
-                    "justifyContent": "start"
+                    "gridCols": 3
                 },
                 "mobile": {
                     "enabled": false,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "margin": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "gap": {
-                        "top": "0rem",
-                        "bottom": "0rem"
-                    },
-                    "fontSize": "",
-                    "lineHeight": "",
-                    "allowNegative": false,
-                    "gridCols": 1,
-                    "alignItems": "start",
-                    "justifyContent": "start"
+                    "gridCols": 1
                 },
                 "tablet": {
                     "enabled": false,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "margin": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "gap": {
-                        "top": "0rem",
-                        "bottom": "0rem"
-                    },
-                    "fontSize": "",
-                    "lineHeight": "",
-                    "allowNegative": false,
-                    "gridCols": 2,
-                    "alignItems": "start",
-                    "justifyContent": "start"
+                    "gridCols": 2
                 },
                 "wide": {
                     "enabled": false,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "margin": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "gap": {
-                        "top": "0rem",
-                        "bottom": "0rem"
-                    },
-                    "fontSize": "",
-                    "lineHeight": "",
-                    "allowNegative": false,
-                    "gridCols": 5,
-                    "alignItems": "start",
-                    "justifyContent": "start"
+                    "gridCols": 5
                 }
             }
         }

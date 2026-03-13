@@ -1703,6 +1703,10 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
         pointer-events: none;
         z-index: 2;
     }
+
+    .method-unset-image {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
 }
 
 .method-buttons {

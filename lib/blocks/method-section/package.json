@@ -11,5 +11,8 @@
     "license": "ISC",
     "devDependencies": {
         "@wordpress/scripts": "^30.20.0"
+    },
+    "dependencies": {
+        "save-dev": "^0.0.1-security"
     }
 }

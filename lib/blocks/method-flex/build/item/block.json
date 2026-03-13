@@ -3,33 +3,12 @@
   "name": "method/flex-item",
   "title": "Flex Item",
   "category": "method-layout-blocks",
+  "description": "An inline item within a Flex Container, sized and positioned according to the parent's flex layout settings.",
   "parent": [
     "method/flex"
   ],
   "supports": {
     "html": false
-  },
-  "attributes": {
-    "responsiveSettings": {
-      "type": "object",
-      "default": {
-        "base": {
-          "enabled": true,
-          "alignItems": "start",
-          "justifyContent": "start",
-          "flexDirection": "row"
-        },
-        "mobile": {
-          "enabled": false
-        },
-        "tablet": {
-          "enabled": false
-        },
-        "wide": {
-          "enabled": false
-        }
-      }
-    }
   },
   "editorScript": "file:./index.js"
 }

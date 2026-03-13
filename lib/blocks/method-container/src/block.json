@@ -2,6 +2,7 @@
     "apiVersion": 3,
     "name": "method/container",
     "title": "Container",
+    "description": "A highly versatile content block for building everything from simple wrappers to complex callouts and link blocks, with extensive controls for styling, layout, and interactivity.",
     "category": "method-layout-blocks",
     "supports": {
         "html": false,
@@ -11,6 +12,13 @@
         ]
     },
     "attributes": {
+        "bgVideo": {
+            "type": "string"
+        },
+        "useParallax": {
+            "type": "bool",
+            "default": false
+        },
         "textColor": {
             "type": "string"
         },
@@ -49,114 +57,19 @@
             "type": "object",
             "default": {
                 "base": {
-                    "enabled": true,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "margin": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "fontSize": "",
-                    "lineHeight": "",
-                    "allowNegative": false,
-                    "border": "",
-                    "borderRadius": {
-                        "topLeft": "0rem",
-                        "topRight": "0rem",
-                        "bottomLeft": "0rem",
-                        "bottomRight": "0rem"
-                    }
+                    "enabled": true
                 },
                 "mobile": {
                     "enabled": false,
-                    "customSpacing": false,
-                    "customBorders": false,
-                    "customType": false,
-                    "customBg": false,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "margin": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "fontSize": "",
-                    "lineHeight": "",
-                    "allowNegative": false,
-                    "border": "",
-                    "borderRadius": {
-                        "topLeft": "0rem",
-                        "topRight": "0rem",
-                        "bottomLeft": "0rem",
-                        "bottomRight": "0rem"
-                    }
+                    "customBg": false
                 },
                 "tablet": {
                     "enabled": false,
-                    "customSpacing": false,
-                    "customBorders": false,
-                    "customType": false,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "margin": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "fontSize": "",
-                    "lineHeight": "",
-                    "allowNegative": false,
-                    "border": "",
-                    "borderRadius": {
-                        "topLeft": "0rem",
-                        "topRight": "0rem",
-                        "bottomLeft": "0rem",
-                        "bottomRight": "0rem"
-                    }
+                    "customBg": false
                 },
                 "wide": {
                     "enabled": false,
-                    "customSpacing": false,
-                    "customBorders": false,
-                    "customType": false,
-                    "padding": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "margin": {
-                        "top": "0rem",
-                        "bottom": "0rem",
-                        "left": "0rem",
-                        "right": "0rem"
-                    },
-                    "fontSize": "",
-                    "lineHeight": "",
-                    "allowNegative": false,
-                    "border": "",
-                    "borderRadius": {
-                        "topLeft": "0rem",
-                        "topRight": "0rem",
-                        "bottomLeft": "0rem",
-                        "bottomRight": "0rem"
-                    }
+                    "customBg": false
                 }
             }
         }

@@ -46,6 +46,8 @@ function render_method_fitted_image_block( $block_attributes, $block ) {
     if ( 'ratio' == $aspectUses ) {
         $aspectRatio = method_get_responsive_setting( $block_attributes, 'base', 'aspectRatio', '-1-1' );
         $aspectClass = ' method-ratio method-ratio' . $aspectRatio;
+    } elseif ( empty( $aspectUses ) ) {
+        $aspectClass = ' method-ratio method-ratio-1-1';
     }
 
     $openTag = '<div ' . get_block_wrapper_attributes( ['class' => 'method-block-fitted-image', 'id' => $methodId] ) . '>';

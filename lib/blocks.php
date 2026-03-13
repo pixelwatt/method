@@ -214,32 +214,12 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 		);
 	}
 	// Check to see if certain declations should be generated for this breakpoint
-	$customSpacing = false;
-	$customType = false;
-	$customDimensions = false;
 	$customBg = false;
-	$customBorders = false;
 	if ( 'base' == $context ) {
-		$customSpacing = true;
-		$customType = true;
-		$customDimensions = true;
 		$customBg = true;
-		$customBorders = true;
 	} elseif ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
-		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customSpacing' ) ) {
-			$customSpacing = true;
-		}
-		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customType' ) ) {
-			$customType = true;
-		}
-		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customDimensions' ) ) {
-			$customDimensions = true;
-		}
 		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customBg' ) ) {
 			$customBg = true;
-		}
-		if ( method_check_array_key( $block_attributes["responsiveSettings"][$context], 'customBorders' ) ) {
-			$customBorders = true;
 		}
 	}
 
@@ -265,17 +245,23 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 		// Background Color
 		if ( 'boxShadow' == $cssprop ) {
 			if ( 'base' == $context ) {
-				$shadow = method_get_responsive_setting( $block_attributes, 'base', 'shadow' );
-				if ( $shadow ) {
-					$defaults = array(
-						'x' => 0,
-						'y' => 0,
-						'blur' => 0,
-						'spread' => 0,
-						'color' => 'rgba(0,0,0,0)'
-					);
-					$shadow = wp_parse_args( $shadow, $defaults );
-					$declarations['box-shadow'] = $shadow['x'] . 'px ' . $shadow['y'] . 'px ' . $shadow['blur'] . 'px ' . $shadow['spread'] . 'px ' . $shadow['color'];
+				$shadows = method_get_responsive_setting( $block_attributes, 'base', 'shadows' );
+				if ( $shadows && is_array( $shadows ) && count( $shadows ) > 0 ) {
+					$shadow_parts = array();
+					foreach ( $shadows as $shadow ) {
+						$defaults = array(
+							'x' => 0,
+							'y' => 0,
+							'blur' => 0,
+							'spread' => 0,
+							'color' => 'rgba(0,0,0,0)',
+							'inset' => false,
+						);
+						$shadow = wp_parse_args( $shadow, $defaults );
+						$inset = ( ! empty( $shadow['inset'] ) ? 'inset ' : '' );
+						$shadow_parts[] = $inset . $shadow['x'] . 'px ' . $shadow['y'] . 'px ' . $shadow['blur'] . 'px ' . $shadow['spread'] . 'px ' . $shadow['color'];
+					}
+					$declarations['box-shadow'] = implode( ', ', $shadow_parts );
 				}
 			}
 		}
@@ -394,9 +380,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 		}
 
-		if ( $customBorders ) {
-
-			if ( 'borderRadius' == $cssprop ) {
+		if ( 'borderRadius' == $cssprop ) {
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'borderRadius' ) ) {
 						if ( is_string( $block_attributes["responsiveSettings"]["{$context}"]['borderRadius'] ) ) {
@@ -420,7 +404,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 				}
 			}
 
-			if ( 'border' == $cssprop ) {
+		if ( 'border' == $cssprop ) {
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'border' ) ) {
 						$border = $block_attributes["responsiveSettings"]["{$context}"]['border'];
@@ -438,8 +422,6 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 					}
 				}
 			}
-
-		}
 
 		if ( 'flexDirection' == $cssprop ) {
 			if ( method_get_responsive_setting( $block_attributes, $context, 'flexDirection', 'row' ) ) {
@@ -474,9 +456,8 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 			}
 		}
 
-		if ( $customDimensions ) {
-			// Min Height
-			if ( 'minHeight' == $cssprop ) {
+		// Min Height
+		if ( 'minHeight' == $cssprop ) {
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'minHeight' ) ) {
 						if ( ! str_starts_with( $block_attributes["responsiveSettings"]["{$context}"]['minHeight'], '0' ) ) {
@@ -505,12 +486,9 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 					}
 				}
 			}
-		}
 
-		if ( $customType ) {
-
-			// Line Height
-			if ( ( 'line-height' == $cssprop ) || ( 'lineHeight' == $cssprop ) ) {
+		// Line Height
+		if ( ( 'line-height' == $cssprop ) || ( 'lineHeight' == $cssprop ) ) {
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'lineHeight' ) ) {
 						$declarations['line-height'] = $block_attributes["responsiveSettings"]["{$context}"]['lineHeight'] . $suffix;
@@ -533,12 +511,8 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 				}
 			}
 
-		}
-
-		if ( $customSpacing ) {
-
-			// Padding Top
-			if ( 'padding-top' == $cssprop ) {
+		// Padding Top
+		if ( 'padding-top' == $cssprop ) {
 				$declarations['padding-top'] = '0' . $suffix;
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'padding' ) ) {
@@ -661,24 +635,19 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 			// Gap alt
 			if ( 'gapAsVars' == $cssprop ) {
-				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
-					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'gap' ) ) {
-						$declarations['--bs-gutter-y'] = '0' . $suffix;
-						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["gap"], 'top' ) ) {
-							$declarations['--bs-gutter-y'] = $block_attributes["responsiveSettings"]["{$context}"]['gap']['top'] . $suffix;
-						}
-						$declarations['--bs-gutter-x'] = '1.5rem' . $suffix;
-						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["gap"], 'left' ) ) {
-							$declarations['--bs-gutter-x'] = $block_attributes["responsiveSettings"]["{$context}"]['gap']['left'] . $suffix;
-						}
-					}
+				$gap = method_get_responsive_setting( $block_attributes, $context, 'gap' );
+				if ( method_check_array_key( $gap, 'top' ) ) {
+					$declarations['--bs-gutter-y'] = $gap['top'] . $suffix;
 				} else {
-					$declarations['--bs-gutter-x'] = '1.5rem' . $suffix;
 					$declarations['--bs-gutter-y'] = '0' . $suffix;
 				}
-			}
 
-		}
+				if ( method_check_array_key( $gap, 'left' ) ) {
+					$declarations['--bs-gutter-x'] = $gap['left'] . $suffix;
+				} else {
+					$declarations['--bs-gutter-x'] = '1.5rem' . $suffix;
+				}
+			}
 
 	}
 	foreach( $declarations as $key => $value ) {

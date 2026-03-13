@@ -2,6 +2,7 @@
   "apiVersion": 3,
   "name": "method/advanced-grid-col",
   "title": "Column",
+  "description": "A configurable column within an Advanced Grid Row, with controls for span, offset, and responsive behavior at each breakpoint.",
   "category": "method-layout-blocks",
   "parent": [
     "method/advanced-grid-row"
@@ -33,71 +34,19 @@
       "default": {
         "base": {
           "enabled": true,
-          "gridCols": 8,
-          "padding": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "margin": {
-            "top": "0rem",
-            "bottom": "0rem"
-          },
-          "fontSize": "",
-          "lineHeight": "",
-          "allowNegative": false
+          "gridCols": 8
         },
         "mobile": {
           "enabled": false,
-          "gridCols": 24,
-          "padding": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "margin": {
-            "top": "0rem",
-            "bottom": "0rem"
-          },
-          "fontSize": "",
-          "lineHeight": "",
-          "allowNegative": false
+          "gridCols": 24
         },
         "tablet": {
           "enabled": false,
-          "gridCols": 12,
-          "padding": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "margin": {
-            "top": "0rem",
-            "bottom": "0rem"
-          },
-          "fontSize": "",
-          "lineHeight": "",
-          "allowNegative": false
+          "gridCols": 12
         },
         "wide": {
           "enabled": false,
-          "gridCols": 6,
-          "padding": {
-            "top": "0rem",
-            "bottom": "0rem",
-            "left": "0rem",
-            "right": "0rem"
-          },
-          "margin": {
-            "top": "0rem",
-            "bottom": "0rem"
-          },
-          "fontSize": "",
-          "lineHeight": "",
-          "allowNegative": false
+          "gridCols": 6
         }
       }
     }

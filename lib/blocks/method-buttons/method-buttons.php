@@ -51,7 +51,7 @@ function render_method_buttons_block( $block_attributes, $content, $block ) {
     $methodId = uniqid( 'method-' );
     $cssargs = array(
         '#' . $methodId => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'margin-top', 'margin-bottom' ),
-        '#' . $methodId . ' > .method-buttons-inner-blocks' => array( 'gap' ),
+        '#' . $methodId . ' > .method-buttons-inner-blocks' => array( 'gap', 'alignItems', 'justifyContent', 'flexDirection' ),
     );
     $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
     method_collect_css( $responsive, '#' . $methodId, 10);

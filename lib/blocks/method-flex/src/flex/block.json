@@ -2,6 +2,7 @@
     "apiVersion": 3,
     "name": "method/flex",
     "title": "Flex Container",
+    "description": "A layout container for arranging child items using flexbox, with controls for direction, alignment, and justification across breakpoints.",
     "category": "method-layout-blocks",
     "supports": {
         "html": false
@@ -11,10 +12,7 @@
             "type": "object",
             "default": {
                 "base": {
-                    "enabled": true,
-                    "alignItems": "start",
-                    "justifyContent": "start",
-                    "flexDirection": "row"
+                    "enabled": true
                 },
                 "mobile": {
                     "enabled": false

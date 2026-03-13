@@ -51,7 +51,7 @@ function render_method_advanced_grid_row_block( $block_attributes, $content, $bl
     $methodId = uniqid( 'method-' );
     $cssargs = array(
         '#' . $methodId => array( 'margin-top', 'margin-bottom', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height', 'text-align' ),
-        '#' . $methodId . ' > .method-advanced-grid-row' => array( 'gapAsVars' )
+        '#' . $methodId . ' > .method-advanced-grid-row' => array( 'gapAsVars', 'alignItems', 'justifyContent' )
     );
 
     $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );

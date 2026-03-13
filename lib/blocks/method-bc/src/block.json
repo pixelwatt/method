@@ -2,6 +2,7 @@
     "apiVersion": 3,
     "name": "method/bc",
     "title": "Breadcrumb",
+    "description": "Displays a navigational breadcrumb trail showing the current page's position within the site hierarchy.",
     "category": "method-component-blocks",
     "supports": {
         "html": false,
@@ -15,9 +16,7 @@
             "type": "object",
             "default": {
                 "base": {
-                    "enabled": true,
-                    "alignItems": "start",
-                    "justifyContent": "start"
+                    "enabled": true
                 },
                 "mobile": {
                     "enabled": false

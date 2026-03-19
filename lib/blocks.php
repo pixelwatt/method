@@ -118,6 +118,7 @@ require_once('blocks/method-core-extensions/method-core-extensions.php');
 require_once('blocks/method-fitted-image/method-fitted-image.php');
 require_once('blocks/method-flex/method-flex.php');
 //require_once('blocks/method-navbar/method-navbar.php');
+require_once('blocks/method-scrollspy/method-scrollspy.php');
 require_once('blocks/method-section/method-section.php');
 require_once('blocks/method-social-nav/method-social-nav.php');
 require_once('blocks/method-swiper-gallery/method-swiper-gallery.php');
@@ -312,6 +313,20 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 		if ( 'linkColor' == $cssprop ) {
 			if ( method_check_array_key( $block_attributes, 'linkColor' ) ) {
 				$declarations['color'] = method_sanitize_theme_color( $block_attributes['linkColor'] ) . $suffix;
+			}
+		}
+
+		// Link Color (Hover)
+		if ( 'linkHoverColor' == $cssprop ) {
+			if ( method_check_array_key( $block_attributes, 'linkHoverColor' ) ) {
+				$declarations['color'] = method_sanitize_theme_color( $block_attributes['linkHoverColor'] ) . $suffix;
+			}
+		}
+
+		// Link Color (Hover)
+		if ( 'linkActiveColor' == $cssprop ) {
+			if ( method_check_array_key( $block_attributes, 'linkActiveColor' ) ) {
+				$declarations['color'] = method_sanitize_theme_color( $block_attributes['linkActiveColor'] ) . $suffix;
 			}
 		}
 

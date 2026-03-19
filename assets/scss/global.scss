@@ -2005,14 +2005,21 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
 
 .wp-block-method-bc {
     ol.method-breadcrumb-list {
-        margin: 0;
+        font-size: 1rem;
+        margin: 0 0 0.25em 0;
         padding: 0;
         display: flex;
-        gap: 12px;
+        column-gap: 0.75em;
+        row-gap: 0.25em;
+        flex-wrap: wrap;
+
+        @media (max-width: $method-mobile-max) {
+            font-size: 0.875em;
+        }
 
         li {
             display: inline-flex;
-            gap: 12px;
+            gap: 0.75em;
             list-style: none;
 
             a {
@@ -2025,4 +2032,229 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
 .aligncenter {
     margin-left: auto !important;
     margin-right: auto !important;
+}
+
+/*
+ * Method Scrollspy — Editor Styles
+ *
+ * Placeholder styling for the block editor preview.
+ */
+
+.method-scrollspy--editor {
+    padding: 1rem;
+    border: 1px dashed var(--wp-admin-theme-color, #007cba);
+    border-radius: 4px;
+    background: rgba(0, 124, 186, 0.03);
+}
+
+.method-scrollspy--editor .method-scrollspy__list--placeholder {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid #e0e0e0;
+}
+
+.method-scrollspy--editor .method-scrollspy__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0 0.3rem 1rem;
+    font-size: 0.8125rem;
+    color: #6b7280;
+}
+
+.method-scrollspy--editor .method-scrollspy__item--sub {
+    padding-left: 1.75rem;
+    font-size: 0.75rem;
+}
+
+.method-scrollspy--editor .method-scrollspy__item--deep {
+    padding-left: 2.5rem;
+    font-size: 0.6875rem;
+}
+
+.method-scrollspy--editor .method-scrollspy__swatch {
+    display: inline-block;
+    width: 60%;
+    max-width: 120px;
+    height: 0.5rem;
+    background: #e5e7eb;
+    border-radius: 2px;
+}
+
+.method-scrollspy--editor .method-scrollspy__hint {
+    margin: 0.75rem 0 0;
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.method-scrollspy--editor .method-scrollspy__hint code {
+    display: inline-block;
+    margin-left: 0.25rem;
+    padding: 0.1em 0.4em;
+    background: #f3f4f6;
+    border-radius: 3px;
+    font-size: 0.7rem;
+}
+
+.method-scrollspy__level-fieldset {
+    margin: 1rem 0;
+    padding: 0;
+    border: none;
+}
+
+.method-scrollspy__level-fieldset legend {
+    margin-bottom: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+/*
+ * Method Scrollspy — Frontend Styles
+ *
+ * The sticky positioning is the key architectural piece:
+ * `align-self: start` prevents the grid cell from stretching to fill
+ * the row height, which gives sticky room to travel. Without it,
+ * the element is already the full height of the row and has nowhere to go.
+ *
+ * --scrollspy-offset is set via JS from the block's stickyOffset attribute.
+ */
+
+.method-scrollspy {
+    --scrollspy-offset: 0px;
+    --scrollspy-active-color: var(--wp--preset--color--primary, #2563eb);
+    --scrollspy-text-color: var(--wp--preset--color--contrast, #374151);
+    --scrollspy-muted-color: var(--wp--preset--color--base-2, #9ca3af);
+    --scrollspy-border-color: var(--wp--preset--color--base-2, #e5e7eb);
+    --scrollspy-font-size: 0.8125rem;
+    --scrollspy-line-height: 1.5;
+    --scrollspy-transition: 150ms ease;
+
+
+    align-self: start;
+    /* Critical for sticky in grid/flex layouts */
+    max-height: calc(100dvh - var(--scrollspy-offset) - 3rem);
+}
+
+.method-scrollspy.is-sticky {
+    position: sticky;
+    top: var(--scrollspy-offset, 0);
+}
+
+/* ── Inner (scrollable area) ─────────────────────────────────────────
+ * Overflow must live here, NOT on .method-scrollspy itself, because
+ * overflow on a sticky element can break sticky positioning.          */
+
+.method-scrollspy__inner {
+    max-height: inherit;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollspy-border-color) transparent;
+}
+
+.method-scrollspy.is-sticky .method-scrollspy__inner {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+/* ── Label ───────────────────────────────────────────────────────────── */
+
+.method-scrollspy__label {
+    margin: 0 0 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--scrollspy-muted-color);
+}
+
+/* ── List ────────────────────────────────────────────────────────────── */
+
+.method-scrollspy__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--scrollspy-border-color);
+}
+
+.method-scrollspy__item {
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Links ───────────────────────────────────────────────────────────── */
+
+.method-scrollspy__link {
+    display: block;
+    padding: 0.25rem 0 0.25rem 1rem;
+    margin-left: -1px;
+    /* overlap the border-left */
+    border-left: 2px solid transparent;
+    font-size: var(--scrollspy-font-size);
+    line-height: var(--scrollspy-line-height);
+    color: var(--scrollspy-text-color);
+    text-decoration: none;
+    transition:
+        color var(--scrollspy-transition),
+        border-color var(--scrollspy-transition);
+}
+
+.method-scrollspy__link:hover,
+.method-scrollspy__link:focus-visible {
+    color: var(--scrollspy-active-color);
+}
+
+.method-scrollspy__link:focus-visible {
+    outline: 2px solid var(--scrollspy-active-color);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* ── Active state ────────────────────────────────────────────────────── */
+
+.method-scrollspy__link.is-active {
+    color: var(--scrollspy-active-color);
+    border-left-color: currentColor;
+    font-weight: 500;
+}
+
+/* ── Sub-levels (h3, h4) ─────────────────────────────────────────────── */
+
+.method-scrollspy__item--sub .method-scrollspy__link {
+    padding-left: 1.75rem;
+    font-size: calc(var(--scrollspy-font-size) - 0.0625rem);
+}
+
+.method-scrollspy__item--deep .method-scrollspy__link {
+    padding-left: 2.5rem;
+    font-size: calc(var(--scrollspy-font-size) - 0.125rem);
+}
+
+/* ── Fix sticky inside WP block layout ───────────────────────────────
+ * The parent theme sets overflow:hidden on .wp-site-blocks and
+ * .method-container-content which creates scroll containers that
+ * break position:sticky. overflow:clip hides overflow like hidden
+ * but does NOT create a scroll container, preserving sticky.          */
+
+.wp-site-blocks:has(.method-scrollspy) {
+    overflow: clip !important;
+}
+
+.method-container-content:has(.method-scrollspy) {
+    overflow: clip !important;
+}
+
+/* ── Hidden when no headings found ───────────────────────────────────── */
+
+.method-scrollspy[hidden] {
+    display: none;
+}
+
+/* ── Scroll-margin on targeted headings ─────────────────────────────── *
+ * Applied globally so that native anchor jumps (e.g. from external links)
+ * don't get hidden behind a fixed header. The JS smooth-scroll also
+ * accounts for the offset, but this covers the non-JS case.              */
+
+:where(.docs-content) :is(h1, h2, h3, h4, h5, h6)[id] {
+    scroll-margin-top: calc(var(--scrollspy-offset, 0px) + 1.5rem);
 }

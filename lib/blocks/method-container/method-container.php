@@ -21,7 +21,7 @@ function render_method_container_block( $block_attributes, $content, $block ) {
 
     $cssargs = array(
         '#' . $methodId => array( 'borderRadius', 'marginLeftNonZero', 'marginRightNonZero', 'margin-top', 'margin-bottom', 'boxShadow' ),
-        '#' . $methodId . ' > .method-container-content' => array( 'color', 'bgColor', 'borderRadius', 'border', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'fontSize', 'lineHeight', 'height', 'minHeight', 'alignItems' ),
+        '#' . $methodId . ' > .method-container-content' => array( 'color', 'bgColor', 'borderRadius', 'border', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'fontSize', 'lineHeight', 'height', 'minHeight', 'width', 'minWidth', 'alignItems' ),
         '#' . $methodId . ' > .method-container-content > .method-container-shade' => array( 'bgShade' ),
         '#' . $methodId . ' a' => array( 'linkColor' )
     );

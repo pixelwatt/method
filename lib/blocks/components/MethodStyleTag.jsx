@@ -146,7 +146,9 @@ function getBreakpointStyle(
 			} else if (
 				prop === 'justifyContent' ||
 				prop === 'alignItems' ||
-				prop === 'flexDirection'
+				prop === 'flexDirection' ||
+				prop === 'overflow' ||
+				prop === 'zIndex'
 			) {
 				if (prop === 'justifyContent' && settings?.justifyContent) {
 					styleProps['justify-content'] = settings.justifyContent;
@@ -160,6 +162,12 @@ function getBreakpointStyle(
 					} else {
 						styleProps['flex-direction'] = 'row';
 					}
+				}
+				if (prop === 'overflow' && settings?.overflow) {
+					styleProps['overflow'] = settings.overflow;
+				}
+				if (prop === 'zIndex' && settings?.zIndex) {
+					styleProps['z-index'] = settings.zIndex;
 				}
 			} else if (
 				prop === 'minHeight' ||

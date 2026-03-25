@@ -29,7 +29,7 @@ function render_method_section_block( $block_attributes, $content, $block ) {
     }
 
     $cssargs = array(
-        '#' . $methodId => array( 'borderRadius', 'marginLeftNonZero', 'marginRightNonZero', 'margin-top', 'margin-bottom', 'boxShadow' ),
+        '#' . $methodId => array( 'borderRadius', 'marginLeftNonZero', 'marginRightNonZero', 'margin-top', 'margin-bottom', 'boxShadow', 'zIndex' ),
         '#' . $methodId . ' > .method-section-content' => array( 'color', 'bgColor', 'borderRadius', 'border', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'fontSize', 'lineHeight', 'height', 'minHeight', 'alignItems' ),
         '#' . $methodId . ' > .method-section-content > .method-section-shade' => array( 'bgShade' ),
         '#' . $methodId . ' a' => array( 'linkColor' )

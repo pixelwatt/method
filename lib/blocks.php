@@ -456,6 +456,18 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 			}
 		}
 
+		if ( 'overflow' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'overflow' ) ) {
+				$declarations['overflow'] = method_get_responsive_setting( $block_attributes, $context, 'overflow' ) . $suffix;
+			}
+		}
+
+		if ( 'zIndex' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'zIndex' ) ) {
+				$declarations['z-index'] = method_get_responsive_setting( $block_attributes, $context, 'zIndex' ) . $suffix;
+			}
+		}
+
 		if ( 'order' == $cssprop ) {
 			if ( ( ! empty ( method_get_responsive_setting( $block_attributes, $context, 'order' ) ) ) && ( '0' != method_get_responsive_setting( $block_attributes, $context, 'order' ) ) ) {
 				$declarations['order'] = method_get_responsive_setting( $block_attributes, $context, 'order' ) . $suffix;

@@ -528,7 +528,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 		// Padding Top
 		if ( 'padding-top' == $cssprop ) {
-				$declarations['padding-top'] = '0' . $suffix;
+				//$declarations['padding-top'] = '0' . $suffix;
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'padding' ) ) {
 						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["padding"], 'top' ) ) {
@@ -540,7 +540,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 			// Padding Bottom
 			if ( 'padding-bottom' == $cssprop ) {
-				$declarations['padding-bottom'] = '0' . $suffix;
+				//$declarations['padding-bottom'] = '0' . $suffix;
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'padding' ) ) {
 						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["padding"], 'bottom' ) ) {
@@ -552,7 +552,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 			// Padding Left
 			if ( 'padding-left' == $cssprop ) {
-				$declarations['padding-left'] = '0' . $suffix;
+				//$declarations['padding-left'] = '0' . $suffix;
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'padding' ) ) {
 						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["padding"], 'left' ) ) {
@@ -564,7 +564,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 			// Padding Right
 			if ( 'padding-right' == $cssprop ) {
-				$declarations['padding-right'] = '0' . $suffix;
+				//$declarations['padding-right'] = '0' . $suffix;
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'padding' ) ) {
 						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["padding"], 'right' ) ) {

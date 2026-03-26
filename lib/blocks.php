@@ -468,6 +468,24 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 			}
 		}
 
+		if ( 'flexGrow' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'flexGrow' ) ) {
+				$declarations['flex-grow'] = method_get_responsive_setting( $block_attributes, $context, 'flexGrow' ) . $suffix;
+			}
+		}
+
+		if ( 'flexShrink' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'flexShrink' ) ) {
+				$declarations['flex-shrink'] = method_get_responsive_setting( $block_attributes, $context, 'flexShrink' ) . $suffix;
+			}
+		}
+
+		if ( 'flexBasis' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'flexBasis' ) ) {
+				$declarations['flex-basis'] = method_get_responsive_setting( $block_attributes, $context, 'flexBasis' ) . $suffix;
+			}
+		}
+
 		if ( 'order' == $cssprop ) {
 			if ( ( ! empty ( method_get_responsive_setting( $block_attributes, $context, 'order' ) ) ) && ( '0' != method_get_responsive_setting( $block_attributes, $context, 'order' ) ) ) {
 				$declarations['order'] = method_get_responsive_setting( $block_attributes, $context, 'order' ) . $suffix;

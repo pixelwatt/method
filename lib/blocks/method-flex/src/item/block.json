@@ -10,5 +10,24 @@
     "supports": {
         "html": false
     },
+    "attributes": {
+        "responsiveSettings": {
+            "type": "object",
+            "default": {
+                "base": {
+                    "enabled": true
+                },
+                "mobile": {
+                    "enabled": false
+                },
+                "tablet": {
+                    "enabled": false
+                },
+                "wide": {
+                    "enabled": false
+                }
+            }
+        }
+    },
     "editorScript": "file:./index.js"
 }

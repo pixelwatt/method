@@ -148,7 +148,10 @@ function getBreakpointStyle(
 				prop === 'alignItems' ||
 				prop === 'flexDirection' ||
 				prop === 'overflow' ||
-				prop === 'zIndex'
+				prop === 'zIndex' ||
+				prop === 'flexGrow' ||
+				prop === 'flexShrink' ||
+				prop === 'flexBasis'
 			) {
 				if (prop === 'justifyContent' && settings?.justifyContent) {
 					styleProps['justify-content'] = settings.justifyContent;
@@ -166,8 +169,17 @@ function getBreakpointStyle(
 				if (prop === 'overflow' && settings?.overflow) {
 					styleProps['overflow'] = settings.overflow;
 				}
-				if (prop === 'zIndex' && settings?.zIndex) {
+				if (prop === 'zIndex' && settings?.zIndex !== undefined) {
 					styleProps['z-index'] = settings.zIndex;
+				}
+				if (prop === 'flexGrow' && settings?.flexGrow !== undefined) {
+					styleProps['flex-grow'] = settings.flexGrow;
+				}
+				if (prop === 'flexShrink' && settings?.flexShrink !== undefined) {
+					styleProps['flex-shrink'] = settings.flexShrink;
+				}
+				if (prop === 'flexBasis' && settings?.flexBasis !== undefined) {
+					styleProps['flex-basis'] = settings.flexBasis;
 				}
 			} else if (
 				prop === 'minHeight' ||

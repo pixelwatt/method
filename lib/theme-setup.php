@@ -180,3 +180,22 @@ add_filter('http_request_args', function($args, $url) {
 
     return $args;
 }, 10, 2);
+
+
+function method_inject_gtag() {
+	$util = new Method_Utility;
+	if ( ( $util->get_option('ga_enable') ) && ( $util->get_option('ga_id') ) ) {
+    ?>
+        <!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-BJ3K9D5ZG9"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', '<?php echo $util->get_option('ga_id'); ?>');
+		</script>
+    <?php
+	}
+}
+add_action('wp_head', 'method_inject_gtag');

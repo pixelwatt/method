@@ -340,6 +340,32 @@ function method_register_theme_options_metabox() {
 
 	$cmb_options->add_field(
 		array(
+			'name'     => __( 'Google Analytics', 'method' ),
+			'id'       => 'ga_info',
+			'type'     => 'title',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Add Tag', 'method' ),
+			'id'       => 'ga_enable',
+			'desc'     => 'Enable basic Google Analytics integration for GA4.',
+			'type'     => 'checkbox',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
+			'name'     => __( 'Tag ID', 'method' ),
+			'id'       => 'ga_id',
+			'desc'     => 'If you checked the option above, provide your tag ID (it will begin with <code>G-</code>).',
+			'type'     => 'text_medium',
+		)
+	);
+
+	$cmb_options->add_field(
+		array(
 			'name'     => __( 'Additional Information', 'method' ),
 			'id'       => 'dia_info',
 			'type'     => 'title',

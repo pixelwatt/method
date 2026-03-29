@@ -354,11 +354,9 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 			if ( 'bgImg' == $cssprop ) {
 				if ( method_check_array_key( $block_attributes, 'useFeaturedImage' ) ) {
-					error_log('Block set to use featured image as bg. Post id: ' . $post_id);
 					$chosenSize = method_get_responsive_setting( $block_attributes, $context, 'featuredImageSize', 'full' );
 					$chosenImg = get_the_post_thumbnail_url( $post_id, $chosenSize );
 					if ( $chosenImg ) {
-						error_log('Image found. Url: ' . $chosenImg);
 						$declarations['background-image'] = ' url("' . $chosenImg . '")';
 					}
 				} elseif ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {

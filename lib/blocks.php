@@ -194,7 +194,7 @@ function method_get_block_inline_styles( $block_attributes, $set_margins = true 
 // This function will be refactored in the very near future. Its nightmarish existence
 // in its current form is the result of tight deadlines and a lot, and I mean a lot, of
 // sleep deprivation.
-function method_get_block_css_declarations( $block_attributes, $context = 'base', $cssprops = array(), $prioritize = false ) {
+function method_get_block_css_declarations( $block_attributes, $context = 'base', $cssprops = array(), $prioritize = false, $post_id = false ) {
 	$output = '';
 	$suffix = ( $prioritize ? ' !important' : '' );
 	if ( 0 === count( $cssprops ) ) {
@@ -353,7 +353,15 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 			}
 
 			if ( 'bgImg' == $cssprop ) {
-				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
+				if ( method_check_array_key( $block_attributes, 'useFeaturedImage' ) ) {
+					error_log('Block set to use featured image as bg. Post id: ' . $post_id);
+					$chosenSize = method_get_responsive_setting( $block_attributes, $context, 'featuredImageSize', 'full' );
+					$chosenImg = get_the_post_thumbnail_url( $post_id, $chosenSize );
+					if ( $chosenImg ) {
+						error_log('Image found. Url: ' . $chosenImg);
+						$declarations['background-image'] = ' url("' . $chosenImg . '")';
+					}
+				} elseif ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'bgImgSize' ) ) {
 						$csize = $block_attributes["responsiveSettings"]["{$context}"]['bgImgSize'];
 						if ( method_check_array_key( $block_attributes, 'bgImg' ) ) {
@@ -662,18 +670,16 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 			// Gap
 			if ( 'gap' == $cssprop ) {
-				$declarations['gap'] = '0 0' . $suffix;
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'gap' ) ) {
 						$gapy = '0';
 						$gapx = '0';
 						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["gap"], 'top' ) ) {
-							$gapy = $block_attributes["responsiveSettings"]["{$context}"]['gap']['top'];
+							$declarations['row-gap'] = $block_attributes["responsiveSettings"]["{$context}"]['gap']['top'] . $suffix;
 						}
 						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["gap"], 'left' ) ) {
-							$gapx = $block_attributes["responsiveSettings"]["{$context}"]['gap']['left'];
+							$declarations['column-gap'] = $block_attributes["responsiveSettings"]["{$context}"]['gap']['left'] . $suffix;
 						}
-						$declarations['gap'] = $gapy . ' ' . $gapx . $suffix;
 					}
 				}
 			}
@@ -701,15 +707,15 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 	return $output;
 }
 
-function method_get_block_media_query_declarations( $block_attributes, $context = '', $cssprops = array(), $cssSelector ) {
+function method_get_block_media_query_declarations( $block_attributes, $context = '', $cssprops = array(), $cssSelector, $post_id = false ) {
 	$output = '';
-	$declarations = method_get_block_css_declarations( $block_attributes, $context, $cssprops, true );
+	$declarations = method_get_block_css_declarations( $block_attributes, $context, $cssprops, true, $post_id );
 	$output .= ( ! empty( $declarations ) ? $cssSelector . ' {' . $declarations . '} ' : '' );
 	return $output;
 }
 
 
-function method_get_block_responsive_styles( $block_attributes, $selectors = array(), $ranges = array( 'mobile', 'tablet', 'wide' ), $wrap = true ) {
+function method_get_block_responsive_styles( $block_attributes, $selectors = array(), $ranges = array( 'mobile', 'tablet', 'wide' ), $wrap = true, $post_id = false ) {
 	$output = '';
 	if ( is_array( $selectors ) ) {
 		if ( 0 < count( $selectors ) ) {
@@ -728,7 +734,7 @@ function method_get_block_responsive_styles( $block_attributes, $selectors = arr
 					$rangeOut .= ' @media (min-width:' . $bps['wide_min'] . ') { ';
 				}
 				foreach ( $selectors as $key => $value ) {
-					$rangeOut .= method_get_block_media_query_declarations( $block_attributes, $range, $value, $key );
+					$rangeOut .= method_get_block_media_query_declarations( $block_attributes, $range, $value, $key, $post_id );
 				}
 				if ( 'base' != $range ) {
 					$rangeOut .= '} ';

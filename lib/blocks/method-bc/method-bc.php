@@ -323,9 +323,20 @@ function method_bc_render_markup( $items, $sep, $attributes = [], $options = [] 
         return '';
     }
 
-    $wrapper_attrs = get_block_wrapper_attributes();
+    $methodId = uniqid( 'method-' );
 
-    $output = '<nav ' . $wrapper_attrs . ' aria-label="' . esc_attr__( 'Breadcrumb', 'method' ) . '">';
+    $cssargs = array(
+        '#' . $methodId => array( 'margin-top', 'margin-bottom', 'color' ),
+        '#' . $methodId . ' a' => array( 'linkColor' ),
+        '#' . $methodId . ' > .method-breadcrumb-list' => array( 'gap', 'justifyContent', 'alignItems', 'padding-top', 'padding-bottom', 'padding-left', 'padding-right' ),
+        '#' . $methodId . ' > .method-breadcrumb-list .method-breadcrumb-item' => array( 'gap' ),
+        '#' . $methodId . ' > .method-breadcrumb-list .method-breadcrumb-item:last-of-type' => array( 'linkColor' ),
+    );
+
+    $responsive = method_get_block_responsive_styles( $attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    method_collect_css( $responsive, '#' . $methodId, 10);
+
+    $output = '<nav ' . get_block_wrapper_attributes( ['class' => 'method-breadcrumb-block', 'id' => $methodId] ) . ' aria-label="' . esc_attr__( 'Breadcrumb', 'method' ) . '">';
     $output .= '<ol class="method-breadcrumb-list">';
 
     $total = count( $items );

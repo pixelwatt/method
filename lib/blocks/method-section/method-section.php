@@ -18,6 +18,7 @@ add_action('enqueue_block_assets', 'method_section_enqueue_assets');
 
 
 function render_method_section_block( $block_attributes, $content, $block ) {
+    $post_id = $block->context['postId'] ?? get_the_ID();
     $methodId = uniqid( 'method-' );
     $align = method_get_responsive_setting( $block_attributes, 'base', 'alignItems' );
 
@@ -43,15 +44,19 @@ function render_method_section_block( $block_attributes, $content, $block ) {
         $contentWrap = '<div class="method-section-content">';
     } else {
         $contentWrap = '<div class="method-section-content jarallax" data-jarallax data-speed="0.8"' . ( method_check_array_key( $block_attributes, 'bgVideo' ) ? ' data-video-src="' . $block_attributes['bgVideo'] . '"' : '' ) . '>';
-        $chosenSize = method_get_responsive_setting( $block_attributes, 'base', 'bgImgSize', 'full' );
-        if ( method_check_array_key( $block_attributes, 'bgImg' ) ) {
+        
+        if ( method_check_array_key( $block_attributes, 'useFeaturedImage' ) ) {
+            $chosenSize = method_get_responsive_setting( $block_attributes, 'base', 'featuredImageSize', 'full' );
+            $chosenImg = get_the_post_thumbnail( $post_id, $chosenSize, array( 'class' => 'jarallax-img' ) );
+        } elseif ( method_check_array_key( $block_attributes, 'bgImg' ) ) {
             if ( method_check_array_key( $block_attributes['bgImg'], 'id' ) ) {
+                $chosenSize = method_get_responsive_setting( $block_attributes, 'base', 'bgImgSize', 'full' );
                 $chosenImg = wp_get_attachment_image( $block_attributes['bgImg']['id'], $chosenSize, false, array( 'class' => 'jarallax-img' ) );
             }
         }
     }
 
-    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false, $post_id );
     method_collect_css( $responsive, '#' . $methodId, 10);
 
     $output = '

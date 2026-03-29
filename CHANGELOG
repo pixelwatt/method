@@ -1,3 +1,42 @@
+## 2.0.0-beta6
+
+### Google Analytics Support
+- Added basic GA4 integration via theme options
+- New theme options fields: "Add Tag" checkbox (`ga_enable`) and "Tag ID" text field (`ga_id`) in `theme-options.php`
+- `method_inject_gtag()` in `theme-setup.php` conditionally injects the Google Analytics `gtag.js` script into `wp_head` when both options are set
+
+### Flex Item Block Controls
+- **New `MethodFlexControls` component** — a reusable `ToolsPanel`-based control set for `flex-grow`, `flex-shrink`, and `flex-basis`, with per-property reset support
+- Flex Item block (`method-flex/item`) now has a full inspector UI with responsive tabs (base, mobile, tablet, wide) for flex properties
+- Added `responsiveSettings` attribute to Flex Item `block.json` with standard breakpoint structure
+- PHP: Added `flexGrow`, `flexShrink`, and `flexBasis` CSS declaration support in `method_get_block_css_declarations()`
+- PHP: Flex Item render callback now generates scoped responsive CSS via `method_get_block_responsive_styles()`
+- `MethodStyleTag.jsx`: Added `flexGrow`, `flexShrink`, `flexBasis` to the editor style generator; fixed `zIndex` check to use `!== undefined` instead of truthy (allowing `z-index: 0`)
+- CSS: Added `width: 100%` to `.method-flex-item-inner-blocks` so inner blocks fill their flex item
+
+### Featured Image as Background (per-breakpoint support)
+- **Featured Image Size is now responsive** — the "Preferred Image Size" dropdown in `MethodBackgroundControls` now reads/writes via `responsiveSettings[breakpoint].featuredImageSize` instead of the top-level `useFeaturedImageSize` attribute, allowing different sizes per breakpoint (mobile, tablet, wide) when "Custom Background" is enabled
+- Added `includeFeaturedImage` prop to `MethodBackgroundControls` — the "Use Featured Image" checkbox and size selector are now opt-in per block
+- Added `useFeaturedImageSizes()` hook in `MethodUseFeaturedImage.js` — returns a `{size: url}` map of all available featured image sizes for use in editor style generation
+- `MethodStyleTag` now accepts `postId`/`postType` props and resolves featured image URLs per-breakpoint using the new sizes hook
+- PHP: `$post_id` is now threaded through `method_get_block_responsive_styles` → `method_get_block_media_query_declarations` → `method_get_block_css_declarations` so featured image backgrounds can be resolved per-breakpoint on the server side
+- `method-section` block now uses `postId`/`postType` context (`usesContext` added to `block.json`) and passes it through to `MethodStyleTag` and `FeaturedImage`
+- Parallax mode now renders a `<FeaturedImage>` component (or a regular `<img>`) conditionally based on `useFeaturedImage`
+
+### Breadcrumb Block (`method-bc`) — Responsive Styles
+- Added `textColor` and `linkColor` attributes to `block.json`
+- Breadcrumb block now generates responsive CSS via `method_get_block_responsive_styles`, with selectors for gap, justification, alignment, padding, color, and link color
+- Wrapper now uses a unique `method-` ID for scoped styling
+
+### Gap CSS Output Fix
+- Gap declarations now output `row-gap` and `column-gap` separately instead of the shorthand `gap` property
+- Removed the default `gap: 0 0` declaration that was applied even when no gap was set
+
+### Misc
+- Formatting/line-length fixes in `MethodStyleTag.jsx` (borderRadius, flexShrink)
+- `method-section/src/block.json`: removed unused top-level `bgSize` and `bgImgAlign` attributes (now handled via `responsiveSettings`)
+
+
 ## 2.0.0-beta4b
 
 This release removes Bootstrap files for the upcoming method/navbar block (coming next beta) to prevent conflicts with themes using custom navbar blocks. These styles will be refactored prior to next beta.

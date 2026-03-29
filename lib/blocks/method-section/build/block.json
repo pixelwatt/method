@@ -4,6 +4,10 @@
   "title": "Section",
   "description": "A full-width content wrapper with robust styling and layout controls, designed to define major sections of a page.",
   "category": "method-layout-blocks",
+  "usesContext": [
+    "postId",
+    "postType"
+  ],
   "supports": {
     "html": false,
     "align": [
@@ -47,12 +51,9 @@
         "id": ""
       }
     },
-    "bgSize": {
-      "type": "string"
-    },
-    "bgImgAlign": {
-      "type": "string",
-      "default": "center center"
+    "useFeaturedImage": {
+      "type": "boolean",
+      "default": false
     },
     "responsiveSettings": {
       "type": "object",

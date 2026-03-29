@@ -4,6 +4,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 // ResponsiveStyleTag.jsx
 import { useEffect, useRef } from 'react';
+import { useFeaturedImageSizes } from './MethodUseFeaturedImage';
 const getBreakpoints = () => window?.methodGlobalData?.breakpoints || {};
 
 const cssPropertyMap = {
@@ -29,7 +30,10 @@ function getBreakpointStyle(
 	responsiveSettings,
 	selectorMap,
 	breakpoint,
-	attributes = {}
+	attributes = {},
+	postId = null,
+	postType = null,
+	featuredImageSizes = null
 ) {
 	let css = '';
 	const settings = responsiveSettings?.[breakpoint] || {};
@@ -92,13 +96,25 @@ function getBreakpointStyle(
 							`${xAlign} ${xOffset} ${yAlign} ${yOffset}`;
 					}
 					if (prop === 'bgImg') {
-						const chosenSize = settings?.bgImgSize;
-						if (
-							!!chosenSize &&
-							!!attributes?.bgImg?.[chosenSize]?.url
-						) {
-							styleProps['background-image'] =
-								`url("${attributes.bgImg[chosenSize].url}")`;
+						if (attributes?.useFeaturedImage === true) {
+							const fiSize =
+								settings?.featuredImageSize || 'large';
+							const fiUrl =
+								featuredImageSizes?.[fiSize] ||
+								featuredImageSizes?.full;
+							if (fiUrl) {
+								styleProps['background-image'] =
+									`url("${fiUrl}")`;
+							}
+						} else {
+							const chosenSize = settings?.bgImgSize;
+							if (
+								!!chosenSize &&
+								!!attributes?.bgImg?.[chosenSize]?.url
+							) {
+								styleProps['background-image'] =
+									`url("${attributes.bgImg[chosenSize].url}")`;
+							}
 						}
 					}
 					if (prop === 'bgSize') {
@@ -175,7 +191,10 @@ function getBreakpointStyle(
 				if (prop === 'flexGrow' && settings?.flexGrow !== undefined) {
 					styleProps['flex-grow'] = settings.flexGrow;
 				}
-				if (prop === 'flexShrink' && settings?.flexShrink !== undefined) {
+				if (
+					prop === 'flexShrink' &&
+					settings?.flexShrink !== undefined
+				) {
 					styleProps['flex-shrink'] = settings.flexShrink;
 				}
 				if (prop === 'flexBasis' && settings?.flexBasis !== undefined) {
@@ -192,10 +211,14 @@ function getBreakpointStyle(
 				}
 			} else if (prop === 'borderRadius') {
 				if (settings?.borderRadius?.topLeft) {
-					styleProps['border-top-left-radius'] = settings.borderRadius.topLeft;
-					styleProps['border-top-right-radius'] = settings.borderRadius.topRight;
-					styleProps['border-bottom-left-radius'] = settings.borderRadius.bottomLeft;
-					styleProps['border-bottom-right-radius'] = settings.borderRadius.bottomRight;
+					styleProps['border-top-left-radius'] =
+						settings.borderRadius.topLeft;
+					styleProps['border-top-right-radius'] =
+						settings.borderRadius.topRight;
+					styleProps['border-bottom-left-radius'] =
+						settings.borderRadius.bottomLeft;
+					styleProps['border-bottom-right-radius'] =
+						settings.borderRadius.bottomRight;
 				} else if (settings?.borderRadius) {
 					styleProps['border-radius'] = settings.borderRadius;
 				}
@@ -345,37 +368,72 @@ export default function MethodStyleTag({
 	attributes,
 	selectorMap,
 	excludeBase,
+	postId = null,
+	postType = null,
 }) {
 	const styleRef = useRef();
 	const breakpoints = getBreakpoints();
 	const responsive = attributes.responsiveSettings || {};
 	const atts = attributes;
+	const featuredImageSizes = useFeaturedImageSizes(postId, postType);
 
 	useEffect(() => {
 		let css = '';
 		if (!excludeBase) {
-			css += getBreakpointStyle(responsive, selectorMap, 'base', atts);
+			css += getBreakpointStyle(
+				responsive,
+				selectorMap,
+				'base',
+				atts,
+				postId,
+				postType,
+				featuredImageSizes
+			);
 		}
 		if (responsive.mobile?.enabled) {
 			css += `@media(max-width: ${breakpoints.mobile_max}) {\n`;
-			css += getBreakpointStyle(responsive, selectorMap, 'mobile', atts);
+			css += getBreakpointStyle(
+				responsive,
+				selectorMap,
+				'mobile',
+				atts,
+				postId,
+				postType,
+				featuredImageSizes
+			);
 			css += '}\n';
 		}
 		if (responsive.tablet?.enabled) {
 			css += `@media(min-width: ${breakpoints.tablet_min}) and (max-width: ${breakpoints.tablet_max}) {\n`;
-			css += getBreakpointStyle(responsive, selectorMap, 'tablet', atts);
+			css += getBreakpointStyle(
+				responsive,
+				selectorMap,
+				'tablet',
+				atts,
+				postId,
+				postType,
+				featuredImageSizes
+			);
 			css += '}\n';
 		}
 		if (responsive.wide?.enabled) {
 			css += `@media(min-width: ${breakpoints.wide_min}) {\n`;
-			css += getBreakpointStyle(responsive, selectorMap, 'wide', atts);
+			css += getBreakpointStyle(
+				responsive,
+				selectorMap,
+				'wide',
+				atts,
+				postId,
+				postType,
+				featuredImageSizes
+			);
 			css += '}\n';
 		}
 
 		if (styleRef.current) {
 			styleRef.current.innerHTML = css;
 		}
-	}, [attributes]);
+	}, [attributes, featuredImageSizes]);
 
 	return <style ref={styleRef} data-method-id={clientId} />;
 }

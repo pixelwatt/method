@@ -12,6 +12,12 @@
     ]
   },
   "attributes": {
+    "textColor": {
+      "type": "string"
+    },
+    "linkColor": {
+      "type": "string"
+    },
     "responsiveSettings": {
       "type": "object",
       "default": {

@@ -1,3 +1,33 @@
+## 2.0.0-beta7
+
+### Zero Height Responsive Setting
+
+Adds a new `zeroHeight` responsive dimension control that collapses a block's vertical footprint to zero while keeping its content visually present via `overflow: visible`. Intended as a clean solution for overlap layouts where a block should not contribute to document flow.
+
+### Changes
+
+**New control — `MethodDimensionControls`**
+- Added opt-in `zeroHeight` toggle (must be explicitly passed via `include` array)
+- When enabled, stores `true`; when panel item is opted in but toggled off, stores `false` explicitly to support per-breakpoint overrides
+- `hasValue` returns `true` only when actively enabled, keeping the ToolsPanel state accurate
+
+**CSS generation — `MethodStyleTag.jsx` & `blocks.php`**
+- When `zeroHeight` is `true`: emits `height: 0; overflow: visible`
+- When `zeroHeight` is `false` on a non-base breakpoint and `true` on base: emits `height: unset; overflow: unset` to restore normal flow at that breakpoint
+
+**Fitted Image block**
+- Added `zeroHeight` support across all four breakpoints (base, mobile, tablet, wide)
+- `zeroHeight` mapped to the block's outer wrapper selector in the CSS map
+
+**Fitted Image block**
+- Added `zeroHeight` support across all four breakpoints (base, mobile, tablet, wide)
+- `zeroHeight` mapped to the block's outer wrapper selector in the CSS map
+
+**Other changes**
+- Removed `error_log()` debug calls from `method_get_block_css_declarations()` in `lib/blocks.php`
+- Temporarily disabled the Bootstrap Tabs block, as it is in active development and unstable. Remove the commenting from line 114 of `lib/blocks.php` to enable. Once refactored and integrated with Method's libraries, the block will return.
+
+
 ## 2.0.0-beta6
 
 ### Google Analytics Support

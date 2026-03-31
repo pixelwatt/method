@@ -111,7 +111,7 @@ require_once('blocks/method-accordion/method-accordion.php');
 require_once('blocks/method-advanced-grid/method-advanced-grid.php');
 require_once('blocks/method-basic-grid/method-basic-grid.php');
 require_once('blocks/method-bc/method-bc.php');
-require_once('blocks/method-bootstrap-tabs/method-bootstrap-tabs.php');
+//require_once('blocks/method-bootstrap-tabs/method-bootstrap-tabs.php');
 require_once('blocks/method-buttons/method-buttons.php');
 require_once('blocks/method-container/method-container.php');
 require_once('blocks/method-core-extensions/method-core-extensions.php');

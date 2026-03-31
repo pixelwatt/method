@@ -159,6 +159,19 @@ function getBreakpointStyle(
 			) {
 				styleProps['width'] = settings.dimensions;
 				styleProps['height'] = settings.dimensions;
+			} else if (prop === 'zeroHeight') {
+				if (settings?.zeroHeight === true) {
+					styleProps['height'] = '0';
+					styleProps['overflow'] = 'visible';
+				}
+				if (
+					breakpoint != 'base' &&
+					settings?.zeroHeight === false &&
+					responsiveSettings?.base?.zeroHeight === true
+				) {
+					styleProps['height'] = 'unset';
+					styleProps['overflow'] = 'unset';
+				}
 			} else if (
 				prop === 'justifyContent' ||
 				prop === 'alignItems' ||

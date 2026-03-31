@@ -468,6 +468,18 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 			}
 		}
 
+		if ( 'zeroHeight' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'zeroHeight' ) ) {
+				$declarations['height'] = '0px' . $suffix;
+				$declarations['overflow'] = 'visible' . $suffix;
+			} elseif ( ( 'base' != $context ) && ( isset( $block_attributes['responsiveSettings']['base']['zeroHeight'] ) ) && ( isset( $block_attributes['responsiveSettings']["{$context}"]['zeroHeight'] ) ) ) {
+				if ( ( true === $block_attributes['responsiveSettings']['base']['zeroHeight'] ) && ( false === $block_attributes['responsiveSettings']["{$context}"]['zeroHeight'] ) ) {
+					$declarations['height'] = 'unset' . $suffix;
+					$declarations['overflow'] = 'unset' . $suffix;
+				}
+			}
+		}
+
 		if ( 'zIndex' == $cssprop ) {
 			if ( method_get_responsive_setting( $block_attributes, $context, 'zIndex' ) ) {
 				$declarations['z-index'] = method_get_responsive_setting( $block_attributes, $context, 'zIndex' ) . $suffix;

@@ -1,3 +1,26 @@
+## 2.0.0-beta8
+
+### New Features
+
+#### Container Block — Aspect Ratio Sizing
+Containers can now be sized using an aspect ratio instead of (or in addition to) fixed height values. A new **Aspect Ratio** control in the Dimension panel accepts X and Y values (e.g. 16 / 9), making it easy to create consistently proportioned containers across breakpoints.
+
+#### Section Block - Image Slideshow Backgrounds
+Sections now support image slideshows as a background media type, powered by the [Vegas](https://vegas.jaysalvat.com) library. To use it:
+1. Open a Section block's **Background Media Options** panel.
+2. Set **Background Media** to **Image Slideshow**.
+3. Use the **Select Slideshow Images** button to choose images from the media library.
+
+Slideshows fade between images on a 10-second interval. The standard image/video background controls are hidden automatically when slideshow mode is active. Slideshow behaviour is previewed live inside the block editor.
+
+### Section Block - Additional Changes
+- The **Background Media** controls panel has been reorganised. The image/video options are now nested inside a single **Background Media Options** panel alongside the new slideshow mode selector, rather than appearing in a separate panel.
+- Responsive background image controls (mobile, tablet, wide) are now conditionally hidden when slideshow mode is active.
+
+### Removed
+- Removed the bundled `method-swiper-gallery.zip` file from the theme.
+
+
 ## 2.0.0-beta7
 
 ### Zero Height Responsive Setting

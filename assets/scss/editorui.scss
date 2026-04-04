@@ -76,3 +76,21 @@
         max-width: 100%;
     }
 }
+
+.method-aspect-ratio-layout {
+    display: inline-flex;
+    border: 1px solid #ddd;
+    align-items: center;
+
+    .components-input-control__input {
+        text-align: center;
+    }
+
+    .components-input-control__input,
+    .components-number-control,
+    .components-number-control * {
+        border: none !important;
+        border-image-width: 0 !important;
+        border-color: transparent !important;
+    }
+}

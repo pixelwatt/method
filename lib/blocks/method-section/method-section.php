@@ -12,8 +12,18 @@ add_action( 'init', 'register_method_section_block' );
 function method_section_enqueue_assets() {
     wp_enqueue_script('jarallax', get_template_directory_uri() . '/inc/jarallax/jarallax.min.js', [], null, true);
     wp_enqueue_script('jarallax-video', get_template_directory_uri() . '/inc/jarallax/jarallax-video.min.js', ['jarallax'], null, true);
+
+    wp_enqueue_script('vegas', get_template_directory_uri() . '/inc/vegas/vegas-global.js', [], null, true);
+    wp_enqueue_style('vegas', get_template_directory_uri() . '/inc/vegas/vegas.min.css');
 }
 add_action('enqueue_block_assets', 'method_section_enqueue_assets');
+
+add_filter('script_loader_tag', function($tag, $handle) {
+    if ($handle === 'vegas') {
+        return str_replace('<script ', '<script type="module" ', $tag);
+    }
+    return $tag;
+}, 10, 2);
 
 
 
@@ -39,12 +49,23 @@ function render_method_section_block( $block_attributes, $content, $block ) {
     $contentWrap = '';
     $imgElement = '';
     $chosenImg = '';
-    if ( ( ! method_check_array_key( $block_attributes, 'useParallax' ) ) && ( ! method_check_array_key( $block_attributes, 'bgVideo' ) ) ) {
+    $bgimgData = '';
+
+    $bgMedia = $block_attributes['bgMedia'] ?? '';
+
+    if ( $bgMedia === 'slideshow' ) {
+        $contentWrap = '<div class="method-section-content">';
+        $images = $block_attributes['images'] ?? [];
+        if ( ! empty( $images ) ) {
+            $slides = array_map( fn( $img ) => [ 'src' => $img['url'] ], $images );
+            $bgimgData = ' data-vegas-slides="' . esc_attr( wp_json_encode( $slides ) ) . '"';
+        }
+    } elseif ( ( ! method_check_array_key( $block_attributes, 'useParallax' ) ) && ( ! method_check_array_key( $block_attributes, 'bgVideo' ) ) ) {
         $cssargs["#{$methodId}  > .method-section-content > .method-section-bgimg"] = array( 'bgImg', 'bgPosition', 'bgSize', 'bgRepeat' );
         $contentWrap = '<div class="method-section-content">';
     } else {
         $contentWrap = '<div class="method-section-content jarallax" data-jarallax data-speed="0.8"' . ( method_check_array_key( $block_attributes, 'bgVideo' ) ? ' data-video-src="' . $block_attributes['bgVideo'] . '"' : '' ) . '>';
-        
+
         if ( method_check_array_key( $block_attributes, 'useFeaturedImage' ) ) {
             $chosenSize = method_get_responsive_setting( $block_attributes, 'base', 'featuredImageSize', 'full' );
             $chosenImg = get_the_post_thumbnail( $post_id, $chosenSize, array( 'class' => 'jarallax-img' ) );
@@ -63,7 +84,7 @@ function render_method_section_block( $block_attributes, $content, $block ) {
         <div ' . get_block_wrapper_attributes( ['class' => 'method-section', 'id' => $methodId] ) . '>
             ' . $contentWrap . '
                 ' . $chosenImg . '
-                <div class="method-section-bgimg">&nbsp;</div>
+                <div class="method-section-bgimg"' . $bgimgData . '>&nbsp;</div>
                 <div class="method-section-shade">&nbsp;</div>
                 <div class="method-section-content-inner' . $extraClasses . '">
                     ' . do_blocks( $content ) . '

@@ -78,6 +78,12 @@ function getBreakpointStyle(
 							.join(', ');
 					}
 				}
+			} else if (prop === 'aspectRatioDimension') {
+				if (!!settings?.aspectRatioX && !!settings?.aspectRatioY) {
+					const arx = settings?.aspectRatioX || 1;
+					const ary = settings?.aspectRatioY || 1;
+					styleProps['aspect-ratio'] = `${arx}/${ary}`;
+				}
 			} else if (
 				prop === 'bgPosition' ||
 				prop === 'bgSize' ||

@@ -330,6 +330,12 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 			}
 		}
 
+		if ( 'aspectRatioDimension' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'aspectRatioX' ) && method_get_responsive_setting( $block_attributes, $context, 'aspectRatioY' ) ) {
+				$declarations['aspect-ratio'] = method_get_responsive_setting( $block_attributes, $context, 'aspectRatioX' ) . '/' . method_get_responsive_setting( $block_attributes, $context, 'aspectRatioY' ) . $suffix;
+			}
+		}
+
 		if ( $customBg ) {
 
 			if ( 'bgPosition' == $cssprop ) {

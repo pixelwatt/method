@@ -61,3 +61,23 @@
 .method-responsive-tab-controls .components-panel__row label {
   max-width: 100%;
 }
+
+.method-aspect-ratio-layout {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  border: 1px solid #ddd;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.method-aspect-ratio-layout .components-input-control__input {
+  text-align: center;
+}
+.method-aspect-ratio-layout .components-input-control__input,
+.method-aspect-ratio-layout .components-number-control,
+.method-aspect-ratio-layout .components-number-control * {
+  border: none !important;
+  border-image-width: 0 !important;
+  border-color: transparent !important;
+}

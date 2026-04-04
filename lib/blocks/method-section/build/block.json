@@ -45,6 +45,14 @@
     "bgShadeGradient": {
       "type": "string"
     },
+    "bgMedia": {
+      "type": "string",
+      "default": ""
+    },
+    "images": {
+      "type": "array",
+      "default": []
+    },
     "bgImg": {
       "type": "object",
       "default": {

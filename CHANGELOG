@@ -1,3 +1,9 @@
+## 2.0.0-beta9
+
+### Section Block Changes
+Overflow can now be set for Section blocks via Additional Options.
+
+
 ## 2.0.0-beta8
 
 ### New Features

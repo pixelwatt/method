@@ -1,3 +1,8 @@
+## 2.0.0-beta10
+
+MatchHeight group now correctly added to container blocks on the frontend (through render callback)
+
+
 ## 2.0.0-beta9
 
 ### Section Block Changes

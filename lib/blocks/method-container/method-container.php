@@ -27,7 +27,7 @@ function render_method_container_block( $block_attributes, $content, $block ) {
     );
 
     // '#' . $methodId . ' > .method-container-content > .method-container-bgimg' => array( 'bgImg', 'bgPosition', 'bgSize', 'bgRepeat' ),
-
+    $mhgroup = method_get_responsive_setting( $block_attributes, 'base', 'mh' );
     $openTag = '<div ' . get_block_wrapper_attributes( ['class' => 'method-container', 'id' => $methodId] ) . '>';
     $closeTag = '</div>';
 
@@ -44,9 +44,9 @@ function render_method_container_block( $block_attributes, $content, $block ) {
     $chosenImg = '';
     if ( ( ! method_check_array_key( $block_attributes, 'useParallax' ) ) && ( ! method_check_array_key( $block_attributes, 'bgVideo' ) ) ) {
         $cssargs["#{$methodId}  > .method-container-content > .method-container-bgimg"] = array( 'bgImg', 'bgPosition', 'bgSize', 'bgRepeat' );
-        $contentWrap = '<div class="method-container-content">';
+        $contentWrap = '<div class="method-container-content"' . ( ! empty( $mhgroup ) ? ' data-mh="' . $mhgroup . '"' : '' ) . '>';
     } else {
-        $contentWrap = '<div class="method-container-content jarallax" data-jarallax data-speed="0.8"' . ( method_check_array_key( $block_attributes, 'bgVideo' ) ? ' data-video-src="' . $block_attributes['bgVideo'] . '"' : '' ) . '>';
+        $contentWrap = '<div class="method-container-content jarallax" data-jarallax data-speed="0.8"' . ( method_check_array_key( $block_attributes, 'bgVideo' ) ? ' data-video-src="' . $block_attributes['bgVideo'] . '"' : '' ) . ( ! empty( $mhgroup ) ? ' data-mh="' . $mhgroup . '"' : '' ) . '>';
         $chosenSize = method_get_responsive_setting( $block_attributes, 'base', 'bgImgSize', 'full' );
         if ( method_check_array_key( $block_attributes, 'bgImg' ) ) {
             if ( method_check_array_key( $block_attributes['bgImg'], 'id' ) ) {

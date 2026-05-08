@@ -1,3 +1,12 @@
+## 2.0.0-beta12
+
+### Accordion Spacing Fixes
+Removed styles that set margins for paragraphs inside accordion content to zero.
+
+### Frontend CSS Generation Changes
+mzrgin-top and margin-bottom no longer generate default values of 0 if no custom margins have been provided. This fixes a display discrepancy between the frontend and backend.
+
+
 ## 2.0.0-beta11
 
 Fixed an issue with frontend CSS generation that prevented responsive text-align overrides for core blocks from rendering.

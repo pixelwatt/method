@@ -976,8 +976,12 @@ $offcanvas-transition: transform 0.3s ease-in-out;
     padding: 1.5rem 0;
     //font-size: 20px;
 
-    p {
-        margin: 0;
+    .accordion-body-inner>*:first-child {
+        margin-top: 0;
+    }
+
+    .accordion-body-inner>*:last-child {
+        margin-bottom: 0;
     }
 }
 
@@ -1658,8 +1662,8 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
     .method-section-inner-blocks {
         box-sizing: border-box;
         position: relative;
+        //display: flow-root;
         //overflow: hidden;
-
     }
 
     .method-section-content-inner {

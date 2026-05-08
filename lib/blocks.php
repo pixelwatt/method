@@ -630,7 +630,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 			// Margin Top
 			if ( ( 'margin-top' == $cssprop ) || ( 'marginTop' == $cssprop ) || ( 'marginTopNonZero' == $cssprop ) ) {
-				$declarations['margin-top'] = '0' . $suffix;
+				//$declarations['margin-top'] = '0' . $suffix;
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'margin' ) ) {
 						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["margin"], 'top' ) ) {
@@ -644,7 +644,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 			// Margin Bottom
 			if ( ( 'margin-bottom' == $cssprop ) || ( 'marginBottom' == $cssprop ) || ( 'marginBottomNonZero' == $cssprop ) ) {
-				$declarations['margin-bottom'] = '0' . $suffix;
+				//$declarations['margin-bottom'] = '0' . $suffix;
 				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
 					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'margin' ) ) {
 						if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"]["margin"], 'bottom' ) ) {

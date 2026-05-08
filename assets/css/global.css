@@ -989,8 +989,11 @@ $offcanvas-transition: transform 0.3s ease-in-out;
 .accordion-body {
   padding: 1.5rem 0;
 }
-.accordion-body p {
-  margin: 0;
+.accordion-body .accordion-body-inner > *:first-child {
+  margin-top: 0;
+}
+.accordion-body .accordion-body-inner > *:last-child {
+  margin-bottom: 0;
 }
 
 .collapse {

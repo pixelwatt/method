@@ -574,7 +574,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 				}
 			}
 
-			if ( 'text-align' == $cssprop ) {
+			if ( ( 'text-align' == $cssprop ) || ( 'textAlign' == $cssprop ) ) {
 				if ( method_get_responsive_setting( $block_attributes, $context, 'textAlign' ) ) {
 					$declarations['text-align'] = method_get_responsive_setting( $block_attributes, $context, 'textAlign' ) . $suffix;
 				}

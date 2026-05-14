@@ -4,6 +4,10 @@
   "title": "Accordion",
   "category": "method-component-blocks",
   "icon": "block-default",
+  "providesContext": {
+    "method-accordion/hTag": "hTag",
+    "method-accordion/closed": "closed"
+  },
   "supports": {
     "html": false,
     "align": [
@@ -13,6 +17,18 @@
   "attributes": {
     "accordionId": {
       "type": "string"
+    },
+    "openItem": {
+      "type": "integer",
+      "default": 1
+    },
+    "closed": {
+      "type": "bool",
+      "default": false
+    },
+    "hTag": {
+      "type": "string",
+      "default": "h2"
     }
   },
   "editorScript": "file:./index.js"

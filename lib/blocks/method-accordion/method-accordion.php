@@ -29,8 +29,12 @@ function render_method_accordion_block( $block_attributes, $content, $block ) {
 
 function render_method_accordion_item_block( $block_attributes, $content, $block ) {
     $itemIndex = $block_attributes['itemIndex'];
+    $hTag = $block->context['method-accordion/hTag'] ?? 'h2';
+    
+    $closed = $block->context['method-accordion/closed'] ?? false;
+    $open = ( 1 == $itemIndex ? ( $closed ? false : true ) : false );
     return '
-        <h2 class="accordion-header"><button class="accordion-button' . ( 1 == $itemIndex ? '' : ' collapsed' ) . '" type="button" aria-expanded="' . ( 1 == $itemIndex ? 'true' : 'false' ) . '" aria-controls="collapse' . $itemIndex . '" data-bs-toggle="collapse" data-bs-target="#collapse' . $itemIndex . '">' . ( method_check_array_key( $block_attributes, 'headline' ) ? $block_attributes['headline'] : 'Accordion Item' ) . '</button></h2>
+        <' . $hTag . ' class="accordion-header"><button class="accordion-button' . ( $open ? '' : ' collapsed' ) . '" type="button" aria-expanded="' . ( $open ? 'true' : 'false' ) . '" aria-controls="collapse' . $itemIndex . '" data-bs-toggle="collapse" data-bs-target="#collapse' . $itemIndex . '">' . ( method_check_array_key( $block_attributes, 'headline' ) ? $block_attributes['headline'] : 'Accordion Item' ) . '</button></' . $hTag . '>
         <div ' . get_block_wrapper_attributes( ['class' => 'accordion-item' ] ) . '>
             ' . do_blocks( $content ) . '
         </div>

@@ -1,10 +1,15 @@
+## 2.0.0-beta13
+
+Added controls for specifying accordion row headline tags and whether the first item of an accordion should appear as open by default.
+
+
 ## 2.0.0-beta12
 
 ### Accordion Spacing Fixes
 Removed styles that set margins for paragraphs inside accordion content to zero.
 
 ### Frontend CSS Generation Changes
-mzrgin-top and margin-bottom no longer generate default values of 0 if no custom margins have been provided. This fixes a display discrepancy between the frontend and backend.
+margin-top and margin-bottom no longer generate default values of 0 if no custom margins have been provided. This fixes a display discrepancy between the frontend and backend.
 
 
 ## 2.0.0-beta11

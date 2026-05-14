@@ -4,6 +4,10 @@
   "title": "Accordion Item",
   "category": "method-component-blocks",
   "icon": "block-default",
+  "usesContext": [
+    "method-accordion/hTag",
+    "method-accordion/closed"
+  ],
   "parent": [
     "method/accordion"
   ],
@@ -19,6 +23,10 @@
     },
     "parentAccordionId": {
       "type": "string"
+    },
+    "closed": {
+      "type": "bool",
+      "default": false
     }
   },
   "editorScript": "file:./index.js"

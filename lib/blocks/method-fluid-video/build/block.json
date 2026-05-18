@@ -1,0 +1,61 @@
+{
+  "apiVersion": 3,
+  "name": "method/fluid-video",
+  "title": "Fluid Video",
+  "description": "A container-filling video embed, triggered via the user clicking on an image overlay.",
+  "category": "method-component-blocks",
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "attributes": {
+    "videoUrl": {
+      "type": "string"
+    },
+    "linkColor": {
+      "type": "string"
+    },
+    "linkHoverColor": {
+      "type": "string"
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "bgGradient": {
+      "type": "string"
+    },
+    "bgShadeColor": {
+      "type": "string"
+    },
+    "bgShadeGradient": {
+      "type": "string"
+    },
+    "bgImg": {
+      "type": "object",
+      "default": {
+        "id": ""
+      }
+    },
+    "responsiveSettings": {
+      "type": "object",
+      "default": {
+        "base": {
+          "enabled": true
+        },
+        "mobile": {
+          "enabled": false
+        },
+        "tablet": {
+          "enabled": false
+        },
+        "wide": {
+          "enabled": false
+        }
+      }
+    }
+  },
+  "editorScript": "file:./index.js"
+}

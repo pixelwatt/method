@@ -271,6 +271,7 @@ function getBreakpointStyle(
 			} else if (
 				prop === 'textColor' ||
 				prop === 'linkColor' ||
+				prop === 'linkHoverColor' ||
 				prop === 'bgColor' ||
 				prop === 'bgShade' ||
 				prop === 'bgAlign'
@@ -281,6 +282,12 @@ function getBreakpointStyle(
 					}
 					if (prop === 'linkColor' && attributes.linkColor) {
 						styleProps['color'] = attributes.linkColor;
+					}
+					if (
+						prop === 'linkHoverColor' &&
+						attributes.linkHoverColor
+					) {
+						styleProps['color'] = attributes.linkHoverColor;
 					}
 					if (prop === 'bgColor') {
 						const bg = attributes.bgGradient || attributes.bgColor;

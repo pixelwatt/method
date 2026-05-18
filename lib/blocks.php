@@ -117,6 +117,7 @@ require_once('blocks/method-container/method-container.php');
 require_once('blocks/method-core-extensions/method-core-extensions.php');
 require_once('blocks/method-fitted-image/method-fitted-image.php');
 require_once('blocks/method-flex/method-flex.php');
+require_once('blocks/method-fluid-video/method-fluid-video.php');
 //require_once('blocks/method-navbar/method-navbar.php');
 require_once('blocks/method-scrollspy/method-scrollspy.php');
 require_once('blocks/method-section/method-section.php');

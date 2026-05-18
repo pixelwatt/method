@@ -1,3 +1,32 @@
+## 2.0.0-beta14
+
+### New Block — Fluid Video (`method/fluid-video`)
+
+A click-to-play video embed block. The block renders a poster image with a play button; on click, the poster is swapped for an autoplaying YouTube or Vimeo iframe at a 16:9 aspect ratio.
+
+- Supports YouTube (`youtube.com/watch`, `youtu.be/`, `embed`, `shorts`) and Vimeo (`vimeo.com/`, `player.vimeo.com/video/`, channel URLs) via the **Video URL** field.
+- Color controls for link (play icon), link hover, background, and background shade — with custom labels in the inspector (e.g. "Icon Color", "Image Shade").
+- Background image (poster) selection through `MethodBackgroundControls` in a limited mode that hides image-display, parallax, and video-fallback options.
+- Border, border-radius, margin, and box-shadow controls per breakpoint.
+- Frontend handler (`method-fluid-video.js`) builds the iframe on click, hides the poster, and moves focus into the player for keyboard users.
+
+### Component Changes
+
+- **`MethodColorControls`** — new `labels` prop accepts a `{ key: 'Custom Label' }` map to override the default label for any included color setting.
+- **`MethodBackgroundControls`** — new `limited` prop that hides image-display options (shade, position, repeat, size, parallax checkbox, background video URL) for blocks that only need to pick a background image.
+- **`MethodStyleTag.jsx`** — added `linkHoverColor` to the editor CSS generator so hover color previews live inside the block editor.
+
+### Helpers
+
+- New `method_parse_video_url( $url )` in `lib/helper-functions.php` returns `[ 'provider' => 'youtube'|'vimeo', 'id' => '...' ]` for supported URLs.
+- New `method_build_embed_url( $provider, $id )` returns an autoplay-ready embed URL with sensible defaults (no related videos, modest branding, inline iOS playback, DNT for Vimeo).
+
+### Build
+
+- `gulpfile.js` — `assets/js/method-fluid-video.js` is now concatenated into `assets/js/scripts.js`.
+- `lib/blocks.php` — registers the new `method-fluid-video` block.
+
+
 ## 2.0.0-beta13
 
 Added controls for specifying accordion row headline tags and whether the first item of an accordion should appear as open by default.

@@ -12,6 +12,7 @@ gulp.task('scripts', function () {
         .src([
             'inc/bootstrap/js/bootstrap.bundle.js',
             'inc/matchHeight/jquery.matchHeight.js',
+            'assets/js/method-fluid-video.js',
         ])
         .pipe(concat('assets/js/scripts.js'))
         .pipe(gulp.dest('.'))

@@ -438,3 +438,63 @@ function method_get_available_archives_options( $prepend = array(), $exclude = f
 	}
 	return $options;
 }
+
+
+function method_parse_video_url( $url ) {
+    if ( empty( $url ) ) {
+        return null;
+    }
+
+    // YouTube: youtube.com/watch?v=, youtu.be/, youtube.com/embed/, youtube.com/shorts/
+    if ( preg_match(
+        '~(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|shorts/|v/)|youtu\.be/)([A-Za-z0-9_-]{11})~',
+        $url,
+        $m
+    ) ) {
+        return [ 'provider' => 'youtube', 'id' => $m[1] ];
+    }
+
+    // Vimeo: vimeo.com/12345678, player.vimeo.com/video/12345678, vimeo.com/channels/x/12345678
+    if ( preg_match(
+        '~vimeo\.com/(?:.*/)?(?:video/)?(\d+)~',
+        $url,
+        $m
+    ) ) {
+        return [ 'provider' => 'vimeo', 'id' => $m[1] ];
+    }
+
+    return null;
+}
+
+
+function method_build_embed_url( $provider, $id ) {
+    if ( 'youtube' === $provider ) {
+        return add_query_arg(
+            [
+                'autoplay'       => 1,
+                'rel'            => 0,   // no related videos from other channels
+                'modestbranding' => 1,
+                'playsinline'    => 1,   // iOS inline playback
+                // 'mute'        => 1,   // add if you want guaranteed autoplay
+            ],
+            "https://www.youtube.com/embed/{$id}"
+        );
+    }
+
+    if ( 'vimeo' === $provider ) {
+        return add_query_arg(
+            [
+                'autoplay'    => 1,
+                'title'       => 0,
+                'byline'      => 0,
+                'portrait'    => 0,
+                'dnt'         => 1,
+                'playsinline' => 1,
+                // 'muted'    => 1,
+            ],
+            "https://player.vimeo.com/video/{$id}"
+        );
+    }
+
+    return '';
+}

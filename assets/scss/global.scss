@@ -2266,3 +2266,57 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
 :where(.docs-content) :is(h1, h2, h3, h4, h5, h6)[id] {
     scroll-margin-top: calc(var(--scrollspy-offset, 0px) + 1.5rem);
 }
+
+.method-fluid-video {
+    overflow: hidden;
+
+    &-preview {
+        position: relative;
+
+        .method-invoke-target {
+            position: absolute;
+            display: flex;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            transition: 0.14s ease-in-out color;
+
+            svg {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        .method-block-shade {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+        }
+
+        .method-fit-img-container {
+            padding-top: 56.25%;
+            z-index: 1;
+        }
+    }
+
+    &-player {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        position: relative;
+
+        .method-fluid-video__iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    }
+}

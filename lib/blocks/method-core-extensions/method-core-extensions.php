@@ -141,7 +141,7 @@ add_filter( 'render_block', 'method_core_extensions_render_css', 10, 3 );
 function method_core_extensions_render_css( $block_content, $parsed_block, $block_instance ) {
     $config = method_core_extensions_get_config();
 
-    if ( ! isset( $config[ $parsed_block['blockName'] ] ) ) {
+    if ( empty( $parsed_block['blockName'] ) || ! isset( $config[ $parsed_block['blockName'] ] ) ) {
         return $block_content;
     }
 

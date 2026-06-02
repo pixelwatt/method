@@ -1,0 +1,49 @@
+{
+  "apiVersion": 3,
+  "name": "method/swiper",
+  "title": "Swiper",
+  "category": "method-layout-blocks",
+  "icon": "images-alt2",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "slidesPerView": {
+      "type": "number",
+      "default": 3
+    },
+    "slidesPerViewTablet": {
+      "type": "number",
+      "default": 2
+    },
+    "slidesPerViewMobile": {
+      "type": "number",
+      "default": 1
+    },
+    "spaceBetween": {
+      "type": "number",
+      "default": 24
+    },
+    "spaceBetweenTablet": {
+      "type": "number",
+      "default": 24
+    },
+    "spaceBetweenMobile": {
+      "type": "number",
+      "default": 24
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "editorScript": "file:./index.js"
+}

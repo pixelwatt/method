@@ -2320,3 +2320,47 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
         }
     }
 }
+
+.method-swiper {
+    .swiper-outer {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+
+        .method-swiper-button-prev {
+            order: 1;
+        }
+
+        .swiper-outer-wrap {
+            order: 2;
+            flex: 1;
+            min-height: 48px;
+            min-width: 0;
+
+            &-inner {
+                display: block;
+                max-width: 100%;
+                //padding-bottom: 64px;
+            }
+        }
+
+        .method-swiper-button-next {
+            order: 3;
+        }
+
+        .method-swiper-button-prev,
+        .method-swiper-button-next {
+            width: 44px;
+            height: 44px;
+            display: inline-block;
+            z-index: 100;
+            position: relative;
+            pointer-events: all;
+
+            svg {
+                width: 44px;
+                height: 44px;
+            }
+        }
+    }
+}

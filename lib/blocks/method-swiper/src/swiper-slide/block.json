@@ -1,0 +1,67 @@
+{
+    "apiVersion": 3,
+    "name": "method/swiper-slide",
+    "title": "Swiper Slide",
+    "category": "method-layout-blocks",
+    "icon": "format-image",
+    "parent": [
+        "method/swiper"
+    ],
+    "supports": {
+        "html": false
+    },
+    "attributes": {
+        "textColor": {
+            "type": "string"
+        },
+        "linkColor": {
+            "type": "string"
+        },
+        "bgColor": {
+            "type": "string"
+        },
+        "bgGradient": {
+            "type": "string"
+        },
+        "bgShadeColor": {
+            "type": "string"
+        },
+        "bgShadeGradient": {
+            "type": "string"
+        },
+        "bgImg": {
+            "type": "object",
+            "default": {
+                "id": ""
+            }
+        },
+        "bgSize": {
+            "type": "string"
+        },
+        "bgImgAlign": {
+            "type": "string",
+            "default": "center center"
+        },
+        "responsiveSettings": {
+            "type": "object",
+            "default": {
+                "base": {
+                    "enabled": true
+                },
+                "mobile": {
+                    "enabled": false,
+                    "customBg": false
+                },
+                "tablet": {
+                    "enabled": false,
+                    "customBg": false
+                },
+                "wide": {
+                    "enabled": false,
+                    "customBg": false
+                }
+            }
+        }
+    },
+    "editorScript": "file:./index.js"
+}

@@ -122,6 +122,7 @@ require_once('blocks/method-fluid-video/method-fluid-video.php');
 require_once('blocks/method-scrollspy/method-scrollspy.php');
 require_once('blocks/method-section/method-section.php');
 require_once('blocks/method-social-nav/method-social-nav.php');
+require_once('blocks/method-swiper/method-swiper.php');
 require_once('blocks/method-swiper-gallery/method-swiper-gallery.php');
 
 

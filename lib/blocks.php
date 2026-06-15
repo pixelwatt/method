@@ -732,7 +732,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 	return $output;
 }
 
-function method_get_block_media_query_declarations( $block_attributes, $context = '', $cssprops = array(), $cssSelector, $post_id = false ) {
+function method_get_block_media_query_declarations( $block_attributes, $context = '', $cssprops = array(), $cssSelector = '', $post_id = false ) {
 	$output = '';
 	$declarations = method_get_block_css_declarations( $block_attributes, $context, $cssprops, true, $post_id );
 	$output .= ( ! empty( $declarations ) ? $cssSelector . ' {' . $declarations . '} ' : '' );

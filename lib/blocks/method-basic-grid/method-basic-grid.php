@@ -46,6 +46,7 @@ function render_method_basic_grid_item_block( $block_attributes, $content, $bloc
     $methodId = uniqid( 'method-' );
     $output = '<div ' . get_block_wrapper_attributes( ['class' => 'method-grid-item-component', 'id' => $methodId] ) . '>' . do_blocks( $content ) . '</div>';
     $cssargs = array(
+        '#' . $methodId => array( 'hide' ),
         '#' . $methodId . ' > .method-inner-blocks' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' )
     );
     $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );

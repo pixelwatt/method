@@ -165,6 +165,11 @@ function getBreakpointStyle(
 			) {
 				styleProps['width'] = settings.dimensions;
 				styleProps['height'] = settings.dimensions;
+			} else if (prop === 'hide') {
+				if (settings?.hide === true) {
+					styleProps['display'] = 'none';
+					styleProps['visibility'] = 'hidden';
+				}
 			} else if (prop === 'zeroHeight') {
 				if (settings?.zeroHeight === true) {
 					styleProps['height'] = '0';

@@ -488,6 +488,13 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 			}
 		}
 
+		if ( 'hide' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'hide' ) ) {
+				$declarations['display'] = 'none' . $suffix;
+				$declarations['visibility'] = 'hidden' . $suffix;
+			}
+		}
+
 		if ( 'zIndex' == $cssprop ) {
 			if ( method_get_responsive_setting( $block_attributes, $context, 'zIndex' ) ) {
 				$declarations['z-index'] = method_get_responsive_setting( $block_attributes, $context, 'zIndex' ) . $suffix;

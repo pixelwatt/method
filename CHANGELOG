@@ -1,6 +1,27 @@
 ## 2.0.0-beta15
 
-Added new Swiper block.
+### New Block — Swiper (`method/swiper` + `method/swiper-slide`)
+
+A responsive content carousel built on [Swiper](https://swiperjs.com). The parent **Swiper** block holds one or more **Swiper Slide** child blocks, each of which is a full inner-blocks container that can hold any other Method or core blocks.
+
+- **Responsive slides-per-view and spacing** — separate Desktop, Tablet, and Mobile controls for both "Slides per view" (1–6) and "Space between" (0–120px). Values are mobile-first: the mobile setting is the base, with tablet (≥768px) and desktop (≥1024px) applied as Swiper breakpoint overrides. The same breakpoints are used in the editor preview and on the frontend.
+- **Navigation toggles** — "Show arrows" and "Show pagination" toggles in the inspector. Prev/next arrows use inline Bootstrap chevron SVGs with visually-hidden labels; pagination renders clickable bullets.
+- **Editor parity** — the block initialises a live Swiper instance inside the editor that mirrors the frontend config. Touch/drag is disabled and click handling is left to Gutenberg so slides remain selectable and editable; Swiper observers keep the instance in sync as slides are added, removed, or their contents change.
+- **Custom slide appender** — an "Add slide" button is rendered outside the Swiper track (so it isn't sized or clipped like a slide) and inserts a new `method/swiper-slide` without stealing focus.
+- The frontend render callback outputs a per-instance Swiper config with a unique ID, `loop: true`, and `autoHeight: true`. Navigation/pagination markup and config are only emitted when the corresponding toggle is enabled.
+- New global styles for `.method-swiper` lay out the prev/arrow/track/next row via flexbox with 44×44px arrow targets.
+- `lib/blocks.php` registers the new block.
+
+### Additional Options — Visibility Toggle
+
+- **`MethodAddtControls`** gains a new `hide` option, opt-in via the `include` array (now `['overflow', 'zIndex', 'hide']` by default). The "Visibility" tools-panel item exposes a **Hide** toggle that hides the block for the selected breakpoint by setting `display: none` and `visibility: hidden`.
+- CSS generation handles `hide` on both sides: `method_get_block_css_declarations()` (`lib/blocks.php`) emits the declarations on the frontend, and `MethodStyleTag.jsx` emits them in the editor preview.
+- The Basic Grid **Item** block (`method-basic-grid`) now wires up the visibility toggle across the mobile, tablet, and wide breakpoints, mapped to the item's outer wrapper selector.
+
+### Fixes
+
+- `method_get_block_media_query_declarations()` (`lib/blocks.php`) — added a default value (`''`) for the `$cssSelector` parameter to silence PHP warnings when it is called without one.
+- `method_core_extensions_render_css()` (`method-core-extensions.php`) — guard against an empty/missing `blockName` before the config lookup, preventing a warning on blocks without a name.
 
 ## 2.0.0-beta14
 

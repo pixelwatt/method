@@ -7,6 +7,7 @@ function register_method_swiper_block() {
 
 		$show_navigation = ! isset( $attributes['showNavigation'] ) || $attributes['showNavigation'];
 		$show_pagination = ! isset( $attributes['showPagination'] ) || $attributes['showPagination'];
+		$fade_effect     = isset( $attributes['fadeEffect'] ) && $attributes['fadeEffect'];
 
 		// Mobile-first base values; tablet (768px) and desktop (1024px) tiers
 		// override via breakpoints, matching the editor's Swiper config.
@@ -30,6 +31,20 @@ function register_method_swiper_block() {
 			? 'navigation: { nextEl: \'#' . $methodId . ' .method-swiper-button-next\', prevEl: \'#' . $methodId . ' .method-swiper-button-prev\' },'
 			: '';
 
+		// Fade shows a single, stacked slide and crossfades between them, so
+		// per-view counts, spacing and breakpoints don't apply.
+		$effect_config = $fade_effect
+			? "slidesPerView: 1,
+                        spaceBetween: 0,
+                        effect: 'fade',
+                        fadeEffect: { crossFade: true },"
+			: "slidesPerView: $slides_per_view_mobile,
+                        spaceBetween: $space_between_mobile,
+                        breakpoints: {
+                            768: { slidesPerView: $slides_per_view_tablet, spaceBetween: $space_between_tablet },
+                            1024: { slidesPerView: $slides_per_view, spaceBetween: $space_between }
+                        },";
+
         return '
             <div ' . get_block_wrapper_attributes( ['class' => 'method-swiper', 'id' => $methodId] ) . '>
                 <div class="swiper-outer">
@@ -47,12 +62,7 @@ function register_method_swiper_block() {
 			<script>
                 document.addEventListener(\'DOMContentLoaded\', function () {
                     const ' . $methodId . 'Swiper = new Swiper(\'#' . $methodId . ' .swiper-container\', {
-                        slidesPerView: ' . $slides_per_view_mobile . ',
-                        spaceBetween: ' . $space_between_mobile . ',
-                        breakpoints: {
-                            768: { slidesPerView: ' . $slides_per_view_tablet . ', spaceBetween: ' . $space_between_tablet . ' },
-                            1024: { slidesPerView: ' . $slides_per_view . ', spaceBetween: ' . $space_between . ' }
-                        },
+                        ' . $effect_config . '
                         loop: true,
                         autoHeight: true,
                         ' . $pagination_config . '

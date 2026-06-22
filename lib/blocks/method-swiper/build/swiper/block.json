@@ -43,6 +43,10 @@
     "showPagination": {
       "type": "boolean",
       "default": true
+    },
+    "fadeEffect": {
+      "type": "boolean",
+      "default": false
     }
   },
   "editorScript": "file:./index.js"

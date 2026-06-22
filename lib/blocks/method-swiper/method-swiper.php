@@ -8,6 +8,7 @@ function register_method_swiper_block() {
 		$show_navigation = ! isset( $attributes['showNavigation'] ) || $attributes['showNavigation'];
 		$show_pagination = ! isset( $attributes['showPagination'] ) || $attributes['showPagination'];
 		$fade_effect     = isset( $attributes['fadeEffect'] ) && $attributes['fadeEffect'];
+		$hash_navigation = isset( $attributes['hashNavigation'] ) && $attributes['hashNavigation'];
 
 		// Mobile-first base values; tablet (768px) and desktop (1024px) tiers
 		// override via breakpoints, matching the editor's Swiper config.
@@ -29,6 +30,9 @@ function register_method_swiper_block() {
 			: '';
 		$navigation_config = $show_navigation
 			? 'navigation: { nextEl: \'#' . $methodId . ' .method-swiper-button-next\', prevEl: \'#' . $methodId . ' .method-swiper-button-prev\' },'
+			: '';
+		$hash_config = $hash_navigation
+			? 'hashNavigation: { watchState: true },'
 			: '';
 
 		// Fade shows a single, stacked slide and crossfades between them, so
@@ -67,6 +71,7 @@ function register_method_swiper_block() {
                         autoHeight: true,
                         ' . $pagination_config . '
                         ' . $navigation_config . '
+                        ' . $hash_config . '
                     });
                 });
 			</script>
@@ -80,10 +85,17 @@ function register_method_swiper_slide_block() {
 	register_block_type( __DIR__ . '/build/swiper-slide', [
     'render_callback' => function( $attributes, $content ) {
         $methodId = uniqid( 'method-' );
-        
+
+		// Swiper's hash navigation reads this `data-hash` off each slide. Output the
+		// value as-is (get_block_wrapper_attributes escapes it) so it matches the
+		// editor exactly. get_block_wrapper_attributes() runs esc_attr() on values.
+		$wrapper_atts = [ 'class' => 'swiper-slide', 'id' => $methodId ];
+		if ( ! empty( $attributes['hash'] ) ) {
+			$wrapper_atts['data-hash'] = $attributes['hash'];
+		}
 
 		return '
-		<div ' . get_block_wrapper_attributes( ['class' => 'swiper-slide', 'id' => $methodId] ) . '>
+		<div ' . get_block_wrapper_attributes( $wrapper_atts ) . '>
 			<div class="method-swiper-slide">
                 <div class="method-swiper-slide-inner">
                     ' . do_blocks( $content ) . '

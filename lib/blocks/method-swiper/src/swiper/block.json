@@ -47,6 +47,10 @@
         "fadeEffect": {
             "type": "boolean",
             "default": false
+        },
+        "hashNavigation": {
+            "type": "boolean",
+            "default": false
         }
     },
     "editorScript": "file:./index.js"

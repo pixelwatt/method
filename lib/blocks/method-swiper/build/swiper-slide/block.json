@@ -11,6 +11,10 @@
     "html": false
   },
   "attributes": {
+    "hash": {
+      "type": "string",
+      "default": ""
+    },
     "textColor": {
       "type": "string"
     },

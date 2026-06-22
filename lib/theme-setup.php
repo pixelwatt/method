@@ -187,7 +187,7 @@ function method_inject_gtag() {
 	if ( ( $util->get_option('ga_enable') ) && ( $util->get_option('ga_id') ) ) {
     ?>
         <!-- Google tag (gtag.js) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-BJ3K9D5ZG9"></script>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $util->get_option('ga_id'); ?>"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}

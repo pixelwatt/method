@@ -9,6 +9,7 @@ function register_method_swiper_block() {
 		$show_pagination = ! isset( $attributes['showPagination'] ) || $attributes['showPagination'];
 		$fade_effect     = isset( $attributes['fadeEffect'] ) && $attributes['fadeEffect'];
 		$hash_navigation = isset( $attributes['hashNavigation'] ) && $attributes['hashNavigation'];
+		$scroll_to_slide = $hash_navigation && isset( $attributes['scrollToSlideStart'] ) && $attributes['scrollToSlideStart'];
 
 		// Mobile-first base values; tablet (768px) and desktop (1024px) tiers
 		// override via breakpoints, matching the editor's Swiper config.
@@ -33,6 +34,13 @@ function register_method_swiper_block() {
 			: '';
 		$hash_config = $hash_navigation
 			? 'hashNavigation: { watchState: true },'
+			: '';
+
+		// Bound after init (below) so the initial hash jump doesn't trigger a scroll —
+		// only genuine navigation does. Scrolls to the top of the slider so taller/
+		// shorter slides always start from the top.
+		$scroll_binding = $scroll_to_slide
+			? $methodId . 'Swiper.on(\'slideChange\', function () { document.getElementById(\'' . $methodId . '\').scrollIntoView({ behavior: \'smooth\', block: \'start\' }); });'
 			: '';
 
 		// Fade shows a single, stacked slide and crossfades between them, so
@@ -73,6 +81,7 @@ function register_method_swiper_block() {
                         ' . $navigation_config . '
                         ' . $hash_config . '
                     });
+                    ' . $scroll_binding . '
                 });
 			</script>
 		';

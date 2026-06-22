@@ -51,6 +51,10 @@
     "hashNavigation": {
       "type": "boolean",
       "default": false
+    },
+    "scrollToSlideStart": {
+      "type": "boolean",
+      "default": false
     }
   },
   "editorScript": "file:./index.js"

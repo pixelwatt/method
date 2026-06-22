@@ -1,3 +1,17 @@
+## 2.0.0-beta16
+
+### Swiper Block — Fade Effect, Hash Navigation & Scroll-to-Slide
+
+Three additions to the **Swiper** block (`method/swiper` + `method/swiper-slide`), all configured from the inspector and reflected in both the editor and on the frontend.
+
+- **Fade (crossfade) effect** — a new **Effect** panel adds a **Fade (crossfade)** toggle. When enabled, the frontend uses Swiper's `fade` effect with `crossFade: true`, showing a single slide at a time; the "Slides per view" and "Space between" panels are hidden, since they no longer apply. The editor preview also drops to one slide at a time, but deliberately keeps the normal (non-stacked) slide layout rather than the real fade: Swiper's fade effect overlaps every slide in the same position, and the top-most (last) slide would then swallow clicks meant for the others, making it impossible to reliably click a slide to edit it. The crossfade transition itself is therefore applied on the frontend only.
+- **Hash navigation** — a new **Hash navigation** toggle on the parent block enables Swiper's `hashNavigation` (`watchState: true`), keeping the URL hash in sync with the active slide and jumping to the matching slide on load and on browser back/forward. Each **Swiper Slide** child block gains a **Slide hash** field (new `hash` attribute) that is output as a `data-hash` attribute on the slide in both the editor and on the frontend.
+- **Scroll to slide start** — a new **Scroll to slide start** toggle that appears only when hash navigation is enabled. On the frontend, navigating to a new slide smoothly scrolls the page to the top of the slider — useful when slides vary substantially in height. The handler is bound after Swiper initialises, so the initial hash jump on page load does not trigger a scroll; only genuine navigation (arrows, pagination, or a hash change) does. The option is also gated server-side so it has no effect unless hash navigation is on.
+
+### Fixes
+
+- **Google Analytics** — `method_inject_gtag()` (`lib/theme-setup.php`) now builds the `gtag.js` loader URL from the configured **Tag ID** (`ga_id`) theme option instead of a hardcoded tracking ID, so the loader script and the inline config reference the same property.
+
 ## 2.0.0-beta15
 
 ### New Block — Swiper (`method/swiper` + `method/swiper-slide`)

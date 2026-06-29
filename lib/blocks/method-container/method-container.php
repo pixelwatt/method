@@ -23,7 +23,7 @@ function render_method_container_block( $block_attributes, $content, $block ) {
         '#' . $methodId => array( 'borderRadius', 'marginLeftNonZero', 'marginRightNonZero', 'margin-top', 'margin-bottom', 'boxShadow', 'zIndex' ),
         '#' . $methodId . ' > .method-container-content' => array( 'color', 'bgColor', 'borderRadius', 'border', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'fontSize', 'lineHeight', 'height', 'minHeight', 'width', 'minWidth', 'alignItems', 'overflow', 'aspectRatioDimension' ),
         '#' . $methodId . ' > .method-container-content > .method-container-shade' => array( 'bgShade' ),
-        '#' . $methodId . ' a' => array( 'linkColor' )
+        '#' . $methodId . ' a:not(.method-theme-button)' => array( 'linkColor' )
     );
 
     // '#' . $methodId . ' > .method-container-content > .method-container-bgimg' => array( 'bgImg', 'bgPosition', 'bgSize', 'bgRepeat' ),

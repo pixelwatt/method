@@ -33,14 +33,19 @@ function register_method_swiper_block() {
 			? 'navigation: { nextEl: \'#' . $methodId . ' .method-swiper-button-next\', prevEl: \'#' . $methodId . ' .method-swiper-button-prev\' },'
 			: '';
 		$hash_config = $hash_navigation
-			? 'hashNavigation: { watchState: true },'
+			? 'hashNavigation: { watchState: true, replaceState: true },'
 			: '';
 
 		// Bound after init (below) so the initial hash jump doesn't trigger a scroll —
 		// only genuine navigation does. Scrolls to the top of the slider so taller/
 		// shorter slides always start from the top.
 		$scroll_binding = $scroll_to_slide
-			? $methodId . 'Swiper.on(\'slideChange\', function () { document.getElementById(\'' . $methodId . '\').scrollIntoView({ behavior: \'smooth\', block: \'start\' }); });'
+			? 'var ' . $methodId . 'LastIndex = ' . $methodId . 'Swiper.realIndex;
+			   ' . $methodId . 'Swiper.on(\'slideChange\', function () {
+			       if ( ' . $methodId . 'Swiper.realIndex === ' . $methodId . 'LastIndex ) return;
+			       ' . $methodId . 'LastIndex = ' . $methodId . 'Swiper.realIndex;
+			       document.getElementById(\'' . $methodId . '\').scrollIntoView({ behavior: \'instant\', block: \'start\' });
+			   });'
 			: '';
 
 		// Fade shows a single, stacked slide and crossfades between them, so

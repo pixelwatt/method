@@ -1558,6 +1558,10 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   margin: 0;
+  -webkit-margin-before: 0;
+          margin-block-start: 0;
+  -webkit-margin-after: 0;
+          margin-block-end: 0;
   padding: 0;
 }
 .method-section .method-section-content {

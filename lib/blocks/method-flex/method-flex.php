@@ -37,7 +37,7 @@ function render_method_flex_block( $block_attributes, $content, $block ) {
 function render_method_flex_item_block( $block_attributes, $content, $block ) {
     $methodId = uniqid( 'method-' );
     $cssargs = array(
-        '#' . $methodId => array( 'flexGrow', 'flexShrink', 'flexBasis' ),
+        '#' . $methodId => array( 'flexGrow', 'flexShrink', 'flexBasis', 'hide' ),
     );
     $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
     method_collect_css( $responsive, '#' . $methodId, 10);

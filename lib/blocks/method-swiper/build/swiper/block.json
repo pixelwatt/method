@@ -43,6 +43,18 @@
     "showPagination": {
       "type": "boolean",
       "default": true
+    },
+    "fadeEffect": {
+      "type": "boolean",
+      "default": false
+    },
+    "hashNavigation": {
+      "type": "boolean",
+      "default": false
+    },
+    "scrollToSlideStart": {
+      "type": "boolean",
+      "default": false
     }
   },
   "editorScript": "file:./index.js"

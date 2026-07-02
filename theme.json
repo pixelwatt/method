@@ -126,6 +126,14 @@
 					"fontWeight": "400",
 					"fontFamily": "var(--wp--preset--font-family--sans-serif)"
 				}
+			},
+			"method/section": {
+				"spacing": {
+					"margin": {
+						"top": "0",
+						"bottom": "0"
+					}
+				}
 			}
 		}
 	}

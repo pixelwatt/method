@@ -1684,6 +1684,7 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
     margin: 0;
     padding: 0;
     display: block;
+    //box-sizing: border-box;
 
     .method-block-content {
         overflow: hidden;
@@ -2365,4 +2366,13 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
             }
         }
     }
+}
+
+.method-embed {
+    aspect-ratio: var(--embed-ratio, 16 / 9);
+}
+
+.method-embed iframe {
+    width: 100%;
+    height: 100%;
 }

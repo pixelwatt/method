@@ -85,7 +85,7 @@ function render_method_advanced_grid_col_block( $block_attributes, $content, $bl
     }
 
     $cssargs = array(
-        '#' . $methodId => array( 'order' ),
+        '#' . $methodId => array( 'order', 'hide' ),
         '#' . $methodId . ' > .method-advanced-grid-col-content' => array( 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'font-size', 'line-height', 'color', 'text-align' ),
         '#' . $methodId . ' > .method-advanced-grid-col-content a' => array( 'linkColor' )
     );

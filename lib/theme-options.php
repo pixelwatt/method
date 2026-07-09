@@ -391,6 +391,7 @@ Child Theme Version: v' . THEME_VERSION;
 $dia = 'Method Version: v' . METHOD_VERSION . $childv . '
 WordPress Version: v' . get_bloginfo('version') . '
 User Agent: ' . $_SERVER['HTTP_USER_AGENT'] . '
+PHP Version: ' . phpversion() . '
 ';
 
 	$cmb_options->add_field(

@@ -18,7 +18,7 @@ function render_method_fitted_image_block( $block_attributes, $block ) {
     $cssargs = array(
         '#' . $methodId => array( 'borderRadius', 'marginLeftNonZero', 'marginRightNonZero', 'margin-top', 'margin-bottom', 'boxShadow', 'zeroHeight' ),
         '#' . $methodId . ' > .method-block-content' => array( 'color', 'bgColor', 'borderRadius', 'border', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom' ),
-        '#' . $methodId . ' > .method-block-content > .method-block-shade' => array( 'bgShade' ),
+        '#' . $methodId . ' > .method-block-content > .method-block-shade' => array( 'bgShade', 'boxShadow', 'borderRadius' ),
         '#' . $methodId . ' > .method-block-content > .method-fit-img-container' => array( 'aspectRatio' ),
     );
     $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );

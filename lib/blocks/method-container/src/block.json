@@ -16,7 +16,7 @@
             "type": "string"
         },
         "useParallax": {
-            "type": "bool",
+            "type": "boolean",
             "default": false
         },
         "textColor": {

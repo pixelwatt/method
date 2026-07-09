@@ -199,3 +199,32 @@ function method_inject_gtag() {
 	}
 }
 add_action('wp_head', 'method_inject_gtag');
+
+
+function method_responsive_embed_wrap( $html ) {
+	// Bail on failures, non-strings, or already-wrapped output.
+	if ( ! is_string( $html ) || '' === $html || str_contains( $html, 'method-embed' ) ) {
+		return $html;
+	}
+
+	if ( ! preg_match( '/<iframe[^>]*\bwidth="(\d+)"[^>]*\bheight="(\d+)"/i', $html, $m ) ) {
+		return $html;
+	}
+
+	return sprintf(
+		'<div class="method-embed" style="--embed-ratio: %d / %d">%s</div>',
+		(int) $m[1],
+		(int) $m[2],
+		$html
+	);
+}
+
+function method_maybe_enable_embed_wrap() {
+	if ( ! current_theme_supports( 'method-responsive-embeds' ) ) {
+		return;
+	}
+
+	add_filter( 'embed_oembed_html', 'method_responsive_embed_wrap', 20 );
+	add_filter( 'oembed_result', 'method_responsive_embed_wrap', 20 );
+}
+add_action( 'after_setup_theme', 'method_maybe_enable_embed_wrap', 11 );

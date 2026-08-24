@@ -228,3 +228,32 @@ function method_maybe_enable_embed_wrap() {
 	add_filter( 'oembed_result', 'method_responsive_embed_wrap', 20 );
 }
 add_action( 'after_setup_theme', 'method_maybe_enable_embed_wrap', 11 );
+
+
+//-----------------------------------------------------
+// Method: disable responsive style editing by default.
+//
+// Child themes can re-enable with:
+//   add_theme_support( 'method-responsive-editing' );
+// or via the filter:
+//   add_filter( 'method/responsive_editing_enabled', '__return_true' );
+//
+// Rendering of saved responsive styles is unaffected — this
+// gates the editing UI only.
+//-----------------------------------------------------
+
+function method_configure_responsive_editing( $settings ) {
+	$enabled = current_theme_supports( 'method-responsive-editing' );
+
+	/**
+	 * Filter whether the responsive editing UI is available.
+	 *
+	 * @param bool $enabled Default false unless child theme declares support.
+	 */
+	$enabled = apply_filters( 'method/responsive_editing_enabled', $enabled );
+
+	$settings['responsiveEditingEnabled'] = (bool) $enabled;
+
+	return $settings;
+}
+add_filter( 'block_editor_settings_all', 'method_configure_responsive_editing' );

@@ -1417,12 +1417,9 @@ div[data-type="method/grid-item"],
   min-height: 100%;
 }
 .method-advanced-grid-col-content > :first-child {
-  margin-top: 0 !important;
+  -webkit-margin-before: 0 !important;
+          margin-block-start: 0 !important;
 }
-.method-advanced-grid-col-content > :last-child {
-  margin-bottom: 0 !important;
-}
-
 div[data-type="method/advanced-grid"],
 div[data-type="method/advanced-grid-row"] {
   padding-top: 0;

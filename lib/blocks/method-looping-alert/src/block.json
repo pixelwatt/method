@@ -41,6 +41,10 @@
         "link": {
             "type": "object"
         },
+        "speed": {
+            "type": "number",
+            "default": 25
+        },
         "responsiveSettings": {
             "type": "object",
             "default": {
@@ -62,5 +66,6 @@
             }
         }
     },
-    "editorScript": "file:./index.js"
+    "editorScript": "file:./index.js",
+    "viewScript": "file:./frontend.js"
 }

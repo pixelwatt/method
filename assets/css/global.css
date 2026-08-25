@@ -2242,15 +2242,130 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   height: 100%;
 }
 
+/*
+ * Method Looping Alert
+ *
+ * Markup (shared by the editor preview and the frontend render):
+ *
+ *   .method-looping-alert-inner            (visible viewport, overflow hidden)
+ *     p.method-looping-alert-track         (animated; width = 2 groups)
+ *       .method-looping-alert-group        (N units, N chosen by JS to fill the width)
+ *         .method-looping-alert-unit
+ *           .method-looping-alert-item     (alertText)
+ *           .method-looping-alert-sep      (seperator)
+ *       .method-looping-alert-group        (identical duplicate, aria-hidden)
+ *
+ * Because the track contains exactly two identical groups, translating it by
+ * -50% moves it by exactly one group width, so the loop is seamless.
+ * --method-alert-duration is set by JS from the `speed` attribute.
+ */
 .method-looping-alert {
   -webkit-margin-before: 0;
           margin-block-start: 0;
   -webkit-margin-after: 0;
           margin-block-end: 0;
+  min-width: 0;
 }
 .method-looping-alert p {
   -webkit-margin-before: 0;
           margin-block-start: 0;
   -webkit-margin-after: 0;
           margin-block-end: 0;
+}
+
+a.method-looping-alert {
+  display: block;
+  color: currentColor;
+  text-decoration: none;
+}
+
+.method-looping-alert-inner {
+  overflow: hidden;
+  contain: inline-size;
+}
+
+.method-looping-alert-track {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: 0;
+  will-change: transform;
+}
+.method-looping-alert-track.is-ready {
+  -webkit-animation: method-looping-alert-scroll var(--method-alert-duration, 20s) linear infinite;
+          animation: method-looping-alert-scroll var(--method-alert-duration, 20s) linear infinite;
+}
+.method-looping-alert-track.is-paused {
+  -webkit-animation: none;
+          animation: none;
+}
+
+.method-looping-alert-group {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.method-looping-alert-unit {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.method-looping-alert-item {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.method-looping-alert-sep {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  white-space: nowrap;
+  padding-inline: 1em;
+}
+
+@-webkit-keyframes method-looping-alert-scroll {
+  from {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  to {
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+}
+
+@keyframes method-looping-alert-scroll {
+  from {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+  }
+  to {
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .method-looping-alert-track.is-ready {
+    -webkit-animation: none;
+            animation: none;
+  }
 }

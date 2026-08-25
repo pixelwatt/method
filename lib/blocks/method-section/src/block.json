@@ -1,7 +1,7 @@
 {
     "apiVersion": 3,
     "name": "method/section",
-    "title": "Section",
+    "title": "Method Section",
     "description": "A full-width content wrapper with robust styling and layout controls, designed to define major sections of a page.",
     "category": "method-layout-blocks",
     "usesContext": [

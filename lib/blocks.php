@@ -306,7 +306,7 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 		}
 
 		// Color
-		if ( 'color' == $cssprop ) {
+		if ( ( 'color' == $cssprop ) || ( 'textColor' == $cssprop ) ) {
 			if ( method_check_array_key( $block_attributes, 'textColor' ) ) {
 				$declarations['color'] = method_sanitize_theme_color( $block_attributes['textColor'] ) . $suffix;
 			}
@@ -568,27 +568,57 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 
 		// Line Height
 		if ( ( 'line-height' == $cssprop ) || ( 'lineHeight' == $cssprop ) ) {
-				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
-					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'lineHeight' ) ) {
-						$declarations['line-height'] = $block_attributes["responsiveSettings"]["{$context}"]['lineHeight'] . $suffix;
-					}
+			if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
+				if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'lineHeight' ) ) {
+					$declarations['line-height'] = $block_attributes["responsiveSettings"]["{$context}"]['lineHeight'] . $suffix;
 				}
 			}
+		}
 
-			// Font Size
-			if ( ( 'font-size' == $cssprop ) || ( 'fontSize' == $cssprop ) ) {
-				if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
-					if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'fontSize' ) ) {
-						$declarations['font-size'] = $block_attributes["responsiveSettings"]["{$context}"]['fontSize']  . $suffix;
-					}
+		// Font Size
+		if ( ( 'font-size' == $cssprop ) || ( 'fontSize' == $cssprop ) ) {
+			if ( method_check_array_key( $block_attributes, 'responsiveSettings' ) ) {
+				if ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'fontSize' ) ) {
+					$declarations['font-size'] = $block_attributes["responsiveSettings"]["{$context}"]['fontSize']  . $suffix;
 				}
 			}
+		}
 
-			if ( ( 'text-align' == $cssprop ) || ( 'textAlign' == $cssprop ) ) {
-				if ( method_get_responsive_setting( $block_attributes, $context, 'textAlign' ) ) {
-					$declarations['text-align'] = method_get_responsive_setting( $block_attributes, $context, 'textAlign' ) . $suffix;
-				}
+		if ( ( 'text-align' == $cssprop ) || ( 'textAlign' == $cssprop ) ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'textAlign' ) ) {
+				$declarations['text-align'] = method_get_responsive_setting( $block_attributes, $context, 'textAlign' ) . $suffix;
 			}
+		}
+
+		if ( 'fontFamily' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'fontFamily' ) ) {
+				$declarations['font-family'] = method_get_responsive_setting( $block_attributes, $context, 'fontFamily' ) . $suffix;
+			}
+		}
+
+		if ( 'fontStyle' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'fontStyle' ) ) {
+				$declarations['font-style'] = method_get_responsive_setting( $block_attributes, $context, 'fontStyle' ) . $suffix;
+			}
+		}
+
+		if ( 'fontWeight' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'fontWeight' ) ) {
+				$declarations['font-weight'] = method_get_responsive_setting( $block_attributes, $context, 'fontWeight' ) . $suffix;
+			}
+		}
+
+		if ( 'textTransform' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'textTransform' ) ) {
+				$declarations['text-transform'] = method_get_responsive_setting( $block_attributes, $context, 'textTransform' ) . $suffix;
+			}
+		}
+
+		if ( 'letterSpacing' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'letterSpacing' ) ) {
+				$declarations['letter-spacing'] = method_get_responsive_setting( $block_attributes, $context, 'letterSpacing' ) . $suffix;
+			}
+		}
 
 		// Padding Top
 		if ( 'padding-top' == $cssprop ) {

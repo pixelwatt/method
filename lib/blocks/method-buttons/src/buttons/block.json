@@ -1,7 +1,7 @@
 {
     "apiVersion": 3,
     "name": "method/buttons",
-    "title": "Buttons",
+    "title": "Method Buttons",
     "description": "A flexible container for grouping buttons, with controls for direction, alignment, justification, and gap across breakpoints.",
     "category": "method-layout-blocks",
     "supports": {

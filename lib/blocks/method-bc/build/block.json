@@ -1,7 +1,7 @@
 {
   "apiVersion": 3,
   "name": "method/bc",
-  "title": "Breadcrumb",
+  "title": "Method Breadcrumb",
   "description": "Displays a navigational breadcrumb trail showing the current page's position within the site hierarchy.",
   "category": "method-component-blocks",
   "supports": {

@@ -1,7 +1,7 @@
 {
     "apiVersion": 3,
     "name": "method/basic-grid",
-    "title": "Basic Grid",
+    "title": "Method Basic Grid",
     "description": "A simple grid container for arranging items in uniform rows, with controls for items per row, alignment, and justification across breakpoints.",
     "category": "method-layout-blocks",
     "supports": {

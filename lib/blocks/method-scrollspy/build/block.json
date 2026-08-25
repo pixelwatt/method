@@ -3,7 +3,7 @@
   "apiVersion": 3,
   "name": "method/scrollspy",
   "version": "1.0.0",
-  "title": "Scrollspy",
+  "title": "Method Scrollspy",
   "category": "method-component-blocks",
   "icon": "list-view",
   "description": "Auto-generates a sticky table of contents from headings in a sibling content area.",

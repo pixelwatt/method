@@ -1,7 +1,7 @@
 {
   "apiVersion": 3,
   "name": "method/accordion",
-  "title": "Accordion",
+  "title": "Method Accordion",
   "category": "method-component-blocks",
   "icon": "block-default",
   "providesContext": {

@@ -1,7 +1,7 @@
 {
   "apiVersion": 3,
   "name": "method/container",
-  "title": "Container",
+  "title": "Method Container",
   "description": "A highly versatile content block for building everything from simple wrappers to complex callouts and link blocks, with extensive controls for styling, layout, and interactivity.",
   "category": "method-layout-blocks",
   "supports": {
@@ -16,7 +16,7 @@
       "type": "string"
     },
     "useParallax": {
-      "type": "bool",
+      "type": "boolean",
       "default": false
     },
     "textColor": {

@@ -1,7 +1,7 @@
 {
   "apiVersion": 3,
   "name": "method/navbar",
-  "title": "Site Navbar",
+  "title": "Method Site Navbar",
   "category": "method-page-blocks",
   "icon": "block-default",
   "supports": {

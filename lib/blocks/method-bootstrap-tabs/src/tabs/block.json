@@ -1,7 +1,7 @@
 {
 	"apiVersion": 3,
 	"name": "method/tabs",
-	"title": "Tabs",
+	"title": "Method Tabs",
 	"category": "method-layout-blocks",
 	"supports": {
 		"html": false

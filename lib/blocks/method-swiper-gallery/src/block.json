@@ -1,7 +1,7 @@
 {
     "apiVersion": 3,
     "name": "method/swiper-gallery",
-    "title": "Swiper Gallery",
+    "title": "Method Swiper Gallery",
     "category": "method-component-blocks",
     "supports": {
         "html": false,

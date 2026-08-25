@@ -1,7 +1,7 @@
 {
     "apiVersion": 3,
     "name": "method/fitted-image",
-    "title": "Fitted Image",
+    "title": "Method Fitted Image",
     "description": "A container-filling image block with cover or contain fitting options, plus controls for aspect ratio, padding, background color, overlaid gradients, and linking.",
     "category": "method-component-blocks",
     "usesContext": [

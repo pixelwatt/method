@@ -1,3 +1,68 @@
+## 2.0.0-beta17
+
+### New Block — Marquee (`method/looping-alert`)
+
+A horizontally scrolling text ticker. A single line of **Alert Text** is repeated with a **Separator** between each copy and scrolls continuously across the block's width. Referred to as "Looping Alert" during development, so the block directory (`method-looping-alert`) and block name retain that name; the inserter title is **Method Marquee**. (Closes #10)
+
+- **Alert Options** panel — Alert Text, Separator, and a **Scroll Speed** range (0–100). Speed is converted to a constant pixels-per-second rate (3px/s per unit, so the default of 25 ≈ 75px/s) rather than a fixed animation duration, so the scroll speed stays consistent regardless of text length or container width. Speed 0 pauses the marquee.
+- **Optional link** — the block toolbar's link control wraps the entire marquee in an `<a>` (with "open in new tab" support). When a link is set, a **Background Shade** color control is also exposed alongside the text and background colors.
+- **Styling** — top/bottom padding and margin, border and border radius, and the full new typography set (font family, appearance, size, letter case, letter spacing), all per breakpoint via the responsive tabs. Supports wide and full alignment.
+- **Frontend** (`src/frontend.js`, registered as the block's `viewScript`) — the PHP render outputs a single text + separator unit; the script measures it, clones it enough times to fill the container (plus one), then duplicates the whole group (`aria-hidden`) so the CSS `translateX(-50%)` animation loops seamlessly. Layout is recalculated on container resize (`ResizeObserver`) and after web fonts finish loading. The animation is disabled under `prefers-reduced-motion: reduce`.
+- **Editor preview** (`src/LoopingAlertMarquee.js`) mirrors the frontend markup and animation, sharing the same measurement/timing math (`src/marquee.js`) so both behave identically.
+- Registered in `lib/blocks.php`; global styles for `.method-looping-alert` added to `global.scss`.
+
+### Typography Controls — Font Family, Appearance, Letter Case & Letter Spacing
+
+- **`MethodTypographyControls`** gains an `include` prop, following the opt-in pattern used by the other Method control components. The default (`['fontSize', 'lineHeight', 'textAlign']`) matches previous behaviour, so existing blocks are unchanged. New options:
+  - `fontFamily` — a **Font Family** picker populated from `theme.json` font families (custom, theme, and default origins merged, as core's typography panel does).
+  - `fontAppearance` — a combined **Font Appearance** (style + weight) control, stored as separate `fontStyle` and `fontWeight` responsive settings.
+  - `textTransform` — **Letter Case**.
+  - `letterSpacing` — **Letter Spacing**.
+  - "Reset all" now clears every typography setting, including the new ones.
+- CSS generation handles the new properties on both sides: `MethodStyleTag.jsx` (editor) and `method_get_block_css_declarations()` in `lib/blocks.php` (frontend) now emit `font-family`, `font-style`, `font-weight`, `text-transform`, and `letter-spacing` from responsive settings. `textColor` is also accepted as an alias for the `color` CSS-map key.
+
+### Block Naming & Inspector UI
+
+- **All top-level Method blocks are now prefixed with "Method" in the inserter** (e.g. *Method Section*, *Method Container*, *Method Swiper*) to avoid confusion with similarly named core blocks (#6). Block *names* (`method/section`, etc.) are unchanged, so existing content is unaffected. Renamed: Accordion, Advanced Grid, Basic Grid, Breadcrumb, Buttons, Container, Fitted Image, Flex Container, Fluid Video, Marquee, Scrollspy, Section, Site Navbar, Social Nav, Swiper, Swiper Gallery, and Tabs. (Closes #6)
+- **`MethodResponsiveTabs`** — the "Responsive Behavior" panel is no longer a collapsible (and collapsed-by-default) `PanelBody`; it now renders as an always-visible section with a heading so the breakpoint tabs are immediately accessible.
+
+### Visibility Toggle — Flex Item & Advanced Grid Column
+
+- The `hide` option introduced in beta15 is now wired up for the **Flex Item** (`method/flex-item`) and **Advanced Grid Column** (`method/advanced-grid-col`) blocks across the mobile, tablet, and wide breakpoints, in both the editor (`MethodAddtControls` with `include={['hide']}`) and the frontend render callbacks.
+
+### Responsive Embeds (opt-in)
+
+- New `method_responsive_embed_wrap()` in `lib/theme-setup.php` wraps oEmbed output (`embed_oembed_html` and `oembed_result` filters) whose `<iframe>` declares a `width` and `height` in a `.method-embed` container with an `--embed-ratio` custom property derived from those dimensions. Companion styles set `aspect-ratio: var(--embed-ratio, 16 / 9)` on the wrapper and stretch the iframe to fill it. Already-wrapped output is skipped.
+- Opt in from a child theme with `add_theme_support( 'method-responsive-embeds' );`.
+
+### Responsive Editing Flag (groundwork)
+
+- New `method_configure_responsive_editing()` adds a `responsiveEditingEnabled` setting to the block editor (`block_editor_settings_all`). It defaults to `false`; child themes can enable it with `add_theme_support( 'method-responsive-editing' );` or the `method/responsive_editing_enabled` filter. This only affects the editing UI — rendering of saved responsive styles is unaffected. Note that no editor component reads this flag yet; it is exposed in this release so the responsive tabs can be gated by it in a future update. (Closes #2)
+
+### CSS Collector
+
+- **`Method_CSS_Collector`** (`lib/class-method-css-collector.php`) now flushes twice: at `wp_head` (priority 100) as before, and again at `wp_footer` (priority 20). Previously any CSS registered after the head had been output — blocks rendered during the template, such as nav panels, hooked content, or late-rendered blocks — was silently discarded. Late additions are now printed in a second `<style id="block-instance-styles-1">` tag. Dedupe by `block_id` applies across both pending and already-flushed styles.
+- New cache-integration primitives: `snapshot()` returns the keys collected so far, `diff_since( $snapshot )` returns everything added since, and `inject( $entries )` re-adds previously captured CSS (with dedupe). These allow fragment-caching layers to store a block's CSS beside its cached markup and restore it on a cache hit.
+- The production minifier no longer strips whitespace around `+`, which was corrupting `calc()` expressions (e.g. `calc(100% + 1rem)` → the invalid `calc(100%+1rem)`).
+
+### Build Tooling — Single `package.json` (Closes #11)
+
+- All per-block `package.json` files have been removed in favour of a single `lib/blocks/package.json`, so `@wordpress/scripts` only needs to be installed once (`npm install` inside `lib/blocks`).
+- New `lib/blocks/build-all.js` (`npm run build`) builds every block directory that contains a `src/` folder, running `wp-scripts build` with `--webpack-src-dir` / `--output-path` pointed at each block. Pass a name or prefix to build a subset (e.g. `npm run build method-section`). `build:block` and `start:block` scripts expose `wp-scripts build` / `wp-scripts start` for single-block use.
+- All blocks were recompiled with the shared toolchain; a stray `method-accordion/src.zip` was removed from the repo.
+
+### Fixes
+
+- **Container & Section — theme button link color** — the `linkColor` selector is now `a:not(.method-theme-button)` (frontend render for both blocks, and the Section editor preview), so theme buttons placed inside a Container or Section keep their own button colors instead of inheriting the block's link color.
+- **Container** — the tablet and wide **Align Items** controls were bound to the `mobile` breakpoint, so changes on those tabs wrote to (and displayed) the mobile value. Each tab now targets its own breakpoint.
+- **Container & Section** — the `useParallax` (and Section's `unconstrained`) attributes declared the invalid type `bool` in `block.json`; corrected to `boolean`.
+- **Section — editor spacing** — `.method-section` now explicitly zeroes `margin-block-start`/`margin-block-end`, and `theme.json` sets `method/section` top/bottom margin to `0`, removing the unwanted gap that appeared between consecutive sections in the editor.
+- **Fitted Image** — `borderRadius` and `boxShadow` are now also applied to the `.method-block-shade` overlay (editor and frontend), so the shade follows the block's rounded corners rather than squaring them off.
+- **Advanced Grid — column content margins** — the first-child reset now uses `margin-block-start: 0` (so it also applies to blocks that set logical margins), and the last-child bottom-margin reset has been removed so trailing blocks retain their own bottom spacing.
+- **Swiper — hash navigation** — now uses `replaceState: true`, so moving between slides no longer adds a browser history entry per slide.
+- **Swiper — scroll to slide start** — the `slideChange` handler now tracks `realIndex` and bails when it hasn't changed, preventing spurious scrolls when Swiper's `loop` mode swaps between a slide and its duplicate. The scroll also uses `behavior: 'instant'` rather than `smooth`, so the slider is repositioned immediately on navigation.
+- **Theme Options — Diagnostic Details** now includes the server's PHP version.
+
 ## 2.0.0-beta16
 
 ### Swiper Block — Fade Effect, Hash Navigation & Scroll-to-Slide

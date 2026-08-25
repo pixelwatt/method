@@ -1,0 +1,12 @@
+{
+    "name": "method-blocks",
+    "private": true,
+    "scripts": {
+        "build": "node build-all.js",
+        "build:block": "wp-scripts build",
+        "start:block": "wp-scripts start"
+    },
+    "devDependencies": {
+        "@wordpress/scripts": "^30.20.0"
+    }
+}

@@ -1,0 +1,66 @@
+{
+  "apiVersion": 3,
+  "name": "method/looping-alert",
+  "title": "Method Looping Alert",
+  "category": "method-component-blocks",
+  "icon": "flag",
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "attributes": {
+    "textColor": {
+      "type": "string"
+    },
+    "linkColor": {
+      "type": "string"
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "bgGradient": {
+      "type": "string"
+    },
+    "bgShadeColor": {
+      "type": "string"
+    },
+    "bgShadeGradient": {
+      "type": "string"
+    },
+    "alertText": {
+      "type": "string",
+      "default": "Run for the hills!"
+    },
+    "seperator": {
+      "type": "string",
+      "default": "-"
+    },
+    "link": {
+      "type": "object"
+    },
+    "responsiveSettings": {
+      "type": "object",
+      "default": {
+        "base": {
+          "enabled": true
+        },
+        "mobile": {
+          "enabled": false,
+          "customBg": false
+        },
+        "tablet": {
+          "enabled": false,
+          "customBg": false
+        },
+        "wide": {
+          "enabled": false,
+          "customBg": false
+        }
+      }
+    }
+  },
+  "editorScript": "file:./index.js"
+}

@@ -8,9 +8,14 @@ import { useFeaturedImageSizes } from './MethodUseFeaturedImage';
 const getBreakpoints = () => window?.methodGlobalData?.breakpoints || {};
 
 const cssPropertyMap = {
+	fontFamily: 'font-family',
 	fontSize: 'font-size',
+	fontStyle: 'font-style',
+	fontWeight: 'font-weight',
 	lineHeight: 'line-height',
 	textAlign: 'text-align',
+	textTransform: 'text-transform',
+	letterSpacing: 'letter-spacing',
 	minHeight: 'min-height',
 	minWidth: 'min-width',
 };
@@ -316,9 +321,14 @@ function getBreakpointStyle(
 					}
 				}
 			} else if (
+				prop === 'fontFamily' ||
 				prop === 'fontSize' ||
+				prop === 'fontStyle' ||
+				prop === 'fontWeight' ||
 				prop === 'lineHeight' ||
-				prop === 'textAlign'
+				prop === 'textAlign' ||
+				prop === 'textTransform' ||
+				prop === 'letterSpacing'
 			) {
 				const value = (() => {
 					if (prop in settings) return settings[prop];

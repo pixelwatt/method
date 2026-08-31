@@ -908,24 +908,28 @@ function method_get_theme_icons() {
 function method_register_theme_icons() {
 	if ( ( function_exists( 'wp_register_icon_collection' ) ) && ( function_exists( 'wp_register_icon' ) ) ) {
 		$icons = method_get_theme_icons();
-		$visible_icons = array_filter( $icons, function ( $icon ) {
-			return empty( $icon['omit'] );
-		} );
-		if ( $visible_icons ) {
-			wp_register_icon_collection(
-				'method',
-				array(
-					'label' => __('Method', 'method'),
-				)
-			);
-			foreach ( $visible_icons as $slug => $icon ) {
-				wp_register_icon(
-					'method/' . $slug,
-					array(
-						'label'   => $icon['label'],
-						'content' => $icon['svg'],
-					)
-				);
+		if ( is_array( $icons ) ) {
+			if ( 0 < count( $icons ) ) {
+				$visible_icons = array_filter( $icons, function ( $icon ) {
+					return empty( $icon['omit'] );
+				} );
+				if ( $visible_icons ) {
+					wp_register_icon_collection(
+						'method',
+						array(
+							'label' => __('Method', 'method'),
+						)
+					);
+					foreach ( $visible_icons as $slug => $icon ) {
+						wp_register_icon(
+							'method/' . $slug,
+							array(
+								'label'   => $icon['label'],
+								'content' => $icon['svg'],
+							)
+						);
+					}
+				}
 			}
 		}
 	}

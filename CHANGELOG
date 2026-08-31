@@ -1,3 +1,34 @@
+## 2.0.0-beta18
+
+### Theme Icons — Shared Icon System
+
+Custom icons are now a theme-level concept rather than a Theme Button feature, so a single icon set can be reused by any block that offers an icon picker.
+
+- New `method_get_theme_icons()` (`lib/blocks.php`) assembles the set from the new `method_theme_icons` filter; icons added through the existing `method_block_theme_button_icons` filter are merged in, so child themes already supplying button icons work unchanged.
+- The icon set is localized into the block editor globally as `methodGlobalData.icons` (the Theme Button–specific `buttonIcons` localization has been removed).
+- New `method_register_theme_icons()` also registers the set with WordPress' icon library (`wp_register_icon_collection()` / `wp_register_icon()`, when available) under a **Method** collection, so theme icons appear in core's icon pickers. Set `'omit' => true` on an icon to keep it out of the WordPress collection while leaving it available to Method's own controls.
+- **Theme Button** now reads icons from the shared set on both sides — the editor dropdowns from `methodGlobalData.icons`, the render callback via `method_get_theme_icons()` — and the Before/After Icon dropdowns gain an explicit **None** option.
+
+### Method Swiper — Arrow Icons, Navigation Colors & Outside Pagination
+
+- **Custom arrow icons** — when "Show arrows" is enabled, new **Previous Arrow** and **Next Arrow** dropdowns (new `prevIcon` / `nextIcon` attributes) swap the default chevrons for any theme icon. Arrow icons are now wrapped in `.method-swiper-icon` spans and the buttons are flex-centered within their 44×44px targets, in both the editor preview and the frontend markup.
+- **Navigation colors** — new **Navigation Arrows** (`textColor`) and **Pagination** (`linkColor`) color controls via `MethodColorControls`. CSS is generated per breakpoint on both sides: `MethodStyleTag` in the editor, `method_get_block_responsive_styles()` plus the CSS collector on the frontend.
+- **Outside pagination** — a new **Place pagination outside** toggle (`altPagination` attribute) renders the pagination bullets outside the Swiper container, alongside the navigation arrows, instead of overlaying the slides. Applies to both the editor preview and the frontend.
+- **Restyled bullets** — pagination bullets are now outlined (transparent fill with a 2px `currentColor` border) with the active bullet filled, so they follow the new Pagination color.
+- **Loop disabled** — the frontend Swiper config now sets `loop: false` (previously `true`), matching the editor preview and avoiding the duplicate-slide quirks loop mode caused with hash navigation.
+
+### Method Swiper — Theme Breakpoints & Canvas-Aware Editor Preview
+
+- The mobile/tablet/desktop tiers for "Slides per view" and "Space between" now follow the theme's configured breakpoints instead of hardcoded 768px/1024px values. On the frontend, new `method_swiper_get_breakpoints()` derives the tablet and desktop min-widths from `method_get_block_breakpoints()` (`tablet_min` and `tablet_max` + 1).
+- New editor hooks — `useCanvasWindow()` and `useCanvasViewport()` (`lib/blocks/hooks/useCanvasViewport.js`) — resolve which Method breakpoint tier the editor canvas is currently in by running media queries against the canvas iframe's own window, using the same localized breakpoints (`methodGlobalData.breakpoints`).
+- The editor Swiper preview is now initialised with the resolved tier's per-view/spacing values rather than Swiper's own `breakpoints` option, which evaluated `matchMedia` against the top admin window and therefore never tracked the device preview or a resized canvas. The preview re-initialises when the canvas crosses a breakpoint, keeping it in sync with the frontend.
+
+### Core Extensions — Full Typography Set
+
+- The responsive controls for `core/paragraph`, `core/heading`, and `core/list` now include the typography options introduced in beta17 — **Font Family**, **Font Appearance** (style + weight), **Letter Case**, and **Letter Spacing** — alongside the existing size, line-height, and alignment controls, wired through the editor controls, the editor CSS map, and the frontend CSS config.
+- Editor CSS for core-extension overrides is now emitted with `!important`, via a new `isImportant` prop on `MethodStyleTag`, so responsive overrides reliably beat core/theme.json specificity inside the editor canvas. Frontend output is unchanged.
+- Breakpoint defaults have been slimmed down (JS `RESPONSIVE_DEFAULTS` and PHP `method_core_extensions_get_defaults()`): the mobile, tablet, and wide breakpoints now default to just `enabled: false` rather than a full set of zeroed padding/margin/typography values, so untouched breakpoints no longer carry default values.
+
 ## 2.0.0-beta17
 
 ### New Block — Marquee (`method/looping-alert`)

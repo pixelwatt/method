@@ -2185,6 +2185,14 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   border: 0;
 }
 
+.method-swiper .swiper-pagination-bullet {
+  opacity: 1;
+  background-color: transparent;
+  border: 2px solid currentColor;
+}
+.method-swiper .swiper-pagination-bullet-active {
+  background-color: currentColor;
+}
 .method-swiper .swiper-outer {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2222,15 +2230,31 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
 .method-swiper .swiper-outer .method-swiper-button-next {
   width: 44px;
   height: 44px;
-  display: inline-block;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
   z-index: 100;
   position: relative;
   pointer-events: all;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  line-height: 1;
 }
-.method-swiper .swiper-outer .method-swiper-button-prev svg,
-.method-swiper .swiper-outer .method-swiper-button-next svg {
+.method-swiper .swiper-outer .method-swiper-button-prev svg.method-default-icon,
+.method-swiper .swiper-outer .method-swiper-button-next svg.method-default-icon {
   width: 44px;
   height: 44px;
+}
+.method-swiper .swiper-outer .method-swiper-button-prev .method-swiper-icon,
+.method-swiper .swiper-outer .method-swiper-button-next .method-swiper-icon {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  line-height: 1;
 }
 
 .method-embed {

@@ -39,7 +39,6 @@ function method_theme_button_enqueue_block_assets() {
         'buttonStyles' => apply_filters( 'method_block_theme_button_styles', $defaults ),
         'buttonStylesLabel' => apply_filters( 'method_block_theme_button_styles_label', 'Button Styles' ),
         'labelStyles' => apply_filters( 'method_block_theme_label_styles', $defaults ),
-        'buttonIcons' => apply_filters( 'method_block_theme_button_icons', $defaults ),
         'afterLabel' => apply_filters( 'method_block_theme_button_after_label', '' ),
         'beforeLabel' => apply_filters( 'method_block_theme_button_before_label', '' ),
     ));
@@ -90,7 +89,7 @@ function render_method_button_block( $block_attributes, $block ) {
 
 function render_method_theme_button_block( $block_attributes, $block ) {
     $methodId = uniqid( 'method-' );
-    $buttonIcons = apply_filters( 'method_block_theme_button_icons', false );
+    $methodIcons = method_get_theme_icons();
 
     $extraclass = '';
     if ( method_check_array_key( $block_attributes, 'btnStyle' ) ) {
@@ -100,18 +99,18 @@ function render_method_theme_button_block( $block_attributes, $block ) {
     $openTag = '<div ' . get_block_wrapper_attributes( ['class' => 'method-theme-button' . $extraclass, 'id' => $methodId] ) . '>';
     $closeTag = '</div>';
 
-    if ( ( is_array( $buttonIcons ) ) && ( method_check_array_key( $block_attributes, 'beforeIcon' ) ) ) {
-        if ( method_check_array_key( $buttonIcons, $block_attributes['beforeIcon'] ) ) {
-            $beforeLabel = '<span class="method-button-icon method-button-icon-before">' . $buttonIcons["{$block_attributes['beforeIcon']}"]['svg'] . '</span>';
+    if ( ( is_array( $methodIcons ) ) && ( method_check_array_key( $block_attributes, 'beforeIcon' ) ) ) {
+        if ( method_check_array_key( $methodIcons, $block_attributes['beforeIcon'] ) ) {
+            $beforeLabel = '<span class="method-button-icon method-button-icon-before">' . $methodIcons["{$block_attributes['beforeIcon']}"]['svg'] . '</span>';
         }
     } else {
         $beforeLabel = apply_filters( 'method_block_theme_button_before_label', '' );
         $beforeLabel = ( ! empty( $beforeLabel ) ? '<span class="method-button-icon method-button-icon-before">' . $beforeLabel . '</span>' : '' );
     }
 
-    if ( ( is_array( $buttonIcons ) ) && ( method_check_array_key( $block_attributes, 'afterIcon' ) ) ) {
-        if ( method_check_array_key( $buttonIcons, $block_attributes['afterIcon'] ) ) {
-            $afterLabel = '<span class="method-button-icon method-button-icon-after">' . $buttonIcons["{$block_attributes['afterIcon']}"]['svg'] . '</span>';
+    if ( ( is_array( $methodIcons ) ) && ( method_check_array_key( $block_attributes, 'afterIcon' ) ) ) {
+        if ( method_check_array_key( $methodIcons, $block_attributes['afterIcon'] ) ) {
+            $afterLabel = '<span class="method-button-icon method-button-icon-after">' . $methodIcons["{$block_attributes['afterIcon']}"]['svg'] . '</span>';
         }
     } else {
         $afterLabel = apply_filters( 'method_block_theme_button_after_label', '' );

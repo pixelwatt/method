@@ -30,6 +30,11 @@ function method_core_extensions_get_config() {
                 'fontSize',
                 'lineHeight',
                 'textAlign',
+                'fontFamily',
+                'fontStyle',
+                'fontWeight',
+                'textTransform',
+                'letterSpacing',
             ),
         ),
         'core/heading' => array(
@@ -39,6 +44,11 @@ function method_core_extensions_get_config() {
                 'fontSize',
                 'lineHeight',
                 'textAlign',
+                'fontFamily',
+                'fontStyle',
+                'fontWeight',
+                'textTransform',
+                'letterSpacing',
             ),
         ),
         'core/list' => array(
@@ -51,6 +61,11 @@ function method_core_extensions_get_config() {
                 'margin-bottom',
                 'fontSize',
                 'lineHeight',
+                'fontFamily',
+                'fontStyle',
+                'fontWeight',
+                'textTransform',
+                'letterSpacing',
             ),
         ),
     );
@@ -64,23 +79,11 @@ function method_core_extensions_get_config() {
  * Base is minimal — core owns base styling.
  */
 function method_core_extensions_get_defaults() {
-    $breakpoint_defaults = array(
-        'enabled'        => false,
-        'customSpacing'  => false,
-        'customType'     => false,
-        'padding'        => array( 'top' => '0rem', 'bottom' => '0rem', 'left' => '0rem', 'right' => '0rem' ),
-        'margin'         => array( 'top' => '0rem', 'bottom' => '0rem', 'left' => '0rem', 'right' => '0rem' ),
-        'fontSize'       => '',
-        'lineHeight'     => '',
-        'textAlign'      => '',
-        'allowNegative'  => false,
-    );
-
     return array(
         'base'   => array( 'enabled' => true ),
-        'mobile' => $breakpoint_defaults,
-        'tablet' => $breakpoint_defaults,
-        'wide'   => $breakpoint_defaults,
+        'mobile' => array( 'enabled' => false ),
+        'tablet' => array( 'enabled' => false ),
+        'wide'   => array( 'enabled' => false ),
     );
 }
 

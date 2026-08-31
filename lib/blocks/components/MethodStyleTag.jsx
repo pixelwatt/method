@@ -20,13 +20,13 @@ const cssPropertyMap = {
 	minWidth: 'min-width',
 };
 
-function generateCSS(properties) {
+function generateCSS(properties, isImportant) {
 	return Object.entries(properties)
 		.map(([prop, val]) => {
 			if (val == null) return '';
 
 			const cssProp = cssPropertyMap[prop] || prop; // fallback to original if not mapped
-			return `${cssProp}: ${val};`;
+			return `${cssProp}: ${val}${isImportant ? ' !important' : ''};`;
 		})
 		.join(' ');
 }
@@ -38,7 +38,8 @@ function getBreakpointStyle(
 	attributes = {},
 	postId = null,
 	postType = null,
-	featuredImageSizes = null
+	featuredImageSizes = null,
+	isImportant,
 ) {
 	let css = '';
 	const settings = responsiveSettings?.[breakpoint] || {};
@@ -397,7 +398,7 @@ function getBreakpointStyle(
 		// Base-only color logic
 
 		if (Object.keys(styleProps).length) {
-			css += `${selector} { ${generateCSS(styleProps)} }\n`;
+			css += `${selector} { ${generateCSS(styleProps, isImportant)} }\n`;
 		}
 	});
 
@@ -411,6 +412,7 @@ export default function MethodStyleTag({
 	excludeBase,
 	postId = null,
 	postType = null,
+	isImportant = false,
 }) {
 	const styleRef = useRef();
 	const breakpoints = getBreakpoints();
@@ -428,7 +430,8 @@ export default function MethodStyleTag({
 				atts,
 				postId,
 				postType,
-				featuredImageSizes
+				featuredImageSizes,
+				isImportant
 			);
 		}
 		if (responsive.mobile?.enabled) {
@@ -440,7 +443,8 @@ export default function MethodStyleTag({
 				atts,
 				postId,
 				postType,
-				featuredImageSizes
+				featuredImageSizes,
+				isImportant
 			);
 			css += '}\n';
 		}
@@ -453,7 +457,8 @@ export default function MethodStyleTag({
 				atts,
 				postId,
 				postType,
-				featuredImageSizes
+				featuredImageSizes,
+				isImportant
 			);
 			css += '}\n';
 		}
@@ -466,7 +471,8 @@ export default function MethodStyleTag({
 				atts,
 				postId,
 				postType,
-				featuredImageSizes
+				featuredImageSizes,
+				isImportant
 			);
 			css += '}\n';
 		}

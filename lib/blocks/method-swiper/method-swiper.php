@@ -1,18 +1,46 @@
 <?php
 
+/**
+ * Min-width (px) at which the swiper's tablet and desktop tiers kick in.
+ *
+ * Derived from the theme breakpoints (method_get_block_breakpoints()) so the
+ * frontend matches the editor, which resolves the same tiers from
+ * methodGlobalData.breakpoints: tablet from tablet_min, desktop just above
+ * tablet_max. Falls back to the lib/config.php defaults.
+ */
+function method_swiper_get_breakpoints() {
+	$bp = function_exists( 'method_get_block_breakpoints' ) ? method_get_block_breakpoints() : array();
+
+	return array(
+		'tablet'  => isset( $bp['tablet_min'] ) ? (int) $bp['tablet_min'] : 768,
+		'desktop' => isset( $bp['tablet_max'] ) ? (int) $bp['tablet_max'] + 1 : 1200,
+	);
+}
+
 function register_method_swiper_block() {
 	register_block_type( __DIR__ . '/build/swiper', [
     'render_callback' => function( $attributes, $content ) {
 		$methodId = uniqid( 'method' );
+		$methodIcons = method_get_theme_icons();
+
+		$cssargs = array(
+        	'#' . $methodId . ' .method-swiper-button-prev, #' . $methodId . ' .method-swiper-button-next' => array( 'textColor' ),
+			'#' . $methodId . ' .swiper-pagination' => array( 'linkColor' ),
+    	);
+
+		$responsive = method_get_block_responsive_styles( $attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
+    	method_collect_css( $responsive, '#' . $methodId, 10);
 
 		$show_navigation = ! isset( $attributes['showNavigation'] ) || $attributes['showNavigation'];
 		$show_pagination = ! isset( $attributes['showPagination'] ) || $attributes['showPagination'];
+		$alt_pagination = ! isset( $attributes['altPagination'] ) || $attributes['altPagination'];
 		$fade_effect     = isset( $attributes['fadeEffect'] ) && $attributes['fadeEffect'];
 		$hash_navigation = isset( $attributes['hashNavigation'] ) && $attributes['hashNavigation'];
 		$scroll_to_slide = $hash_navigation && isset( $attributes['scrollToSlideStart'] ) && $attributes['scrollToSlideStart'];
 
-		// Mobile-first base values; tablet (768px) and desktop (1024px) tiers
-		// override via breakpoints, matching the editor's Swiper config.
+		// Mobile-first base values; the tablet and desktop tiers override via
+		// Swiper breakpoints at the theme's breakpoint widths.
+		$breakpoints            = method_swiper_get_breakpoints();
 		$slides_per_view        = isset( $attributes['slidesPerView'] ) ? intval( $attributes['slidesPerView'] ) : 3;
 		$slides_per_view_tablet = isset( $attributes['slidesPerViewTablet'] ) ? intval( $attributes['slidesPerViewTablet'] ) : 2;
 		$slides_per_view_mobile = isset( $attributes['slidesPerViewMobile'] ) ? intval( $attributes['slidesPerViewMobile'] ) : 1;
@@ -20,14 +48,28 @@ function register_method_swiper_block() {
 		$space_between_tablet   = isset( $attributes['spaceBetweenTablet'] ) ? intval( $attributes['spaceBetweenTablet'] ) : 24;
 		$space_between_mobile   = isset( $attributes['spaceBetweenMobile'] ) ? intval( $attributes['spaceBetweenMobile'] ) : 24;
 
-		$pagination_markup = $show_pagination ? '<div class="swiper-pagination"> </div>' : '';
+		$leftArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="method-default-prev-icon method-default-icon" viewBox="0 0 16 16"><path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" /></svg>';
+		$rightArrow = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="method-default-next-icon method-default-icon" viewBox="0 0 16 16"><path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" /></svg>';
+
+		if ( ( is_array( $methodIcons ) ) && ( method_check_array_key( $attributes, 'prevIcon' ) ) ) {
+        	if ( method_check_array_key( $methodIcons, $attributes['prevIcon'] ) ) {
+				$leftArrow = $methodIcons["{$attributes['prevIcon']}"]['svg'];
+			}
+		}
+		if ( ( is_array( $methodIcons ) ) && ( method_check_array_key( $attributes, 'nextIcon' ) ) ) {
+        	if ( method_check_array_key( $methodIcons, $attributes['nextIcon'] ) ) {
+				$rightArrow = $methodIcons["{$attributes['nextIcon']}"]['svg'];
+			}
+		}
+
+		$pagination_markup = $show_pagination ? '<div class="' . ( $alt_pagination ? 'method-swiper-pagination ' : '' ) . 'swiper-pagination"> </div>' : '';
 		$navigation_markup = $show_navigation
-			? '<div class="method-swiper-button-prev"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-left" viewBox="0 0 16 16"><path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" /></svg><span class="visually-hidden">Previous</span></div>
-			   <div class="method-swiper-button-next"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16"><path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708" /></svg><span class="visually-hidden">Next</span></div>'
+			? '<div class="method-swiper-button-prev"><span class="method-swiper-icon method-swiper-icon-prev">' . $leftArrow . '</span><span class="visually-hidden">Previous</span></div>
+			   <div class="method-swiper-button-next"><span class="method-swiper-icon method-swiper-icon-next">' . $rightArrow . '</span><span class="visually-hidden">Next</span></div>'
 			: '';
 
 		$pagination_config = $show_pagination
-			? 'pagination: { el: \'#' . $methodId . ' .swiper-pagination\', clickable: true },'
+			? 'pagination: { el: \'#' . $methodId . ' .' . ( $alt_pagination ? 'method-' : '' ) . 'swiper-pagination\', clickable: true },'
 			: '';
 		$navigation_config = $show_navigation
 			? 'navigation: { nextEl: \'#' . $methodId . ' .method-swiper-button-next\', prevEl: \'#' . $methodId . ' .method-swiper-button-prev\' },'
@@ -58,8 +100,8 @@ function register_method_swiper_block() {
 			: "slidesPerView: $slides_per_view_mobile,
                         spaceBetween: $space_between_mobile,
                         breakpoints: {
-                            768: { slidesPerView: $slides_per_view_tablet, spaceBetween: $space_between_tablet },
-                            1024: { slidesPerView: $slides_per_view, spaceBetween: $space_between }
+                            {$breakpoints['tablet']}: { slidesPerView: $slides_per_view_tablet, spaceBetween: $space_between_tablet },
+                            {$breakpoints['desktop']}: { slidesPerView: $slides_per_view, spaceBetween: $space_between }
                         },";
 
         return '
@@ -69,18 +111,19 @@ function register_method_swiper_block() {
                         <div class="swiper-outer-wrap-inner">
                             <div class="swiper swiper-container">
                                     ' . do_blocks( $content ) . '
-                                    ' . $pagination_markup . '
+                                    ' . ( ! $alt_pagination ? $pagination_markup : '' ) . '
                             </div>
                         </div>
                     </div>
 				    ' . $navigation_markup . '
+					' . ( $alt_pagination ? $pagination_markup : '' ) . '
                 </div>
 			</div>
 			<script>
                 document.addEventListener(\'DOMContentLoaded\', function () {
                     const ' . $methodId . 'Swiper = new Swiper(\'#' . $methodId . ' .swiper-container\', {
                         ' . $effect_config . '
-                        loop: true,
+                        loop: false,
                         autoHeight: true,
                         ' . $pagination_config . '
                         ' . $navigation_config . '

@@ -2325,6 +2325,16 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
 }
 
 .method-swiper {
+    .swiper-pagination-bullet {
+        opacity: 1;
+        background-color: transparent;
+        border: 2px solid currentColor;
+
+        &-active {
+            background-color: currentColor;
+        }
+    }
+
     .swiper-outer {
         display: flex;
         align-items: center;
@@ -2355,14 +2365,22 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
         .method-swiper-button-next {
             width: 44px;
             height: 44px;
-            display: inline-block;
+            display: inline-flex;
             z-index: 100;
             position: relative;
             pointer-events: all;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
 
-            svg {
+            svg.method-default-icon {
                 width: 44px;
                 height: 44px;
+            }
+
+            .method-swiper-icon {
+                display: inline-flex;
+                line-height: 1;
             }
         }
     }

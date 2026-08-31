@@ -44,6 +44,10 @@
       "type": "boolean",
       "default": true
     },
+    "altPagination": {
+      "type": "boolean",
+      "default": false
+    },
     "fadeEffect": {
       "type": "boolean",
       "default": false
@@ -55,6 +59,18 @@
     "scrollToSlideStart": {
       "type": "boolean",
       "default": false
+    },
+    "prevIcon": {
+      "type": "string"
+    },
+    "nextIcon": {
+      "type": "string"
+    },
+    "textColor": {
+      "type": "string"
+    },
+    "linkColor": {
+      "type": "string"
     }
   },
   "editorScript": "file:./index.js"

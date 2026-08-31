@@ -21,6 +21,7 @@ add_action( 'enqueue_block_assets', function() {
 		'fontSizePresets' => method_get_font_size_presets(),
 		'bsBreakpoints' => method_get_all_bs_breakpoint_options(),
 		'socialNavItems' => method_build_social_nav_items(),
+		'icons' => method_get_theme_icons(),
     ]);
 
     // Enqueue the script (editor only)
@@ -896,3 +897,38 @@ function method_get_responsive_setting( $block_attributes, $breakpoint, $setting
 	}
 	return $fallback;
 }
+
+function method_get_theme_icons() {
+	$icons = array();
+	$icons = apply_filters( 'method_block_theme_button_icons', $icons );
+	$icons = apply_filters( 'method_theme_icons', $icons );
+	return ( 0 < count( $icons ) ? $icons : false );
+}
+
+function method_register_theme_icons() {
+	if ( ( function_exists( 'wp_register_icon_collection' ) ) && ( function_exists( 'wp_register_icon' ) ) ) {
+		$icons = method_get_theme_icons();
+		$visible_icons = array_filter( $icons, function ( $icon ) {
+			return empty( $icon['omit'] );
+		} );
+		if ( $visible_icons ) {
+			wp_register_icon_collection(
+				'method',
+				array(
+					'label' => __('Method', 'method'),
+				)
+			);
+			foreach ( $visible_icons as $slug => $icon ) {
+				wp_register_icon(
+					'method/' . $slug,
+					array(
+						'label'   => $icon['label'],
+						'content' => $icon['svg'],
+					)
+				);
+			}
+		}
+	}
+}
+
+add_action( 'init', 'method_register_theme_icons');

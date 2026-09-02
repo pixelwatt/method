@@ -104,6 +104,84 @@ function register_method_swiper_block() {
                             {$breakpoints['desktop']}: { slidesPerView: $slides_per_view, spaceBetween: $space_between }
                         },";
 
+        $hash_tracking = '
+			// Store this swiper in a global registry for hash tracking
+			if (!window.methodSwipers) window.methodSwipers = {};
+			window.methodSwipers[\'' . $methodId . '\'] = ' . $methodId . 'Swiper;
+			';
+
+        $global_tracking_script = '
+			<script>
+			if (!window.methodHashTrackingLoaded) {
+				window.methodHashTrackingLoaded = true;
+				(function () {
+					var attachedSwipers = new Set();
+
+					function getActiveHashFromSwipers() {
+						if (!window.methodSwipers) return window.location.hash.slice(1);
+
+						for (var swiperId in window.methodSwipers) {
+							var swiper = window.methodSwipers[swiperId];
+							if (swiper && swiper.slides && swiper.activeIndex !== undefined) {
+								var activeSlide = swiper.slides[swiper.activeIndex];
+								if (activeSlide) {
+									var dataHash = activeSlide.getAttribute("data-hash");
+									if (dataHash) return dataHash;
+								}
+							}
+						}
+
+						return window.location.hash.slice(1);
+					}
+
+					function updateHashActiveLinks() {
+						const activeHash = getActiveHashFromSwipers();
+						const hashLinks = document.querySelectorAll("a[href^=\"#\"]");
+
+						hashLinks.forEach(function (link) {
+							const linkHash = link.getAttribute("href").slice(1);
+							if (linkHash === activeHash && activeHash !== "") {
+								link.classList.add("method-hash-active");
+							} else {
+								link.classList.remove("method-hash-active");
+							}
+						});
+					}
+
+					function attachSwiperListeners() {
+						if (!window.methodSwipers) return;
+
+						Object.entries(window.methodSwipers).forEach(function (entry) {
+							var swiperId = entry[0];
+							var swiper = entry[1];
+
+							if (attachedSwipers.has(swiperId) || !swiper) return;
+							attachedSwipers.add(swiperId);
+
+							if (typeof swiper.on === "function") {
+								swiper.on("slideChange", updateHashActiveLinks);
+								swiper.on("init", updateHashActiveLinks);
+							}
+						});
+					}
+
+					if (document.readyState === "loading") {
+						document.addEventListener("DOMContentLoaded", function () {
+							updateHashActiveLinks();
+							setTimeout(attachSwiperListeners, 100);
+						});
+					} else {
+						updateHashActiveLinks();
+						setTimeout(attachSwiperListeners, 100);
+					}
+
+					window.addEventListener("hashchange", updateHashActiveLinks);
+					setInterval(attachSwiperListeners, 500);
+				})();
+			}
+			</script>
+		';
+
         return '
             <div ' . get_block_wrapper_attributes( ['class' => 'method-swiper', 'id' => $methodId] ) . '>
                 <div class="swiper-outer">
@@ -130,8 +208,10 @@ function register_method_swiper_block() {
                         ' . $hash_config . '
                     });
                     ' . $scroll_binding . '
+                    ' . $hash_tracking . '
                 });
 			</script>
+			' . $global_tracking_script . '
 		';
     },
 ] );
@@ -163,24 +243,3 @@ function register_method_swiper_slide_block() {
 ] );
 }
 add_action( 'init', 'register_method_swiper_slide_block' );
-
-function enqueue_method_swiper_assets() {
-	if ( is_admin() ) {
-	wp_add_inline_script( 'swiper', "
-		document.addEventListener('DOMContentLoaded', function () {
-			document.querySelectorAll('.method-swiper .swiper-container').forEach(function (el) {
-				new Swiper(el, {
-					slidesPerView: parseInt(el.dataset.slidesPerView) || 1,
-					loop: true,
-                    autoHeight: true,
-					pagination: {
-						el: el.querySelector('.swiper-pagination'),
-						clickable: true
-					}
-				});
-			});
-		});
-	" );
-	}
-}
-//add_action( 'enqueue_block_assets', 'enqueue_method_swiper_assets' );

@@ -1,3 +1,16 @@
+## 2.0.0-beta19
+
+### Swiper Block — Hash Navigation Link Active States
+
+Enhanced hash navigation tracking to properly synchronize hash-based navigation links with swiper slide state.
+
+- **Hash tracking registry** — when hash navigation is enabled, each Swiper instance now registers itself in a global `window.methodSwipers` object on initialization, allowing cross-swiper hash state monitoring.
+- **Active hash link styling** — new global tracking script monitors hash navigation across all swipers and applies the `.method-hash-active` class to any link whose `href` matches the currently active slide's hash (via `data-hash` attribute). The active state is updated on slide change, page load, and browser back/forward navigation.
+- **Listener attachment** — the tracking system safely attaches event listeners to swipers as they initialize, using a `Set` to prevent duplicate listeners and a retry interval to handle asynchronous registration. The listener setup occurs only once per page (`methodHashTrackingLoaded` flag).
+- Removed unused `enqueue_method_swiper_assets()` function and associated commented-out code.
+
+
+
 ## 2.0.0-beta18
 
 ### Theme Icons — Shared Icon System

@@ -454,6 +454,22 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 				}
 			}
 
+		if ( 'backdrop' == $cssprop ) {
+			$backdrop = method_get_responsive_setting( $block_attributes, $context, 'backdrop' );
+			if ( $backdrop && is_array( $backdrop ) && count( $backdrop ) > 0 ) {
+				$filters = array();
+				foreach ( $backdrop as $key => $value ) {
+					if ( ! empty( $value ) && $value !== null ) {
+						$filter_name = ( 'hueRotate' === $key ) ? 'hue-rotate' : $key;
+						$filters[] = $filter_name . '(' . $value . ')';
+					}
+				}
+				if ( count( $filters ) > 0 ) {
+					$declarations['backdrop-filter'] = implode( ' ', $filters ) . $suffix;
+				}
+			}
+		}
+
 		if ( 'flexDirection' == $cssprop ) {
 			if ( method_get_responsive_setting( $block_attributes, $context, 'flexDirection', 'row' ) ) {
 				$declarations['flex-direction'] = method_get_responsive_setting( $block_attributes, $context, 'flexDirection' ) . $suffix;

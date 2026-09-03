@@ -159,6 +159,22 @@ function getBreakpointStyle(
 					}
 				}
 			} else if (
+				prop === 'backdrop'
+			) {
+				if (settings?.backdrop && Object.keys(settings.backdrop).length > 0) {
+					const filters = Object.entries(settings.backdrop)
+						.filter(([, value]) => value !== undefined && value !== null && value !== '')
+						.map(([key, value]) => {
+							const filterName = key === 'hueRotate' ? 'hue-rotate' : key;
+							return `${filterName}(${value})`;
+						})
+						.join(' ');
+
+					if (filters) {
+						styleProps['backdrop-filter'] = filters;
+					}
+				}
+			} else if (
 				prop === 'order' &&
 				settings?.order &&
 				!settings?.order.startsWith('0')

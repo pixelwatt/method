@@ -1,3 +1,21 @@
+## 2.0.0-beta20
+
+### Backdrop Filters — Container Visual Effects
+
+Containers can now apply backdrop filter effects via a new responsive control set. Backdrop filters blur, brighten, or otherwise alter the appearance of content visible through a semi-transparent element.
+
+- **`MethodBackdropControls`** — new component for selecting and configuring backdrop filter effects. Exposes toggles and value inputs for: Blur, Brightness, Contrast, Grayscale, Hue Rotate, Invert, Opacity, Saturate, and Sepia. Each filter accepts appropriate units or ranges; the controls are exposed per-breakpoint via responsive tabs.
+- **CSS generation** — `method_get_block_css_declarations()` in `lib/blocks.php` now handles the `backdrop` property, building a space-separated `backdrop-filter` CSS declaration from active filters. MethodStyleTag in the editor also generates backdrop-filter styles for live preview.
+- **Container block** — integrated `MethodBackdropControls` into the Container block's inspector, allowing backdrop effects to be set across mobile, tablet, base, and wide breakpoints.
+
+### Flex Item — Mobile Order Override
+
+The Flex Item block now supports the `order` flex property on the mobile breakpoint, allowing flex children to be reordered for mobile layouts independently of their DOM order.
+
+- **`order` control** — added to `MethodFlexControls` so it appears alongside `flex-grow`, `flex-shrink`, and `flex-basis` in the Flex Item inspector. The control is exposed per-breakpoint (mobile, tablet, wide).
+- **CSS generation** — `method_get_block_css_declarations()` emits the `order` property for the selected breakpoint, and `MethodStyleTag` renders it in the editor preview.
+
+
 ## 2.0.0-beta19
 
 ### Swiper Block — Hash Navigation Link Active States

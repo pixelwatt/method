@@ -102,12 +102,31 @@
           justify-content: center;
   padding-left: 6px;
   padding-right: 6px;
-  border: 1px solid #B5B5B5;
-  color: #B5B5B5;
+  border: 1px solid rgb(56, 88, 233);
+  color: rgb(56, 88, 233);
   border-radius: 4px;
   font-size: 12px !important;
   font-weight: 500;
 }
 .method-shadow-layer .components-range-control__root .components-number-control:hover:after {
   opacity: 0;
+}
+.method-shadow-layer div[data-wp-component=ColorPicker] {
+  margin-left: -16px;
+  width: calc(100% + 32px) !important;
+}
+.method-shadow-layer div[data-wp-component=ColorPicker] .react-colorful {
+  width: calc(100% + 32px) !important;
+  -webkit-box-align: start !important;
+      -ms-flex-align: start !important;
+          align-items: flex-start !important;
+}
+.method-shadow-layer div[data-wp-component=ColorPicker] .react-colorful .react-colorful__hue,
+.method-shadow-layer div[data-wp-component=ColorPicker] .react-colorful .react-colorful__alpha {
+  width: calc(100% - 64px) !important;
+  margin-left: 16px !important;
+}
+.method-shadow-layer .components-checkbox-control .components-checkbox-control__input {
+  -webkit-margin-before: 0 !important;
+          margin-block-start: 0 !important;
 }

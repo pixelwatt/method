@@ -1532,6 +1532,7 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   left: 0;
   right: 0;
   z-index: 1;
+  background-size: cover;
 }
 .method-container .method-container-shade {
   position: absolute;
@@ -1577,6 +1578,7 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   left: 0;
   right: 0;
   z-index: 1;
+  background-size: cover;
 }
 .method-section .method-section-shade {
   position: absolute;

@@ -22,8 +22,9 @@ function ShadowLayer({ value, onChange, onRemove, index, total, isCollapsed, onT
             className="method-shadow-layer"
             style={{
                 width: '100%',
-                paddingBottom: index < total - 1 ? '16px' : '0',
-                marginBottom: index < total - 1 ? '16px' : '0',
+                paddingTop: '8px',
+                paddingBottom: index < total - 1 ? '8px' : '0',
+                marginBottom: index < total - 1 ? '8px' : '0',
                 borderBottom: index < total - 1 ? '1px solid #e0e0e0' : 'none',
             }}
         >
@@ -46,7 +47,7 @@ function ShadowLayer({ value, onChange, onRemove, index, total, isCollapsed, onT
             </div>
             {!isCollapsed && (
                 <>
-                    <div className="method-shadow-layer-control" style={{ width: '100%', paddingBlockEnd: '20px' }}>
+                    <div className="method-shadow-layer-control" style={{ width: '100%', paddingBlockEnd: '20px', paddingBlockStart: '12px' }}>
                         <RangeControl
                             label="Horizontal Offset"
                             value={value.x || 0}
@@ -102,19 +103,18 @@ function ShadowLayer({ value, onChange, onRemove, index, total, isCollapsed, onT
                             ]}
                         />
                     </div>
-                    <div className="method-shadow-layer-control" style={{ width: '100%', paddingBlockEnd: '20px' }}>
+                    <div className="method-shadow-layer-control" style={{ width: '100%', paddingBlockEnd: '8px' }}>
                         <ColorPicker
                             color={value.color || '#000'}
                             onChangeComplete={({ hex }) => update('color', hex)}
                             disableAlpha={false}
                         />
                     </div>
-                    <div className="method-shadow-layer-control" style={{ width: '100%', paddingBlockEnd: '20px' }}>
+                    <div className="method-shadow-layer-control" style={{ width: '100%', paddingBlockEnd: '12px' }}>
                         <CheckboxControl
                             label="Inset"
                             checked={!!value.inset}
                             onChange={(v) => update('inset', v)}
-                            style={{ marginTop: '12px' }}
                         />
                     </div>
                 </>

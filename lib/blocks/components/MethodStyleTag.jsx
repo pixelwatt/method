@@ -148,6 +148,8 @@ function getBreakpointStyle(
 								styleProps['background-size'] =
 									`${bgWidth} ${bgHeight}`;
 							}
+						} else if (settings?.bgDisplaySize === 'size') {
+							styleProps['background-size'] = 'unset';
 						}
 					}
 					if (prop === 'bgRepeat') {

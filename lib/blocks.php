@@ -389,6 +389,8 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 						$dsize = $block_attributes["responsiveSettings"]["{$context}"]['bgDisplaySize'];
 						if ( ( 'cover' == $dsize ) || ( 'contain' == $dsize ) ) {
 							$declarations['background-size'] = $dsize;
+						} elseif ( 'size' == $dsize ) {
+							$declarations['background-size'] = 'unset';
 						} elseif ( 'custom' == $dsize ) {
 							if ( ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'bgWidth' ) ) && ( method_check_array_key( $block_attributes["responsiveSettings"]["{$context}"], 'bgHeight' ) ) ) {
 								if ( ( ! str_starts_with( $block_attributes["responsiveSettings"]["{$context}"]['bgWidth'], '0' ) ) && ( ! str_starts_with( $block_attributes["responsiveSettings"]["{$context}"]['bgHeight'], '0' ) ) ) {

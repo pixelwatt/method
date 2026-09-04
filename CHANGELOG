@@ -1,3 +1,31 @@
+## 2.0.0-beta21
+
+### Shadow Control — Collapsible Layers & Inspector Polish
+
+The multi-layer box-shadow control (`MethodShadowControl`, used by Section, Container, Fitted Image, Fluid Video, and Theme Button) has been reworked so that stacks of several shadows stay manageable in the inspector. Storage (`responsiveSettings.base.shadows`) and the generated `box-shadow` output are unchanged on both sides, so existing shadows render exactly as before.
+
+- **Collapsible layers** — each shadow layer now has an expand/collapse toggle (with `aria-expanded`) beside its "Shadow N" label. Layers are collapsed by default, including newly added ones, so only the layer being edited takes up space. Collapse state is held in component state and kept in step as layers are added, removed, or reset.
+- **Layer header always shown** — the "Shadow N" label and **Remove** button now render for every layer, including when only one exists (previously they only appeared once there were two or more layers).
+- **Tighter layout** — each control is wrapped in a `.method-shadow-layer-control` row with consistent block spacing, and the divider spacing between layers is reduced from 16px to 8px.
+- **Editor UI styles** (`editorui.scss`) — the number input beside each offset/blur/spread slider now shows a `px` unit badge (hidden on hover so the field stays usable); the color picker bleeds to the panel edges for a wider hue/alpha slider; the Inset checkbox no longer carries extra top margin.
+
+### Backdrop Filters — Section Support & Responsive Controls
+
+- **Container** — the **Background Filters** panel introduced in beta20 is now also exposed in the mobile, tablet, and wide responsive tabs (beta20 offered it at the base breakpoint only), so backdrop effects can be overridden per breakpoint.
+- The backdrop-filter controls are now also available on the **Section** block. They appear as a **Background Overlay Filters** panel at the base breakpoint and in the mobile, tablet, and wide responsive tabs, and target the section's shade overlay (`.method-section-shade`), so blur, brightness, contrast, etc. apply to whatever shows through the overlay. The `backdrop` property is mapped to the shade selector in both the editor CSS map (`src/edit.js`) and the frontend render callback (`method-section.php`).
+- **`MethodBackdropControls`** gains a `controlLabel` prop (default: "Background Filters") so each block can name the panel to suit where the filter is applied.
+
+### Background Size — Cover by Default & "Image Size" Option
+
+- `.method-container-bgimg` and `.method-section-bgimg` now default to `background-size: cover` in `global.scss`, so background images cover their block without an explicit size setting.
+- The **Background Size** dropdown in `MethodBackgroundControls` has been reworked to match: the default (empty) option is now labelled **Cover**, followed by **Contain**, a new **Image Size** option (value `size`) that renders the image at its natural dimensions, and **Custom**. The explicit `cover` value has been removed from the list, but previously saved `cover` values still render as before in both the editor and on the frontend.
+- `MethodStyleTag` (editor) and `method_get_block_css_declarations()` (frontend) both emit `background-size: unset` for the new `size` option, overriding the global `cover` default.
+
+### Housekeeping
+
+- Version bumped to 2.0.0-beta21 (`style.css`); all block bundles recompiled.
+
+
 ## 2.0.0-beta20
 
 ### Backdrop Filters — Container Visual Effects

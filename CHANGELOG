@@ -1,3 +1,19 @@
+## 2.0.0-beta22
+
+### Block Inserter — Method Collection, Suffix Titles & Placeholders
+
+Top-level Method blocks are now grouped and named so they are easier to find in the inserter, and the container-type blocks start with a visible placeholder instead of an empty inner area.
+
+- **Block collection** — new `assets/js/method-block-collection.js` registers a `method` block collection (`wp.blocks.registerBlockCollection()`) titled **Method** with the Method logo as its icon, so every `method/*` block is grouped under a Method heading in the inserter. The script is enqueued for the block editor via `enqueue_block_editor_assets` (alongside the existing inline editor styles in `lib/blocks.php`), depends on `wp-blocks` and `wp-element`, and is versioned by `METHOD_VERSION`.
+- **Suffix titles** — the "Method" prefix added in beta17 has moved to a suffix: *Method Section* is now **Section (Method)**, and so on. The inserter (including the inline slash inserter) ranks titles that begin with the search term higher, so typing "section" or "swiper" now surfaces the Method block alongside the core one instead of burying it. Retitled: Accordion, Advanced Grid, Basic Grid, Breadcrumb, Buttons, Container, Fitted Image, Flex Container, Fluid Video, Marquee, Scrollspy, Section, Social Nav, Swiper, Swiper Gallery, and Tabs. Block *names* (`method/section`, etc.) are unchanged, so existing content is unaffected. Child blocks (Accordion Item, Column, Row, Basic Grid Item, Flex Item, Button, Theme Button, Swiper Slide, Tab) and the Site Navbar keep their existing titles.
+- **`method` keyword** — every retitled block gains a `"method"` keyword in `block.json` (appended to Scrollspy's existing keywords), so searching "method" still lists them all.
+- **Inner-content placeholders** — **Advanced Grid Column**, **Basic Grid Item**, **Flex Item**, **Container**, and **Section** now pass an inner-blocks `template` consisting of a single `core/paragraph` with a block-specific placeholder ("Column content goes here…", "Grid item content goes here…", "Flex item content goes here…", "Container content goes here…", "Section content goes here…"). A newly inserted block therefore shows an editable prompt rather than a bare appender. No template lock is applied, so the paragraph can be replaced or removed as usual.
+
+### Housekeeping
+
+- Version bumped to 2.0.0-beta22 (`style.css`); all block bundles recompiled so the new titles, keywords, and templates are live in the editor.
+
+
 ## 2.0.0-beta21
 
 ### Shadow Control — Collapsible Layers & Inspector Polish

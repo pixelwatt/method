@@ -899,6 +899,12 @@ function myplugin_inline_editor_styles() {
 		';
 	}
 	wp_add_inline_style( 'wp-edit-blocks', $custom_css );
+	wp_enqueue_script(
+		'method-block-collection',
+		get_template_directory_uri() . '/assets/js/method-block-collection.js',
+		array( 'wp-blocks', 'wp-element' ),
+		METHOD_VERSION
+	);
 }
 add_action( 'enqueue_block_editor_assets', 'myplugin_inline_editor_styles' );
 

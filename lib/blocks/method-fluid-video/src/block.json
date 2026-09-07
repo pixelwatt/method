@@ -1,7 +1,10 @@
 {
     "apiVersion": 3,
     "name": "method/fluid-video",
-    "title": "Method Fluid Video",
+    "title": "Fluid Video (Method)",
+    "keywords": [
+        "method"
+    ],
     "description": "A container-filling video embed, triggered via the user clicking on an image overlay.",
     "category": "method-component-blocks",
     "supports": {

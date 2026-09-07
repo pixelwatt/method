@@ -1,7 +1,10 @@
 {
     "apiVersion": 3,
     "name": "method/swiper",
-    "title": "Method Swiper",
+    "title": "Swiper (Method)",
+    "keywords": [
+        "method"
+    ],
     "category": "method-layout-blocks",
     "icon": "images-alt2",
     "supports": {

@@ -1,9 +1,12 @@
 {
   "apiVersion": 3,
   "name": "method/accordion",
-  "title": "Method Accordion",
+  "title": "Accordion (Method)",
   "category": "method-component-blocks",
   "icon": "block-default",
+  "keywords": [
+    "method"
+  ],
   "providesContext": {
     "method-accordion/hTag": "hTag",
     "method-accordion/closed": "closed"

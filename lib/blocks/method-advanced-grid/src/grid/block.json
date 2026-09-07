@@ -1,7 +1,10 @@
 {
     "apiVersion": 3,
     "name": "method/advanced-grid",
-    "title": "Method Advanced Grid",
+    "title": "Advanced Grid (Method)",
+    "keywords": [
+        "method"
+    ],
     "description": "A flexible CSS Grid container for building complex, responsive layouts with precise control over columns, rows, and spacing.",
     "category": "method-layout-blocks",
     "supports": {

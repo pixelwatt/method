@@ -1,7 +1,10 @@
 {
   "apiVersion": 3,
   "name": "method/looping-alert",
-  "title": "Method Marquee",
+  "title": "Marquee (Method)",
+  "keywords": [
+    "method"
+  ],
   "category": "method-component-blocks",
   "icon": "flag",
   "supports": {

@@ -1,7 +1,10 @@
 {
     "apiVersion": 3,
     "name": "method/flex",
-    "title": "Method Flex Container",
+    "title": "Flex Container (Method)",
+    "keywords": [
+        "method"
+    ],
     "description": "A layout container for arranging child items using flexbox, with controls for direction, alignment, and justification across breakpoints.",
     "category": "method-layout-blocks",
     "supports": {

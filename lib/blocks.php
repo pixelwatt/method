@@ -874,12 +874,15 @@ function myplugin_inline_editor_styles() {
 			.method-tab-' . $range . '.components-tab-panel__tabs-item:after {
 				background-color: ' . $colors["{$range}"] . ';
 			}
-			.method-responsive-control-tab-' . $range . ' .components-range-control__track {
+			.method-responsive-control-tab-' . $range . ' .components-range-control__track, 
+			.method-bpc-range.method-bpc-' . $range . ' .components-range-control__track {
 				background: ' . $colors["{$range}"] . ' !important;
 				color: ' . $colors["{$range}"] . ' !important;
 			}
 			.method-responsive-control-tab-' . $range . ' .components-range-control__thumb-wrapper,
-			.method-responsive-control-tab-' . $range . ' .components-range-control__thumb-wrapper span {
+			.method-responsive-control-tab-' . $range . ' .components-range-control__thumb-wrapper span,
+			.method-bpc-range.method-bpc-' . $range . ' .components-range-control__thumb-wrapper, 
+			.method-bpc-range.method-bpc-' . $range . ' .components-range-control__thumb-wrapper span {
 				background-color: ' . $colors["{$range}"] . ' !important;
 			}
 			.method-responsive-control-tab-' . $range . ' .components-form-toggle .components-form-toggle__input {

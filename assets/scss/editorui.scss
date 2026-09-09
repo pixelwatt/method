@@ -95,13 +95,13 @@
     }
 }
 
-.method-shadow-layer {
+@mixin rangeUnit($unit) {
     .components-range-control__root {
         .components-number-control {
             position: relative;
 
             &:after {
-                content: 'px';
+                content: $unit;
                 position: absolute;
                 top: 10px;
                 bottom: 10px;
@@ -111,12 +111,13 @@
                 justify-content: center;
                 padding-left: 6px;
                 padding-right: 6px;
-                border: 1px solid rgb(56, 88, 233);
-                color: rgb(56, 88, 233);
+                border: 1px solid #7c7c7c;
+                color: #7c7c7c;
                 border-radius: 4px;
                 font-size: 12px !important;
                 font-weight: 500;
                 //text-transform: uppercase;
+                pointer-events: none;
             }
 
             &:hover {
@@ -126,6 +127,10 @@
             }
         }
     }
+}
+
+.method-shadow-layer {
+    @include rangeUnit('px');
 
     div[data-wp-component="ColorPicker"] {
         margin-left: -16px;
@@ -147,5 +152,11 @@
         .components-checkbox-control__input {
             margin-block-start: 0 !important;
         }
+    }
+}
+
+.method-bpc-range {
+    &.method-bpc-units-px {
+        @include rangeUnit('px');
     }
 }

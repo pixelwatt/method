@@ -67,11 +67,17 @@ function method_swiper_get_nav_icons( $attributes ) {
  * @param array  $attributes   Block attributes.
  * @param string $track_markup The `.swiper-wrapper` element containing the slides.
  * @param array  $args {
- *     @type string $id                    Wrapper id; also prefixes the JS variable. Defaults to uniqid('method').
- *     @type string $class                 Extra wrapper class(es), added after `method-swiper`.
- *     @type bool   $watch_slides_progress Enable Swiper's watchSlidesProgress option.
- *     @type string $center_class          When set, the runtime keeps this class on the
- *                                         center visible slide(s) of this swiper.
+ *     @type string     $id                    Wrapper id; also prefixes the JS variable. Defaults to uniqid('method').
+ *     @type string     $class                 Extra wrapper class(es), added after `method-swiper`.
+ *     @type bool       $watch_slides_progress Enable Swiper's watchSlidesProgress option.
+ *     @type string     $center_class          When set, the runtime keeps this class on the
+ *                                             center visible slide(s) of this swiper.
+ *     @type bool|array $loop                  Swiper loop mode: a bool for every tier, or
+ *                                             [ 'mobile' => bool, 'tablet' => bool, 'desktop' => bool ]
+ *                                             to decide per tier (Swiper toggles loop on breakpoint
+ *                                             change). Loop needs at least slidesPerView + 1 slides
+ *                                             at a tier, so callers should pass false where a tier
+ *                                             lacks them. Default false.
  * }
  * @return string
  */
@@ -81,8 +87,25 @@ function method_swiper_render( $attributes, $track_markup, $args = array() ) {
 		'class'                 => '',
 		'watch_slides_progress' => false,
 		'center_class'          => '',
+		'loop'                  => false,
 	) );
 	$methodId = $args['id'] ? $args['id'] : uniqid( 'method' );
+
+	$loop = $args['loop'];
+	if ( ! is_array( $loop ) ) {
+		$loop = array( 'mobile' => (bool) $loop, 'tablet' => (bool) $loop, 'desktop' => (bool) $loop );
+	}
+	$loop = array(
+		'mobile'  => ! empty( $loop['mobile'] ),
+		'tablet'  => ! empty( $loop['tablet'] ),
+		'desktop' => ! empty( $loop['desktop'] ),
+	);
+	$any_loop = in_array( true, $loop, true );
+	// Per-tier loop flags only appear in the breakpoint params when some tier
+	// loops, so swipers that never loop keep the plain `loop: false` config.
+	$loop_tier_config = function( $tier ) use ( $loop, $any_loop ) {
+		return $any_loop ? ', loop: ' . ( $loop[ $tier ] ? 'true' : 'false' ) : '';
+	};
 
 	$show_navigation = ! isset( $attributes['showNavigation'] ) || $attributes['showNavigation'];
 	$show_pagination = ! isset( $attributes['showPagination'] ) || $attributes['showPagination'];
@@ -137,7 +160,10 @@ function method_swiper_render( $attributes, $track_markup, $args = array() ) {
 		: '';
 
 	// Fade shows a single, stacked slide and crossfades between them, so
-	// per-view counts, spacing and breakpoints don't apply.
+	// per-view counts, spacing and breakpoints don't apply (its loop flag is
+	// the base/mobile one, since callers pass a uniform value for fade).
+	$loop_tablet  = $loop_tier_config( 'tablet' );
+	$loop_desktop = $loop_tier_config( 'desktop' );
 	$effect_config = $fade_effect
 		? "slidesPerView: 1,
                         spaceBetween: 0,
@@ -146,9 +172,10 @@ function method_swiper_render( $attributes, $track_markup, $args = array() ) {
 		: "slidesPerView: $slides_per_view_mobile,
                         spaceBetween: $space_between_mobile,
                         breakpoints: {
-                            {$breakpoints['tablet']}: { slidesPerView: $slides_per_view_tablet, spaceBetween: $space_between_tablet },
-                            {$breakpoints['desktop']}: { slidesPerView: $slides_per_view, spaceBetween: $space_between }
+                            {$breakpoints['tablet']}: { slidesPerView: $slides_per_view_tablet, spaceBetween: $space_between_tablet{$loop_tablet} },
+                            {$breakpoints['desktop']}: { slidesPerView: $slides_per_view, spaceBetween: $space_between{$loop_desktop} }
                         },";
+	$loop_config = 'loop: ' . ( $loop['mobile'] ? 'true' : 'false' ) . ',';
 
 	// Register with the shared runtime. The queue is a plain array until the
 	// runtime's view script takes it over, so this works regardless of which
@@ -178,7 +205,7 @@ function method_swiper_render( $attributes, $track_markup, $args = array() ) {
                 document.addEventListener(\'DOMContentLoaded\', function () {
                     const ' . $methodId . 'Swiper = new Swiper(\'#' . $methodId . ' .swiper-container\', {
                         ' . $effect_config . '
-                        loop: false,
+                        ' . $loop_config . '
                         autoHeight: true,
                         ' . $watch_config . '
                         ' . $pagination_config . '

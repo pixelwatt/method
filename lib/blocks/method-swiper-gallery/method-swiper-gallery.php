@@ -53,6 +53,33 @@ function method_swiper_gallery_get_slide_hash( $hash_id, $index ) {
 
 
 /**
+ * Which tiers loop. The gallery always loops (as the original block did) —
+ * except at a tier where Swiper would refuse: loop mode needs at least
+ * slidesPerView + 1 slides, and with fewer there is nothing to slide anyway.
+ * Per-view defaults match method_swiper_render(); src/edit.js applies the
+ * same rule to the tier it resolves in the editor.
+ *
+ * @param array $block_attributes Block attributes.
+ * @param int   $slide_count      Number of rendered slides.
+ * @return array{mobile: bool, tablet: bool, desktop: bool}
+ */
+function method_swiper_gallery_get_loop_tiers( $block_attributes, $slide_count ) {
+    $fade     = ! empty( $block_attributes['fadeEffect'] );
+    $per_view = array(
+        'mobile'  => $fade ? 1 : ( isset( $block_attributes['slidesPerViewMobile'] ) ? (int) $block_attributes['slidesPerViewMobile'] : 1 ),
+        'tablet'  => $fade ? 1 : ( isset( $block_attributes['slidesPerViewTablet'] ) ? (int) $block_attributes['slidesPerViewTablet'] : 2 ),
+        'desktop' => $fade ? 1 : ( isset( $block_attributes['slidesPerView'] ) ? (int) $block_attributes['slidesPerView'] : 3 ),
+    );
+
+    $loop = array();
+    foreach ( $per_view as $tier => $count ) {
+        $loop[ $tier ] = (int) $slide_count > max( 1, $count );
+    }
+    return $loop;
+}
+
+
+/**
  * name => value pairs to an escaped HTML attribute string. Empty / false
  * values are skipped.
  *
@@ -108,7 +135,8 @@ function render_method_swiper_gallery_block( $block_attributes, $block ) {
         ? array_values( $block_attributes['images'] )
         : array();
 
-    $slides = '';
+    $slides      = '';
+    $slide_count = 0;
     foreach ( $images as $index => $item ) {
         $attachment_id = ( is_array( $item ) && ! empty( $item['id'] ) ) ? (int) $item['id'] : 0;
         if ( ! $attachment_id ) {
@@ -139,6 +167,7 @@ function render_method_swiper_gallery_block( $block_attributes, $block ) {
             }
         }
 
+        $slide_count++;
         $slides .= '
             <div' . method_swiper_gallery_attribute_string( $slide_atts ) . '>
                 <' . $item_tag . method_swiper_gallery_attribute_string( $item_atts ) . '>
@@ -164,6 +193,7 @@ function render_method_swiper_gallery_block( $block_attributes, $block ) {
             // moving between visible lightbox links doesn't jump the track.
             'watch_slides_progress' => true,
             'center_class'          => $center_slides ? METHOD_SWIPER_GALLERY_CENTER_CLASS : '',
+            'loop'                  => method_swiper_gallery_get_loop_tiers( $block_attributes, $slide_count ),
         )
     );
 }

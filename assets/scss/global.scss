@@ -1718,10 +1718,11 @@ div[data-type="method/advanced-grid"]>.row>.col-24>.method-advanced-grid-rows>.b
     }
 }
 
-// Fitted image lightbox.
-// Markup is created by lib/blocks/method-fitted-image/src/frontend.js: a
-// shared native <dialog class="method-lightbox"> holding the uncropped image.
-.method-block-fitted-image.method-lightbox-trigger {
+// Image lightbox (Fitted Image and Swiper Gallery blocks).
+// Markup is created by lib/blocks/utils/lightbox.js, bundled into each block's
+// view script: a shared native <dialog class="method-lightbox"> holding the
+// uncropped image.
+.method-lightbox-trigger {
     cursor: zoom-in;
 }
 
@@ -1990,11 +1991,21 @@ html.method-lightbox-open {
     display: block;
 }
 
+// Swiper Gallery.
+// The wrapper also carries `.method-swiper`, so the arrow, pagination and
+// outer layout rules under `.method-swiper` (below) apply to galleries too;
+// only the per-slide image markup is gallery-specific:
+//
+//   .swiper-slide[data-hash]
+//     .method-swiper-gallery-item        (div, or <a> when the lightbox is on)
+//       .method-fit-img-container.method-ratio-*  |  .method-swiper-img-container
+//         .method-img-shade
+//         img.method-fit-img              |  img.method-fluid-img
+//
+// With "Mark center slides" enabled the shared runtime keeps
+// `.method-swiper-gallery-center` on the center visible slide(s) — it has no
+// default styling here, so child themes decide what "center" looks like.
 .method-swiper-gallery {
-    .method-fit-img-container {
-        //padding-top: 66%;
-    }
-
     .swiper {
         overflow: hidden;
         position: relative;
@@ -2006,6 +2017,17 @@ html.method-lightbox-open {
 
     .swiper-slide {
         flex-shrink: 0;
+    }
+
+    .method-swiper-gallery-item {
+        display: block;
+        position: relative;
+        overflow: hidden;
+    }
+
+    a.method-swiper-gallery-item {
+        color: inherit;
+        text-decoration: none;
     }
 
     .method-fluid-img {
@@ -2024,6 +2046,7 @@ html.method-lightbox-open {
         bottom: 0;
         left: 0;
         z-index: 4;
+        pointer-events: none;
     }
 }
 

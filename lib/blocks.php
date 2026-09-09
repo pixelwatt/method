@@ -912,6 +912,41 @@ function myplugin_inline_editor_styles() {
 add_action( 'enqueue_block_editor_assets', 'myplugin_inline_editor_styles' );
 
 
+/**
+ * Attributes for an image lightbox trigger, shared by the Fitted Image and
+ * Swiper Gallery blocks. Applied to an <a> so that, without the lightbox
+ * script (lib/blocks/utils/lightbox.js, bundled into each block's view script)
+ * or without <dialog> support, the element degrades to a plain link to the
+ * uncropped, full-size image.
+ *
+ * @param int $attachment_id Attachment to show in the lightbox.
+ * @return array Attribute name => value pairs (unescaped), or an empty array
+ *               if the attachment has no usable full-size image.
+ */
+function method_get_lightbox_attributes( $attachment_id ) {
+    $full = wp_get_attachment_image_src( $attachment_id, 'full' );
+    if ( ! $full || empty( $full[0] ) ) {
+        return array();
+    }
+
+    $attributes = array(
+        'href'                        => $full[0],
+        'data-method-lightbox'        => '1',
+        'data-method-lightbox-src'    => $full[0],
+        'data-method-lightbox-width'  => $full[1],
+        'data-method-lightbox-height' => $full[2],
+        'data-method-lightbox-alt'    => trim( (string) get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ),
+        'aria-haspopup'               => 'dialog',
+    );
+
+    $srcset = wp_get_attachment_image_srcset( $attachment_id, 'full' );
+    if ( $srcset ) {
+        $attributes['data-method-lightbox-srcset'] = $srcset;
+    }
+
+    return $attributes;
+}
+
 function method_get_responsive_setting( $block_attributes, $breakpoint, $setting, $fallback = false ) {
 	if ( method_checK_array_key( $block_attributes, 'responsiveSettings' ) ) {
 		if ( method_checK_array_key( $block_attributes['responsiveSettings'], $breakpoint ) ) {

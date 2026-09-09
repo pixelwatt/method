@@ -5,14 +5,92 @@
   "keywords": [
     "method"
   ],
+  "description": "A Swiper slider built from a set of images, with the same effect, per-view, spacing, navigation and hash options as the Swiper block, plus image aspect ratio, slide background and shade colors, an optional lightbox, and optional center-slide marking.",
   "category": "method-component-blocks",
   "supports": {
     "html": false,
     "align": [
+      "wide",
       "full"
     ]
   },
   "attributes": {
+    "images": {
+      "type": "array",
+      "default": []
+    },
+    "lightbox": {
+      "type": "boolean",
+      "default": false
+    },
+    "centerSlides": {
+      "type": "boolean",
+      "default": false
+    },
+    "slidesPerView": {
+      "type": "number",
+      "default": 3
+    },
+    "slidesPerViewTablet": {
+      "type": "number",
+      "default": 2
+    },
+    "slidesPerViewMobile": {
+      "type": "number",
+      "default": 1
+    },
+    "spaceBetween": {
+      "type": "number",
+      "default": 24
+    },
+    "spaceBetweenTablet": {
+      "type": "number",
+      "default": 24
+    },
+    "spaceBetweenMobile": {
+      "type": "number",
+      "default": 24
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": true
+    },
+    "altPagination": {
+      "type": "boolean",
+      "default": false
+    },
+    "fadeEffect": {
+      "type": "boolean",
+      "default": false
+    },
+    "hashNavigation": {
+      "type": "boolean",
+      "default": false
+    },
+    "hashId": {
+      "type": "string",
+      "default": ""
+    },
+    "scrollToSlideStart": {
+      "type": "boolean",
+      "default": false
+    },
+    "prevIcon": {
+      "type": "string"
+    },
+    "nextIcon": {
+      "type": "string"
+    },
+    "textColor": {
+      "type": "string"
+    },
+    "linkColor": {
+      "type": "string"
+    },
     "bgColor": {
       "type": "string"
     },
@@ -24,10 +102,6 @@
     },
     "bgShadeGradient": {
       "type": "string"
-    },
-    "images": {
-      "type": "array",
-      "default": []
     },
     "responsiveSettings": {
       "type": "object",
@@ -47,5 +121,6 @@
       }
     }
   },
-  "editorScript": "file:./index.js"
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./frontend.js"
 }

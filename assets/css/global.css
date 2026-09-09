@@ -1634,7 +1634,7 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.method-block-fitted-image.method-lightbox-trigger {
+.method-lightbox-trigger {
   cursor: -webkit-zoom-in;
   cursor: zoom-in;
 }
@@ -1917,6 +1917,15 @@ html.method-lightbox-open {
   -ms-flex-negative: 0;
       flex-shrink: 0;
 }
+.method-swiper-gallery .method-swiper-gallery-item {
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+.method-swiper-gallery a.method-swiper-gallery-item {
+  color: inherit;
+  text-decoration: none;
+}
 .method-swiper-gallery .method-fluid-img {
   margin-left: auto;
   margin-right: auto;
@@ -1931,6 +1940,7 @@ html.method-lightbox-open {
   bottom: 0;
   left: 0;
   z-index: 4;
+  pointer-events: none;
 }
 
 .method-navbar .navbar-nav {

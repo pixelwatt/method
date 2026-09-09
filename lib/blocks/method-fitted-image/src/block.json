@@ -47,6 +47,10 @@
             "type": "boolean",
             "default": false
         },
+        "lightbox": {
+            "type": "boolean",
+            "default": false
+        },
         "responsiveSettings": {
             "type": "object",
             "default": {
@@ -65,5 +69,6 @@
             }
         }
     },
-    "editorScript": "file:./index.js"
+    "editorScript": "file:./index.js",
+    "viewScript": "file:./frontend.js"
 }

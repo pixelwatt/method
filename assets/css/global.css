@@ -1634,6 +1634,160 @@ div[data-type="method/advanced-grid"] > .row > .col-24 > .method-advanced-grid-r
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+.method-block-fitted-image.method-lightbox-trigger {
+  cursor: -webkit-zoom-in;
+  cursor: zoom-in;
+}
+
+html.method-lightbox-open {
+  overflow: hidden;
+}
+
+.method-lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.92);
+  color: #fff;
+  -ms-scroll-chaining: none;
+      overscroll-behavior: contain;
+}
+@supports (height: 100dvh) {
+  .method-lightbox {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+}
+.method-lightbox::-webkit-backdrop {
+  background: rgba(0, 0, 0, 0.92);
+}
+.method-lightbox::backdrop {
+  background: rgba(0, 0, 0, 0.92);
+}
+.method-lightbox[open] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.method-lightbox .method-lightbox-figure {
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 1.5rem;
+}
+.method-lightbox .method-lightbox-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -webkit-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  -webkit-transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
+}
+.method-lightbox.is-loading .method-lightbox-img {
+  opacity: 0;
+}
+.method-lightbox.is-loading .method-lightbox-figure::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  border-radius: 50%;
+  -webkit-animation: method-lightbox-spin 0.8s linear infinite;
+          animation: method-lightbox-spin 0.8s linear infinite;
+}
+.method-lightbox .method-lightbox-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 1;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+}
+.method-lightbox .method-lightbox-close svg {
+  width: 20px;
+  height: 20px;
+}
+.method-lightbox .method-lightbox-close:hover, .method-lightbox .method-lightbox-close:focus-visible {
+  background: rgba(255, 255, 255, 0.28);
+}
+.method-lightbox .method-lightbox-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .method-lightbox .method-lightbox-img {
+    -webkit-transition: none;
+    transition: none;
+  }
+  .method-lightbox.is-loading .method-lightbox-figure::after {
+    -webkit-animation-duration: 2s;
+            animation-duration: 2s;
+  }
+}
+
+@-webkit-keyframes method-lightbox-spin {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes method-lightbox-spin {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
 .method-buttons .method-buttons-inner-blocks {
   display: -webkit-box !important;
   display: -ms-flexbox !important;

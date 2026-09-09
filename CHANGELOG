@@ -1,3 +1,20 @@
+## 2.0.0-beta24
+
+### Flex Container — Flex Wrap
+
+The Flex Container block previously had no way to control wrapping: `.method-flex-inner-blocks` is a flex container with no `flex-wrap` declared, so items always sat on one line (browser default `nowrap`) and could only be broken across lines by a child theme. Wrapping is now a per-breakpoint block option.
+
+- **Flex Wrap control** — `MethodAlignmentControls` (`lib/blocks/components/MethodAlignmentControls.js`) gains an opt-in `flexWrap` item: a **Flex Wrap** select in the Alignment tools panel with **No Wrap** (`nowrap`), **Wrap** (`wrap`), **Wrap Reverse** (`wrap-reverse`), and **Balance** (`balance`) options. It is stored as `responsiveSettings[breakpoint].flexWrap` alongside `alignItems`, `justifyContent`, and `flexDirection`, and the panel's **Reset all** now clears it with the rest. Like the other alignment items it must be requested via `include`; only the Flex Container asks for it, so the Buttons, Breadcrumb, Social Nav, Advanced Grid Row, Section, and Container inspectors are unchanged.
+- **Flex Container inspector** — the base (desktop) panel and the Mobile, Tablet, and Wide responsive tabs each include the new control, so wrapping can be set universally and overridden per tier — for example wrapping on mobile while staying on one line on desktop.
+- **Frontend CSS** — `method_get_block_css_declarations()` (`lib/blocks.php`) emits `flex-wrap` for a `flexWrap` setting (respecting the `!important` suffix when a caller prioritises), and the Flex Container's render callback adds `flexWrap` to the property list for `> .method-flex-inner-blocks`, so the value is generated for the base, mobile, tablet, and wide contexts like the existing alignment properties.
+- **Editor preview** — `MethodStyleTag` mirrors the same `flex-wrap` declaration per breakpoint, and the Flex Container's editor style map lists `flexWrap` for its inner-blocks selector, so the canvas wraps exactly as the frontend will.
+- **Note on Balance** — `flex-wrap: balance` is a newer CSS value that not every browser understands yet; where unsupported the declaration is dropped and the container falls back to the default single line.
+
+### Housekeeping
+
+- Version bumped to 2.0.0-beta24 (`style.css`). The Flex Container and Flex Item bundles were recompiled — the Flex Item block has no new controls, but it bundles the updated `MethodStyleTag`.
+
+
 ## 2.0.0-beta23
 
 ### Image Lightbox — Fitted Image & Swiper Gallery

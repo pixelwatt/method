@@ -478,6 +478,12 @@ function method_get_block_css_declarations( $block_attributes, $context = 'base'
 			}
 		}
 
+		if ( 'flexWrap' == $cssprop ) {
+			if ( method_get_responsive_setting( $block_attributes, $context, 'flexWrap' ) ) {
+				$declarations['flex-wrap'] = method_get_responsive_setting( $block_attributes, $context, 'flexWrap' ) . $suffix;
+			}
+		}
+
 		if ( 'alignItems' == $cssprop ) {
 			if ( method_get_responsive_setting( $block_attributes, $context, 'alignItems' ) ) {
 				$declarations['align-items'] = method_get_responsive_setting( $block_attributes, $context, 'alignItems' ) . $suffix;

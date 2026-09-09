@@ -20,7 +20,7 @@ function render_method_flex_block( $block_attributes, $content, $block ) {
     $methodId = uniqid( 'method-' );
     $cssargs = array(
         '#' . $methodId => array( 'margin-top', 'margin-bottom' ),
-        '#' . $methodId . ' > .method-flex-inner-blocks' => array( 'gap', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'justifyContent', 'alignItems', 'flexDirection' ),
+        '#' . $methodId . ' > .method-flex-inner-blocks' => array( 'gap', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom', 'justifyContent', 'alignItems', 'flexDirection', 'flexWrap' ),
     );
     $responsive = method_get_block_responsive_styles( $block_attributes, $cssargs, array( 'base', 'mobile', 'tablet', 'wide' ), false );
     method_collect_css( $responsive, '#' . $methodId, 10);

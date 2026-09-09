@@ -215,7 +215,8 @@ function getBreakpointStyle(
 				prop === 'zIndex' ||
 				prop === 'flexGrow' ||
 				prop === 'flexShrink' ||
-				prop === 'flexBasis'
+				prop === 'flexBasis' ||
+				prop === 'flexWrap'
 			) {
 				if (prop === 'justifyContent' && settings?.justifyContent) {
 					styleProps['justify-content'] = settings.justifyContent;
@@ -238,6 +239,9 @@ function getBreakpointStyle(
 				}
 				if (prop === 'flexGrow' && settings?.flexGrow !== undefined) {
 					styleProps['flex-grow'] = settings.flexGrow;
+				}
+				if (prop === 'flexWrap' && settings?.flexWrap !== undefined) {
+					styleProps['flex-wrap'] = settings.flexWrap;
 				}
 				if (
 					prop === 'flexShrink' &&

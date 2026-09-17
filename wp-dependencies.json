@@ -1,0 +1,9 @@
+[
+    {
+        "name": "CMB2",
+        "host": "wordpress",
+        "slug": "cmb2/init.php",
+        "uri": "https://wordpress.org/plugins/cmb2/",
+        "required": true
+    }
+]

@@ -1,3 +1,26 @@
+## 2.0.0-beta25
+
+### Plugin Dependencies — WP Dependency Installer Replaces TGMPA
+
+Required plugins were previously declared in PHP through TGM Plugin Activation: `method_register_required_plugins()` hooked `tgmpa_register` with a hard-coded array (just CMB2), and installation happened by hand from an **Install Plugins** page under Appearance. Dependencies are now declared in a `wp-dependencies.json` file and handled by [WP Dependency Installer](https://github.com/afragen/wp-dependency-installer) (`afragen/wp-dependency-installer` 4.3.14, installed via Composer), which also means a child theme can declare its own plugins — including ones hosted outside wordpress.org — without touching PHP.
+
+- **`wp-dependencies.json`** — new file in the theme root listing dependencies in WPDI's format (`name`, `host`, `slug`, `uri`, `required`, plus `branch` for git hosts). Method's own file declares CMB2 as required from wordpress.org; note that `slug` is the plugin file path (`cmb2/init.php`), not the directory slug TGMPA used. Supported hosts are `wordpress`, `github`, `bitbucket`, `gitlab`, `gitea`, and `direct` (a zip URL).
+- **Parent and child theme files are merged** — new `method_collect_plugin_dependencies()` (`lib/theme-setup.php`) reads `wp-dependencies.json` from both `get_template_directory()` and `get_stylesheet_directory()` (de-duplicated, so a site running Method directly reads the file once), skipping files that are missing, unreadable, or not valid JSON arrays. A child theme only needs to drop its own `wp-dependencies.json` beside its `style.css`.
+- **`method/plugin_dependencies` filter** — the merged list passes through this filter before registration, so dependencies can also be added, altered, or removed from PHP. Afterwards entries without a `slug` are discarded and the list is de-duplicated by slug, with later entries replacing earlier ones (child theme over parent, filter over both).
+- **Bootstrap** — new `method_run_plugin_dependencies()` runs on `after_setup_theme`: it loads `vendor/autoload.php`, then registers the collected list with `WP_Dependency_Installer::instance( get_template_directory() )` and calls `run()`. It returns quietly if the autoloader is unreadable, the class is unavailable, or no dependencies were collected, so a checkout without `vendor/` degrades to "no dependency management" rather than a fatal error.
+- **Behaviour change: required plugins install themselves** — with TGMPA, required plugins produced a nag and were installed manually. WPDI installs and activates a `required` plugin automatically on the next admin page load (for a user with `update_plugins` / `activate_plugins`), and on the Plugins screen labels it **Required Plugin** and removes its **Deactivate** and **Delete** links. Optional plugins (`"required": false`) instead show a dismissible admin notice with an install or activate link; dismissal lasts a week.
+- **Note on overriding Method's own dependencies** — `run()` also reads the parent theme's `wp-dependencies.json` itself, and in WPDI's registry a required entry always replaces an existing one for the same slug. A child theme or filter can therefore add dependencies or change optional ones, but cannot downgrade CMB2 from required to optional.
+
+### Removed
+
+- `method_register_required_plugins()`, its `tgmpa_register` hook, and the bundled TGM Plugin Activation library itself (`inc/tgm-plugin-activation/`). The **Appearance → Install Plugins** page (`themes.php?page=tgmpa-install-plugins`) no longer exists, and `tgmpa()` and the `TGM_Plugin_Activation` class are no longer provided by Method — a child theme that hooked `tgmpa_register` to add its own plugins should move them to a `wp-dependencies.json` file or the `method/plugin_dependencies` filter.
+
+### Housekeeping
+
+- Version bumped to 2.0.0-beta25 (`style.css`).
+- Added `composer.json` and `composer.lock` (requiring `afragen/wp-dependency-installer` ^4.3) along with the installed `vendor/` directory, which also brings in WPDI's own dependency, `afragen/wp-dismiss-notice` 0.3.7. `vendor/` ships with the theme, so no `composer install` step is needed on deploy.
+
+
 ## 2.0.0-beta24
 
 ### Flex Container — Flex Wrap

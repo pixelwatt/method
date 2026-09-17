@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'name' => '__root__',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'a3a3034bd1bbd6cc1c74c0638012b89c13e47009',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'a3a3034bd1bbd6cc1c74c0638012b89c13e47009',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'afragen/wp-dependency-installer' => array(
+            'pretty_version' => '4.3.14',
+            'version' => '4.3.14.0',
+            'reference' => '38f127feeaeb1cfc8544c120d4e9e372fa41f79e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../afragen/wp-dependency-installer',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'afragen/wp-dismiss-notice' => array(
+            'pretty_version' => '0.3.7',
+            'version' => '0.3.7.0',
+            'reference' => '3e2c694ca891fe94771457f54a3a5457a70c0aec',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../afragen/wp-dismiss-notice',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+    ),
+);

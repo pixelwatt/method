@@ -162,3 +162,90 @@
 .method-bpc-range.method-bpc-units-px .components-range-control__root .components-number-control:hover:after {
   opacity: 0;
 }
+
+.method-modal-id {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  gap: 8px;
+}
+.method-modal-id code {
+  min-width: 0;
+  padding: 4px 8px;
+  border-radius: 2px;
+  background: #f0f0f0;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.method-modal-manager .method-modal-manager-heading {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.method-modal-manager .method-modal-manager-section + .method-modal-manager-section {
+  margin-top: 24px;
+}
+.method-modal-manager .method-modal-manager-empty {
+  margin: 0 0 12px;
+  color: #757575;
+}
+.method-modal-manager .method-modal-manager-list {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+.method-modal-manager .method-modal-manager-row {
+  margin: 0;
+  padding: 12px 0;
+  border-top: 1px solid #e0e0e0;
+}
+.method-modal-manager .method-modal-manager-row:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.method-modal-manager .method-modal-manager-title {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.method-modal-manager .method-modal-manager-meta {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 4px 8px;
+  margin-top: 4px;
+  color: #757575;
+  font-size: 12px;
+}
+.method-modal-manager .method-modal-manager-meta code {
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: #f0f0f0;
+  color: #1e1e1e;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.method-modal-manager .method-modal-manager-warning {
+  margin: 8px 0 0;
+  color: #8a2424;
+  font-size: 12px;
+}
+.method-modal-manager .method-modal-manager-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}

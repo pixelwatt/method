@@ -1,0 +1,99 @@
+{
+  "apiVersion": 3,
+  "name": "method/modal",
+  "title": "Modal (Method)",
+  "keywords": [
+    "method",
+    "popup",
+    "dialog",
+    "overlay"
+  ],
+  "description": "A modal that opens from any link or button pointing at its ID, such as #modal-id. The modal is not shown where the block sits; it is printed at the end of the page, with options for size, full screen behavior, title, close icon, spacing, border and colors.",
+  "category": "method-component-blocks",
+  "supports": {
+    "html": false,
+    "align": false,
+    "anchor": false,
+    "visibility": false
+  },
+  "attributes": {
+    "modalId": {
+      "type": "string",
+      "default": ""
+    },
+    "customId": {
+      "type": "string",
+      "default": ""
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "hideTitle": {
+      "type": "boolean",
+      "default": false
+    },
+    "titleTag": {
+      "type": "string",
+      "default": "h2"
+    },
+    "size": {
+      "type": "string",
+      "default": "default"
+    },
+    "fullscreenBelow": {
+      "type": "string",
+      "default": ""
+    },
+    "centered": {
+      "type": "boolean",
+      "default": false
+    },
+    "scrollable": {
+      "type": "boolean",
+      "default": false
+    },
+    "staticBackdrop": {
+      "type": "boolean",
+      "default": false
+    },
+    "closeIcon": {
+      "type": "string",
+      "default": ""
+    },
+    "textColor": {
+      "type": "string"
+    },
+    "linkColor": {
+      "type": "string"
+    },
+    "bgColor": {
+      "type": "string"
+    },
+    "bgGradient": {
+      "type": "string"
+    },
+    "responsiveSettings": {
+      "type": "object",
+      "default": {
+        "base": {
+          "enabled": true
+        },
+        "mobile": {
+          "enabled": false
+        },
+        "tablet": {
+          "enabled": false
+        },
+        "wide": {
+          "enabled": false
+        }
+      }
+    }
+  },
+  "editorScript": [
+    "file:./index.js",
+    "file:./manager.js"
+  ],
+  "viewScript": "file:./frontend.js"
+}

@@ -34,10 +34,14 @@
 //     A php class for collecting and minifying block CSS for each
 //     page.
 //
-// 8.  lib/admin-customization.php
+// 8.  lib/class-method-modals.php
+//     A php class for collecting modals while a page renders and
+//     printing them at the end of the page.
+//
+// 9.  lib/admin-customization.php
 //     This file contains admin customizations and optimizations.
 //
-// 9.  lib/helper-functions.php
+// 10. lib/helper-functions.php
 //     This file contains a number of useful functions to assist in
 //     a variety of tasks.
 //
@@ -64,5 +68,6 @@ require_once('lib/blocks.php');
 require_once('lib/class-method-utility.php');
 require_once('lib/class-method-bs-accordion.php');
 require_once('lib/class-method-css-collector.php');
+require_once('lib/class-method-modals.php');
 require_once('lib/admin-customization.php');
 require_once('lib/helper-functions.php');

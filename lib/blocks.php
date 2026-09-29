@@ -120,6 +120,7 @@ require_once('blocks/method-fitted-image/method-fitted-image.php');
 require_once('blocks/method-flex/method-flex.php');
 require_once('blocks/method-fluid-video/method-fluid-video.php');
 require_once('blocks/method-looping-alert/method-looping-alert.php');
+require_once('blocks/method-modal/method-modal.php');
 //require_once('blocks/method-navbar/method-navbar.php');
 require_once('blocks/method-scrollspy/method-scrollspy.php');
 require_once('blocks/method-section/method-section.php');

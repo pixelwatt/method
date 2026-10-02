@@ -140,8 +140,42 @@ class Method_Modals {
         return array(
             'styles'  => wp_styles()->queue,
             'scripts' => wp_scripts()->queue,
-            'modules' => wp_script_modules()->get_queue(),
+            'modules' => self::get_script_module_queue(),
         );
+    }
+
+    /**
+     * IDs of the script modules enqueued right now.
+     *
+     * WP_Script_Modules::get_queue() exists since WordPress 6.9. On 6.5–6.8 the
+     * queue is private state, so it is read from inside the class scope the
+     * same way core's own get_marked_for_enqueue() reads it. Returns an empty
+     * list when neither is possible, which only costs a modal the re-enqueue
+     * of script modules its content loaded (classic scripts and styles are
+     * unaffected).
+     *
+     * @return string[]
+     */
+    private static function get_script_module_queue(): array {
+        $modules = wp_script_modules();
+        if ( method_exists( $modules, 'get_queue' ) ) {
+            return (array) $modules->get_queue();
+        }
+
+        $reader = function (): array {
+            $ids = array();
+            foreach ( (array) $this->registered as $id => $module ) {
+                if ( ! empty( $module['enqueue'] ) ) {
+                    $ids[] = (string) $id;
+                }
+            }
+            foreach ( array_keys( (array) $this->enqueued_before_registered ) as $id ) {
+                $ids[] = (string) $id;
+            }
+            return array_values( array_unique( $ids ) );
+        };
+        $bound = Closure::bind( $reader, $modules, WP_Script_Modules::class );
+        return $bound ? $bound() : array();
     }
 
     /**

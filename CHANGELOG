@@ -1,3 +1,17 @@
+## 2.0.0-beta27
+
+### Modal Registry — WordPress 6.5–6.8 Compatibility
+
+The modal registry's asset snapshot (`Method_Modals::get_asset_queues()`, behind `snapshot_assets()` / `assets_since_snapshot()`, which work out what a modal's content enqueued while it rendered) read the script-module queue through `wp_script_modules()->get_queue()`. That method only exists from WordPress 6.9, so on 6.5–6.8 any page containing a `method/modal` block died in the `render_block_data` hook with `Call to undefined method WP_Script_Modules::get_queue()`. beta26 was effectively 6.9-only without declaring it.
+
+- **`get_script_module_queue()`** — new private helper behind the `modules` entry of the snapshot. On WordPress 6.9+ it still calls `get_queue()`. On 6.5–6.8, where the queue is private state, it reads the same per-module `enqueue` flags core's own `get_marked_for_enqueue()` reads, plus `enqueued_before_registered`, through a closure bound into `WP_Script_Modules` scope — so the before/after diff that re-enqueues a modal's script modules behaves the same on both. If neither route is available it returns an empty list, which only costs a modal the re-enqueue of script modules its content loaded; classic scripts and styles are unaffected.
+- Behaviour on 6.9+ is unchanged. The effective floor for the Modal block is now 6.5, where `wp_script_modules()` was introduced; `style.css` still declares no `Requires at least` pending an audit of the rest of the theme.
+
+### Housekeeping
+
+- Version bumped to 2.0.0-beta27 (`style.css`).
+
+
 ## 2.0.0-beta26
 
 ### Modal Block

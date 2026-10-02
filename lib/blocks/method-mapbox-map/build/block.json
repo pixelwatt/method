@@ -1,0 +1,92 @@
+{
+  "apiVersion": 3,
+  "name": "method/mapbox-map",
+  "title": "Mapbox Map (Method)",
+  "keywords": [
+    "method",
+    "map",
+    "mapbox",
+    "location",
+    "pin"
+  ],
+  "description": "A Mapbox map with a single pin, placed by looking up an address or by hand. Choose one of Mapbox's styles or supply a style URL, set the pin color and size, the initial zoom, and the map height per breakpoint.",
+  "category": "method-component-blocks",
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ]
+  },
+  "attributes": {
+    "accessToken": {
+      "type": "string",
+      "default": ""
+    },
+    "address": {
+      "type": "string",
+      "default": ""
+    },
+    "geocodedAddress": {
+      "type": "string",
+      "default": ""
+    },
+    "lng": {
+      "type": "number"
+    },
+    "lat": {
+      "type": "number"
+    },
+    "zoom": {
+      "type": "number",
+      "default": 14
+    },
+    "mapStyle": {
+      "type": "string",
+      "default": "standard"
+    },
+    "customStyleUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "pinColor": {
+      "type": "string"
+    },
+    "pinScale": {
+      "type": "number",
+      "default": 1
+    },
+    "popupText": {
+      "type": "string",
+      "default": ""
+    },
+    "showNavigation": {
+      "type": "boolean",
+      "default": true
+    },
+    "cooperativeGestures": {
+      "type": "boolean",
+      "default": true
+    },
+    "responsiveSettings": {
+      "type": "object",
+      "default": {
+        "base": {
+          "enabled": true,
+          "height": "400px"
+        },
+        "mobile": {
+          "enabled": false
+        },
+        "tablet": {
+          "enabled": false
+        },
+        "wide": {
+          "enabled": false
+        }
+      }
+    }
+  },
+  "editorScript": "file:./index.js",
+  "viewScript": "file:./frontend.js"
+}

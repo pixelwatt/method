@@ -5,7 +5,7 @@
     "keywords": [
         "method"
     ],
-    "description": "A Swiper slider built from a set of images, with the same effect, per-view, spacing, navigation and hash options as the Swiper block, plus image aspect ratio, slide background and shade colors, an optional lightbox, and optional center-slide marking.",
+    "description": "A Swiper slider built from a set of images, with the same effect, per-view, spacing, navigation and hash options as the Swiper block, plus image aspect ratio, slide background and shade colors, an optional lightbox, optional image captions overlaid on each slide, and optional center-slide marking.",
     "category": "method-component-blocks",
     "supports": {
         "html": false,
@@ -20,6 +20,10 @@
             "default": []
         },
         "lightbox": {
+            "type": "boolean",
+            "default": false
+        },
+        "showCaptions": {
             "type": "boolean",
             "default": false
         },

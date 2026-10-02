@@ -248,3 +248,37 @@
         margin-top: 8px;
     }
 }
+
+// Mapbox Map block inspector: the address lookup and the coordinate fields.
+.method-mapbox-geocode {
+    > .components-button {
+        margin-top: 4px;
+    }
+
+    .components-notice {
+        margin: 8px 0 0;
+    }
+}
+
+.method-mapbox-geocode-results {
+    margin-top: 8px;
+
+    .components-button.is-link {
+        display: block;
+        margin-top: 4px;
+        font-size: 12px;
+        text-align: left;
+        text-decoration: none;
+    }
+}
+
+.method-mapbox-coordinates {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+
+    > * {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+}

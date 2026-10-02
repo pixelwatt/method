@@ -249,3 +249,35 @@
   gap: 8px;
   margin-top: 8px;
 }
+
+.method-mapbox-geocode > .components-button {
+  margin-top: 4px;
+}
+.method-mapbox-geocode .components-notice {
+  margin: 8px 0 0;
+}
+
+.method-mapbox-geocode-results {
+  margin-top: 8px;
+}
+.method-mapbox-geocode-results .components-button.is-link {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  text-align: left;
+  text-decoration: none;
+}
+
+.method-mapbox-coordinates {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+.method-mapbox-coordinates > * {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 0px;
+          flex: 1 1 0;
+  min-width: 0;
+}

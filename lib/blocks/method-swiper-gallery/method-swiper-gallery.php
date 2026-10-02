@@ -99,6 +99,39 @@ function method_swiper_gallery_attribute_string( $attributes ) {
 }
 
 
+/**
+ * Caption overlay for one slide: the attachment's caption from the media
+ * library, texturized as the core gallery shortcode does, in a single element
+ * placed after the image inside the slide's image container. The editor
+ * preview (src/edit.js) reads the same caption through the REST API, so
+ * nothing caption-related is stored in the block.
+ *
+ * @param int  $attachment_id Attachment whose caption to render.
+ * @param bool $inside_link   True when the slide item is already an <a>
+ *                            (lightbox on). Links inside the caption would
+ *                            nest anchors, which is invalid HTML, so they are
+ *                            reduced to their text.
+ * @return string Caption markup, or '' when the attachment has no caption.
+ */
+function method_swiper_gallery_get_caption_markup( $attachment_id, $inside_link = false ) {
+    $caption = wp_get_attachment_caption( $attachment_id );
+    if ( ! $caption ) {
+        return '';
+    }
+
+    $allowed = wp_kses_allowed_html( 'post' );
+    if ( $inside_link ) {
+        unset( $allowed['a'] );
+    }
+    $caption = trim( wp_kses( wptexturize( $caption ), $allowed ) );
+    if ( '' === $caption ) {
+        return '';
+    }
+
+    return '<div class="method-swiper-gallery-caption">' . $caption . '</div>';
+}
+
+
 function render_method_swiper_gallery_block( $block_attributes, $block ) {
     $methodId = uniqid( 'method' );
 
@@ -126,6 +159,7 @@ function render_method_swiper_gallery_block( $block_attributes, $block ) {
     }
 
     $lightbox      = ! empty( $block_attributes['lightbox'] );
+    $show_captions = ! empty( $block_attributes['showCaptions'] );
     $fade_effect   = ! empty( $block_attributes['fadeEffect'] );
     // Fade shows one slide at a time, so there is never a center slide to mark.
     $center_slides = ! $fade_effect && ! empty( $block_attributes['centerSlides'] );
@@ -167,13 +201,16 @@ function render_method_swiper_gallery_block( $block_attributes, $block ) {
             }
         }
 
+        // Caption overlay (last child of the image container, over the shade).
+        $caption = $show_captions ? method_swiper_gallery_get_caption_markup( $attachment_id, 'a' === $item_tag ) : '';
+
         $slide_count++;
         $slides .= '
             <div' . method_swiper_gallery_attribute_string( $slide_atts ) . '>
                 <' . $item_tag . method_swiper_gallery_attribute_string( $item_atts ) . '>
                     <div class="' . esc_attr( $outerClass . $aspectClass ) . '">
                         <div class="method-img-shade">&nbsp;</div>
-                        ' . $image . '
+                        ' . $image . $caption . '
                     </div>
                 </' . $item_tag . '>
             </div>';

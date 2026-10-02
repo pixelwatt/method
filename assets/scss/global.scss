@@ -2402,6 +2402,7 @@ html.method-modal-active .modal-backdrop {
 //       .method-fit-img-container.method-ratio-*  |  .method-swiper-img-container
 //         .method-img-shade
 //         img.method-fit-img              |  img.method-fluid-img
+//         .method-swiper-gallery-caption  (with "Show captions", for images that have one)
 //
 // With "Mark center slides" enabled the shared runtime keeps
 // `.method-swiper-gallery-center` on the center visible slide(s) — it has no
@@ -2448,6 +2449,28 @@ html.method-modal-active .modal-backdrop {
         left: 0;
         z-index: 4;
         pointer-events: none;
+    }
+
+    // "Show captions": the image's media library caption, overlaid along the
+    // bottom of the image above the shade. One element holds the whole
+    // caption, so a child theme can restyle or reposition it with one selector.
+    .method-swiper-gallery-caption {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 5;
+        margin: 0;
+        padding: 2.5rem 1rem 0.75rem;
+        color: #fff;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.45) 50%, rgba(0, 0, 0, 0) 100%);
+        font-size: 0.875rem;
+        line-height: 1.4;
+        text-align: left;
+
+        a {
+            color: inherit;
+        }
     }
 }
 
@@ -3049,5 +3072,87 @@ a.method-looping-alert {
 @media (prefers-reduced-motion: reduce) {
     .method-looping-alert-track.is-ready {
         animation: none;
+    }
+}
+
+/* ==========================================================================
+   Mapbox Map block
+   ========================================================================== */
+// Markup (method-mapbox-map.php):
+//   .method-mapbox-map[data-map] > .method-mapbox-map-canvas
+// The wrapper carries the generated height (or aspect ratio), margins, border,
+// radius and shadow; the canvas fills it and is handed to Mapbox GL JS by
+// lib/blocks/utils/mapbox.js, which the view script and the editor preview share.
+.method-mapbox-map {
+    position: relative;
+    overflow: hidden;
+    // A map whose height was reset still shows something.
+    min-height: 120px;
+    background: rgba(30, 30, 30, 0.06);
+
+    .method-mapbox-map-canvas {
+        position: absolute;
+        inset: 0;
+    }
+
+    // A popup inherits the theme's font size, which can be large.
+    .mapboxgl-popup-content {
+        font-size: 0.875rem;
+        line-height: 1.4;
+    }
+
+    // Editor: the token placeholder fills the block's height.
+    > .components-placeholder {
+        min-height: 100%;
+    }
+}
+
+// Editor preview: a status (loading, error) over the map, and a note in the
+// corner that says how to place the pin.
+.method-mapbox-map-editor-status {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    pointer-events: none;
+
+    .components-notice {
+        margin: 0;
+        pointer-events: auto;
+    }
+}
+
+.method-mapbox-map-editor-note {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 2;
+    max-width: calc(100% - 1rem);
+    padding: 0.375rem 0.625rem;
+    border-radius: 3px;
+    background: rgba(30, 30, 30, 0.85);
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0;
+    text-transform: none;
+    pointer-events: none;
+}
+
+.method-mapbox-map-token {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    width: 100%;
+
+    .components-base-control {
+        flex: 1 1 240px;
+        margin-bottom: 0;
     }
 }

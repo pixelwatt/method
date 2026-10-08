@@ -1,3 +1,22 @@
+## 2.0.0-beta28
+
+### Accordion Block — Unique Panel IDs
+
+Each Accordion Item's collapsible panel was saved with `id="collapse{itemIndex}"`, where `itemIndex` is the item's position in its accordion, so a page holding two accordions had two `#collapse1`, two `#collapse2`, and so on. Bootstrap resolves a toggle's `data-bs-target` with `querySelector()`, so a header in the second accordion opened the matching panel in the first. Panel ids are now scoped to their accordion.
+
+- **ID scheme** — a panel's id is `accordion-{accordionId}-collapse-{itemIndex}`, built from the accordion's existing `accordionId` (the accordion wrapper keeps `accordion-{accordionId}`). Both ids come from `getAccordionElementId()` / `getAccordionCollapseId()` in the new shared `lib/blocks/utils/accordionId.js`, used by the editor and save code of both blocks, and from their PHP twins `method_accordion_element_id()` / `method_accordion_collapse_id()`.
+- **Server-side render** — the Accordion Item render callback now decides the panel's `id`, `data-bs-parent`, and `show` class itself, rewriting the saved wrapper with `WP_HTML_Tag_Processor` from the same values the header button is printed with. Content saved before this release (`collapse1`, …) therefore renders with unique, matching ids immediately, without being re-saved, and a button's `aria-expanded` and its panel's open state can no longer disagree.
+- **Context** — the Accordion block provides `method-accordion/accordionId` and the item uses it, so the render callback reads the parent's id at render time; the item's own `parentAccordionId` attribute remains as the fallback.
+- **Deprecation** — the item's `save` now emits the new id, so the previous save is registered as a block deprecation (Method's first). Existing content still validates in the editor, no attribute changes, and a post is rewritten in the new format the next time it is updated. A deprecation entry inherits nothing from the block, so it carries `apiVersion`, `attributes`, and `supports` as well as the old `save`: without `apiVersion` the generated `wp-block-*` class is added to the deprecated output and nothing matches.
+- **Editor** — the canvas uses the same ids (falling back to the parent's clientId until its `accordionId` is set), so duplicated accordions no longer share panel ids in the editor either.
+- **Schema** — the `closed` attribute of both blocks is declared as `boolean` rather than the invalid `bool`, which silences a `_doing_it_wrong` notice from `rest_validate_value_from_schema()`; validation behaviour is unchanged.
+
+### Housekeeping
+
+- Version bumped to 2.0.0-beta28 (`style.css`).
+- The Accordion bundles were recompiled.
+
+
 ## 2.0.0-beta27
 
 ### Mapbox Map Block

@@ -8,6 +8,7 @@
         "method"
     ],
     "providesContext": {
+        "method-accordion/accordionId": "accordionId",
         "method-accordion/hTag": "hTag",
         "method-accordion/closed": "closed"
     },
@@ -26,7 +27,7 @@
             "default": 1
         },
         "closed": {
-            "type": "bool",
+            "type": "boolean",
             "default": false
         },
         "hTag": {

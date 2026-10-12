@@ -18,6 +18,89 @@ function method_swiper_get_breakpoints() {
 }
 
 /**
+ * Whether a swiper sizes its slides by width ("Set slide widths",
+ * slideWidthMode) rather than by a number of slides per view. The fade effect
+ * stacks every slide in the same spot, so it takes precedence. Mirrors
+ * isSlideWidthMode() in lib/blocks/utils/swiperSlideWidth.js.
+ *
+ * @param array $attributes Block attributes.
+ * @return bool
+ */
+function method_swiper_is_slide_width_mode( $attributes ) {
+	return ! empty( $attributes['slideWidthMode'] ) && empty( $attributes['fadeEffect'] );
+}
+
+/**
+ * The slideWidth* / containerWidthSlides* attribute names and the default
+ * width of a tier. Keep the defaults in sync with SLIDE_WIDTH_DEFAULTS in
+ * lib/blocks/utils/swiperSlideWidth.js and with the block.json files.
+ *
+ * @param string $tier 'desktop', 'tablet' or 'mobile'.
+ * @return array{width: string, container: string, default: int}
+ */
+function method_swiper_get_slide_width_keys( $tier ) {
+	$tiers = array(
+		'desktop' => array( 'width' => 'slideWidth', 'container' => 'containerWidthSlides', 'default' => 400 ),
+		'tablet'  => array( 'width' => 'slideWidthTablet', 'container' => 'containerWidthSlidesTablet', 'default' => 320 ),
+		'mobile'  => array( 'width' => 'slideWidthMobile', 'container' => 'containerWidthSlidesMobile', 'default' => 260 ),
+	);
+	return isset( $tiers[ $tier ] ) ? $tiers[ $tier ] : $tiers['desktop'];
+}
+
+/**
+ * Whether a tier's slides match the container width. Mirrors
+ * isContainerWidthTier() in lib/blocks/utils/swiperSlideWidth.js.
+ *
+ * @param array  $attributes Block attributes.
+ * @param string $tier       'desktop', 'tablet' or 'mobile'.
+ * @return bool
+ */
+function method_swiper_is_container_width_tier( $attributes, $tier ) {
+	$keys = method_swiper_get_slide_width_keys( $tier );
+	return ! empty( $attributes[ $keys['container'] ] );
+}
+
+/**
+ * The CSS width of a slide at a tier in width mode: `<n>px` from the tier's
+ * slideWidth* attribute, or `100%` of the track's content box when the tier's
+ * containerWidthSlides* flag is set — which, for a full-width block, is the
+ * constrained content area (see method_swiper_get_slide_width_css()).
+ * Mirrors getSlideWidth() in lib/blocks/utils/swiperSlideWidth.js.
+ *
+ * @param array  $attributes Block attributes.
+ * @param string $tier       'desktop', 'tablet' or 'mobile'.
+ * @return string
+ */
+function method_swiper_get_slide_width( $attributes, $tier ) {
+	if ( method_swiper_is_container_width_tier( $attributes, $tier ) ) {
+		return '100%';
+	}
+	$keys  = method_swiper_get_slide_width_keys( $tier );
+	$width = isset( $attributes[ $keys['width'] ] ) ? intval( $attributes[ $keys['width'] ] ) : 0;
+	return ( 0 < $width ? $width : $keys['default'] ) . 'px';
+}
+
+/**
+ * The custom property declarations the wrapper carries for a tier in width
+ * mode, which assets/scss/global.scss turns into layout: the slide width
+ * (`--method-swiper-slide-width`), and whether the slides fill the container
+ * (`--method-swiper-slide-fill`, 1 or 0). A full-width block pads its track
+ * on the left so the first slide starts at the constrained content's edge; a
+ * container-width tier gets the same padding on the right, so the track's
+ * content box is exactly the content area and every slide — the last one
+ * included — snaps into it. The editor sets the same two inline for the tier
+ * the canvas is in (getSlideWidthStyle() in lib/blocks/utils/swiperSlideWidth.js).
+ *
+ * @param array  $attributes Block attributes.
+ * @param string $tier       'desktop', 'tablet' or 'mobile'.
+ * @return string Declarations, without braces.
+ */
+function method_swiper_get_slide_width_css( $attributes, $tier ) {
+	return '--method-swiper-slide-width: ' . method_swiper_get_slide_width( $attributes, $tier ) . ';'
+		. ' --method-swiper-slide-fill: ' . ( method_swiper_is_container_width_tier( $attributes, $tier ) ? '1' : '0' ) . ';';
+}
+
+/**
  * Previous / next arrow SVGs for a swiper: the theme icon chosen in the
  * block's prevIcon / nextIcon attributes when it exists, otherwise the default
  * chevrons. The editor equivalents live in
@@ -52,10 +135,21 @@ function method_swiper_get_nav_icons( $attributes ) {
  * Shared by the Swiper block (whose track comes from its inner swiper-slide
  * blocks) and the Swiper Gallery block (whose track is generated from its
  * images). Both store the same option attributes — slidesPerView*,
- * spaceBetween*, showNavigation, showPagination, altPagination, fadeEffect,
- * hashNavigation, scrollToSlideStart, prevIcon, nextIcon — so everything
- * except the slides is built here, guaranteeing identical markup, Swiper
- * configuration and behaviour for the two blocks.
+ * slideWidthMode, slideWidth*, containerWidthSlides*, spaceBetween*,
+ * showNavigation, showPagination, altPagination, fadeEffect, hashNavigation,
+ * scrollToSlideStart, prevIcon, nextIcon — so everything except the slides is
+ * built here, guaranteeing identical markup, Swiper configuration and
+ * behaviour for the two blocks.
+ *
+ * In width mode (slideWidthMode) Swiper runs with `slidesPerView: 'auto'` and
+ * the slides are sized by CSS: the wrapper carries `method-swiper-width-mode`
+ * and the block's collected CSS sets the slide width (and whether it fills
+ * the container) on it per tier, at the same breakpoints Swiper switches at
+ * (method_swiper_get_slide_width_css()). global.scss applies the width to the
+ * slides and, when the block is full width, pads the track so the slides line
+ * up with the constrained content. The wrapper also carries
+ * `method-swiper-has-nav` while the arrows are shown, which is how
+ * global.scss knows the track sits beside them.
  *
  * Must be called from within a block render callback: it relies on
  * get_block_wrapper_attributes(). Each instance is handed to the shared
@@ -124,6 +218,13 @@ function method_swiper_render( $attributes, $track_markup, $args = array() ) {
 	$space_between_tablet   = isset( $attributes['spaceBetweenTablet'] ) ? intval( $attributes['spaceBetweenTablet'] ) : 24;
 	$space_between_mobile   = isset( $attributes['spaceBetweenMobile'] ) ? intval( $attributes['spaceBetweenMobile'] ) : 24;
 
+	// Width mode: every tier runs with 'auto' and the slide widths go out as
+	// CSS (below), so the per-view counts above are not used.
+	$width_mode = method_swiper_is_slide_width_mode( $attributes );
+	if ( $width_mode ) {
+		$slides_per_view = $slides_per_view_tablet = $slides_per_view_mobile = "'auto'";
+	}
+
 	$icons      = method_swiper_get_nav_icons( $attributes );
 	$leftArrow  = $icons['prev'];
 	$rightArrow = $icons['next'];
@@ -184,7 +285,19 @@ function method_swiper_render( $attributes, $track_markup, $args = array() ) {
 		. ( $args['center_class'] ? ', centerClass: \'' . esc_js( $args['center_class'] ) . '\'' : '' )
 		. ' });';
 
-	$wrapper_class = trim( 'method-swiper ' . $args['class'] );
+	$wrapper_class = trim( 'method-swiper ' . $args['class'] )
+		. ( $width_mode ? ' method-swiper-width-mode' : '' )
+		. ( $show_navigation ? ' method-swiper-has-nav' : '' );
+
+	// Width mode: the slide width per tier, mobile-first at the breakpoints
+	// Swiper's own tiers switch at. Keyed apart from the block's responsive
+	// styles, which the callers collect under '#' . $methodId.
+	if ( $width_mode ) {
+		$slide_width_css = '#' . $methodId . ' { ' . method_swiper_get_slide_width_css( $attributes, 'mobile' ) . ' }'
+			. ' @media (min-width: ' . $breakpoints['tablet'] . 'px) { #' . $methodId . ' { ' . method_swiper_get_slide_width_css( $attributes, 'tablet' ) . ' } }'
+			. ' @media (min-width: ' . $breakpoints['desktop'] . 'px) { #' . $methodId . ' { ' . method_swiper_get_slide_width_css( $attributes, 'desktop' ) . ' } }';
+		method_collect_css( $slide_width_css, $methodId . '-slide-width', 10 );
+	}
 
 	return '
             <div ' . get_block_wrapper_attributes( ['class' => $wrapper_class, 'id' => $methodId] ) . '>

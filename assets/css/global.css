@@ -2916,6 +2916,21 @@ html.method-modal-active .modal-backdrop {
   line-height: 1;
 }
 
+.method-swiper-has-nav {
+  --method-swiper-track-inset: 76px;
+}
+
+.method-swiper.method-swiper-width-mode .swiper-slide {
+  width: var(--method-swiper-slide-width, 100%);
+}
+.method-swiper.method-swiper-width-mode.alignfull {
+  --method-swiper-track-padding: max(0px, calc(var(--wp--style--root--padding-left, 0px) - var(--method-swiper-track-inset, 0px)), calc((100% - var(--wp--style--global--content-size, 100%)) / 2));
+}
+.method-swiper.method-swiper-width-mode.alignfull .swiper {
+  padding-left: var(--method-swiper-track-padding);
+  padding-right: calc(var(--method-swiper-track-padding) * var(--method-swiper-slide-fill, 0));
+}
+
 .method-embed {
   aspect-ratio: var(--embed-ratio, 16/9);
 }

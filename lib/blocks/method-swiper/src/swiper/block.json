@@ -39,6 +39,34 @@
             "type": "number",
             "default": 24
         },
+        "slideWidthMode": {
+            "type": "boolean",
+            "default": false
+        },
+        "slideWidth": {
+            "type": "number",
+            "default": 400
+        },
+        "slideWidthTablet": {
+            "type": "number",
+            "default": 320
+        },
+        "slideWidthMobile": {
+            "type": "number",
+            "default": 260
+        },
+        "containerWidthSlides": {
+            "type": "boolean",
+            "default": false
+        },
+        "containerWidthSlidesTablet": {
+            "type": "boolean",
+            "default": false
+        },
+        "containerWidthSlidesMobile": {
+            "type": "boolean",
+            "default": false
+        },
         "showNavigation": {
             "type": "boolean",
             "default": true

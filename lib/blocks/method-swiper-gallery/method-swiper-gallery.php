@@ -59,16 +59,21 @@ function method_swiper_gallery_get_slide_hash( $hash_id, $index ) {
  * Per-view defaults match method_swiper_render(); src/edit.js applies the
  * same rule to the tier it resolves in the editor.
  *
+ * With fade, and in width mode (slidesPerView 'auto', where the number per
+ * view depends on the viewport), two slides are enough: Swiper itself drops
+ * the loop at a viewport that shows every slide at once.
+ *
  * @param array $block_attributes Block attributes.
  * @param int   $slide_count      Number of rendered slides.
  * @return array{mobile: bool, tablet: bool, desktop: bool}
  */
 function method_swiper_gallery_get_loop_tiers( $block_attributes, $slide_count ) {
     $fade     = ! empty( $block_attributes['fadeEffect'] );
+    $one      = $fade || method_swiper_is_slide_width_mode( $block_attributes );
     $per_view = array(
-        'mobile'  => $fade ? 1 : ( isset( $block_attributes['slidesPerViewMobile'] ) ? (int) $block_attributes['slidesPerViewMobile'] : 1 ),
-        'tablet'  => $fade ? 1 : ( isset( $block_attributes['slidesPerViewTablet'] ) ? (int) $block_attributes['slidesPerViewTablet'] : 2 ),
-        'desktop' => $fade ? 1 : ( isset( $block_attributes['slidesPerView'] ) ? (int) $block_attributes['slidesPerView'] : 3 ),
+        'mobile'  => $one ? 1 : ( isset( $block_attributes['slidesPerViewMobile'] ) ? (int) $block_attributes['slidesPerViewMobile'] : 1 ),
+        'tablet'  => $one ? 1 : ( isset( $block_attributes['slidesPerViewTablet'] ) ? (int) $block_attributes['slidesPerViewTablet'] : 2 ),
+        'desktop' => $one ? 1 : ( isset( $block_attributes['slidesPerView'] ) ? (int) $block_attributes['slidesPerView'] : 3 ),
     );
 
     $loop = array();
@@ -76,6 +81,37 @@ function method_swiper_gallery_get_loop_tiers( $block_attributes, $slide_count )
         $loop[ $tier ] = (int) $slide_count > max( 1, $count );
     }
     return $loop;
+}
+
+
+/**
+ * The `sizes` attribute of the slide images in width mode, so the browser
+ * picks a srcset candidate for the slide's width rather than the viewport's:
+ * each tier's pixel width at the breakpoints Swiper switches at, or, for a
+ * tier matching the container width, the viewport capped at the constrained
+ * content width (theme.json layout.contentSize) when that is a plain length.
+ *
+ * @param array $block_attributes Block attributes.
+ * @return string Value for `sizes`, or '' when the gallery is not in width mode.
+ */
+function method_swiper_gallery_get_image_sizes( $block_attributes ) {
+    if ( ! method_swiper_is_slide_width_mode( $block_attributes ) ) {
+        return '';
+    }
+
+    $content_size = wp_get_global_settings( array( 'layout', 'contentSize' ) );
+    $content_size = is_string( $content_size ) ? trim( $content_size ) : '';
+    $container    = preg_match( '/^\d+(\.\d+)?(px|r?em)$/', $content_size ) ? 'min(100vw, ' . $content_size . ')' : '100vw';
+
+    $breakpoints = method_swiper_get_breakpoints();
+    $sizes       = array();
+    foreach ( array( 'desktop' => $breakpoints['desktop'], 'tablet' => $breakpoints['tablet'], 'mobile' => 0 ) as $tier => $min_width ) {
+        $width   = method_swiper_is_container_width_tier( $block_attributes, $tier )
+            ? $container
+            : method_swiper_get_slide_width( $block_attributes, $tier );
+        $sizes[] = ( $min_width ? '(min-width: ' . $min_width . 'px) ' : '' ) . $width;
+    }
+    return implode( ', ', $sizes );
 }
 
 
@@ -169,6 +205,13 @@ function render_method_swiper_gallery_block( $block_attributes, $block ) {
         ? array_values( $block_attributes['images'] )
         : array();
 
+    // In width mode the slides have known widths, so the images say so.
+    $image_atts  = array( 'class' => $imgClass );
+    $image_sizes = method_swiper_gallery_get_image_sizes( $block_attributes );
+    if ( $image_sizes ) {
+        $image_atts['sizes'] = $image_sizes;
+    }
+
     $slides      = '';
     $slide_count = 0;
     foreach ( $images as $index => $item ) {
@@ -176,7 +219,7 @@ function render_method_swiper_gallery_block( $block_attributes, $block ) {
         if ( ! $attachment_id ) {
             continue;
         }
-        $image = wp_get_attachment_image( $attachment_id, 'method_hd', false, array( 'class' => $imgClass ) );
+        $image = wp_get_attachment_image( $attachment_id, 'method_hd', false, $image_atts );
         if ( ! $image ) {
             // Attachment removed since it was selected; slide numbering (and
             // therefore hashes) still follow the stored image order.

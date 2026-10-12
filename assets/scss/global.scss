@@ -2909,6 +2909,25 @@ html.method-modal-active .modal-backdrop {
     }
 }
 
+// Swiper and Swiper Gallery (the shell both blocks render through
+// method_swiper_render()):
+//
+//   .method-swiper                 (+ .alignfull, .method-swiper-has-nav, .method-swiper-width-mode)
+//     .swiper-outer                (flex row: the arrows flank the track)
+//       .swiper-outer-wrap
+//         .swiper-outer-wrap-inner
+//           .swiper.swiper-container
+//             .swiper-wrapper
+//               .swiper-slide
+//       .method-swiper-button-prev
+//       .method-swiper-button-next
+//       .method-swiper-pagination   (with "Place pagination outside")
+//
+// The arrows' size and the gap between them and the track also decide the
+// track inset in width mode (below), so they are set once here.
+$method-swiper-nav-size: 44px;
+$method-swiper-nav-gap: 32px;
+
 .method-swiper {
     .swiper-pagination-bullet {
         opacity: 1;
@@ -2923,7 +2942,7 @@ html.method-modal-active .modal-backdrop {
     .swiper-outer {
         display: flex;
         align-items: center;
-        gap: 32px;
+        gap: $method-swiper-nav-gap;
 
         .method-swiper-button-prev {
             order: 1;
@@ -2948,8 +2967,8 @@ html.method-modal-active .modal-backdrop {
 
         .method-swiper-button-prev,
         .method-swiper-button-next {
-            width: 44px;
-            height: 44px;
+            width: $method-swiper-nav-size;
+            height: $method-swiper-nav-size;
             display: inline-flex;
             z-index: 100;
             position: relative;
@@ -2959,14 +2978,77 @@ html.method-modal-active .modal-backdrop {
             line-height: 1;
 
             svg.method-default-icon {
-                width: 44px;
-                height: 44px;
+                width: $method-swiper-nav-size;
+                height: $method-swiper-nav-size;
             }
 
             .method-swiper-icon {
                 display: inline-flex;
                 line-height: 1;
             }
+        }
+    }
+}
+
+// Width mode ("Set slide widths"): Swiper runs with slidesPerView 'auto' and
+// the slides are sized here, from two custom properties the block sets on its
+// wrapper per tier — in the collected CSS on the frontend
+// (method_swiper_get_slide_width_css()), inline for the tier the canvas is
+// in, in the editor (lib/blocks/utils/swiperSlideWidth.js):
+//
+//   --method-swiper-slide-width   a pixel width, or 100% of the track's
+//                                 content box for a tier matching the
+//                                 container width
+//   --method-swiper-slide-fill    1 at a container-width tier, else 0
+//
+// A full-width swiper in this mode is padded on the left so its first slide
+// starts where the constrained content starts, while the slides still travel
+// to the edge of the page as the carousel moves (the padding box is inside
+// the track's overflow clip). At a container-width tier it is padded on the
+// right by the same amount, so the track's content box is exactly the
+// content area: Swiper's size equals the slide width, every slide — the last
+// one included — snaps into the content area with its neighbours peeking out
+// into the gutters, and Swiper counts a single visible slide, so only that
+// slide's hash links are marked active. Pixel-width tiers keep the left
+// gutter only, as the Burritt Events Carousel does, so the last slides pack
+// against the edge of the page.
+//
+// The distance from the block's left edge to the content's left edge is
+// max(root padding, (block width − content size) / 2), as in the theme's
+// constrained layout; the block width, though, is not available where the
+// padding is set: a percentage there is the track container's width, which
+// is the block minus whatever flanks the track — in this stylesheet the
+// arrows and the gap beside them, the same on both sides.
+// --method-swiper-track-inset is that distance (0 without arrows), and with
+// it, writing B for the block, T for the track container (so B = T + 2 inset)
+// and C for the content size:
+//
+//   padding = (B − C) / 2 − inset = (T − C) / 2         when the content is centred
+//   padding = root padding − inset (at least 0)         when the root padding rules
+//
+// A child theme that moves the arrows off the track's row (below it, say) or
+// resizes them sets --method-swiper-track-inset to match — 0px when the track
+// spans the block — on .method-swiper.method-swiper-has-nav, so it outranks
+// the default below whichever stylesheet loads first.
+.method-swiper-has-nav {
+    --method-swiper-track-inset: #{$method-swiper-nav-size + $method-swiper-nav-gap};
+}
+
+.method-swiper.method-swiper-width-mode {
+    .swiper-slide {
+        width: var(--method-swiper-slide-width, 100%);
+    }
+
+    &.alignfull {
+        // Declared as a custom property so the minifier leaves it alone:
+        // clean-css turns the `0px` into a unitless 0, which a math function
+        // rejects (the whole declaration would be dropped). Its 100% resolves
+        // where it is used, against the track container.
+        --method-swiper-track-padding: max(0px, calc(var(--wp--style--root--padding-left, 0px) - var(--method-swiper-track-inset, 0px)), calc((100% - var(--wp--style--global--content-size, 100%)) / 2));
+
+        .swiper {
+            padding-left: var(--method-swiper-track-padding);
+            padding-right: calc(var(--method-swiper-track-padding) * var(--method-swiper-slide-fill, 0));
         }
     }
 }

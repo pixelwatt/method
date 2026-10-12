@@ -42,9 +42,9 @@ define('METHOD_OPTIONS', array(
     ),
     'breakpoint-colors' => array(
         'enabled' => true, // if false, the default blue (#007CBA) will be passed to Method controls
-        'mobile' => '#865EBF',
-        'tablet' => '#D94A64',
-        'wide' => '#F28729',
+        'mobile' => '#d17c28',
+        'tablet' => '#2b9d9a',
+        'wide' => '#9b2d8c',
     ),
     'typography' => array(
         'font-size-presets' => array(

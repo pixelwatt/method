@@ -1,3 +1,30 @@
+## 2.0.0-beta30
+
+### Code Block
+
+A new **Code (Method)** block (`method/code`, Method Component Blocks) for syntax-highlighted code samples, built so a sample is only ever stored as text.
+
+- **What is saved** — the block is dynamic, so its markup is a single delimiter comment: `code` (the sample), `language`, an optional pill `label`, the `showLabel`, `showCopy` and `wrapLines` toggles, and `responsiveSettings` for the vertical margins. No highlighted HTML is stored, so a sample can be changed wherever the block markup can be — the editor, the REST API, a docs pipeline — by editing one attribute, with nothing to regenerate. This is what the Method wiki moves to from Code Block Pro, whose static blocks keep three copies of every sample (the text, Shiki's highlighted HTML, and the saved markup) that have to agree byte for byte.
+- **Highlighting** — highlight.js, bundled into the block (the first runtime dependency in `lib/blocks/package.json`), with only the grammars the block offers registered in the new shared `lib/blocks/utils/highlight.js`: PHP, PHP + HTML (`php-template`), HTML, CSS, SCSS, JavaScript, TypeScript, JSON, Shell, Markdown and plain text. `method_code_get_languages()` mirrors the list in PHP for the pill label and to sanitise the stored value (an unknown language renders as plain text, never as highlight.js's auto-detection); the `method_code_languages` filter changes the labels, but a new value also needs its grammar registered in the JS module. Highlighting only adds `hljs-*` classes — every color is in `global.scss`, as `--method-code-*` custom properties on `.method-code` that a child theme can override on `:root` or on the block. The defaults are the Material Palenight palette the wiki already uses.
+- **Frontend** — `method_code_render()` prints `<pre><code class="language-…">` inside a wrapper with the header the block asks for (a language or custom pill, a copy button); the view script highlights the code and wires the button, which writes the `<code>`'s text to the clipboard and shows "Copied" for two seconds. Without JavaScript the sample is a readable, dark `<pre>`; without the async clipboard API (plain http) the button is removed rather than left to fail. Blocks added to the page later can be picked up with `window.methodCode.init(container)` or by dispatching `method:code-refresh` on `document`. Long lines scroll horizontally unless **Wrap long lines** is on. Vertical margins come from the usual responsive spacing controls (`margin-top` / `margin-bottom` per tier, collected by id like the other blocks).
+- **Editor** — the canvas is a live, highlighted editor rather than a preview: a transparent `<textarea>` sits over the highlighted `<pre>`, both with the same font metrics, so the caret and selection land on the colored text, and the same highlight.js bundle tokenises the sample on every keystroke. Tab inserts a tab and Enter keeps the current line's indentation; both are handled on the textarea natively, before the editor's own Tab handling (which would move focus out of the block) can see them. Lines always wrap in the editor so the two layers can't scroll apart; the wrap toggle only affects the page. The pill and copy button in the canvas are the real thing.
+- **Settings** — **Language** (select), **Show language pill** with an optional **Pill text** (a file name works well; empty shows the language), **Show copy button**, **Wrap long lines**, then the base and per-tier margins.
+
+### Breakpoint Colors
+
+The default colors that mark Method's responsive tiers in the editor — the Mobile / Tablet / Ultrawide tabs, and the range tracks, toggles and tab badges inside each tier's controls — are new.
+
+- **`lib/config.php`** — `breakpoint-colors` in `METHOD_OPTIONS` is now mobile `#d17c28` (orange), tablet `#2b9d9a` (teal), wide `#9b2d8c` (magenta), replacing `#865EBF` / `#D94A64` / `#F28729` — three hues spread more evenly around the wheel. They reach the editor the same way as before: `method_get_breakpoint_colors()` feeds the inline editor styles and `methodGlobalData.breakpointColors`. A child theme that sets its own `breakpoint-colors` is unaffected.
+
+### Housekeeping
+
+- Version bumped to 2.0.0-beta30 (`style.css`).
+- `global.css` / `global.min.css` were recompiled; the Code bundle was built.
+- `lib/blocks/package.json` gains a `dependencies` section (`highlight.js`); run `npm install` in `lib/blocks` before building.
+- New `.gitattributes` marks `scripts/` and `CLAUDE.md` `export-ignore`, so GitHub's release archives leave out the wiki tooling and the agent instructions; both stay in the repository.
+- New `.gitignore` entry for `docs/wiki/`, the snapshot `scripts/wiki-pull.mjs` writes: derived from method.wiki, never the source of truth.
+
+
 ## 2.0.0-beta29
 
 ### Swiper & Swiper Gallery — Slide Widths

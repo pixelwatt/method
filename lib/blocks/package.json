@@ -8,5 +8,8 @@
     },
     "devDependencies": {
         "@wordpress/scripts": "^30.20.0"
+    },
+    "dependencies": {
+        "highlight.js": "^11.11.1"
     }
 }

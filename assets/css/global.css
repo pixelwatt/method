@@ -3146,3 +3146,339 @@ a.method-looping-alert {
           flex: 1 1 240px;
   margin-bottom: 0;
 }
+
+/* ==========================================================================
+   Method Code block
+   ========================================================================== */
+/*
+ * The sample is printed by lib/blocks/method-code/method-code.php as
+ * <pre><code class="language-…"> and highlighted in the browser by the view
+ * script (highlight.js, lib/blocks/utils/highlight.js), which only adds
+ * `hljs-*` classes: every color is set here. The editor renders the same
+ * markup with a transparent textarea over the <pre> (".method-code--editor").
+ *
+ * Retheme from a child theme through the custom properties — on :root, or
+ * on .method-code for the block alone. The defaults are the Material
+ * Palenight palette.
+ */
+.method-code {
+  --method-code-bg: #292d3e;
+  --method-code-fg: #babed8;
+  --method-code-muted: #676e95;
+  --method-code-header-bg: rgba(255, 255, 255, 0.04);
+  --method-code-border: rgba(255, 255, 255, 0.08);
+  --method-code-pill-bg: #aaafcf;
+  --method-code-pill-fg: #292d3e;
+  --method-code-selection: rgba(159, 170, 243, 0.25);
+  --method-code-radius: 0.5rem;
+  --method-code-font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --method-code-font-size: 0.875rem;
+  --method-code-line-height: 1.6;
+  --method-code-padding: 1rem;
+  --method-code-tab-size: 4;
+  --method-code-comment: #676e95;
+  --method-code-keyword: #c792ea;
+  --method-code-string: #c3e88d;
+  --method-code-number: #f78c6c;
+  --method-code-function: #82aaff;
+  --method-code-variable: #f07178;
+  --method-code-type: #ffcb6b;
+  --method-code-tag: #f07178;
+  --method-code-attr: #ffcb6b;
+  --method-code-operator: #89ddff;
+  --method-code-meta: #89ddff;
+  --method-code-addition: #c3e88d;
+  --method-code-deletion: #f07178;
+  position: relative;
+  border-radius: var(--method-code-radius);
+  background: var(--method-code-bg);
+  color: var(--method-code-fg);
+  font-size: var(--method-code-font-size);
+  line-height: var(--method-code-line-height);
+  overflow: hidden;
+}
+.method-code__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  gap: 0.5rem 1rem;
+  min-height: 2.5rem;
+  padding: 0.375rem 0.5rem 0.375rem var(--method-code-padding);
+  background: var(--method-code-header-bg);
+  border-bottom: 1px solid var(--method-code-border);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+.method-code__label {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0.35rem 0.6rem 0.3rem;
+  border-radius: 1rem;
+  background: var(--method-code-pill-bg);
+  color: var(--method-code-pill-fg);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.method-code__copy {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 0.375rem;
+  margin-left: auto;
+  padding: 0.375rem 0.5rem;
+  border: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--method-code-fg);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  -webkit-transition: opacity 0.15s ease, background-color 0.15s ease;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+.method-code__copy:hover, .method-code__copy:focus-visible {
+  opacity: 1;
+  background: var(--method-code-border);
+}
+.method-code__copy:focus-visible {
+  outline: 2px solid var(--method-code-operator);
+  outline-offset: 1px;
+}
+.method-code__copy-icon {
+  width: 1rem;
+  height: 1rem;
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+}
+.method-code__copy-icon--copied {
+  display: none;
+  color: var(--method-code-string);
+}
+.method-code.is-copied .method-code__copy-icon--copy {
+  display: none;
+}
+.method-code.is-copied .method-code__copy-icon--copied {
+  display: block;
+}
+.method-code__pre {
+  margin: 0;
+  padding: var(--method-code-padding);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-family: var(--method-code-font);
+  font-size: inherit;
+  line-height: inherit;
+  -moz-tab-size: var(--method-code-tab-size);
+    -o-tab-size: var(--method-code-tab-size);
+       tab-size: var(--method-code-tab-size);
+  white-space: pre;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.method-code__pre:focus-visible {
+  outline: 2px solid var(--method-code-operator);
+  outline-offset: -2px;
+}
+.method-code__code {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: inherit;
+  -moz-tab-size: inherit;
+    -o-tab-size: inherit;
+       tab-size: inherit;
+}
+.method-code--wrap .method-code__pre, .method-code--wrap .method-code__code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.method-code ::-moz-selection {
+  background: var(--method-code-selection);
+}
+.method-code ::selection {
+  background: var(--method-code-selection);
+}
+.method-code .hljs-comment,
+.method-code .hljs-quote {
+  color: var(--method-code-comment);
+  font-style: italic;
+}
+.method-code .hljs-keyword,
+.method-code .hljs-selector-tag,
+.method-code .hljs-doctag,
+.method-code .hljs-formula,
+.method-code .hljs-section,
+.method-code .hljs-name {
+  color: var(--method-code-keyword);
+}
+.method-code .hljs-string,
+.method-code .hljs-regexp,
+.method-code .hljs-addition,
+.method-code .hljs-meta .hljs-string {
+  color: var(--method-code-string);
+}
+.method-code .hljs-number,
+.method-code .hljs-literal,
+.method-code .hljs-symbol,
+.method-code .hljs-bullet,
+.method-code .hljs-link {
+  color: var(--method-code-number);
+}
+.method-code .hljs-title,
+.method-code .hljs-title.function_,
+.method-code .hljs-title.function_.invoke__ {
+  color: var(--method-code-function);
+}
+.method-code .hljs-title.class_,
+.method-code .hljs-title.class_.inherited__,
+.method-code .hljs-type,
+.method-code .hljs-built_in,
+.method-code .hljs-attribute,
+.method-code .hljs-selector-class,
+.method-code .hljs-selector-id,
+.method-code .hljs-selector-pseudo {
+  color: var(--method-code-type);
+}
+.method-code .hljs-variable,
+.method-code .hljs-template-variable,
+.method-code .hljs-variable.language_,
+.method-code .hljs-property,
+.method-code .hljs-deletion {
+  color: var(--method-code-variable);
+}
+.method-code .hljs-tag {
+  color: var(--method-code-operator);
+}
+.method-code .hljs-tag .hljs-name {
+  color: var(--method-code-tag);
+}
+.method-code .hljs-tag .hljs-attr {
+  color: var(--method-code-attr);
+}
+.method-code .hljs-attr {
+  color: var(--method-code-attr);
+}
+.method-code .hljs-operator,
+.method-code .hljs-punctuation,
+.method-code .hljs-char.escape_ {
+  color: var(--method-code-operator);
+}
+.method-code .hljs-meta,
+.method-code .hljs-meta .hljs-keyword,
+.method-code .hljs-template-tag {
+  color: var(--method-code-meta);
+}
+.method-code .hljs-params {
+  color: var(--method-code-fg);
+}
+.method-code .hljs-emphasis {
+  font-style: italic;
+}
+.method-code .hljs-strong {
+  font-weight: 700;
+}
+.method-code .hljs-subst {
+  color: var(--method-code-fg);
+}
+.method-code .language-bash .hljs-built_in {
+  color: var(--method-code-type);
+}
+
+/*
+ * Method Code — Editor
+ *
+ * A transparent textarea over the highlighted <pre>. Both layers get the
+ * same box, font and wrapping from the rules above, so they stay aligned;
+ * in the editor the lines always wrap (see src/edit.js). The copy button
+ * and pill are the real thing, so the canvas is also a preview.
+ */
+.method-code--editor .method-code__editor {
+  position: relative;
+}
+.method-code--editor .method-code__pre,
+.method-code--editor .method-code__code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+  min-height: calc(var(--method-code-line-height) * 1em + var(--method-code-padding) * 2);
+}
+.method-code--editor .method-code__textarea {
+  position: absolute;
+  inset: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: var(--method-code-padding);
+  border: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--method-code-fg);
+  font-family: var(--method-code-font);
+  font-size: inherit;
+  line-height: inherit;
+  -moz-tab-size: var(--method-code-tab-size);
+    -o-tab-size: var(--method-code-tab-size);
+       tab-size: var(--method-code-tab-size);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+  resize: none;
+  outline: none;
+}
+.method-code--editor .method-code__textarea::-webkit-input-placeholder {
+  color: var(--method-code-muted);
+  opacity: 1;
+}
+.method-code--editor .method-code__textarea::-moz-placeholder {
+  color: var(--method-code-muted);
+  opacity: 1;
+}
+.method-code--editor .method-code__textarea:-ms-input-placeholder {
+  color: var(--method-code-muted);
+  opacity: 1;
+}
+.method-code--editor .method-code__textarea::-ms-input-placeholder {
+  color: var(--method-code-muted);
+  opacity: 1;
+}
+.method-code--editor .method-code__textarea::placeholder {
+  color: var(--method-code-muted);
+  opacity: 1;
+}
+.method-code--editor .method-code__textarea::-moz-selection {
+  background: var(--method-code-selection);
+  color: transparent;
+}
+.method-code--editor .method-code__textarea::selection {
+  background: var(--method-code-selection);
+  color: transparent;
+}

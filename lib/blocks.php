@@ -114,6 +114,7 @@ require_once('blocks/method-basic-grid/method-basic-grid.php');
 require_once('blocks/method-bc/method-bc.php');
 //require_once('blocks/method-bootstrap-tabs/method-bootstrap-tabs.php');
 require_once('blocks/method-buttons/method-buttons.php');
+require_once('blocks/method-code/method-code.php');
 require_once('blocks/method-container/method-container.php');
 require_once('blocks/method-core-extensions/method-core-extensions.php');
 require_once('blocks/method-fitted-image/method-fitted-image.php');

@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "method/code",
+	"version": "1.0.0",
+	"title": "Code (Method)",
+	"category": "method-component-blocks",
+	"description": "A syntax-highlighted code sample with a language pill and a copy button. The sample is stored as plain text and highlighted when the page renders, so it can be edited anywhere the block markup can.",
+	"keywords": [
+		"code",
+		"snippet",
+		"syntax",
+		"highlight",
+		"pre",
+		"method"
+	],
+	"textdomain": "method",
+	"supports": {
+		"html": false,
+		"anchor": false,
+		"align": false,
+		"className": true
+	},
+	"attributes": {
+		"code": {
+			"type": "string",
+			"default": ""
+		},
+		"language": {
+			"type": "string",
+			"default": "php"
+		},
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"showLabel": {
+			"type": "boolean",
+			"default": true
+		},
+		"showCopy": {
+			"type": "boolean",
+			"default": true
+		},
+		"wrapLines": {
+			"type": "boolean",
+			"default": false
+		},
+		"responsiveSettings": {
+			"type": "object",
+			"default": {
+				"base": {
+					"enabled": true
+				},
+				"mobile": {
+					"enabled": false
+				},
+				"tablet": {
+					"enabled": false
+				},
+				"wide": {
+					"enabled": false
+				}
+			}
+		}
+	},
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./frontend.js"
+}

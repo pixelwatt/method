@@ -4,3 +4,5 @@ node_modules/
 .sublime-gulp.cache
 package-lock.json
 /sublime-gulp.log
+# Wiki snapshot: derived from method.wiki by scripts/wiki-pull.mjs, never the source of truth
+/docs/wiki/

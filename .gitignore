@@ -6,3 +6,4 @@ package-lock.json
 /sublime-gulp.log
 # Wiki snapshot: derived from method.wiki by scripts/wiki-pull.mjs, never the source of truth
 /docs/wiki/
+/docs/wiki-backups/

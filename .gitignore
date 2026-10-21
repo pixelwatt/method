@@ -7,3 +7,4 @@ package-lock.json
 # Wiki snapshot: derived from method.wiki by scripts/wiki-pull.mjs, never the source of truth
 /docs/wiki/
 /docs/wiki-backups/
+/docs/wiki-new/

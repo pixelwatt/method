@@ -165,6 +165,15 @@ core blocks plus `method/code`. Sections are `h2` headings separated by
 <!-- /wp:separator -->
 ```
 
+Two separators. The heavy one above divides h2 sections. A lighter one
+(`"color":{"background":"#271a3b33"}` on the delimiter, `has-text-color
+has-alpha-channel-opacity has-background` and the matching inline colors on the
+`<hr>`) goes *before every h3* — between it and whatever precedes it in the
+section, whether the previous h3 subsection or the h2's own intro paragraph or
+code sample — except an h3 that directly follows its h2 heading. Never before an
+h2. Copy it from any page with h3s (`components/methodbackgroundcontrols.html`,
+`systems/plugin-dependencies.html`).
+
 Block vocabulary inside the column — copy these from a sibling page rather
 than typing them from memory:
 
@@ -172,14 +181,17 @@ than typing them from memory:
 - `<!-- wp:paragraph --><p>…</p>`; parameters are written as
   `<p><code>$name</code> <em>(type)</em> : <br>Description.</p>`
 - `<!-- wp:list --><ul class="wp-block-list"><!-- wp:list-item --><li>…</li><!-- /wp:list-item --></ul>`
+  (`{"ordered":true}` + `<ol>` for numbered). The editor serialises sibling
+  `list-item`s with a blank line between them (`<!-- /wp:list-item -->\n\n<!-- wp:list-item -->`);
+  write them that way or the first save in the editor will re-serialise the page.
 - `<!-- wp:table {"backgroundColor":"cl-light"} --><figure class="wp-block-table"><table class="has-cl-light-background-color has-background has-fixed-layout"><thead>…</thead><tbody>…</tbody></table></figure>`
 - `<!-- wp:method/code {"code":"…","language":"php"} /-->` — code samples.
   `code` holds the plain text (no HTML entities); `language` is one of
   php, php-template, html, css, scss, javascript, typescript, json, bash,
   markdown, plaintext (omit for php). Optional `label` for a file-name pill.
-  Attribute JSON is escaped the way the editor does it: `--` → `--`,
-  `<` `>` `&` → `<` `>` `&`, `"` inside strings → `"`,
-  newlines → `\n`. Copy the escaping from an existing block when unsure.
+  Attribute JSON is escaped the way the editor does it: `--` → `\u002d\u002d`,
+  `<` `>` `&` → `\u003c` `\u003e` `\u0026`, `"` inside strings → `\u0022`,
+  a literal `\` inside strings → `\u005c`, newlines → `\n`. Copy the escaping from an existing block when unsure.
 
 The four page templates, by section (in order):
 
@@ -230,8 +242,10 @@ last section inside the content column, after the standard separator.
 | `apply_filters( 'method_foo' )` / `do_action` | `filters-actions-reference/method_foo.html` — **no convention yet for `method/foo` hooks** (slash); ask |
 | `lib/blocks/method-<x>/` | `method-blocks/<slug>.html` with slug exceptions: `method/bc` → `breadcrumb`, `method/flex` → `flex-container`; sub-blocks (`advanced-grid-col`, `accordion-item`, `theme-button`, `swiper-slide`…) are sections of their parent's page |
 | `lib/blocks/components/MethodFoo.js`, `hooks/useFoo.js` | `components/methodfoo.html`, `components/usefoo.html` (lowercased) |
-| core block extensions (`lib/blocks/method-core-extensions/`) | `core-extensions.html`, one page, a section per extension |
+| core block extensions (`lib/blocks/method-core-extensions/`) | `systems/core-extensions.html`, one page, a section per extension |
 | guides | `docs/wiki/guides/*.html` — hand-written; only touched when asked |
+| Method Child (`pixelwatt/method-child`) | `method-child.html` — a top-level child of Documentation (parent 128). Source is the submodule at `~/method-generator/method-child` on Rob's Mac (its own git history and `v1.0.0-betaN` tags); commit links go to that repo |
+| Method Generator (`pixelwatt/method-generator`) | `method-generator.html` — same level. Source `~/method-generator` (`v2-1.0.0-betaN` tags; `v1.x` tags are the Method 1.x generator) |
 
 A new page is created with `wiki-create.mjs` as a draft, `--from` the nearest
 sibling page so the chrome and section order are right, then edited and
@@ -242,17 +256,168 @@ card grids: a `method/fitted-image` with an uploaded SVG icon and a
 `method/theme-button` linking the child. The card needs an icon from the
 media library, which is Rob's call — report it, don't improvise.
 
-### Current coverage gaps (Oct 2026) — a work queue, not an instruction to fill them all
+### Current coverage gaps (Oct 2026)
 
-- Pages with no Changelog section yet: all 15 component pages, all 11 block pages, core-extensions, and 10 of the 29 function/class pages (`grep -L 'wp-block-heading">Changelog' docs/wiki/documentation/**/*.html`). A backfill is a legitimate one-off task: derive each Introduced row from git as above.
-- Blocks with no page: code, scrollspy, swiper, modal, mapbox-map, looping-alert, fluid-video (navbar and bootstrap-tabs are commented out in blocks.php — don't document).
-- Components/hooks with no page: MethodBackdropControls, MethodBreakpointSelect, MethodFeaturedImage/MethodUseFeaturedImage, MethodFlexControls, MethodSwiperControls, MethodSwiperNav, useCanvasViewport, usePersistentId. (`MethodResponsive.js` is documented as `methodresponsivetabs`.)
-- Hooks with no page: every `method/*` hook (modals, plugin dependencies, responsive editing), plus `method_code_languages`, `method_core_extensions_config`, `method_mapbox_*`, `method_theme_icons`, `method_utility_*`.
-- Functions with no page: ~26 in `lib/*.php`, most of them setup/enqueue internals (`method_scripts`, `method_inject_gtag`, `method_register_*_metabox`…) that probably shouldn't have one. Public-API candidates: `method_get_lightbox_attributes`, `method_get_modal_sizes`, `method_register_modal`, `method_get_theme_icons`, `method_parse_video_url`, `method_build_embed_url`.
+- Changelog state (2026-10-19): every page has a Changelog section. The 37 reference pages
+  (`php-function-class-reference/`, `filters-actions-reference/`) have a git-verified first row
+  with a commit link (backfill run of 2026-10-19, which also collapsed the nested `<code>` tags
+  the editor had left in their signature paragraphs). Block, component and system pages written
+  before this session still carry unverified first rows without commit links (`2.0.0-alpha4 |
+  Introduced.` and the like); verify each one against git when the release walk touches the page.
+- Release walk (beta5 → beta30) over the pre-session pages: done locally 2026-10-19 for the 11
+  block pages, core-extensions, the 14 pre-session component pages and the 6 reference pages whose
+  symbol changed (list in `docs/wiki-new/_walk-all.txt`, pending Rob's push). Method used: per
+  symbol, not per release — for a block, `git log 0693f3a..v2.0.0-beta30 -- lib/blocks/method-<x>
+  ':(exclude)lib/blocks/method-<x>/build'`; for a component, the file's log; for a PHP function
+  or hook, the function body extracted at every tag and compared (string-aware brace matching —
+  naive counting breaks on `' { '` literals in the CSS builders). Rows cite the commit, or the
+  release compare link where a change spans many commits (beta5's responsive refactor).
+  After this the walk is caught up and the per-release procedure below is the steady state.
+- Everything below is a **proposal** until a box is ticked. Create only ticked pages; report the rest when a release touches them.
 
-Whether a symbol deserves a page is Rob's decision. The release sync reports
-new public symbols; it does not create pages for them unless the task says
-which ones to create.
+#### Proposed new pages
+
+**System pages** — children of the `systems` landing page (`documentation/systems/<slug>.html`
+once published): what the system is for, how it works, which blocks/functions/hooks
+take part (linked), child-theme extension points, then Changelog. Template: any
+published sibling, e.g. `documentation/systems/theme-options.html`. The landing page
+itself is a card grid like `components.html`; a new system page needs a card there.
+The landing page and all seven system pages below are published (2026-10-18);
+`core-extensions` moved under it, and its card on the Documentation landing page
+was replaced by a Systems card.
+
+- [x] `modals` (published 2026-10-18) — the modal system (beta26–27): `method/modal` block, the Modals
+      panel, `Method_Modals` registry, `method_register_modal()`,
+      `method_get_modal_sizes()`, `method_sanitize_modal_id()`, opening a modal
+      from any `#id` link, fullscreen tiers, printing at page end. Hooks table:
+      `method/modal_args`, `modal_content`, `modal_duplicate`, `modal_markup`,
+      `modal_registered`, `modal_script_dependencies`, `modal_sizes`,
+      `method/register_modals` — documented here, not as nine pages.
+- [x] `theme-icons` (published 2026-10-18) — the shared icon system (beta18): `method_register_theme_icons()`,
+      `method_get_theme_icons()`, the `method_theme_icons` filter, which blocks
+      consume icons (swiper arrows, social nav, theme button), how a child theme adds one.
+- [x] `image-lightbox` (published 2026-10-18) — (beta23) `method_get_lightbox_attributes()`,
+      `lib/blocks/utils/lightbox.js`, the shared `<dialog class="method-lightbox">`,
+      which blocks use it, degradation without JS or `<dialog>`, CSS hooks.
+- [x] `plugin-dependencies` (published 2026-10-18) — (beta25) `wp-dependencies.json`, WP Dependency
+      Installer, `method_collect_plugin_dependencies()`, the
+      `method/plugin_dependencies` filter, how a child theme adds a required plugin.
+- [x] `editor-integration` (published 2026-10-18) — the Method block collection and inserter (beta22),
+      breakpoint colors and tabs (`lib/config.php`, `method_get_breakpoint_colors()`),
+      the responsive-editing flag (`method_configure_responsive_editing()`,
+      `method/responsive_editing_enabled`, WordPress 7.1's `responsiveEditingEnabled`
+      and why Method turns it off by default), `methodGlobalData`.
+- [x] `responsive-embeds` (published 2026-10-18) — (beta17, opt-in) `method_maybe_enable_embed_wrap()`,
+      `method_responsive_embed_wrap()` on `embed_oembed_html`; short page.
+- [x] `theme-options` (published 2026-10-18) — the CMB2 options pages (`lib/theme-options.php`): every
+      option, where it is read (gtag injection, social platforms, Mapbox token via
+      cmb2-mapbox). There is no page for this today at all.
+
+**Block pages** — `documentation/method-blocks/<slug>.html`, Block template.
+Sub-blocks are sections of the parent (as advanced-grid-col is of advanced-grid).
+Each section's pages carry a different hero image id in the chrome (blocks 6,
+components 101/587, functions 607, hooks 585, systems 593), so build a block
+page from a block page (`method-blocks/fitted-image.html`), never from a
+system page. `method-blocks.html` is a card grid like `components.html`; a new
+block page needs a card there (the icon is added by hand).
+
+- [x] `code` (published 2026-10-18) — beta30. Attributes, languages, the plain-text storage contract,
+      `method_code_languages`, theming via `--method-code-*`.
+- [x] `scrollspy` (published 2026-10-18) — predates the wiki but never got a page; every wiki page uses it.
+- [x] `swiper` (published 2026-10-18) — beta15/16/18/19/29; `method/swiper-slide` as a section. Effects,
+      hash navigation, slide widths, theme breakpoints, `utils/swiperRuntime.js`.
+- [x] `modal` (published 2026-10-18) — beta26; the block's own attributes and sizes, linking to the
+      `modals` system page for the registry and hooks.
+- [x] `mapbox-map` (published 2026-10-18) — beta27. Token resolution (site vs block), styles, pin,
+      `method_mapbox_token`, `method_mapbox_map_styles`, `method_mapbox_map_config`.
+- [x] `looping-alert` (published 2026-10-18) — beta17 (titled Marquee in the editor).
+- [x] `fluid-video` (published 2026-10-18) — beta14; include `method_parse_video_url()` and
+      `method_build_embed_url()` as its Data & Dependencies.
+- Not proposed: navbar, bootstrap-tabs (both commented out in `blocks.php`).
+
+**Component / hook pages** — `documentation/components/<lowercase>.html`.
+
+- [x] `methodbackdropcontrols` (published 2026-10-18) — beta20/21 (Container and Section backdrop filters).
+- [x] `methodflexcontrols` (published 2026-10-18) — flex container/item controls incl. wrap (beta24) and mobile order (beta20).
+- [x] `methodswipercontrols` (published 2026-10-18) — beta15+; the `MethodSwiperNav` arrow helpers as a section, not a page.
+- [x] `methodbreakpointselect` (published 2026-10-18) — small; used by Scrollspy's "sticky at".
+- [x] `usecanvasviewport` (published 2026-10-18) — canvas-aware previews (Swiper, Mapbox).
+- [x] `usepersistentid` (published 2026-10-18) — a generated-once id that survives copies and synced patterns; used by the Modal block only (beta26).
+- Folded in (pushed 2026-10-18): `MethodFeaturedImage` + `MethodUseFeaturedImage` are a
+  "Featured Image as Background" section on the existing `methodbackgroundcontrols` page (beta6),
+  which also gained the `includeFeaturedImage` / `limited` props, a corrected Display Size table
+  (beta21 options) and Changelog rows for beta6, beta14 and beta21.
+
+**Function / class pages** — `documentation/php-function-class-reference/<lowercase>.html`.
+Public surface only: something a child theme or plugin would call.
+
+- [x] `method_modals` (published 2026-10-19) (class `Method_Modals`)
+- [x] `method_register_modal` (published 2026-10-19)
+- [x] `method_get_modal_sizes` (published 2026-10-19)
+- [x] `method_sanitize_modal_id` (published 2026-10-19)
+- [x] `method_get_lightbox_attributes` (published 2026-10-19)
+- [x] `method_get_theme_icons` (published 2026-10-19)
+- [x] `method_parse_video_url` (published 2026-10-19)
+- [x] `method_build_embed_url` (published 2026-10-19)
+- Not proposed (internal, hook callbacks, or covered by a system page):
+  `method_scripts`, `method_admin_scripts`, `method_login_scripts`,
+  `method_block_assets`, `method_enable_theme_support`,
+  `method_register_custom_nav_menus`, `method_register_theme_options_metabox`,
+  `method_register_breadcrumb_metabox`, `method_register_taxonomy_breadcrumb_metabox`,
+  `method_inject_gtag`, `method_lower_wpseo_priority`, `method_remove_add_new_nf_button`,
+  `method_custom_login_url`, `method_method_utility_option_key_callback`,
+  `method_run_plugin_dependencies`, `method_collect_plugin_dependencies`,
+  `method_register_theme_icons`, `method_configure_responsive_editing`,
+  `method_responsive_embed_wrap`, `method_maybe_enable_embed_wrap`,
+  `method_get_class`, `method_check_key` (deprecated).
+
+**Hook pages** — `documentation/filters-actions-reference/<hook>.html`, Hook template.
+The existing pattern is both: a page per hook *and* a row on the owning
+block's Filters section.
+
+- [x] `method_code_languages` (published 2026-10-19)
+- [x] `method_core_extensions_config` (published 2026-10-19)
+- [x] `method_mapbox_token` (published 2026-10-19)
+- [x] `method_mapbox_map_styles` (published 2026-10-19)
+- [x] `method_mapbox_map_config` (published 2026-10-19)
+- [x] `method_theme_icons` (published 2026-10-19)
+- [x] `method_utility_format_tags` (published 2026-10-19)
+- [x] `method_utility_option_key` (published 2026-10-19)
+- Covered by system pages, no page unless asked: the eight `method/modal_*` and
+  `method/register_modals` (modals), `method/plugin_dependencies`
+  (plugin-dependencies), `method/responsive_editing_enabled` (editor-integration).
+- If a slash-named hook ever needs its own page, the slug replaces `/` with `-`:
+  `method-modal_args.html`.
+
+**Pages the walk changed the most** (done 2026-10-19; listed so a reviewer knows where to look):
+`swiper-gallery` (rebuilt on the Swiper block in beta23, captions beta27, slide
+widths beta29), `fitted-image` (lightbox and linking, beta23), `section` and
+`container` (backdrop filters beta20–21, background size beta21), `core-extensions`
+(typography set beta18), `flex-container` (wrap, item order, visibility),
+`accordion` (panel ids beta28), `methodtypographycontrols` (beta17's additions),
+`methodshadowcontrol` (beta21).
+
+**Method Child and Method Generator pages** (generated 2026-10-19, created as
+drafts from `docs/wiki-new/method-child.html` and `method-generator.html`; specs in
+the harness as `blockpages/method-child.py` and `method-generator.py`). They are
+reference pages for the two sibling repos, built on the Systems page chrome
+(hero image 593, the same one the Documentation landing uses) until Rob picks
+images for them; the breadcrumb block is dynamic so the parent decides the trail.
+Sections: Method Child — what's in the theme, how it loads, `METHOD_CHILD_OPTIONS`
+(a wholesale replacement for `METHOD_OPTIONS`, read by the five breakpoint/
+typography getters and the options page's diagnostics), styles and the gulp build,
+the commented extension points mapped to their hook pages, a version/compatibility
+table (which Method release each child release's examples target), Changelog from
+the child's CHANGELOG with child-repo commit links. Method Generator — the
+`build-custom` task series, templated vs copied files, every `_globals.html`
+variable and where it lands, the beta5 push step, versions (v2 tags track Method
+Child; v1.x built Method 1.x), Changelog with generator-repo commit links. Their
+Changelogs follow those repos' tags, not Method's: sync them when *those* repos
+tag, by diffing the repo and the child CHANGELOG as for Method. Two facts worth
+keeping: the child's `lib/config.php` is a snapshot (beta5 still has the pre-beta30
+accent palette), and GitHub's auto-generated Source zip of the generator has an
+empty `method-child/` — the usable download is the `method-generator.zip` asset
+attached to the release.
 
 ### Hard rules for wiki edits
 
@@ -297,7 +462,7 @@ Trigger: "Method vX was tagged; sync the wiki from vY."
 The version written into Changelog rows is the tag being synced to (vX
 without the `v`), never the `style.css` string at an intermediate commit.
 
-### Worked example — 2.0.0-beta30, breakpoint colors (real, and still open)
+### Worked example — 2.0.0-beta30, breakpoint colors (done 2026-10-18; kept as the model)
 
 Commit `3fc99f5` changed `lib/config.php`:
 

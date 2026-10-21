@@ -5,7 +5,6 @@
   "version": "1.0.0",
   "title": "Scrollspy (Method)",
   "category": "method-component-blocks",
-  "icon": "list-view",
   "description": "Auto-generates a sticky table of contents from headings in a sibling content area.",
   "keywords": [
     "toc",

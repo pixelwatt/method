@@ -6,7 +6,6 @@
   ],
   "title": "Basic Grid Item",
   "description": "An individual item within a Basic Grid, inheriting its size and positioning from the parent grid's layout settings.",
-  "icon": "block-default",
   "category": "method-component-blocks",
   "supports": {
     "html": false

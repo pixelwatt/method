@@ -6,7 +6,6 @@
     "method"
   ],
   "category": "method-component-blocks",
-  "icon": "flag",
   "supports": {
     "html": false,
     "align": [

@@ -3,7 +3,6 @@
     "name": "method/swiper-slide",
     "title": "Swiper Slide",
     "category": "method-layout-blocks",
-    "icon": "format-image",
     "parent": [
         "method/swiper"
     ],

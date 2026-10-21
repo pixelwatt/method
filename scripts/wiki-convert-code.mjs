@@ -74,7 +74,10 @@ function serializeAttributes(attributes) {
 		.replace(/</g, '\\u003c')
 		.replace(/>/g, '\\u003e')
 		.replace(/&/g, '\\u0026')
-		.replace(/\\"/g, '\\u0022');
+		.replace(/\\"/g, '\\u0022')
+		// A backslash inside a string: the editor stores it as \u005c so the
+		// server's stripslashes never turns "\\n" into a newline.
+		.replace(/\\\\/g, '\\u005c');
 }
 
 // Single pass, so a sample that documented an entity (`&amp;gt;`) comes out

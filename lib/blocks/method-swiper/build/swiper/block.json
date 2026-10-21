@@ -6,7 +6,6 @@
     "method"
   ],
   "category": "method-layout-blocks",
-  "icon": "images-alt2",
   "supports": {
     "html": false,
     "align": [

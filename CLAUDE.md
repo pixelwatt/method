@@ -246,6 +246,7 @@ last section inside the content column, after the standard separator.
 | guides | `docs/wiki/guides/*.html` — hand-written; only touched when asked |
 | Method Child (`pixelwatt/method-child`) | `method-child.html` — a top-level child of Documentation (parent 128). Source is the submodule at `~/method-generator/method-child` on Rob's Mac (its own git history and `v1.0.0-betaN` tags); commit links go to that repo |
 | Method Generator (`pixelwatt/method-generator`) | `method-generator.html` — same level. Source `~/method-generator` (`v2-1.0.0-betaN` tags; `v1.x` tags are the Method 1.x generator) |
+| What is Method? | `what-is-method.html` — top-level under Documentation; a hand-written positioning page (who Method is for, what ships, the project workflow, design principles). No Changelog section, like the landing pages and guides; spec `blockpages/what-is-method.py`. Revisit when the plugin list or the workflow changes, not per release |
 
 A new page is created with `wiki-create.mjs` as a draft, `--from` the nearest
 sibling page so the chrome and section order are right, then edited and
@@ -397,7 +398,7 @@ widths beta29), `fitted-image` (lightbox and linking, beta23), `section` and
 `accordion` (panel ids beta28), `methodtypographycontrols` (beta17's additions),
 `methodshadowcontrol` (beta21).
 
-**Method Child and Method Generator pages** (generated 2026-10-19, created as
+**Method Child and Method Generator pages** (generated 2026-10-19, published 2026-10-19 as ids 1118 and 1119, created as
 drafts from `docs/wiki-new/method-child.html` and `method-generator.html`; specs in
 the harness as `blockpages/method-child.py` and `method-generator.py`). They are
 reference pages for the two sibling repos, built on the Systems page chrome

@@ -18,6 +18,13 @@ function method_section_enqueue_assets() {
 }
 add_action('enqueue_block_assets', 'method_section_enqueue_assets');
 
+// jQuery matchHeight for the editor canvas (MatchHeight Group option). The frontend
+// already gets it via assets/js/scripts.min.js, so this is editor-only.
+function method_section_editor_assets() {
+    wp_enqueue_script( 'method-matchheight', get_template_directory_uri() . '/inc/matchHeight/jquery.matchHeight.js', array( 'jquery' ), METHOD_VERSION, true );
+}
+add_action( 'enqueue_block_editor_assets', 'method_section_editor_assets' );
+
 add_filter('script_loader_tag', function($tag, $handle) {
     if ($handle === 'vegas') {
         return str_replace('<script ', '<script type="module" ', $tag);

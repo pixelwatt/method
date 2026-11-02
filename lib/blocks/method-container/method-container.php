@@ -15,6 +15,13 @@ function method_container_enqueue_assets() {
 }
 add_action('enqueue_block_assets', 'method_container_enqueue_assets');
 
+// jQuery matchHeight for the editor canvas (MatchHeight Group option). The frontend
+// already gets it via assets/js/scripts.min.js, so this is editor-only.
+function method_container_editor_assets() {
+    wp_enqueue_script( 'method-matchheight', get_template_directory_uri() . '/inc/matchHeight/jquery.matchHeight.js', array( 'jquery' ), METHOD_VERSION, true );
+}
+add_action( 'enqueue_block_editor_assets', 'method_container_editor_assets' );
+
 function render_method_container_block( $block_attributes, $content, $block ) {
     $methodId = uniqid( 'method-' );
     $align = method_get_responsive_setting( $block_attributes, 'base', 'alignItems' );
